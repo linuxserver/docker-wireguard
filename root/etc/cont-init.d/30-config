@@ -1,0 +1,113 @@
+#!/usr/bin/with-contenv bash
+
+mkdir -p /config
+
+# install headers and wireguard
+apt-get update
+if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
+  apt-get install -y \
+    linux-headers-$(uname -r) \
+    wireguard
+elif uname -v | grep -q 'Ubuntu'; then
+  curl -s http://archive.ubuntu.com/ubuntu/dists/xenial/Release.gpg | apt-key add -
+  echo -e \
+    "deb http://archive.ubuntu.com/ubuntu/ xenial main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ xenial main restricted\n\ndeb http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted" \
+    > /etc/apt/sources.list.d/xenial.list
+  apt-get update
+  if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
+    apt-get install -y \
+      linux-headers-$(uname -r) \
+      wireguard
+  else
+    echo "No kernel headers found!! Will try the headers from the wireguard ppa, may or may not work"
+    apt-get install -y \
+      wireguard
+  fi
+elif uname -v | grep -q 'Debian'; then
+  curl -s https://ftp-master.debian.org/keys/archive-key-10.asc | apt-key add -
+  echo -e \
+    "deb http://deb.debian.org/debian buster main contrib non-free\ndeb-src http://deb.debian.org/debian buster main contrib non-free" \
+    > /etc/apt/sources.list.d/debian.list
+  apt-get update
+  if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
+    apt-get install -y \
+      linux-headers-$(uname -r) \
+      wireguard
+  else
+    curl -s https://ftp-master.debian.org/keys/archive-key-9.asc | apt-key add -
+    sed -i 's/buster/stretch/g' /etc/apt/sources.list.d/debian.list
+    apt-get update
+    if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
+      apt-get install -y \
+        linux-headers-$(uname -r) \
+        wireguard
+    else
+      echo "No kernel headers found!! Will try the headers from the wireguard ppa, may or may not work"
+      apt-get install -y \
+        wireguard
+    fi
+  fi
+else
+  echo "No kernel headers found!! Will try the headers from the wireguard ppa, may or may not work"
+  apt-get install -y \
+    wireguard
+fi
+
+rm -rf /etc/wireguard
+mkdir -p /etc/wireguard
+ln -s /config/wg0.conf /etc/wireguard/wg0.conf
+
+if [ ! -f /config/wg0.conf ] && [ -n "$PEERS" ] && [ -n "$SERVERURL" ]; then
+  SERVERPORT=${SERVERPORT:-51820}
+  PEERDNS=${PEERDNS:-8.8.8.8}
+  mkdir -p /config/server
+  if [ ! -f /config/server/privatekey-server ]; then
+    umask 077
+    wg genkey | tee /config/server/privatekey-server | wg pubkey > /config/server/publickey-server
+  fi
+  cat <<DUDE > /config/wg0.conf
+[Interface]
+Address = 10.13.13.1
+ListenPort = 51820
+PrivateKey = $(cat /config/server/privatekey-server)
+PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+
+DUDE
+  if ! [[ $PEERS =~ ^[0-9]+$ ]]; then
+    echo "PEERS is not set to an integer, setting it to 1"
+    PEERS="1"
+  fi
+  for i in $(seq 1 $PEERS); do
+    mkdir -p /config/peer${i}
+    if [ ! -f /config/peer${i}/privatekey-peer${i} ]; then
+      umask 077
+      wg genkey | tee /config/peer${i}/privatekey-peer${i} | wg pubkey > /config/peer${i}/publickey-peer${i}
+    fi
+    cat <<DUDE > /config/peer${i}/peer${i}.conf
+[Interface]
+Address = 10.13.13.$(( $i + 1 ))
+PrivateKey = $(cat /config/peer${i}/privatekey-peer${i})
+ListenPort = 51820
+DNS = ${PEERDNS}
+
+[Peer]
+PublicKey = $(cat /config/server/publickey-server)
+Endpoint = ${SERVERURL}:${SERVERPORT}
+AllowedIPs = 0.0.0.0/0, ::/0
+DUDE
+    cat <<DUDE >> /config/wg0.conf
+[Peer]
+PublicKey = $(cat /config/peer${i}/publickey-peer${i})
+AllowedIPs = 10.13.13.$(( $i + 1 ))/32
+
+DUDE
+    echo "PEER ${i} QR code:"
+    qrencode -t ansiutf8 < /config/peer${i}/peer${i}.conf
+    qrencode -o /config/peer${i}/peer${i}.png < /config/peer${i}/peer${i}.conf
+  done
+fi
+
+# permissions
+chown -R abc:abc \
+	/config
