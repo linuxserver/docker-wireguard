@@ -1,0 +1,27 @@
+---
+
+# jenkins variables
+project_name: docker-wireguard
+external_type: na
+custom_version_command: "curl -sX GET http://ppa.launchpad.net/wireguard/wireguard/ubuntu/dists/bionic/main/binary-amd64/Packages.gz | gunzip -c |grep -A 7 -m 1 'Package: wireguard' | awk -F ': ' '/Version/{print $2;exit}'"
+release_type: stable
+release_tag: latest
+ls_branch: master
+repo_vars:
+  - CONTAINER_NAME = 'wireguard'
+  - BUILD_VERSION_ARG = 'WIREGUARD_VERSION'
+  - LS_USER = 'linuxserver'
+  - LS_REPO = 'docker-wireguard'
+  - DOCKERHUB_IMAGE = 'linuxserver/wireguard'
+  - DEV_DOCKERHUB_IMAGE = 'lsiodev/wireguard'
+  - PR_DOCKERHUB_IMAGE = 'lspipepr/wireguard'
+  - DIST_IMAGE = 'ubuntu'
+  - MULTIARCH='false'
+  - CI='false'
+  - CI_WEB='false'
+  - CI_PORT='8080'
+  - CI_SSL='false'
+  - CI_DELAY='120'
+  - CI_DOCKERENV='TZ=US/Pacific'
+  - CI_AUTH='user:password'
+  - CI_WEBPATH=''

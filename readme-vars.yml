@@ -1,0 +1,96 @@
+---
+
+# project information
+project_name: wireguard
+project_url: "https://www.wireguard.com/"
+project_logo: "https://www.wireguard.com/img/wireguard.svg"
+project_blurb: "[WireGuard®]({{ project_url }}) is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography. It aims to be faster, simpler, leaner, and more useful than IPsec, while avoiding the massive headache. It intends to be considerably more performant than OpenVPN. WireGuard is designed as a general purpose VPN for running on embedded interfaces and super computers alike, fit for many different circumstances. Initially released for the Linux kernel, it is now cross-platform (Windows, macOS, BSD, iOS, Android) and widely deployable. It is currently under heavy development, but already it might be regarded as the most secure, easiest to use, and simplest VPN solution in the industry."
+project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_name }}"
+
+# supported architectures
+available_architectures:
+  - { arch: "{{ arch_x86_64 }}", tag: "amd64-latest"}
+
+# development version
+development_versions: false
+development_versions_items:
+  - { tag: "latest", desc: "Stable releases" }
+  - { tag: "development", desc: "Prereleases from their GitHub" }
+
+# container parameters
+common_param_env_vars_enabled: true
+param_container_name: "{{ project_name }}"
+param_usage_include_vols: true
+param_volumes:
+  - { vol_path: "/config", vol_host_path: "/path/to/appdata/config", desc: "Contains all relevant configuration files." }
+  - { vol_path: "/lib/modules", vol_host_path: "/lib/modules", desc: "Maps host's modules folder." }
+param_usage_include_ports: true
+param_ports:
+  - { external_port: "51820", internal_port: "51820/udp", port_desc: "wireguard port" }
+param_usage_include_env: true
+param_env_vars:
+  - { env_var: "TZ", env_value: "Europe/London", desc: "Specify a timezone to use EG Europe/London"}
+cap_add_param: true
+cap_add_param_vars:
+  - { cap_add_var: "NET_ADMIN" }
+  - { cap_add_var: "SYS_MODULE" }
+custom_params:
+  - { name: "sysctl", name_compose: "sysctls", value: "net.ipv4.conf.all.src_valid_mark=1", desc: "Required for client mode." }
+
+# optional container parameters
+opt_param_usage_include_env: true
+opt_param_env_vars:
+  - { env_var: "SERVERURL", env_value: "wireguard.domain.com", desc: "External IP or domain name for docker host. Required for server mode."}
+  - { env_var: "SERVERPORT", env_value: "51820", desc: "External port for docker host. Required for server mode."}
+  - { env_var: "PEERS", env_value: "1", desc: "Number of peers to create confs for. Required for server mode."}
+  - { env_var: "PEERDNS", env_value: "8.8.8.8", desc: "DNS server set in peer/client configs."}
+
+optional_block_1: false
+optional_block_1_items: ""
+
+custom_compose: |
+  version: "2.1"
+  services:
+    wireguard:
+      image: linuxserver/wireguard
+      container_name: wireguard
+      cap_add:
+        - NET_ADMIN
+        - SYS_MODULE
+      environment:
+        - PUID=1000
+        - PGID=1000
+        - TZ=Europe/London
+        - SERVERURL=wireguard.domain.com #optional
+        - SERVERPORT=51820 #optional
+        - PEERS=1 #optional
+        - PEERDNS=8.8.8.8 #optional
+      volumes:
+        - /path/to/appdata/config:/config
+        - /lib/modules:/lib/modules
+      ports:
+        - 51820:51820/udp
+      sysctls:
+        - net.ipv4.conf.all.src_valid_mark=1
+      restart: unless-stopped
+
+# application setup block
+app_setup_block_enabled: true
+app_setup_block: |
+  This image is designed for Ubuntu and Debian x86_64 systems only. During container start, it will download the necessary kernel headers and build the kernel module (until kernel 5.6, which has the module built-in, goes mainstream).
+
+  This can be run as a server or a client, based on the parameters used. 
+
+  ## Server Mode
+  Pass the environment variables `SERVERURL`, `SERVERPORT`, `PEERS` and `PEERDNS`, and the container will generate all necessary confs for both the server and the clients. The client config qr codes will be output in the docker log. They will also be saved in text and png format under `/config/peerX`.
+  
+  If there is an existing `/config/wg0.conf`, the above environment variables won't have any affect. To add more peers/clients later on, you can run `docker exec -it wireguard /app/add-peer` while the container is running.
+  
+  To recreate all serer and client confs, set the above env vars, delete `/config/wg0.conf` and restart the container. Client confs will be recreated with existing private/public keys. Delete the peer folders for the keys to be recreated along with the confs.
+
+  ## Client Mode
+  Drop your client conf into the config folder as `/config/wg0.conf` and start the container. 
+
+# changelog
+changelogs:
+  - { date: "31.03.20:", desc: "Initial Release." }
