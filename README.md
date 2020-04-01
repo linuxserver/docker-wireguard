@@ -161,6 +161,8 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 
 This image is designed for Ubuntu and Debian x86_64 systems only. During container start, it will download the necessary kernel headers and build the kernel module (until kernel 5.6, which has the module built-in, goes mainstream).
 
+If you're on a debian/ubuntu based host with a custom or downstream distro provided kernel (ie. Pop!_OS), the container won't be able to install the kernel headers from the regular ubuntu and debian repos. In those cases, you can try installing the headers on the host via `sudo apt install linux-headers-$(uname -r)` (if distro version) and then add a volume mapping for `/usr/src:/usr/src`, or if custom built, map the location of the existing headers to allow the container to use host installed headers to build the kernel module (tested successful on Pop!_OS, ymmv).
+
 This can be run as a server or a client, based on the parameters used. 
 
 ## Server Mode
@@ -168,7 +170,9 @@ Pass the environment variables `SERVERURL`, `SERVERPORT`, `PEERS` and `PEERDNS`,
 
 If there is an existing `/config/wg0.conf`, the above environment variables won't have any affect. To add more peers/clients later on, you can run `docker exec -it wireguard /app/add-peer` while the container is running.
 
-To recreate all serer and client confs, set the above env vars, delete `/config/wg0.conf` and restart the container. Client confs will be recreated with existing private/public keys. Delete the peer folders for the keys to be recreated along with the confs.
+To display the QR codes of active peers again, you can use the following command and list the peer numbers as arguments: `docker exec -it wireguard /app/show-peer 1 4 5` (Keep in mind that the QR codes are also stored as PNGs in the config folder).
+
+To recreate all server and client confs, set the above env vars, delete `/config/wg0.conf` and restart the container. Client confs will be recreated with existing private/public keys. Delete the peer folders for the keys to be recreated along with the confs.
 
 ## Client Mode
 Drop your client conf into the config folder as `/config/wg0.conf` and start the container. 
@@ -239,4 +243,5 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **01.04.20:** - Add `show-peer` script and include info on host installed headers.
 * **31.03.20:** - Initial Release.
