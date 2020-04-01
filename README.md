@@ -161,7 +161,7 @@ In this instance `PUID=1000` and `PGID=1000`, to find yours use `id user` as bel
 
 This image is designed for Ubuntu and Debian x86_64 systems only. During container start, it will download the necessary kernel headers and build the kernel module (until kernel 5.6, which has the module built-in, goes mainstream).
 
-If you're on a debian/ubuntu based host with a custom kernel, the container won't be able to install the kernel headers. In that case you can try installing the headers on the host via `sudo apt install linux-headers-$(uname -r)` and then add a volume mapping for `/usr/src:/usr/src` to allow the container to use host installed headers to build the kernel module (tested on Pop!_OS).
+If you're on a debian/ubuntu based host with a custom or downstream distro provided kernel (ie. Pop!_OS), the container won't be able to install the kernel headers from the regular ubuntu and debian repos. In those cases, you can try installing the headers on the host via `sudo apt install linux-headers-$(uname -r)` (if distro version) and then add a volume mapping for `/usr/src:/usr/src`, or if custom built, map the location of the existing headers to allow the container to use host installed headers to build the kernel module (tested successful on Pop!_OS, ymmv).
 
 This can be run as a server or a client, based on the parameters used. 
 
