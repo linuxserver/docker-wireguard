@@ -79,6 +79,8 @@ app_setup_block_enabled: true
 app_setup_block: |
   This image is designed for Ubuntu and Debian x86_64 systems only. During container start, it will download the necessary kernel headers and build the kernel module (until kernel 5.6, which has the module built-in, goes mainstream).
 
+  If you're on a debian/ubuntu based host with a custom kernel, the container won't be able to install the kernel headers. In that case you can try installing the headers on the host via `sudo apt install linux-headers-$(uname -r)` and then add a volume mapping for `/usr/src:/usr/src` to allow the container to use host installed headers to build the kernel module (tested on Pop!_OS).
+
   This can be run as a server or a client, based on the parameters used. 
 
   ## Server Mode
@@ -86,11 +88,14 @@ app_setup_block: |
   
   If there is an existing `/config/wg0.conf`, the above environment variables won't have any affect. To add more peers/clients later on, you can run `docker exec -it wireguard /app/add-peer` while the container is running.
   
-  To recreate all serer and client confs, set the above env vars, delete `/config/wg0.conf` and restart the container. Client confs will be recreated with existing private/public keys. Delete the peer folders for the keys to be recreated along with the confs.
+  To display the QR codes of active peers again, you can use the following command and list the peer numbers as arguments: `docker exec -it wireguard /app/show-peer 1 4 5` (Keep in mind that the QR codes are also stored as PNGs in the config folder).
+
+  To recreate all server and client confs, set the above env vars, delete `/config/wg0.conf` and restart the container. Client confs will be recreated with existing private/public keys. Delete the peer folders for the keys to be recreated along with the confs.
 
   ## Client Mode
   Drop your client conf into the config folder as `/config/wg0.conf` and start the container. 
 
 # changelog
 changelogs:
+  - { date: "01.04.20:", desc: "Add `show-peer` script and include info on host installed headers." }
   - { date: "31.03.20:", desc: "Initial Release." }

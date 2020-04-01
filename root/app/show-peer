@@ -1,0 +1,15 @@
+#!/usr/bin/with-contenv bash
+
+if [ ! $# -gt 0 ]; then
+  echo "You need to specify which peers to show"
+  exit 0
+fi
+
+for i in "$@"; do
+  if grep -q "AllowedIPs = 10.13.13.$(( $i + 1 ))/32" /config/wg0.conf; then
+    echo "PEER $i QR code:"
+    qrencode -t ansiutf8 < /config/peer${i}/peer${i}.conf
+  else
+    echo "PEER $i is not active"
+  fi
+done
