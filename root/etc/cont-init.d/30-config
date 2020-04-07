@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bash
 
-mkdir -p /config
+mkdir -p /config/templates
 
 # install headers and wireguard
 apt-get update
@@ -53,59 +53,100 @@ else
     wireguard
 fi
 
+# prepare symlinks
 rm -rf /etc/wireguard
 mkdir -p /etc/wireguard
 ln -s /config/wg0.conf /etc/wireguard/wg0.conf
+# prepare templates
+[[ ! -f /config/templates/server.conf ]] && \
+  cp /defaults/server.conf /config/templates/server.conf
+[[ ! -f /config/templates/peer.conf ]] && \
+  cp /defaults/peer.conf /config/templates/peer.conf
 
-if [ ! -f /config/wg0.conf ] && [ -n "$PEERS" ] && [ -n "$SERVERURL" ]; then
-  SERVERPORT=${SERVERPORT:-51820}
-  PEERDNS=${PEERDNS:-8.8.8.8}
+generate_confs () {
   mkdir -p /config/server
   if [ ! -f /config/server/privatekey-server ]; then
     umask 077
     wg genkey | tee /config/server/privatekey-server | wg pubkey > /config/server/publickey-server
   fi
+  eval "`printf %s`
   cat <<DUDE > /config/wg0.conf
-[Interface]
-Address = 10.13.13.1
-ListenPort = 51820
-PrivateKey = $(cat /config/server/privatekey-server)
-PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+`cat /config/templates/server.conf`
 
-DUDE
-  if ! [[ $PEERS =~ ^[0-9]+$ ]]; then
-    echo "PEERS is not set to an integer, setting it to 1"
-    PEERS="1"
-  fi
+DUDE"
   for i in $(seq 1 $PEERS); do
     mkdir -p /config/peer${i}
-    if [ ! -f /config/peer${i}/privatekey-peer${i} ]; then
+    if [ ! -f "/config/peer${i}/privatekey-peer${i}" ]; then
       umask 077
       wg genkey | tee /config/peer${i}/privatekey-peer${i} | wg pubkey > /config/peer${i}/publickey-peer${i}
     fi
+    eval "`printf %s`
     cat <<DUDE > /config/peer${i}/peer${i}.conf
-[Interface]
-Address = 10.13.13.$(( $i + 1 ))
-PrivateKey = $(cat /config/peer${i}/privatekey-peer${i})
-ListenPort = 51820
-DNS = ${PEERDNS}
-
-[Peer]
-PublicKey = $(cat /config/server/publickey-server)
-Endpoint = ${SERVERURL}:${SERVERPORT}
-AllowedIPs = 0.0.0.0/0, ::/0
-DUDE
+`cat /config/templates/peer.conf`
+DUDE"
     cat <<DUDE >> /config/wg0.conf
 [Peer]
 PublicKey = $(cat /config/peer${i}/publickey-peer${i})
-AllowedIPs = 10.13.13.$(( $i + 1 ))/32
+AllowedIPs = ${INTERFACE}.$(( $i + 1 ))/32
 
 DUDE
     echo "PEER ${i} QR code:"
     qrencode -t ansiutf8 < /config/peer${i}/peer${i}.conf
     qrencode -o /config/peer${i}/peer${i}.png < /config/peer${i}/peer${i}.conf
   done
+}
+
+save_vars () {
+  cat <<DUDE > /config/.donoteditthisfile
+ORIG_SERVERURL=$SERVERURL
+ORIG_SERVERPORT=#SERVER_PORT
+ORIG_PEERDNS=$PEERDNS
+ORIG_PEERS=$PEERS
+ORIG_INTERFACE=$INTERFACE
+DUDE
+}
+
+if [ -n "$PEERS" ]; then
+  echo "Server mode is selected"
+  if ! [[ "$PEERS" =~ ^[0-9]+$ ]]; then
+    echo "PEERS is not set to an integer, setting it to 1"
+    PEERS="1"
+  fi
+  if [ -z "$SERVERURL" ] || [ "$SERVERURL" = "auto" ]; then
+    SERVERURL=$(curl icanhazip.com)
+    echo "SERVERURL var is either not set or is set to \"auto\", setting external IP to auto detected value of $SERVERURL"
+  else
+    echo "External server address is set to $SERVERURL"
+  fi
+  SERVERPORT=${SERVERPORT:-51820}
+  echo "External server port is set to ${SERVERPORT}. Make sure that port is properly forwarded to port 51820 inside this container"
+  PEERDNS=${PEERDNS:-8.8.8.8}
+  echo "DNS server is set to $PEERDNS"
+  INTERNAL_SUBNET=${INTERNAL_SUBNET:-10.13.13.0}
+  echo "Internal subnet is set to $INTERNAL_SUBNET"
+  INTERFACE=$(echo "$INTERNAL_SUBNET" | awk 'BEGIN{FS=OFS="."} NF--')
+  if [ ! -f /config/wg0.conf ]; then
+    echo "No found wg0.conf found (maybe an initial install), generating 1 server and $PEERS peer/client confs"
+    generate_confs
+    save_vars
+  else
+    echo "Server mode is selected"
+    [[ -f /config/.donoteditthisfile ]] && \
+      . /config/.donoteditthisfile
+    if [ "$SERVERURL" != "$ORIG_SERVERURL" ] || [ "$SERVERPORT" != "$ORIG_SERVERPORT" ] || [ "$PEERDNS" != "$ORIG_PEERDNS" ] || [ "$PEERS" != "$ORIG_PEERS" ] || [ "$INTERFACE" != "$ORIG_INTERFACE" ]; then
+      echo "Server related environment variables changed, regenerating 1 server and $PEERS peer/client confs"
+      generate_confs
+      save_vars
+    else
+      echo "No changes to parameters. Existing configs are used."
+    fi
+  fi
+else
+  echo "Client mode selected."
+  if [ !-f /config/wg0.conf ]; then
+    "No client conf found. Provide your own client conf as \"/config/wg0.conf\" and restart the container."
+    sleep infinity
+  fi
 fi
 
 # permissions
