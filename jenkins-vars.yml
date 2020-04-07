@@ -25,3 +25,5 @@ repo_vars:
   - CI_DOCKERENV='TZ=US/Pacific'
   - CI_AUTH='user:password'
   - CI_WEBPATH=''
+sponsor_links:
+  - { name: "WireGuard", url: "https://www.wireguard.com/donations/" }

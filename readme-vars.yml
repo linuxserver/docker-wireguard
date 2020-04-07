@@ -35,7 +35,7 @@ cap_add_param_vars:
   - { cap_add_var: "NET_ADMIN" }
   - { cap_add_var: "SYS_MODULE" }
 custom_params:
-  - { name: "sysctl", name_compose: "sysctls", value: "net.ipv4.conf.all.src_valid_mark=1", desc: "Required for client mode." }
+  - { name: "sysctl", name_compose: "sysctls", value: ["net.ipv4.conf.all.src_valid_mark=1"], desc: "Required for client mode.", array: "true" }
 
 # optional container parameters
 opt_param_usage_include_env: true
@@ -48,33 +48,6 @@ opt_param_env_vars:
 
 optional_block_1: false
 optional_block_1_items: ""
-
-custom_compose: |
-  version: "2.1"
-  services:
-    wireguard:
-      image: linuxserver/wireguard
-      container_name: wireguard
-      cap_add:
-        - NET_ADMIN
-        - SYS_MODULE
-      environment:
-        - PUID=1000
-        - PGID=1000
-        - TZ=Europe/London
-        - SERVERURL=wireguard.domain.com #optional
-        - SERVERPORT=51820 #optional
-        - PEERS=1 #optional
-        - PEERDNS=8.8.8.8 #optional
-        - INTERNAL_SUBNET=10.13.13.0 #optional
-      volumes:
-        - /path/to/appdata/config:/config
-        - /lib/modules:/lib/modules
-      ports:
-        - 51820:51820/udp
-      sysctls:
-        - net.ipv4.conf.all.src_valid_mark=1
-      restart: unless-stopped
 
 # application setup block
 app_setup_block_enabled: true
