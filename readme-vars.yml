@@ -10,6 +10,8 @@ project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_
 # supported architectures
 available_architectures:
   - { arch: "{{ arch_x86_64 }}", tag: "amd64-latest"}
+  - { arch: "{{ arch_arm64 }}", tag: "arm64v8-latest"}
+  - { arch: "{{ arch_armhf }}", tag: "arm32v7-latest"}
 
 # development version
 development_versions: false
@@ -43,7 +45,7 @@ opt_param_env_vars:
   - { env_var: "SERVERURL", env_value: "wireguard.domain.com", desc: "External IP or domain name for docker host. Used in server mode. If set to `auto`, the container will try to determine and set the external IP automatically"}
   - { env_var: "SERVERPORT", env_value: "51820", desc: "External port for docker host. Used in server mode."}
   - { env_var: "PEERS", env_value: "1", desc: "Number of peers to create confs for. Required for server mode."}
-  - { env_var: "PEERDNS", env_value: "8.8.8.8", desc: "DNS server set in peer/client configs. Used in server mode."}
+  - { env_var: "PEERDNS", env_value: "auto", desc: "DNS server set in peer/client configs (can be set as `8.8.8.8`). Used in server mode. Defaults to `auto`, which uses wireguard docker host's DNS via included CoreDNS forward."}
   - { env_var: "INTERNAL_SUBNET", env_value: "10.13.13.0", desc: "Internal subnet for the wireguard and server and peers (only change if it clashes). Used in server mode."}
 
 optional_block_1: false
@@ -52,9 +54,11 @@ optional_block_1_items: ""
 # application setup block
 app_setup_block_enabled: true
 app_setup_block: |
-  This image is designed for Ubuntu and Debian x86_64 systems only. During container start, it will download the necessary kernel headers and build the kernel module (until kernel 5.6, which has the module built-in, goes mainstream).
+  This image is designed for Ubuntu and Debian based systems only. During container start, it will download the necessary kernel headers and build the kernel module (until kernel 5.6, which has the module built-in, goes mainstream).
 
   If you're on a debian/ubuntu based host with a custom or downstream distro provided kernel (ie. Pop!_OS), the container won't be able to install the kernel headers from the regular ubuntu and debian repos. In those cases, you can try installing the headers on the host via `sudo apt install linux-headers-$(uname -r)` (if distro version) and then add a volume mapping for `/usr/src:/usr/src`, or if custom built, map the location of the existing headers to allow the container to use host installed headers to build the kernel module (tested successful on Pop!_OS, ymmv).
+
+  With regards to arm32/64 devices, Raspberry Pi 2-4 running the [official ubuntu images](https://ubuntu.com/download/raspberry-pi) or Raspbian Buster are supported out of the box. For all other devices and OSes, you can try installing the kernel headers on the host, and mapping `/usr/src:/usr/src` and it may just work (no guarantees).
 
   This can be run as a server or a client, based on the parameters used. 
 
@@ -74,7 +78,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
-  - { date: "08.04.20:", desc: "Update the `add-peer`/`show-peer` scripts to utilize the templates and the `INTERNAL_SUBNET` var (previously missed, oops)." }
+  - { date: "08.04.20:", desc: "Add arm32/64 builds and enable multi-arch (rpi4 with ubuntu and raspbian buster tested). Add CoreDNS for `PEERDNS=auto` setting. Update the `add-peer`/`show-peer` scripts to utilize the templates and the `INTERNAL_SUBNET` var (previously missed, oops)." }
   - { date: "05.04.20:", desc: "Add `INTERNAL_SUBNET` variable to prevent subnet clashes. Add templates for server and peer confs." }
   - { date: "01.04.20:", desc: "Add `show-peer` script and include info on host installed headers." }
   - { date: "31.03.20:", desc: "Initial Release." }

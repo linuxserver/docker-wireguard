@@ -11,7 +11,9 @@ if [ -z "$SERVERURL" ] || [ "$SERVERURL" = "auto" ]; then
   SERVERURL=$(curl icanhazip.com)
 fi
 SERVERPORT=${SERVERPORT:-51820}
-PEERDNS=${PEERDNS:-8.8.8.8}
+if [ -z "$PEERDNS" ] || [ "$PEERDNS" = "auto" ]; then
+  PEERDNS="${INTERFACE}.1"
+fi
 
 for i in {1..254}; do
   if grep -q "AllowedIPs = ${INTERFACE}.$(( $i + 1 ))/32" /config/wg0.conf; then
