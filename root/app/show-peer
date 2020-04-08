@@ -5,8 +5,11 @@ if [ ! $# -gt 0 ]; then
   exit 0
 fi
 
+INTERNAL_SUBNET=${INTERNAL_SUBNET:-10.13.13.0}
+INTERFACE=$(echo "$INTERNAL_SUBNET" | awk 'BEGIN{FS=OFS="."} NF--')
+
 for i in "$@"; do
-  if grep -q "AllowedIPs = 10.13.13.$(( $i + 1 ))/32" /config/wg0.conf; then
+  if grep -q "AllowedIPs = ${INTERFACE}.$(( $i + 1 ))/32" /config/wg0.conf; then
     echo "PEER $i QR code:"
     qrencode -t ansiutf8 < /config/peer${i}/peer${i}.conf
   else

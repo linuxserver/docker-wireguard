@@ -253,6 +253,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **08.04.20:** - Update the `add-peer`/`show-peer` scripts to utilize the templates and the `INTERNAL_SUBNET` var (previously missed, oops).
 * **05.04.20:** - Add `INTERNAL_SUBNET` variable to prevent subnet clashes. Add templates for server and peer confs.
 * **01.04.20:** - Add `show-peer` script and include info on host installed headers.
 * **31.03.20:** - Initial Release.

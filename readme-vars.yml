@@ -74,6 +74,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "08.04.20:", desc: "Update the `add-peer`/`show-peer` scripts to utilize the templates and the `INTERNAL_SUBNET` var (previously missed, oops)." }
   - { date: "05.04.20:", desc: "Add `INTERNAL_SUBNET` variable to prevent subnet clashes. Add templates for server and peer confs." }
   - { date: "01.04.20:", desc: "Add `show-peer` script and include info on host installed headers." }
   - { date: "31.03.20:", desc: "Initial Release." }
