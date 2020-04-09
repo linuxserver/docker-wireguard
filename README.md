@@ -72,7 +72,7 @@ docker create \
   -e SERVERURL=wireguard.domain.com `#optional` \
   -e SERVERPORT=51820 `#optional` \
   -e PEERS=1 `#optional` \
-  -e PEERDNS=8.8.8.8 `#optional` \
+  -e PEERDNS=auto `#optional` \
   -e INTERNAL_SUBNET=10.13.13.0 `#optional` \
   -p 51820:51820/udp \
   -v /path/to/appdata/config:/config \
@@ -104,7 +104,7 @@ services:
       - SERVERURL=wireguard.domain.com #optional
       - SERVERPORT=51820 #optional
       - PEERS=1 #optional
-      - PEERDNS=8.8.8.8 #optional
+      - PEERDNS=auto #optional
       - INTERNAL_SUBNET=10.13.13.0 #optional
     volumes:
       - /path/to/appdata/config:/config
@@ -129,7 +129,7 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-e SERVERURL=wireguard.domain.com` | External IP or domain name for docker host. Used in server mode. If set to `auto`, the container will try to determine and set the external IP automatically |
 | `-e SERVERPORT=51820` | External port for docker host. Used in server mode. |
 | `-e PEERS=1` | Number of peers to create confs for. Required for server mode. |
-| `-e PEERDNS=8.8.8.8` | DNS server set in peer/client configs. Used in server mode. |
+| `-e PEERDNS=auto` | DNS server set in peer/client configs (can be set as `8.8.8.8`). Used in server mode. Defaults to `auto`, which uses wireguard docker host's DNS via included CoreDNS forward. |
 | `-e INTERNAL_SUBNET=10.13.13.0` | Internal subnet for the wireguard and server and peers (only change if it clashes). Used in server mode. |
 | `-v /config` | Contains all relevant configuration files. |
 | `-v /lib/modules` | Maps host's modules folder. |
@@ -257,7 +257,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
-* **08.04.20:** - Add arm32/64 builds and enable multi-arch (rpi4 with ubuntu and raspbian buster tested). Add CoreDNS. Update the `add-peer`/`show-peer` scripts to utilize the templates and the `INTERNAL_SUBNET` var (previously missed, oops).
+* **08.04.20:** - Add arm32/64 builds and enable multi-arch (rpi4 with ubuntu and raspbian buster tested). Add CoreDNS for `PEERDNS=auto` setting. Update the `add-peer`/`show-peer` scripts to utilize the templates and the `INTERNAL_SUBNET` var (previously missed, oops).
 * **05.04.20:** - Add `INTERNAL_SUBNET` variable to prevent subnet clashes. Add templates for server and peer confs.
 * **01.04.20:** - Add `show-peer` script and include info on host installed headers.
 * **31.03.20:** - Initial Release.
