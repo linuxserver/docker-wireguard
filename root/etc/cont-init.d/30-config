@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bash
 
-mkdir -p /config/templates
+mkdir -p /config/{templates,coredns}
 
 # install headers and wireguard
 apt-get update
@@ -8,7 +8,18 @@ if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
   apt-get install -y \
     linux-headers-$(uname -r) \
     wireguard
+elif uname -r | grep -q 'v7l+'; then
+  echo "Raspbian kernel naming convention detected, attempting to install raspbian kernel headers"
+  curl -s http://archive.raspberrypi.org/debian/raspberrypi.gpg.key | apt-key add -
+  echo -e \
+    "deb http://archive.raspberrypi.org/debian/ buster main\ndeb-src http://archive.raspberrypi.org/debian/ buster main" \
+    > /etc/apt/sources.list.d/raspbian.list
+  apt-get update
+  apt-get install -y \
+    raspberrypi-kernel-headers \
+    wireguard
 elif uname -v | grep -q 'Ubuntu'; then
+  echo "Attempting to install kernel headers from Ubuntu Xenial repo"
   curl -s http://archive.ubuntu.com/ubuntu/dists/xenial/Release.gpg | apt-key add -
   echo -e \
     "deb http://archive.ubuntu.com/ubuntu/ xenial main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ xenial main restricted\n\ndeb http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted" \
@@ -19,11 +30,12 @@ elif uname -v | grep -q 'Ubuntu'; then
       linux-headers-$(uname -r) \
       wireguard
   else
-    echo "No kernel headers found!! Will try the headers from the wireguard ppa, may or may not work"
+    echo "No kernel headers found in the Ubuntu repos!! Will try the headers from host (if mapped), may or may not work"
     apt-get install -y \
       wireguard
   fi
 elif uname -v | grep -q 'Debian'; then
+  echo "Debian host detected, attempting to install kernel headers from Debian Buster repo"
   curl -s https://ftp-master.debian.org/keys/archive-key-10.asc | apt-key add -
   echo -e \
     "deb http://deb.debian.org/debian buster main contrib non-free\ndeb-src http://deb.debian.org/debian buster main contrib non-free" \
@@ -34,6 +46,7 @@ elif uname -v | grep -q 'Debian'; then
       linux-headers-$(uname -r) \
       wireguard
   else
+    echo "Attempting to install kernel headers from the Debian Stretch repo"
     curl -s https://ftp-master.debian.org/keys/archive-key-9.asc | apt-key add -
     sed -i 's/buster/stretch/g' /etc/apt/sources.list.d/debian.list
     apt-get update
@@ -42,13 +55,13 @@ elif uname -v | grep -q 'Debian'; then
         linux-headers-$(uname -r) \
         wireguard
     else
-      echo "No kernel headers found!! Will try the headers from the wireguard ppa, may or may not work"
+      echo "No kernel headers found in Debian repos!! Will try the headers from host (if mapped), may or may not work"
       apt-get install -y \
         wireguard
     fi
   fi
 else
-  echo "No kernel headers found!! Will try the headers from the wireguard ppa, may or may not work"
+  echo "No kernel headers found in the Ubuntu or Debian repos!! Will try the headers from host (if mapped), may or may not work"
   apt-get install -y \
     wireguard
 fi
@@ -120,11 +133,15 @@ if [ -n "$PEERS" ]; then
   fi
   SERVERPORT=${SERVERPORT:-51820}
   echo "External server port is set to ${SERVERPORT}. Make sure that port is properly forwarded to port 51820 inside this container"
-  PEERDNS=${PEERDNS:-8.8.8.8}
-  echo "DNS server is set to $PEERDNS"
   INTERNAL_SUBNET=${INTERNAL_SUBNET:-10.13.13.0}
   echo "Internal subnet is set to $INTERNAL_SUBNET"
   INTERFACE=$(echo "$INTERNAL_SUBNET" | awk 'BEGIN{FS=OFS="."} NF--')
+  if [ -z "$PEERDNS" ] || [ "$PEERDNS" = "auto" ]; then
+    PEERDNS="${INTERFACE}.1"
+    echo "PEERDNS var is either not set or is set to \"auto\", setting peer DNS to ${INTERFACE}.1 to use wireguard docker host's DNS."
+  else
+    echo "Peer DNS servers will be set to $PEERDNS"
+  fi
   if [ ! -f /config/wg0.conf ]; then
     echo "No found wg0.conf found (maybe an initial install), generating 1 server and $PEERS peer/client confs"
     generate_confs
@@ -148,6 +165,10 @@ else
     sleep infinity
   fi
 fi
+
+# set up CoreDNS
+[[ ! -f /config/coredns/Corefile ]] && \
+  cp /defaults/Corefile /config/coredns/Corefile
 
 # permissions
 chown -R abc:abc \

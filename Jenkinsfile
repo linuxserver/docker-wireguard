@@ -24,7 +24,7 @@ pipeline {
     DEV_DOCKERHUB_IMAGE = 'lsiodev/wireguard'
     PR_DOCKERHUB_IMAGE = 'lspipepr/wireguard'
     DIST_IMAGE = 'ubuntu'
-    MULTIARCH='false'
+    MULTIARCH='true'
     CI='false'
     CI_WEB='false'
     CI_PORT='8080'
