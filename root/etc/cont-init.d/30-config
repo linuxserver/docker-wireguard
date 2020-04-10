@@ -8,7 +8,7 @@ if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
   apt-get install -y \
     linux-headers-$(uname -r) \
     wireguard
-elif uname -r | grep -q 'v7l+'; then
+elif (uname -r | grep -q 'v7+') || (uname -r | grep -q 'v7l+'); then
   echo "Raspbian kernel naming convention detected, attempting to install raspbian kernel headers"
   curl -s http://archive.raspberrypi.org/debian/raspberrypi.gpg.key | apt-key add -
   echo -e \
