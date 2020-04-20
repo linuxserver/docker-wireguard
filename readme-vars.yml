@@ -78,6 +78,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "20.04.20:", desc: "Fix typo in client mode conf existence check." }
   - { date: "13.04.20:", desc: "Fix bug that forced conf recreation on every start." }
   - { date: "08.04.20:", desc: "Add arm32/64 builds and enable multi-arch (rpi4 with ubuntu and raspbian buster tested). Add CoreDNS for `PEERDNS=auto` setting. Update the `add-peer`/`show-peer` scripts to utilize the templates and the `INTERNAL_SUBNET` var (previously missed, oops)." }
   - { date: "05.04.20:", desc: "Add `INTERNAL_SUBNET` variable to prevent subnet clashes. Add templates for server and peer confs." }
