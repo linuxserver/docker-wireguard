@@ -159,8 +159,8 @@ libperl5.265.26.1-6ubuntu0.3
 libpng16-161.6.34-1ubuntu0.18.04.2
 libprocps62:3.3.12-3ubuntu1.2
 libpsl50.19.1-5build1
-libpython3.6-minimal3.6.9-1~18.04
-libpython3.6-stdlib3.6.9-1~18.04
+libpython3.6-minimal3.6.9-1~18.04ubuntu1
+libpython3.6-stdlib3.6.9-1~18.04ubuntu1
 libpython3-stdlib3.6.7-1~18.04
 libqrencode33.4.4-1build1
 libquadmath08.4.0-1ubuntu1~18.04
@@ -220,8 +220,8 @@ pinentry-curses1.1.0-1
 procps2:3.3.12-3ubuntu1.2
 publicsuffix20180223.1310-1
 python33.6.7-1~18.04
-python3.63.6.9-1~18.04
-python3.6-minimal3.6.9-1~18.04
+python3.63.6.9-1~18.04ubuntu1
+python3.6-minimal3.6.9-1~18.04ubuntu1
 python3-minimal3.6.7-1~18.04
 qrencode3.4.4-1build1
 readline-common7.0-3
