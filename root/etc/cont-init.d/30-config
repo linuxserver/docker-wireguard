@@ -38,7 +38,7 @@ elif uname -v | grep -q 'Debian'; then
   echo "Debian host detected, attempting to install kernel headers from Debian Buster repo"
   curl -s https://ftp-master.debian.org/keys/archive-key-10.asc | apt-key add -
   echo -e \
-    "deb http://deb.debian.org/debian buster main contrib non-free\ndeb-src http://deb.debian.org/debian buster main contrib non-free" \
+    "deb http://deb.debian.org/debian buster main contrib non-free\ndeb-src http://deb.debian.org/debian buster main contrib non-free\ndeb http://deb.debian.org/debian buster-backports main contrib non-free\ndeb-src deb http://deb.debian.org/debian buster-backports main contrib non-free" \
     > /etc/apt/sources.list.d/debian.list
   apt-get update
   if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
