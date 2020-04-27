@@ -20,7 +20,6 @@ elif (uname -r | grep -q 'v7+') || (uname -r | grep -q 'v7l+'); then
     wireguard
 elif uname -v | grep -q 'Ubuntu'; then
   echo "Attempting to install kernel headers from Ubuntu Xenial repo"
-  curl -s http://archive.ubuntu.com/ubuntu/dists/xenial/Release.gpg | apt-key add -
   echo -e \
     "deb http://archive.ubuntu.com/ubuntu/ xenial main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ xenial main restricted\n\ndeb http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted" \
     > /etc/apt/sources.list.d/xenial.list
@@ -38,7 +37,7 @@ elif uname -v | grep -q 'Debian'; then
   echo "Debian host detected, attempting to install kernel headers from Debian Buster repo"
   curl -s https://ftp-master.debian.org/keys/archive-key-10.asc | apt-key add -
   echo -e \
-    "deb http://deb.debian.org/debian buster main contrib non-free\ndeb-src http://deb.debian.org/debian buster main contrib non-free\ndeb http://deb.debian.org/debian buster-backports main contrib non-free\ndeb-src deb http://deb.debian.org/debian buster-backports main contrib non-free" \
+    "deb http://deb.debian.org/debian buster main contrib non-free\ndeb-src http://deb.debian.org/debian buster main contrib non-free\ndeb http://deb.debian.org/debian buster-backports main contrib non-free\ndeb-src http://deb.debian.org/debian buster-backports main contrib non-free" \
     > /etc/apt/sources.list.d/debian.list
   apt-get update
   if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
