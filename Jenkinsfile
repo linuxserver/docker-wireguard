@@ -347,7 +347,9 @@ pipeline {
               sh "docker build --no-cache --pull -f Dockerfile.armhf -t ${IMAGE}:arm32v7-${META_TAG} \
                            --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${META_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} ."
               sh "docker tag ${IMAGE}:arm32v7-${META_TAG} lsiodev/buildcache:arm32v7-${COMMIT_SHA}-${BUILD_NUMBER}"
-              sh "docker push lsiodev/buildcache:arm32v7-${COMMIT_SHA}-${BUILD_NUMBER}"
+              retry(5) {
+                sh "docker push lsiodev/buildcache:arm32v7-${COMMIT_SHA}-${BUILD_NUMBER}"
+              }
               sh '''docker rmi \
                     ${IMAGE}:arm32v7-${META_TAG} \
                     lsiodev/buildcache:arm32v7-${COMMIT_SHA}-${BUILD_NUMBER} || :'''
@@ -374,7 +376,9 @@ pipeline {
               sh "docker build --no-cache --pull -f Dockerfile.aarch64 -t ${IMAGE}:arm64v8-${META_TAG} \
                            --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${META_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} ."
               sh "docker tag ${IMAGE}:arm64v8-${META_TAG} lsiodev/buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER}"
-              sh "docker push lsiodev/buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER}"
+              retry(5) {
+                sh "docker push lsiodev/buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER}"
+              }
               sh '''docker rmi \
                     ${IMAGE}:arm64v8-${META_TAG} \
                     lsiodev/buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER} || :'''
@@ -539,18 +543,22 @@ pipeline {
             passwordVariable: 'QUAYPASS'
           ]
         ]) {
+          retry(5) {
+            sh '''#! /bin/bash
+                  set -e
+                  echo $QUAYPASS | docker login quay.io -u $QUAYUSER --password-stdin
+                  echo $DOCKERPASS | docker login -u $DOCKERUSER --password-stdin
+                  echo $GITHUB_TOKEN | docker login docker.pkg.github.com -u LinuxServer-CI --password-stdin
+                  echo $GITLAB_TOKEN | docker login registry.gitlab.com -u LinuxServer.io --password-stdin
+                  for PUSHIMAGE in "${QUAYIMAGE}" "${GITHUBIMAGE}" "${GITLABIMAGE}" "${IMAGE}"; do
+                    docker tag ${IMAGE}:${META_TAG} ${PUSHIMAGE}:${META_TAG}
+                    docker tag ${PUSHIMAGE}:${META_TAG} ${PUSHIMAGE}:latest
+                    docker push ${PUSHIMAGE}:latest
+                    docker push ${PUSHIMAGE}:${META_TAG}
+                  done
+               '''
+          }
           sh '''#! /bin/bash
-                set -e
-                echo $QUAYPASS | docker login quay.io -u $QUAYUSER --password-stdin
-                echo $DOCKERPASS | docker login -u $DOCKERUSER --password-stdin
-                echo $GITHUB_TOKEN | docker login docker.pkg.github.com -u LinuxServer-CI --password-stdin
-                echo $GITLAB_TOKEN | docker login registry.gitlab.com -u LinuxServer.io --password-stdin
-                for PUSHIMAGE in "${QUAYIMAGE}" "${GITHUBIMAGE}" "${GITLABIMAGE}" "${IMAGE}"; do
-                  docker tag ${IMAGE}:${META_TAG} ${PUSHIMAGE}:${META_TAG}
-                  docker tag ${PUSHIMAGE}:${META_TAG} ${PUSHIMAGE}:latest
-                  docker push ${PUSHIMAGE}:latest
-                  docker push ${PUSHIMAGE}:${META_TAG}
-                done
                 for DELETEIMAGE in "${QUAYIMAGE}" "${GITHUBIMAGE}" "{GITLABIMAGE}" "${IMAGE}"; do
                   docker rmi \
                   ${DELETEIMAGE}:${META_TAG} \
@@ -581,59 +589,61 @@ pipeline {
             passwordVariable: 'QUAYPASS'
           ]
         ]) {
-          sh '''#! /bin/bash
-                set -e
-                echo $QUAYPASS | docker login quay.io -u $QUAYUSER --password-stdin
-                echo $DOCKERPASS | docker login -u $DOCKERUSER --password-stdin
-                echo $GITHUB_TOKEN | docker login docker.pkg.github.com -u LinuxServer-CI --password-stdin
-                echo $GITLAB_TOKEN | docker login registry.gitlab.com -u LinuxServer.io --password-stdin
-                if [ "${CI}" == "false" ]; then
-                  docker pull lsiodev/buildcache:arm32v7-${COMMIT_SHA}-${BUILD_NUMBER}
-                  docker pull lsiodev/buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER}
-                  docker tag lsiodev/buildcache:arm32v7-${COMMIT_SHA}-${BUILD_NUMBER} ${IMAGE}:arm32v7-${META_TAG}
-                  docker tag lsiodev/buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER} ${IMAGE}:arm64v8-${META_TAG}
-                fi
-                for MANIFESTIMAGE in "${IMAGE}" "${GITLABIMAGE}"; do
-                  docker tag ${IMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:amd64-${META_TAG}
-                  docker tag ${IMAGE}:arm32v7-${META_TAG} ${MANIFESTIMAGE}:arm32v7-${META_TAG}
-                  docker tag ${IMAGE}:arm64v8-${META_TAG} ${MANIFESTIMAGE}:arm64v8-${META_TAG}
-                  docker tag ${MANIFESTIMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:amd64-latest
-                  docker tag ${MANIFESTIMAGE}:arm32v7-${META_TAG} ${MANIFESTIMAGE}:arm32v7-latest
-                  docker tag ${MANIFESTIMAGE}:arm64v8-${META_TAG} ${MANIFESTIMAGE}:arm64v8-latest
-                  docker push ${MANIFESTIMAGE}:amd64-${META_TAG}
-                  docker push ${MANIFESTIMAGE}:arm32v7-${META_TAG}
-                  docker push ${MANIFESTIMAGE}:arm64v8-${META_TAG}
-                  docker push ${MANIFESTIMAGE}:amd64-latest
-                  docker push ${MANIFESTIMAGE}:arm32v7-latest
-                  docker push ${MANIFESTIMAGE}:arm64v8-latest
-                  docker manifest push --purge ${MANIFESTIMAGE}:latest || :
-                  docker manifest create ${MANIFESTIMAGE}:latest ${MANIFESTIMAGE}:amd64-latest ${MANIFESTIMAGE}:arm32v7-latest ${MANIFESTIMAGE}:arm64v8-latest
-                  docker manifest annotate ${MANIFESTIMAGE}:latest ${MANIFESTIMAGE}:arm32v7-latest --os linux --arch arm
-                  docker manifest annotate ${MANIFESTIMAGE}:latest ${MANIFESTIMAGE}:arm64v8-latest --os linux --arch arm64 --variant v8
-                  docker manifest push --purge ${MANIFESTIMAGE}:${META_TAG} || :
-                  docker manifest create ${MANIFESTIMAGE}:${META_TAG} ${MANIFESTIMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:arm32v7-${META_TAG} ${MANIFESTIMAGE}:arm64v8-${META_TAG}
-                  docker manifest annotate ${MANIFESTIMAGE}:${META_TAG} ${MANIFESTIMAGE}:arm32v7-${META_TAG} --os linux --arch arm
-                  docker manifest annotate ${MANIFESTIMAGE}:${META_TAG} ${MANIFESTIMAGE}:arm64v8-${META_TAG} --os linux --arch arm64 --variant v8
-                  docker manifest push --purge ${MANIFESTIMAGE}:latest
-                  docker manifest push --purge ${MANIFESTIMAGE}:${META_TAG} 
-                done
-                for LEGACYIMAGE in "${GITHUBIMAGE}" "${QUAYIMAGE}"; do
-                  docker tag ${IMAGE}:amd64-${META_TAG} ${LEGACYIMAGE}:amd64-${META_TAG}
-                  docker tag ${IMAGE}:arm32v7-${META_TAG} ${LEGACYIMAGE}:arm32v7-${META_TAG}
-                  docker tag ${IMAGE}:arm64v8-${META_TAG} ${LEGACYIMAGE}:arm64v8-${META_TAG}
-                  docker tag ${LEGACYIMAGE}:amd64-${META_TAG} ${LEGACYIMAGE}:latest
-                  docker tag ${LEGACYIMAGE}:amd64-${META_TAG} ${LEGACYIMAGE}:${META_TAG}
-                  docker tag ${LEGACYIMAGE}:arm32v7-${META_TAG} ${LEGACYIMAGE}:arm32v7-latest
-                  docker tag ${LEGACYIMAGE}:arm64v8-${META_TAG} ${LEGACYIMAGE}:arm64v8-latest
-                  docker push ${LEGACYIMAGE}:amd64-${META_TAG}
-                  docker push ${LEGACYIMAGE}:arm32v7-${META_TAG}
-                  docker push ${LEGACYIMAGE}:arm64v8-${META_TAG}
-                  docker push ${LEGACYIMAGE}:latest
-                  docker push ${LEGACYIMAGE}:${META_TAG}
-                  docker push ${LEGACYIMAGE}:arm32v7-latest
-                  docker push ${LEGACYIMAGE}:arm64v8-latest
-                done
-             '''
+          retry(5) {
+            sh '''#! /bin/bash
+                  set -e
+                  echo $QUAYPASS | docker login quay.io -u $QUAYUSER --password-stdin
+                  echo $DOCKERPASS | docker login -u $DOCKERUSER --password-stdin
+                  echo $GITHUB_TOKEN | docker login docker.pkg.github.com -u LinuxServer-CI --password-stdin
+                  echo $GITLAB_TOKEN | docker login registry.gitlab.com -u LinuxServer.io --password-stdin
+                  if [ "${CI}" == "false" ]; then
+                    docker pull lsiodev/buildcache:arm32v7-${COMMIT_SHA}-${BUILD_NUMBER}
+                    docker pull lsiodev/buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER}
+                    docker tag lsiodev/buildcache:arm32v7-${COMMIT_SHA}-${BUILD_NUMBER} ${IMAGE}:arm32v7-${META_TAG}
+                    docker tag lsiodev/buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER} ${IMAGE}:arm64v8-${META_TAG}
+                  fi
+                  for MANIFESTIMAGE in "${IMAGE}" "${GITLABIMAGE}"; do
+                    docker tag ${IMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:amd64-${META_TAG}
+                    docker tag ${IMAGE}:arm32v7-${META_TAG} ${MANIFESTIMAGE}:arm32v7-${META_TAG}
+                    docker tag ${IMAGE}:arm64v8-${META_TAG} ${MANIFESTIMAGE}:arm64v8-${META_TAG}
+                    docker tag ${MANIFESTIMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:amd64-latest
+                    docker tag ${MANIFESTIMAGE}:arm32v7-${META_TAG} ${MANIFESTIMAGE}:arm32v7-latest
+                    docker tag ${MANIFESTIMAGE}:arm64v8-${META_TAG} ${MANIFESTIMAGE}:arm64v8-latest
+                    docker push ${MANIFESTIMAGE}:amd64-${META_TAG}
+                    docker push ${MANIFESTIMAGE}:arm32v7-${META_TAG}
+                    docker push ${MANIFESTIMAGE}:arm64v8-${META_TAG}
+                    docker push ${MANIFESTIMAGE}:amd64-latest
+                    docker push ${MANIFESTIMAGE}:arm32v7-latest
+                    docker push ${MANIFESTIMAGE}:arm64v8-latest
+                    docker manifest push --purge ${MANIFESTIMAGE}:latest || :
+                    docker manifest create ${MANIFESTIMAGE}:latest ${MANIFESTIMAGE}:amd64-latest ${MANIFESTIMAGE}:arm32v7-latest ${MANIFESTIMAGE}:arm64v8-latest
+                    docker manifest annotate ${MANIFESTIMAGE}:latest ${MANIFESTIMAGE}:arm32v7-latest --os linux --arch arm
+                    docker manifest annotate ${MANIFESTIMAGE}:latest ${MANIFESTIMAGE}:arm64v8-latest --os linux --arch arm64 --variant v8
+                    docker manifest push --purge ${MANIFESTIMAGE}:${META_TAG} || :
+                    docker manifest create ${MANIFESTIMAGE}:${META_TAG} ${MANIFESTIMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:arm32v7-${META_TAG} ${MANIFESTIMAGE}:arm64v8-${META_TAG}
+                    docker manifest annotate ${MANIFESTIMAGE}:${META_TAG} ${MANIFESTIMAGE}:arm32v7-${META_TAG} --os linux --arch arm
+                    docker manifest annotate ${MANIFESTIMAGE}:${META_TAG} ${MANIFESTIMAGE}:arm64v8-${META_TAG} --os linux --arch arm64 --variant v8
+                    docker manifest push --purge ${MANIFESTIMAGE}:latest
+                    docker manifest push --purge ${MANIFESTIMAGE}:${META_TAG} 
+                  done
+                  for LEGACYIMAGE in "${GITHUBIMAGE}" "${QUAYIMAGE}"; do
+                    docker tag ${IMAGE}:amd64-${META_TAG} ${LEGACYIMAGE}:amd64-${META_TAG}
+                    docker tag ${IMAGE}:arm32v7-${META_TAG} ${LEGACYIMAGE}:arm32v7-${META_TAG}
+                    docker tag ${IMAGE}:arm64v8-${META_TAG} ${LEGACYIMAGE}:arm64v8-${META_TAG}
+                    docker tag ${LEGACYIMAGE}:amd64-${META_TAG} ${LEGACYIMAGE}:latest
+                    docker tag ${LEGACYIMAGE}:amd64-${META_TAG} ${LEGACYIMAGE}:${META_TAG}
+                    docker tag ${LEGACYIMAGE}:arm32v7-${META_TAG} ${LEGACYIMAGE}:arm32v7-latest
+                    docker tag ${LEGACYIMAGE}:arm64v8-${META_TAG} ${LEGACYIMAGE}:arm64v8-latest
+                    docker push ${LEGACYIMAGE}:amd64-${META_TAG}
+                    docker push ${LEGACYIMAGE}:arm32v7-${META_TAG}
+                    docker push ${LEGACYIMAGE}:arm64v8-${META_TAG}
+                    docker push ${LEGACYIMAGE}:latest
+                    docker push ${LEGACYIMAGE}:${META_TAG}
+                    docker push ${LEGACYIMAGE}:arm32v7-latest
+                    docker push ${LEGACYIMAGE}:arm64v8-latest
+                  done
+               '''
+          }
           sh '''#! /bin/bash
                 for DELETEIMAGE in "${QUAYIMAGE}" "${GITHUBIMAGE}" "${GITLABIMAGE}" "${IMAGE}"; do
                   docker rmi \

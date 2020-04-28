@@ -13,6 +13,7 @@ RUN \
  echo "**** install dependencies ****" && \
  apt-get update && \
  apt-get install -y \
+	bc \
 	curl \
 	dkms \
 	gnupg \ 
