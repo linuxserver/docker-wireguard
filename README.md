@@ -257,7 +257,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
-* **26.04.20:** - Add Buster backports repo for Debian.
+* **28.04.20:** - Add Buster backports repo for Debian.
 * **20.04.20:** - Fix typo in client mode conf existence check.
 * **13.04.20:** - Fix bug that forced conf recreation on every start.
 * **08.04.20:** - Add arm32/64 builds and enable multi-arch (rpi4 with ubuntu and raspbian buster tested). Add CoreDNS for `PEERDNS=auto` setting. Update the `add-peer`/`show-peer` scripts to utilize the templates and the `INTERNAL_SUBNET` var (previously missed, oops).

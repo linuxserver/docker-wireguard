@@ -41,18 +41,34 @@ elif uname -v | grep -q 'Debian'; then
     > /etc/apt/sources.list.d/debian.list
   apt-get update
   if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
-    apt-get install -y \
-      linux-headers-$(uname -r) \
-      wireguard
+    if uname -r | grep -qs "bpo"; then
+      echo "Backported kernel detected"
+      apt-get install -y -t buster-backports \
+        linux-headers-$(uname -r)
+      apt-get install -y \
+        wireguard
+    else
+      apt-get install -y \
+        linux-headers-$(uname -r) \
+        wireguard
+    fi
   else
     echo "Attempting to install kernel headers from the Debian Stretch repo"
     curl -s https://ftp-master.debian.org/keys/archive-key-9.asc | apt-key add -
     sed -i 's/buster/stretch/g' /etc/apt/sources.list.d/debian.list
     apt-get update
     if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
-      apt-get install -y \
-        linux-headers-$(uname -r) \
-        wireguard
+      if uname -r | grep -qs "bpo"; then
+        echo "Backported kernel detected"
+        apt-get install -y -t stretch-backports \
+          linux-headers-$(uname -r)
+        apt-get install -y \
+          wireguard
+      else
+        apt-get install -y \
+          linux-headers-$(uname -r) \
+          wireguard
+      fi
     else
       echo "No kernel headers found in Debian repos!! Will try the headers from host (if mapped), may or may not work"
       apt-get install -y \
