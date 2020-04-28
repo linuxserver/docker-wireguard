@@ -22,6 +22,7 @@ RUN \
 	iputils-ping \
 	libc6 \
 	perl \
+	bc \
 	qrencode && \
  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E1B39B6EF6DDB96564797591AE33835F504A1A25 && \
  echo "deb http://ppa.launchpad.net/wireguard/wireguard/ubuntu bionic main" >> /etc/apt/sources.list.d/wireguard.list && \
