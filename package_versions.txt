@@ -4,9 +4,10 @@ apt-utils1.6.12
 base-files10.1ubuntu2.8
 base-passwd3.5.44
 bash4.4.18-2ubuntu1.2
-binutils2.30-21ubuntu1~18.04.2
-binutils-common2.30-21ubuntu1~18.04.2
-binutils-x86-64-linux-gnu2.30-21ubuntu1~18.04.2
+bc1.07.1-2
+binutils2.30-21ubuntu1~18.04.3
+binutils-common2.30-21ubuntu1~18.04.3
+binutils-x86-64-linux-gnu2.30-21ubuntu1~18.04.3
 bsdutils1:2.31.1-0.4ubuntu3.6
 build-essential12.4ubuntu1
 bzip21.0.6-8.1ubuntu0.2
@@ -20,7 +21,7 @@ debconf1.5.66ubuntu1
 debianutils4.8.4
 diffutils1:3.6-1
 dirmngr2.2.4-1ubuntu1.2
-distro-info-data0.37ubuntu0.6
+distro-info-data0.37ubuntu0.7
 dkms2.3-3ubuntu9.7
 dpkg1.19.0.5ubuntu2.3
 dpkg-dev1.19.0.5ubuntu2.3
@@ -55,7 +56,7 @@ iptables1.6.1-2ubuntu2
 iputils-ping3:20161105-1ubuntu3
 isc-dhcp-client4.3.5-3ubuntu7.1
 isc-dhcp-common4.3.5-3ubuntu7.1
-kmod24-1ubuntu3.2
+kmod24-1ubuntu3.3
 krb5-locales1.16-2ubuntu0.1
 libacl12.2.52-3build1
 libalgorithm-diff-perl1.19.03-1
@@ -71,7 +72,7 @@ libatomic18.4.0-1ubuntu1~18.04
 libattr11:2.4.47-2build1
 libaudit11:2.8.2-1ubuntu1
 libaudit-common1:2.8.2-1ubuntu1
-libbinutils2.30-21ubuntu1~18.04.2
+libbinutils2.30-21ubuntu1~18.04.3
 libblkid12.31.1-0.4ubuntu3.6
 libbz2-1.01.0.6-8.1ubuntu0.2
 libc62.27-3ubuntu1
@@ -122,7 +123,7 @@ libisl190.19-1
 libitm18.4.0-1ubuntu1~18.04
 libk5crypto31.16-2ubuntu0.1
 libkeyutils11.5.9-9.2ubuntu2
-libkmod224-1ubuntu3.2
+libkmod224-1ubuntu3.3
 libkrb5-26-heimdal7.5.0+dfsg-1
 libkrb5-31.16-2ubuntu0.1
 libkrb5support01.16-2ubuntu0.1
