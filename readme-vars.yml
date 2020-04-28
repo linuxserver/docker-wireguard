@@ -78,7 +78,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
-  - { date: "28.04.20:", desc: "Add Buster backports repo for Debian." }
+  - { date: "28.04.20:", desc: "Add Buster/Stretch backports repos for Debian. Tested with OMV 5 and OMV 4 (on kernel 4.19.0-0.bpo.8-amd64)." }
   - { date: "20.04.20:", desc: "Fix typo in client mode conf existence check." }
   - { date: "13.04.20:", desc: "Fix bug that forced conf recreation on every start." }
   - { date: "08.04.20:", desc: "Add arm32/64 builds and enable multi-arch (rpi4 with ubuntu and raspbian buster tested). Add CoreDNS for `PEERDNS=auto` setting. Update the `add-peer`/`show-peer` scripts to utilize the templates and the `INTERNAL_SUBNET` var (previously missed, oops)." }
