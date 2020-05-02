@@ -29,7 +29,7 @@ RUN \
  echo "deb-src http://ppa.launchpad.net/wireguard/wireguard/ubuntu bionic main" >> /etc/apt/sources.list.d/wireguard.list && \
  echo resolvconf resolvconf/linkify-resolvconf boolean false | debconf-set-selections && \
  echo "REPORT_ABSENT_SYMLINK=no" >> /etc/default/resolvconf && \
- apt-get install resolvconf && \
+ apt-get install openresolv && \
  echo "**** install CoreDNS ****" && \
  COREDNS_VERSION=$(curl -sX GET "https://api.github.com/repos/coredns/coredns/releases/latest" \
 	| awk '/tag_name/{print $4;exit}' FS='[""]' | awk '{print substr($1,2); }') && \
