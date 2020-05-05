@@ -76,6 +76,13 @@ app_setup_block: |
   ## Client Mode
   Do not set the `PEERS` environment variable. Drop your client conf into the config folder as `/config/wg0.conf` and start the container. 
 
+  ## Road warriors, roaming and returning home
+  If you plan to use Wireguard both remotely and locally, say on your mobile phone, you will need to consider routing. Most firewalls will not route ports forwarded on your WAN interface correctly to the LAN out of the box. This means that when you return home, even though you can see the Wireguard server, the return packets will probably get lost.
+  
+  This is not a Wireguard specific issue and the two generally accepted solutions are NAT reflection (setting your edge router/firewall up in such a way as it translates internal packets correctly) or split horizon DNS (setting your internal DNS to return the private rather than public IP when connecting locally).
+  
+  Both of these approaches have positives and negatives however their setup is out of scope for this document as everyone's network layout and equipment will be different.
+  
 # changelog
 changelogs:
   - { date: "28.04.20:", desc: "Add Buster/Stretch backports repos for Debian. Tested with OMV 5 and OMV 4 (on kernel 4.19.0-0.bpo.8-amd64)." }
