@@ -33,6 +33,7 @@ DUDE"
 [Peer]
 PublicKey = $(cat /config/peer${i}/publickey-peer${i})
 AllowedIPs = ${INTERFACE}.$(( $i + 1 ))/32
+PersistentKeepalive = 60
 
 DUDE
     echo "PEER ${i} QR code:"
