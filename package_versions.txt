@@ -177,7 +177,7 @@ libsemanage12.7-2build2
 libsemanage-common2.7-2build2
 libsepol12.7-1
 libsmartcols12.31.1-0.4ubuntu3.6
-libsqlite3-03.22.0-1ubuntu0.3
+libsqlite3-03.22.0-1ubuntu0.4
 libss21.44.1-1ubuntu1.3
 libssl1.11.1.1-1ubuntu2.1~18.04.6
 libstdc++68.4.0-1ubuntu1~18.04
@@ -193,10 +193,10 @@ libuuid12.31.1-0.4ubuntu3.6
 libwind0-heimdal7.5.0+dfsg-1
 libxtables121.6.1-2ubuntu2
 libzstd11.3.3+dfsg-2ubuntu1.1
-linux-headers-4.15.0-1014.15.0-101.102
-linux-headers-4.15.0-101-generic4.15.0-101.102
-linux-headers-generic4.15.0.101.91
-linux-libc-dev4.15.0-101.102
+linux-headers-4.15.0-1064.15.0-106.107
+linux-headers-4.15.0-106-generic4.15.0-106.107
+linux-headers-generic4.15.0.106.94
+linux-libc-dev4.15.0-106.107
 locales2.27-3ubuntu1
 login1:4.5-1ubuntu2
 lsb-base9.20170808ubuntu1
