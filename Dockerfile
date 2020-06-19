@@ -30,7 +30,9 @@ RUN \
 	qrencode && \
  echo resolvconf resolvconf/linkify-resolvconf boolean false | debconf-set-selections && \
  echo "REPORT_ABSENT_SYMLINK=no" >> /etc/default/resolvconf && \
- apt-get install resolvconf && \
+ apt-get install -y --no-install-recommends \
+	dkms \
+	resolvconf && \
  echo "**** install wireguard-tools ****" && \
  if [ -z ${WIREGUARD_RELEASE+x} ]; then \
 	WIREGUARD_RELEASE=$(curl -sX GET "https://api.github.com/repos/WireGuard/wireguard-tools/tags" \
@@ -53,9 +55,6 @@ RUN \
 	/tmp/coredns.tar.gz -C \
 	/app && \
  echo "**** clean up ****" && \
- apt-get -y purge \
-	git && \
- apt-get -y autoremove && \
  rm -rf \
 	/tmp/* \
 	/var/lib/apt/lists/* \
