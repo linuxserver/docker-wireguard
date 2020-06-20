@@ -4,30 +4,30 @@ mkdir -p /config/{templates,coredns}
 
 # check for wireguard module
 if grep -q wireguard /proc/modules; then
-  echo "It seems the wireguard module is already loaded, let's test to make sure it works."
+  echo "**** It seems the wireguard module is already loaded, let's test to make sure it works. ****"
   /app/wireguard-tools/contrib/ncat-client-server/client-quick.sh
   wg-quick up demo
   if wg show | grep -q demo; then
-    echo "The module is working properly, skipping kernel header install and module compilation."
+    echo "**** The module is working properly, skipping kernel header install and module compilation. ****"
     SKIP_COMPILE="true"
   else
-    echo "The module is not functional, will attempt kernel header install and module compilation."
+    echo "**** The module is not functional, will attempt kernel header install and module compilation. ****"
   fi
   wg-quick down demo
   rm -f /etc/wireguard/demo.conf
 else
-  echo "The wireguard module is not loaded, will attempt kernel header install and module compilation."
+  echo "**** The wireguard module is not loaded, will attempt kernel header install and module compilation. ****"
 fi  
 
 # install headers if necessary
 if [ "$SKIP_COMPILE" != "true" ]; then
-  echo "Attempting kernel header install"
+  echo "**** Attempting kernel header install ****"
   apt-get update
   if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
     apt-get install -y \
       linux-headers-$(uname -r)
   elif (uname -r | grep -q 'v7+') || (uname -r | grep -q 'v7l+') || (uname -r | grep -q 'v8+'); then
-    echo "Raspbian kernel naming convention detected, attempting to install raspbian kernel headers"
+    echo "**** Raspbian kernel naming convention detected, attempting to install raspbian kernel headers ****"
     curl -s http://archive.raspberrypi.org/debian/raspberrypi.gpg.key | apt-key add -
     echo -e \
       "deb http://archive.raspberrypi.org/debian/ buster main\ndeb-src http://archive.raspberrypi.org/debian/ buster main" \
@@ -36,7 +36,7 @@ if [ "$SKIP_COMPILE" != "true" ]; then
     apt-get install -y \
       raspberrypi-kernel-headers
   elif uname -v | grep -q 'Ubuntu'; then
-    echo "Attempting to install kernel headers from Ubuntu Xenial repo"
+    echo "**** Attempting to install kernel headers from Ubuntu Xenial repo ****"
     echo -e \
       "deb http://archive.ubuntu.com/ubuntu/ xenial main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ xenial main restricted\n\ndeb http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted" \
       > /etc/apt/sources.list.d/xenial.list
@@ -45,10 +45,10 @@ if [ "$SKIP_COMPILE" != "true" ]; then
       apt-get install -y \
         linux-headers-$(uname -r)
     else
-      echo "No kernel headers found in the Ubuntu repos!! Will try the headers from host (if mapped), may or may not work"
+      echo "**** No kernel headers found in the Ubuntu repos!! Will try the headers from host (if mapped), may or may not work ****"
     fi
   elif uname -v | grep -q 'Debian'; then
-    echo "Debian host detected, attempting to install kernel headers from Debian Buster repo"
+    echo "**** Debian host detected, attempting to install kernel headers from Debian Buster repo ****"
     curl -s https://ftp-master.debian.org/keys/archive-key-10.asc | apt-key add -
     echo -e \
       "deb http://deb.debian.org/debian buster main contrib non-free\ndeb-src http://deb.debian.org/debian buster main contrib non-free\ndeb http://deb.debian.org/debian buster-backports main contrib non-free\ndeb-src http://deb.debian.org/debian buster-backports main contrib non-free" \
@@ -56,7 +56,7 @@ if [ "$SKIP_COMPILE" != "true" ]; then
     apt-get update
     if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
       if uname -r | grep -qs "bpo"; then
-        echo "Backported kernel detected"
+        echo "**** Backported kernel detected ****"
         apt-get install -y -t buster-backports \
           linux-headers-$(uname -r)
       else
@@ -64,13 +64,13 @@ if [ "$SKIP_COMPILE" != "true" ]; then
           linux-headers-$(uname -r)
       fi
     else
-      echo "Attempting to install kernel headers from the Debian Stretch repo"
+      echo "**** Attempting to install kernel headers from the Debian Stretch repo ****"
       curl -s https://ftp-master.debian.org/keys/archive-key-9.asc | apt-key add -
       sed -i 's/buster/stretch/g' /etc/apt/sources.list.d/debian.list
       apt-get update
       if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
         if uname -r | grep -qs "bpo"; then
-          echo "Backported kernel detected"
+          echo "**** Backported kernel detected ****"
           apt-get install -y -t stretch-backports \
             linux-headers-$(uname -r)
         else
@@ -78,35 +78,35 @@ if [ "$SKIP_COMPILE" != "true" ]; then
             linux-headers-$(uname -r)
         fi
       else
-        echo "No kernel headers found in Debian repos!! Will try the headers from host (if mapped), may or may not work"
+        echo "**** No kernel headers found in Debian repos!! Will try the headers from host (if mapped), may or may not work ****"
       fi
     fi
   else
-    echo "No kernel headers found in the Ubuntu or Debian repos!! Will try the headers from host (if mapped), may or may not work"
+    echo "**** No kernel headers found in the Ubuntu or Debian repos!! Will try the headers from host (if mapped), may or may not work ****"
   fi
 fi
 
 if [ "$SKIP_COMPILE" != "true" ]; then
   if [ -e /lib/modules/$(uname -r)/build ]; then 
-    echo "Kernel headers seem to be present, attempting to build the wireguard module. . ."
+    echo "**** Kernel headers seem to be present, attempting to build the wireguard module. . . ****"
     cd /app
     make -C wireguard-linux-compat/src -j$(nproc)
     make -C wireguard-linux-compat/src install
-    echo "Let's test our new module."
+    echo "**** Let's test our new module. ****"
     /app/wireguard-tools/contrib/ncat-client-server/client-quick.sh
     wg-quick up demo
     if wg show | grep -q demo; then
-      echo "The module is working properly, moving forward with setup."
+      echo "**** The module is working properly, moving forward with setup. ****"
     else
-      echo "The module is not working, review the logs. Sleeping now. . ."
       wg-quick down demo
       rm -f /etc/wireguard/demo.conf
+      echo "**** The module is not working, review the logs. Sleeping now. . . ****"
       sleep infinity
     fi
     wg-quick down demo
     rm -f /etc/wireguard/demo.conf
   else
-    echo "Kernel headers don't seem to be available, can't compile the module. Sleeping now. . ."
+    echo "**** Kernel headers don't seem to be available, can't compile the module. Sleeping now. . . ****"
     sleep infinity
   fi
 fi
