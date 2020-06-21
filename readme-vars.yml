@@ -54,7 +54,7 @@ optional_block_1_items: ""
 # application setup block
 app_setup_block_enabled: true
 app_setup_block: |
-  This image is designed for Ubuntu and Debian based systems mainly. During container start, it will first check if the wireguard module is already installed and loaded. If not, it will then check if the kernel headers are already installed (in `/usr/src`) and if not, attempt to download the necessary kernel headers from the ubuntu/debian/raspbian repos; then will compile and install the kernel module.
+  This image is designed for Ubuntu and Debian based systems mainly (it works on some others, but ymmv). During container start, it will first check if the wireguard module is already installed and loaded. If not, it will then check if the kernel headers are already installed (in `/usr/src`) and if not, attempt to download the necessary kernel headers from the ubuntu/debian/raspbian repos; then will compile and install the kernel module.
 
   If you're on a debian/ubuntu based host with a custom or downstream distro provided kernel (ie. Pop!_OS), the container won't be able to install the kernel headers from the regular ubuntu and debian repos. In those cases, you can try installing the headers on the host via `sudo apt install linux-headers-$(uname -r)` (if distro version) and then add a volume mapping for `/usr/src:/usr/src`, or if custom built, map the location of the existing headers to allow the container to use host installed headers to build the kernel module (tested successful on Pop!_OS, ymmv).
 
@@ -85,7 +85,7 @@ app_setup_block: |
   
 # changelog
 changelogs:
-  - { date: "19.06.20:", desc: "Compile wireguard tools and kernel module instead of using the ubuntu packages. Make module install optional. Imrpove verbosity in logs." }
+  - { date: "19.06.20:", desc: "Compile wireguard tools and kernel module instead of using the ubuntu packages. Make module install optional. Improve verbosity in logs." }
   - { date: "29.05.20:", desc: "Add support for 64bit raspbian." }
   - { date: "28.04.20:", desc: "Add Buster/Stretch backports repos for Debian. Tested with OMV 5 and OMV 4 (on kernel 4.19.0-0.bpo.8-amd64)." }
   - { date: "20.04.20:", desc: "Fix typo in client mode conf existence check." }

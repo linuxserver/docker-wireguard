@@ -50,7 +50,7 @@ RUN \
 	| awk '/tag_name/{print $4;exit}' FS='[""]' | awk '{print substr($1,2); }') && \
  curl -o \
 	/tmp/coredns.tar.gz -L \
-	"https://github.com/coredns/coredns/releases/download/v${COREDNS_VERSION}/coredns_${COREDNS_VERSION}_linux_amd64.tgz" && \
+	"https://github.com/coredns/coredns/releases/download/v${COREDNS_VERSION}/coredns_${COREDNS_VERSION}_linux_arm.tgz" && \
  tar xf \
 	/tmp/coredns.tar.gz -C \
 	/app && \
