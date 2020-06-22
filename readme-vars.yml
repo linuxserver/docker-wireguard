@@ -85,7 +85,7 @@ app_setup_block: |
   
 # changelog
 changelogs:
-  - { date: "19.06.20:", desc: "Compile wireguard tools and kernel module instead of using the ubuntu packages. Make module install optional. Improve verbosity in logs." }
+  - { date: "19.06.20:", desc: "Add support for Ubuntu Focal (20.04) kernels. Compile wireguard tools and kernel module instead of using the ubuntu packages. Make module install optional. Improve verbosity in logs." }
   - { date: "29.05.20:", desc: "Add support for 64bit raspbian." }
   - { date: "28.04.20:", desc: "Add Buster/Stretch backports repos for Debian. Tested with OMV 5 and OMV 4 (on kernel 4.19.0-0.bpo.8-amd64)." }
   - { date: "20.04.20:", desc: "Fix typo in client mode conf existence check." }

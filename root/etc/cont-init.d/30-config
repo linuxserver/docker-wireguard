@@ -36,16 +36,32 @@ if [ "$SKIP_COMPILE" != "true" ]; then
     apt-get install -y \
       raspberrypi-kernel-headers
   elif uname -v | grep -q 'Ubuntu'; then
+    echo "**** Ubuntu kernel detected, but likely not Bionic. ****"
     echo "**** Attempting to install kernel headers from Ubuntu Xenial repo ****"
-    echo -e \
-      "deb http://archive.ubuntu.com/ubuntu/ xenial main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ xenial main restricted\n\ndeb http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted" \
-      > /etc/apt/sources.list.d/xenial.list
+    if uname -m | grep -q 'x86_64'; then
+      echo -e \
+        "deb http://archive.ubuntu.com/ubuntu/ xenial main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ xenial main restricted\n\ndeb http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted" \
+        > /etc/apt/sources.list.d/xenial-focal.list
+    else
+      echo -e \
+      "deb http://ports.ubuntu.com/ubuntu-ports/ xenial main restricted\ndeb-src http://ports.ubuntu.com/ubuntu-ports/ xenial main restricted\n\ndeb http://ports.ubuntu.com/ubuntu-ports/ xenial-updates main restricted\ndeb-src http://ports.ubuntu.com/ubuntu-ports/ xenial-updates main restricted" \
+        > /etc/apt/sources.list.d/xenial-focal.list
+    fi
     apt-get update
     if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
       apt-get install -y \
         linux-headers-$(uname -r)
     else
-      echo "**** No kernel headers found in the Ubuntu repos!! Will try the headers from host (if mapped), may or may not work ****"
+      echo "**** No kernel headers found in the Ubuntu Xenial repo!! Trying Ubuntu Focal. ****"
+      sed -i 's/xenial/focal/g' /etc/apt/sources.list.d/xenial-focal.list
+      apt-get update
+      if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
+        apt-get install -y \
+          linux-headers-$(uname -r)
+      else
+        echo "**** No kernel headers found in the Ubuntu repos!! Will try the headers from host (if mapped), may or may not work ****"
+        rm -rf /etc/apt/sources.list.d/xenial-focal.list
+      fi
     fi
   elif uname -v | grep -q 'Debian'; then
     echo "**** Debian host detected, attempting to install kernel headers from Debian Buster repo ****"
@@ -79,6 +95,7 @@ if [ "$SKIP_COMPILE" != "true" ]; then
         fi
       else
         echo "**** No kernel headers found in Debian repos!! Will try the headers from host (if mapped), may or may not work ****"
+        rm -rf /etc/apt/sources.list.d/debian.list
       fi
     fi
   else
