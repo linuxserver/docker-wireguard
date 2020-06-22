@@ -2,83 +2,153 @@
 
 mkdir -p /config/{templates,coredns}
 
-# install headers and wireguard
-apt-get update
-if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
-  apt-get install -y \
-    linux-headers-$(uname -r) \
-    wireguard
-elif (uname -r | grep -q 'v7+') || (uname -r | grep -q 'v7l+') || (uname -r | grep -q 'v8+'); then
-  echo "Raspbian kernel naming convention detected, attempting to install raspbian kernel headers"
-  curl -s http://archive.raspberrypi.org/debian/raspberrypi.gpg.key | apt-key add -
-  echo -e \
-    "deb http://archive.raspberrypi.org/debian/ buster main\ndeb-src http://archive.raspberrypi.org/debian/ buster main" \
-    > /etc/apt/sources.list.d/raspbian.list
-  apt-get update
-  apt-get install -y \
-    raspberrypi-kernel-headers \
-    wireguard
-elif uname -v | grep -q 'Ubuntu'; then
-  echo "Attempting to install kernel headers from Ubuntu Xenial repo"
-  echo -e \
-    "deb http://archive.ubuntu.com/ubuntu/ xenial main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ xenial main restricted\n\ndeb http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted" \
-    > /etc/apt/sources.list.d/xenial.list
-  apt-get update
-  if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
-    apt-get install -y \
-      linux-headers-$(uname -r) \
-      wireguard
+# check for wireguard module
+if grep -q wireguard /proc/modules; then
+  echo "**** It seems the wireguard module is already loaded, let's test to make sure it works. ****"
+  /app/wireguard-tools/contrib/ncat-client-server/client-quick.sh
+  wg-quick up demo
+  if wg show | grep -q demo; then
+    echo "**** The module is working properly, skipping kernel header install and module compilation. ****"
+    SKIP_COMPILE="true"
   else
-    echo "No kernel headers found in the Ubuntu repos!! Will try the headers from host (if mapped), may or may not work"
-    apt-get install -y \
-      wireguard
+    echo "**** The module is not functional, will attempt kernel header install and module compilation. ****"
   fi
-elif uname -v | grep -q 'Debian'; then
-  echo "Debian host detected, attempting to install kernel headers from Debian Buster repo"
-  curl -s https://ftp-master.debian.org/keys/archive-key-10.asc | apt-key add -
-  echo -e \
-    "deb http://deb.debian.org/debian buster main contrib non-free\ndeb-src http://deb.debian.org/debian buster main contrib non-free\ndeb http://deb.debian.org/debian buster-backports main contrib non-free\ndeb-src http://deb.debian.org/debian buster-backports main contrib non-free" \
-    > /etc/apt/sources.list.d/debian.list
+  wg-quick down demo
+  rm -f /etc/wireguard/demo.conf
+else
+  echo "**** The wireguard module is not loaded, will attempt kernel header install and module compilation. ****"
+fi  
+
+# install headers if necessary
+if [ "$SKIP_COMPILE" != "true" ] && [ ! -e /lib/modules/$(uname -r)/build ]; then
+  echo "**** Attempting kernel header install ****"
   apt-get update
   if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
-    if uname -r | grep -qs "bpo"; then
-      echo "Backported kernel detected"
-      apt-get install -y -t buster-backports \
-        linux-headers-$(uname -r)
-      apt-get install -y \
-        wireguard
+    apt-get install -y \
+      linux-headers-$(uname -r)
+  elif (uname -r | grep -q 'v7+') || (uname -r | grep -q 'v7l+') || (uname -r | grep -q 'v8+'); then
+    echo "**** Raspbian kernel naming convention detected, attempting to install raspbian kernel headers ****"
+    curl -s http://archive.raspberrypi.org/debian/raspberrypi.gpg.key | apt-key add -
+    echo -e \
+      "deb http://archive.raspberrypi.org/debian/ buster main\ndeb-src http://archive.raspberrypi.org/debian/ buster main" \
+      > /etc/apt/sources.list.d/raspbian.list
+    apt-get update
+    apt-get install -y \
+      raspberrypi-kernel-headers
+  elif uname -v | grep -q 'Ubuntu'; then
+    echo "**** Ubuntu kernel detected, but likely not Bionic. ****"
+    echo "**** Attempting to install kernel headers from Ubuntu Xenial repo ****"
+    if uname -m | grep -q 'x86_64'; then
+      echo -e \
+        "deb http://archive.ubuntu.com/ubuntu/ xenial main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ xenial main restricted\n\ndeb http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ xenial-updates main restricted" \
+        > /etc/apt/sources.list.d/xenial-focal.list
     else
-      apt-get install -y \
-        linux-headers-$(uname -r) \
-        wireguard
+      echo -e \
+      "deb http://ports.ubuntu.com/ubuntu-ports/ xenial main restricted\ndeb-src http://ports.ubuntu.com/ubuntu-ports/ xenial main restricted\n\ndeb http://ports.ubuntu.com/ubuntu-ports/ xenial-updates main restricted\ndeb-src http://ports.ubuntu.com/ubuntu-ports/ xenial-updates main restricted" \
+        > /etc/apt/sources.list.d/xenial-focal.list
     fi
-  else
-    echo "Attempting to install kernel headers from the Debian Stretch repo"
-    curl -s https://ftp-master.debian.org/keys/archive-key-9.asc | apt-key add -
-    sed -i 's/buster/stretch/g' /etc/apt/sources.list.d/debian.list
+    apt-get update
+    if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
+      apt-get install -y \
+        linux-headers-$(uname -r)
+    else
+      echo "**** No kernel headers found in the Ubuntu Xenial repo!! Trying Ubuntu Focal. ****"
+      sed -i 's/xenial/focal/g' /etc/apt/sources.list.d/xenial-focal.list
+      apt-get update
+      if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
+        apt-get install -y \
+          linux-headers-$(uname -r)
+      else
+        echo "**** No kernel headers found in the Ubuntu repos!! Will try the headers from host (if mapped), may or may not work ****"
+        rm -rf /etc/apt/sources.list.d/xenial-focal.list
+      fi
+    fi
+  elif uname -v | grep -q 'Debian'; then
+    echo "**** Debian host detected, attempting to install kernel headers from Debian Buster repo ****"
+    curl -s https://ftp-master.debian.org/keys/archive-key-10.asc | apt-key add -
+    echo -e \
+      "deb http://deb.debian.org/debian buster main contrib non-free\ndeb-src http://deb.debian.org/debian buster main contrib non-free\ndeb http://deb.debian.org/debian buster-backports main contrib non-free\ndeb-src http://deb.debian.org/debian buster-backports main contrib non-free" \
+      > /etc/apt/sources.list.d/debian.list
     apt-get update
     if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
       if uname -r | grep -qs "bpo"; then
-        echo "Backported kernel detected"
-        apt-get install -y -t stretch-backports \
+        echo "**** Backported kernel detected ****"
+        apt-get install -y -t buster-backports \
           linux-headers-$(uname -r)
-        apt-get install -y \
-          wireguard
       else
         apt-get install -y \
-          linux-headers-$(uname -r) \
-          wireguard
+          linux-headers-$(uname -r)
       fi
     else
-      echo "No kernel headers found in Debian repos!! Will try the headers from host (if mapped), may or may not work"
-      apt-get install -y \
-        wireguard
+      echo "**** Attempting to install kernel headers from the Debian Stretch repo ****"
+      curl -s https://ftp-master.debian.org/keys/archive-key-9.asc | apt-key add -
+      sed -i 's/buster/stretch/g' /etc/apt/sources.list.d/debian.list
+      apt-get update
+      if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
+        if uname -r | grep -qs "bpo"; then
+          echo "**** Backported kernel detected ****"
+          apt-get install -y -t stretch-backports \
+            linux-headers-$(uname -r)
+        else
+          apt-get install -y \
+            linux-headers-$(uname -r)
+        fi
+      else
+        echo "**** No kernel headers found in Debian repos!! Will try the headers from host (if mapped), may or may not work ****"
+        rm -rf /etc/apt/sources.list.d/debian.list
+      fi
     fi
+  else
+    echo "**** No kernel headers found in the Ubuntu or Debian repos!! Will try the headers from host (if mapped), may or may not work ****"
   fi
-else
-  echo "No kernel headers found in the Ubuntu or Debian repos!! Will try the headers from host (if mapped), may or may not work"
-  apt-get install -y \
-    wireguard
+fi
+
+if [ "$SKIP_COMPILE" != "true" ]; then
+  if [ -e /lib/modules/$(uname -r)/build ]; then 
+    echo "**** Kernel headers seem to be present, attempting to build the wireguard module. . . ****"
+    if [ ! -f /lib/modules/$(uname -r)/build/certs/signing_key.pem ]; then
+      cd /lib/modules/$(uname -r)/build/certs
+      cat <<DUDE >> x509.genkey
+[ req ]
+default_bits = 4096
+distinguished_name = req_distinguished_name
+prompt = no
+string_mask = utf8only
+x509_extensions = myexts
+
+[ req_distinguished_name ]
+CN = Modules
+
+[ myexts ]
+basicConstraints=critical,CA:FALSE
+keyUsage=digitalSignature
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid
+DUDE
+      echo "**** Generating signing key ****"
+      openssl req -new -nodes -utf8 -sha512 -days 36500 -batch -x509 -config x509.genkey -outform DER -out signing_key.x509 -keyout signing_key.pem
+    fi
+    cd /app
+    echo "**** Building the module ****"
+    make -C wireguard-linux-compat/src -j$(nproc)
+    make -C wireguard-linux-compat/src install
+    echo "**** Let's test our new module. ****"
+    /app/wireguard-tools/contrib/ncat-client-server/client-quick.sh
+    wg-quick up demo
+    if wg show | grep -q demo; then
+      echo "**** The module is working properly, moving forward with setup. ****"
+    else
+      wg-quick down demo
+      rm -f /etc/wireguard/demo.conf
+      echo "**** The module is not working, review the logs. Sleeping now. . . ****"
+      sleep infinity
+    fi
+    wg-quick down demo
+    rm -f /etc/wireguard/demo.conf
+  else
+    echo "**** Kernel headers don't seem to be available, can't compile the module. Sleeping now. . . ****"
+    sleep infinity
+  fi
 fi
 
 # prepare symlinks
@@ -135,48 +205,48 @@ DUDE
 }
 
 if [ -n "$PEERS" ]; then
-  echo "Server mode is selected"
+  echo "**** Server mode is selected ****"
   if ! [[ "$PEERS" =~ ^[0-9]+$ ]]; then
-    echo "PEERS is not set to an integer, setting it to 1"
+    echo "**** PEERS is not set to an integer, setting it to 1 ****"
     PEERS="1"
   fi
   if [ -z "$SERVERURL" ] || [ "$SERVERURL" = "auto" ]; then
     SERVERURL=$(curl icanhazip.com)
-    echo "SERVERURL var is either not set or is set to \"auto\", setting external IP to auto detected value of $SERVERURL"
+    echo "**** SERVERURL var is either not set or is set to \"auto\", setting external IP to auto detected value of $SERVERURL ****"
   else
-    echo "External server address is set to $SERVERURL"
+    echo "**** External server address is set to $SERVERURL ****"
   fi
   SERVERPORT=${SERVERPORT:-51820}
-  echo "External server port is set to ${SERVERPORT}. Make sure that port is properly forwarded to port 51820 inside this container"
+  echo "**** External server port is set to ${SERVERPORT}. Make sure that port is properly forwarded to port 51820 inside this container ****"
   INTERNAL_SUBNET=${INTERNAL_SUBNET:-10.13.13.0}
-  echo "Internal subnet is set to $INTERNAL_SUBNET"
+  echo "**** Internal subnet is set to $INTERNAL_SUBNET ****"
   INTERFACE=$(echo "$INTERNAL_SUBNET" | awk 'BEGIN{FS=OFS="."} NF--')
   if [ -z "$PEERDNS" ] || [ "$PEERDNS" = "auto" ]; then
     PEERDNS="${INTERFACE}.1"
-    echo "PEERDNS var is either not set or is set to \"auto\", setting peer DNS to ${INTERFACE}.1 to use wireguard docker host's DNS."
+    echo "**** PEERDNS var is either not set or is set to \"auto\", setting peer DNS to ${INTERFACE}.1 to use wireguard docker host's DNS. ****"
   else
-    echo "Peer DNS servers will be set to $PEERDNS"
+    echo "**** Peer DNS servers will be set to $PEERDNS ****"
   fi
   if [ ! -f /config/wg0.conf ]; then
-    echo "No found wg0.conf found (maybe an initial install), generating 1 server and $PEERS peer/client confs"
+    echo "**** No found wg0.conf found (maybe an initial install), generating 1 server and $PEERS peer/client confs ****"
     generate_confs
     save_vars
   else
-    echo "Server mode is selected"
+    echo "**** Server mode is selected ****"
     [[ -f /config/.donoteditthisfile ]] && \
       . /config/.donoteditthisfile
     if [ "$SERVERURL" != "$ORIG_SERVERURL" ] || [ "$SERVERPORT" != "$ORIG_SERVERPORT" ] || [ "$PEERDNS" != "$ORIG_PEERDNS" ] || [ "$PEERS" != "$ORIG_PEERS" ] || [ "$INTERFACE" != "$ORIG_INTERFACE" ]; then
-      echo "Server related environment variables changed, regenerating 1 server and $PEERS peer/client confs"
+      echo "**** Server related environment variables changed, regenerating 1 server and $PEERS peer/client confs ****"
       generate_confs
       save_vars
     else
-      echo "No changes to parameters. Existing configs are used."
+      echo "**** No changes to parameters. Existing configs are used. ****"
     fi
   fi
 else
-  echo "Client mode selected."
+  echo "**** Client mode selected."
   if [ ! -f /config/wg0.conf ]; then
-    echo "No client conf found. Provide your own client conf as \"/config/wg0.conf\" and restart the container."
+    echo "**** No client conf found. Provide your own client conf as \"/config/wg0.conf\" and restart the container. ****"
     sleep infinity
   fi
 fi

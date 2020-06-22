@@ -103,7 +103,7 @@ pipeline {
       steps{
         script{
           env.EXT_RELEASE = sh(
-            script: ''' curl -sX GET http://ppa.launchpad.net/wireguard/wireguard/ubuntu/dists/bionic/main/binary-amd64/Packages.gz | gunzip -c |grep -A 7 -m 1 'Package: wireguard' | awk -F ': ' '/Version/{print $2;exit}' ''',
+            script: ''' curl -sX GET https://api.github.com/repos/WireGuard/wireguard-tools/tags | jq -r .[0].name ''',
             returnStdout: true).trim()
             env.RELEASE_LINK = 'custom_command'
         }

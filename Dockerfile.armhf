@@ -14,22 +14,37 @@ RUN \
  apt-get update && \
  apt-get install -y \
 	bc \
+	build-essential \
 	curl \
-	dkms \
+	git \
 	gnupg \ 
 	ifupdown \
 	iproute2 \
 	iptables \
 	iputils-ping \
+	jq \
 	libc6 \
+	libelf-dev \
 	perl \
+	pkg-config \
 	qrencode && \
- apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E1B39B6EF6DDB96564797591AE33835F504A1A25 && \
- echo "deb http://ppa.launchpad.net/wireguard/wireguard/ubuntu bionic main" >> /etc/apt/sources.list.d/wireguard.list && \
- echo "deb-src http://ppa.launchpad.net/wireguard/wireguard/ubuntu bionic main" >> /etc/apt/sources.list.d/wireguard.list && \
  echo resolvconf resolvconf/linkify-resolvconf boolean false | debconf-set-selections && \
  echo "REPORT_ABSENT_SYMLINK=no" >> /etc/default/resolvconf && \
- apt-get install resolvconf && \
+ apt-get install -y --no-install-recommends \
+	dkms \
+	resolvconf && \
+ echo "**** install wireguard-tools ****" && \
+ if [ -z ${WIREGUARD_RELEASE+x} ]; then \
+	WIREGUARD_RELEASE=$(curl -sX GET "https://api.github.com/repos/WireGuard/wireguard-tools/tags" \
+	| jq -r .[0].name); \
+ fi && \
+ cd /app && \
+ git clone https://git.zx2c4.com/wireguard-linux-compat && \
+ git clone https://git.zx2c4.com/wireguard-tools && \
+ cd wireguard-tools && \
+ git checkout "${WIREGUARD_RELEASE}" && \
+ make -C src -j$(nproc) && \
+ make -C src install && \
  echo "**** install CoreDNS ****" && \
  COREDNS_VERSION=$(curl -sX GET "https://api.github.com/repos/coredns/coredns/releases/latest" \
 	| awk '/tag_name/{print $4;exit}' FS='[""]' | awk '{print substr($1,2); }') && \
