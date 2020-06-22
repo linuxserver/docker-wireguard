@@ -205,48 +205,48 @@ DUDE
 }
 
 if [ -n "$PEERS" ]; then
-  echo "Server mode is selected"
+  echo "**** Server mode is selected ****"
   if ! [[ "$PEERS" =~ ^[0-9]+$ ]]; then
-    echo "PEERS is not set to an integer, setting it to 1"
+    echo "**** PEERS is not set to an integer, setting it to 1 ****"
     PEERS="1"
   fi
   if [ -z "$SERVERURL" ] || [ "$SERVERURL" = "auto" ]; then
     SERVERURL=$(curl icanhazip.com)
-    echo "SERVERURL var is either not set or is set to \"auto\", setting external IP to auto detected value of $SERVERURL"
+    echo "**** SERVERURL var is either not set or is set to \"auto\", setting external IP to auto detected value of $SERVERURL ****"
   else
-    echo "External server address is set to $SERVERURL"
+    echo "**** External server address is set to $SERVERURL ****"
   fi
   SERVERPORT=${SERVERPORT:-51820}
-  echo "External server port is set to ${SERVERPORT}. Make sure that port is properly forwarded to port 51820 inside this container"
+  echo "**** External server port is set to ${SERVERPORT}. Make sure that port is properly forwarded to port 51820 inside this container ****"
   INTERNAL_SUBNET=${INTERNAL_SUBNET:-10.13.13.0}
-  echo "Internal subnet is set to $INTERNAL_SUBNET"
+  echo "**** Internal subnet is set to $INTERNAL_SUBNET ****"
   INTERFACE=$(echo "$INTERNAL_SUBNET" | awk 'BEGIN{FS=OFS="."} NF--')
   if [ -z "$PEERDNS" ] || [ "$PEERDNS" = "auto" ]; then
     PEERDNS="${INTERFACE}.1"
-    echo "PEERDNS var is either not set or is set to \"auto\", setting peer DNS to ${INTERFACE}.1 to use wireguard docker host's DNS."
+    echo "**** PEERDNS var is either not set or is set to \"auto\", setting peer DNS to ${INTERFACE}.1 to use wireguard docker host's DNS. ****"
   else
-    echo "Peer DNS servers will be set to $PEERDNS"
+    echo "**** Peer DNS servers will be set to $PEERDNS ****"
   fi
   if [ ! -f /config/wg0.conf ]; then
-    echo "No found wg0.conf found (maybe an initial install), generating 1 server and $PEERS peer/client confs"
+    echo "**** No found wg0.conf found (maybe an initial install), generating 1 server and $PEERS peer/client confs ****"
     generate_confs
     save_vars
   else
-    echo "Server mode is selected"
+    echo "**** Server mode is selected ****"
     [[ -f /config/.donoteditthisfile ]] && \
       . /config/.donoteditthisfile
     if [ "$SERVERURL" != "$ORIG_SERVERURL" ] || [ "$SERVERPORT" != "$ORIG_SERVERPORT" ] || [ "$PEERDNS" != "$ORIG_PEERDNS" ] || [ "$PEERS" != "$ORIG_PEERS" ] || [ "$INTERFACE" != "$ORIG_INTERFACE" ]; then
-      echo "Server related environment variables changed, regenerating 1 server and $PEERS peer/client confs"
+      echo "**** Server related environment variables changed, regenerating 1 server and $PEERS peer/client confs ****"
       generate_confs
       save_vars
     else
-      echo "No changes to parameters. Existing configs are used."
+      echo "**** No changes to parameters. Existing configs are used. ****"
     fi
   fi
 else
-  echo "Client mode selected."
+  echo "**** Client mode selected."
   if [ ! -f /config/wg0.conf ]; then
-    echo "No client conf found. Provide your own client conf as \"/config/wg0.conf\" and restart the container."
+    echo "**** No client conf found. Provide your own client conf as \"/config/wg0.conf\" and restart the container. ****"
     sleep infinity
   fi
 fi
