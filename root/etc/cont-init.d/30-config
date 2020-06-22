@@ -20,7 +20,7 @@ else
 fi  
 
 # install headers if necessary
-if [ "$SKIP_COMPILE" != "true" ]; then
+if [ "$SKIP_COMPILE" != "true" ] && [ ! -e /lib/modules/$(uname -r)/build ]; then
   echo "**** Attempting kernel header install ****"
   apt-get update
   if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
