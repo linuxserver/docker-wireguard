@@ -3,20 +3,13 @@
 mkdir -p /config/{templates,coredns}
 
 # check for wireguard module
-if grep -q wireguard /proc/modules; then
-  echo "**** It seems the wireguard module is already loaded, let's test to make sure it works. ****"
-  /app/wireguard-tools/contrib/ncat-client-server/client-quick.sh
-  wg-quick up demo
-  if wg show | grep -q demo; then
-    echo "**** The module is working properly, skipping kernel header install and module compilation. ****"
-    SKIP_COMPILE="true"
-  else
-    echo "**** The module is not functional, will attempt kernel header install and module compilation. ****"
-  fi
-  wg-quick down demo
-  rm -f /etc/wireguard/demo.conf
+ip link del dev test 2>/dev/null
+if ip link add dev test type wireguard; then
+  echo "**** It seems the wireguard module is already active. Skipping kernel header install and module compilation. ****"
+  SKIP_COMPILE="true"
+  ip link del dev test
 else
-  echo "**** The wireguard module is not loaded, will attempt kernel header install and module compilation. ****"
+  echo "**** The wireguard module is not active, will attempt kernel header install and module compilation. ****"
 fi  
 
 # install headers if necessary
@@ -133,18 +126,14 @@ DUDE
     make -C wireguard-linux-compat/src -j$(nproc)
     make -C wireguard-linux-compat/src install
     echo "**** Let's test our new module. ****"
-    /app/wireguard-tools/contrib/ncat-client-server/client-quick.sh
-    wg-quick up demo
-    if wg show | grep -q demo; then
-      echo "**** The module is working properly, moving forward with setup. ****"
+    ip link del dev test 2>/dev/null
+    if ip link add dev test type wireguard; then
+      echo "**** The module is active, moving forward with setup. ****"
+      ip link del dev test
     else
-      wg-quick down demo
-      rm -f /etc/wireguard/demo.conf
-      echo "**** The module is not working, review the logs. Sleeping now. . . ****"
+      echo "**** The module is not active, review the logs. Sleeping now. . . ****"
       sleep infinity
     fi
-    wg-quick down demo
-    rm -f /etc/wireguard/demo.conf
   else
     echo "**** Kernel headers don't seem to be available, can't compile the module. Sleeping now. . . ****"
     sleep infinity
