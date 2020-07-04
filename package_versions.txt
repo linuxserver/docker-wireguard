@@ -177,7 +177,7 @@ librtmp12.4+20151223.gitfa8646d.1-1
 libsasl2-22.1.27~101-g0780600+dfsg-3ubuntu2.1
 libsasl2-modules2.1.27~101-g0780600+dfsg-3ubuntu2.1
 libsasl2-modules-db2.1.27~101-g0780600+dfsg-3ubuntu2.1
-libseccomp22.4.1-0ubuntu0.18.04.2
+libseccomp22.4.3-1ubuntu3.18.04.2
 libselinux12.7-2build2
 libsemanage12.7-2build2
 libsemanage-common2.7-2build2
@@ -200,7 +200,7 @@ libuuid12.31.1-0.4ubuntu3.6
 libwind0-heimdal7.5.0+dfsg-1
 libx11-62:1.6.4-3ubuntu0.2
 libx11-data2:1.6.4-3ubuntu0.2
-libxau61:1.0.8-1
+libxau61:1.0.8-1ubuntu1
 libxcb11.13-2~ubuntu18.04
 libxdmcp61:1.1.2-3
 libxext62:1.3.3-1
@@ -208,7 +208,7 @@ libxml22.9.4+dfsg1-6.1ubuntu1.3
 libxmuu12:1.1.2-2
 libxtables121.6.1-2ubuntu2
 libzstd11.3.3+dfsg-2ubuntu1.1
-linux-libc-dev4.15.0-108.109
+linux-libc-dev4.15.0-109.110
 locales2.27-3ubuntu1
 login1:4.5-1ubuntu2
 lsb-base9.20170808ubuntu1
