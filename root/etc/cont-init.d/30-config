@@ -59,9 +59,17 @@ if [ "$SKIP_COMPILE" != "true" ] && [ ! -e /lib/modules/$(uname -r)/build ]; the
   elif uname -v | grep -q 'Debian'; then
     echo "**** Debian host detected, attempting to install kernel headers from Debian Buster repo ****"
     curl -s https://ftp-master.debian.org/keys/archive-key-10.asc | apt-key add -
-    echo -e \
-      "deb http://deb.debian.org/debian buster main contrib non-free\ndeb-src http://deb.debian.org/debian buster main contrib non-free\ndeb http://deb.debian.org/debian buster-backports main contrib non-free\ndeb-src http://deb.debian.org/debian buster-backports main contrib non-free" \
-      > /etc/apt/sources.list.d/debian.list
+    curl -s https://ftp-master.debian.org/keys/archive-key-10-security.asc | apt-key add -
+    cat <<DUDE > /etc/apt/sources.list.d/debian.list
+deb http://deb.debian.org/debian buster main contrib non-free
+deb-src http://deb.debian.org/debian buster main contrib non-free
+deb http://deb.debian.org/debian-security/ buster/updates main contrib non-free
+deb-src http://deb.debian.org/debian-security/ buster/updates main contrib non-free
+deb http://deb.debian.org/debian buster-updates main contrib non-free
+deb-src http://deb.debian.org/debian buster-updates main contrib non-free
+deb http://deb.debian.org/debian buster-backports main contrib non-free
+deb-src http://deb.debian.org/debian buster-backports main contrib non-free
+DUDE
     apt-get update
     if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
       if uname -r | grep -qs "bpo"; then
@@ -75,6 +83,7 @@ if [ "$SKIP_COMPILE" != "true" ] && [ ! -e /lib/modules/$(uname -r)/build ]; the
     else
       echo "**** Attempting to install kernel headers from the Debian Stretch repo ****"
       curl -s https://ftp-master.debian.org/keys/archive-key-9.asc | apt-key add -
+      curl -s https://ftp-master.debian.org/keys/archive-key-9-security.asc | apt-key add -
       sed -i 's/buster/stretch/g' /etc/apt/sources.list.d/debian.list
       apt-get update
       if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
@@ -100,6 +109,7 @@ if [ "$SKIP_COMPILE" != "true" ]; then
   if [ -e /lib/modules/$(uname -r)/build ]; then 
     echo "**** Kernel headers seem to be present, attempting to build the wireguard module. . . ****"
     if [ ! -f /lib/modules/$(uname -r)/build/certs/signing_key.pem ]; then
+      mkdir -p /lib/modules/$(uname -r)/build/certs
       cd /lib/modules/$(uname -r)/build/certs
       cat <<DUDE >> x509.genkey
 [ req ]
