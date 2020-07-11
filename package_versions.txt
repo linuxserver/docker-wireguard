@@ -78,14 +78,14 @@ libbinutils2.30-21ubuntu1~18.04.3
 libblkid12.31.1-0.4ubuntu3.6
 libbsd00.8.7-1ubuntu0.1
 libbz2-1.01.0.6-8.1ubuntu0.2
-libc62.27-3ubuntu1
-libc6-dev2.27-3ubuntu1
+libc62.27-3ubuntu1.2
+libc6-dev2.27-3ubuntu1.2
 libcap21:2.25-1.2
 libcap2-bin1:2.25-1.2
 libcap-ng00.7.7-3.1
 libc-bin2.27-3ubuntu1
 libcc1-08.4.0-1ubuntu1~18.04
-libc-dev-bin2.27-3ubuntu1
+libc-dev-bin2.27-3ubuntu1.2
 libcilkrts57.5.0-3ubuntu1~18.04
 libcom-err21.44.1-1ubuntu1.3
 libcurl3-gnutls7.58.0-2ubuntu3.9
@@ -209,7 +209,7 @@ libxmuu12:1.1.2-2
 libxtables121.6.1-2ubuntu2
 libzstd11.3.3+dfsg-2ubuntu1.1
 linux-libc-dev4.15.0-109.110
-locales2.27-3ubuntu1
+locales2.27-3ubuntu1.2
 login1:4.5-1ubuntu2
 lsb-base9.20170808ubuntu1
 make4.1-9.1ubuntu1
@@ -217,7 +217,7 @@ manpages4.15-1
 manpages-dev4.15-1
 mawk1.3.3-17ubuntu3
 mount2.31.1-0.4ubuntu3.6
-multiarch-support2.27-3ubuntu1
+multiarch-support2.27-3ubuntu1.2
 ncurses-base6.1-1ubuntu1.18.04
 ncurses-bin6.1-1ubuntu1.18.04
 netbase5.4
