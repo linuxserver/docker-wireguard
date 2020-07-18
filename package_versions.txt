@@ -83,7 +83,7 @@ libc6-dev2.27-3ubuntu1.2
 libcap21:2.25-1.2
 libcap2-bin1:2.25-1.2
 libcap-ng00.7.7-3.1
-libc-bin2.27-3ubuntu1
+libc-bin2.27-3ubuntu1.2
 libcc1-08.4.0-1ubuntu1~18.04
 libc-dev-bin2.27-3ubuntu1.2
 libcilkrts57.5.0-3ubuntu1~18.04
@@ -112,7 +112,7 @@ libgdbm-compat41.14.1-6
 libglib2.0-02.56.4-0ubuntu0.18.04.6
 libglib2.0-data2.56.4-0ubuntu0.18.04.6
 libgmp102:6.1.2+dfsg-2
-libgnutls303.5.18-1ubuntu1.3
+libgnutls303.5.18-1ubuntu1.4
 libgomp18.4.0-1ubuntu1~18.04
 libgpg-error01.27-6
 libgssapi3-heimdal7.5.0+dfsg-1
@@ -208,7 +208,7 @@ libxml22.9.4+dfsg1-6.1ubuntu1.3
 libxmuu12:1.1.2-2
 libxtables121.6.1-2ubuntu2
 libzstd11.3.3+dfsg-2ubuntu1.1
-linux-libc-dev4.15.0-109.110
+linux-libc-dev4.15.0-111.112
 locales2.27-3ubuntu1.2
 login1:4.5-1ubuntu2
 lsb-base9.20170808ubuntu1
