@@ -85,6 +85,7 @@ app_setup_block: |
   
 # changelog
 changelogs:
+  - { date: "27.07.20:", desc: "Update Coredns config to prevent issues with non-user-defined bridge networks." }
   - { date: "05.07.20:", desc: "Add Debian updates and security repos for headers." }
   - { date: "25.06.20:", desc: "Simplify module tests, prevent iptables issues from resulting in false negatives." }
   - { date: "19.06.20:", desc: "Add support for Ubuntu Focal (20.04) kernels. Compile wireguard tools and kernel module instead of using the ubuntu packages. Make module install optional. Improve verbosity in logs." }
