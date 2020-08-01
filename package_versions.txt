@@ -177,7 +177,7 @@ librtmp12.4+20151223.gitfa8646d.1-1
 libsasl2-22.1.27~101-g0780600+dfsg-3ubuntu2.1
 libsasl2-modules2.1.27~101-g0780600+dfsg-3ubuntu2.1
 libsasl2-modules-db2.1.27~101-g0780600+dfsg-3ubuntu2.1
-libseccomp22.4.3-1ubuntu3.18.04.2
+libseccomp22.4.3-1ubuntu3.18.04.3
 libselinux12.7-2build2
 libsemanage12.7-2build2
 libsemanage-common2.7-2build2
