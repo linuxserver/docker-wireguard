@@ -87,7 +87,7 @@ app_setup_block: |
   
 # changelog
 changelogs:
-  - { date: "06.08.20:", desc: "Replace resolvconf with openresolv due to dns issues when a client based on this image is connected to a server also based on this image." }
+  - { date: "06.08.20:", desc: "Replace resolvconf with openresolv due to dns issues when a client based on this image is connected to a server also based on this image. Add IPv6 info to readme. Display kernel version in logs." }
   - { date: "29.07.20:", desc: "Update Coredns config to detect dns loops (existing users need to delete `/config/coredns/Corefile` and restart)." }
   - { date: "27.07.20:", desc: "Update Coredns config to prevent issues with non-user-defined bridge networks (existing users need to delete `/config/coredns/Corefile` and restart)." }
   - { date: "05.07.20:", desc: "Add Debian updates and security repos for headers." }

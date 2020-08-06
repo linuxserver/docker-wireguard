@@ -2,6 +2,7 @@
 
 mkdir -p /config/{templates,coredns}
 
+echo "Uname info: $(uname -a)"
 # check for wireguard module
 ip link del dev test 2>/dev/null
 if ip link add dev test type wireguard; then

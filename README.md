@@ -270,7 +270,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
-* **06.08.20:** - Replace resolvconf with openresolv due to dns issues when a client based on this image is connected to a server also based on this image.
+* **06.08.20:** - Replace resolvconf with openresolv due to dns issues when a client based on this image is connected to a server also based on this image. Add IPv6 info to readme. Display kernel version in logs.
 * **29.07.20:** - Update Coredns config to detect dns loops (existing users need to delete `/config/coredns/Corefile` and restart).
 * **27.07.20:** - Update Coredns config to prevent issues with non-user-defined bridge networks (existing users need to delete `/config/coredns/Corefile` and restart).
 * **05.07.20:** - Add Debian updates and security repos for headers.
