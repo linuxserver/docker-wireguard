@@ -12,10 +12,11 @@ ENV DEBIAN_FRONTEND="noninteractive"
 RUN \
  echo "**** install dependencies ****" && \
  apt-get update && \
- apt-get install -y \
+ apt-get install -y --no-install-recommends \
 	bc \
 	build-essential \
 	curl \
+	dkms \
 	git \
 	gnupg \ 
 	ifupdown \
@@ -25,14 +26,10 @@ RUN \
 	jq \
 	libc6 \
 	libelf-dev \
+	openresolv \
 	perl \
 	pkg-config \
 	qrencode && \
- echo resolvconf resolvconf/linkify-resolvconf boolean false | debconf-set-selections && \
- echo "REPORT_ABSENT_SYMLINK=no" >> /etc/default/resolvconf && \
- apt-get install -y --no-install-recommends \
-	dkms \
-	resolvconf && \
  echo "**** install wireguard-tools ****" && \
  if [ -z ${WIREGUARD_RELEASE+x} ]; then \
 	WIREGUARD_RELEASE=$(curl -sX GET "https://api.github.com/repos/WireGuard/wireguard-tools/tags" \
