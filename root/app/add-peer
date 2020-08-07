@@ -1,5 +1,7 @@
 #!/usr/bin/with-contenv bash
 
+echo "******* This script has been deprecated and will be removed in a future version. In order to add peers, change the PEERS env var and recreate your container. Existing peers will still use the same private and public keys. *******"
+
 if [ ! -f /config/wg0.conf ] || [ -z "$PEERS" ]; then
   echo "Wireguard is not set up in server mode"
   exit 0
