@@ -15,7 +15,7 @@ ca-certificates20190110~18.04.1
 coreutils8.28-1ubuntu1
 cpp4:7.4.0-1ubuntu2.3
 cpp-77.5.0-3ubuntu1~18.04
-curl7.58.0-2ubuntu3.9
+curl7.58.0-2ubuntu3.10
 dash0.5.8-2.10
 debconf1.5.66ubuntu1
 debianutils4.8.4
@@ -78,8 +78,8 @@ libcc1-08.4.0-1ubuntu1~18.04
 libc-dev-bin2.27-3ubuntu1.2
 libcilkrts57.5.0-3ubuntu1~18.04
 libcom-err21.44.1-1ubuntu1.3
-libcurl3-gnutls7.58.0-2ubuntu3.9
-libcurl47.58.0-2ubuntu3.9
+libcurl3-gnutls7.58.0-2ubuntu3.10
+libcurl47.58.0-2ubuntu3.10
 libdb5.35.3.28-13.1ubuntu1.1
 libdebconfclient00.213ubuntu1
 libdpkg-perl1.19.0.5ubuntu2.3
