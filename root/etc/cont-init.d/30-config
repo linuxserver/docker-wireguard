@@ -172,7 +172,6 @@ generate_confs () {
 `cat /config/templates/server.conf`
 
 DUDE"
-  CLIENT_IP_IDX=2
   for i in ${PEERS_ARRAY[@]}; do
     if [[ "${i}" =~ ^[0-9]+$ ]]; then
       PEER_ID="peer${i}"
@@ -184,6 +183,17 @@ DUDE"
       umask 077
       wg genkey | tee /config/${PEER_ID}/privatekey-${PEER_ID} | wg pubkey > /config/${PEER_ID}/publickey-${PEER_ID}
     fi
+    if [ -f "/config/${PEER_ID}/${PEER_ID}.conf" ]; then
+      CLIENT_IP=$(cat /config/${PEER_ID}/${PEER_ID}.conf | grep "Address" | awk '{print $NF}')
+    else
+      for idx in {2..254}; do
+        PROPOSED_IP="${INTERFACE}.${idx}"
+        if ! grep -q -R "${PROPOSED_IP}" /config/peer*/*.conf; then
+          CLIENT_IP="${PROPOSED_IP}"
+          break
+        fi
+      done
+    fi
     eval "`printf %s`
     cat <<DUDE > /config/${PEER_ID}/${PEER_ID}.conf
 `cat /config/templates/peer.conf`
@@ -192,10 +202,9 @@ DUDE"
 [Peer]
 # ${PEER_ID}
 PublicKey = $(cat /config/${PEER_ID}/publickey-${PEER_ID})
-AllowedIPs = ${INTERFACE}.${CLIENT_IP_IDX}/32
+AllowedIPs = ${CLIENT_IP}/32
 
 DUDE
-    CLIENT_IP_IDX=$(( $CLIENT_IP_IDX + 1 ))
     echo "PEER ${i} QR code:"
     qrencode -t ansiutf8 < /config/${PEER_ID}/${PEER_ID}.conf
     qrencode -o /config/${PEER_ID}/${PEER_ID}.png < /config/${PEER_ID}/${PEER_ID}.conf
