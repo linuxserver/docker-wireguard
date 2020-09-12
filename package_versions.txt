@@ -1,7 +1,7 @@
 adduser3.116ubuntu1
 apt1.6.12ubuntu0.1
 apt-utils1.6.12ubuntu0.1
-base-files10.1ubuntu2.9
+base-files10.1ubuntu2.10
 base-passwd3.5.44
 bash4.4.18-2ubuntu1.2
 bc1.07.1-2
@@ -141,10 +141,10 @@ libnghttp2-141.30.0-1ubuntu1
 libnpth01.5-3
 libonig46.7.0-1
 libp11-kit00.23.9-2
-libpam0g1.1.8-3.6ubuntu2.18.04.1
-libpam-modules1.1.8-3.6ubuntu2.18.04.1
-libpam-modules-bin1.1.8-3.6ubuntu2.18.04.1
-libpam-runtime1.1.8-3.6ubuntu2.18.04.1
+libpam0g1.1.8-3.6ubuntu2.18.04.2
+libpam-modules1.1.8-3.6ubuntu2.18.04.2
+libpam-modules-bin1.1.8-3.6ubuntu2.18.04.2
+libpam-runtime1.1.8-3.6ubuntu2.18.04.2
 libpcre32:8.39-9
 libperl5.265.26.1-6ubuntu0.3
 libpng16-161.6.34-1ubuntu0.18.04.2
@@ -180,7 +180,7 @@ libuuid12.31.1-0.4ubuntu3.6
 libwind0-heimdal7.5.0+dfsg-1
 libxtables121.6.1-2ubuntu2
 libzstd11.3.3+dfsg-2ubuntu1.1
-linux-libc-dev4.15.0-115.116
+linux-libc-dev4.15.0-117.118
 locales2.27-3ubuntu1.2
 login1:4.5-1ubuntu2
 lsb-base9.20170808ubuntu1
