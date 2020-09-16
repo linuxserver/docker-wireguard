@@ -87,6 +87,8 @@ app_setup_block: |
 
   ## Maintaining local access to attached services
 
+  ** Note: This is not a supported configuration by Linuxserver.io - use at your own risk.
+
   When routing via Wireguard from another container using the `service` option in docker, you might lose access to the containers webUI locally. To avoid this, exclude the docker subnet from being routed via Wireguard by modifying your `wg0.conf` like so (modifying the subnets as you require):
 
     ```
