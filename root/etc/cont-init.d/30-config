@@ -211,7 +211,7 @@ if [ -n "$PEERS" ]; then
     PEERS="1"
   fi
   if [ -z "$SERVERURL" ] || [ "$SERVERURL" = "auto" ]; then
-    SERVERURL=$(curl icanhazip.com)
+    SERVERURL=$(curl -s icanhazip.com)
     echo "**** SERVERURL var is either not set or is set to \"auto\", setting external IP to auto detected value of $SERVERURL ****"
   else
     echo "**** External server address is set to $SERVERURL ****"
