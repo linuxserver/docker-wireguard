@@ -5,14 +5,17 @@ if [ ! $# -gt 0 ]; then
   exit 0
 fi
 
-INTERNAL_SUBNET=${INTERNAL_SUBNET:-10.13.13.0}
-INTERFACE=$(echo "$INTERNAL_SUBNET" | awk 'BEGIN{FS=OFS="."} NF--')
-
 for i in "$@"; do
-  if grep -q "AllowedIPs = ${INTERFACE}.$(( $i + 1 ))/32" /config/wg0.conf; then
-    echo "PEER $i QR code:"
-    qrencode -t ansiutf8 < /config/peer${i}/peer${i}.conf
+  if [[ "${i}" =~ ^[0-9]+$ ]]; then
+    PEER_ID="peer${i}"
   else
-    echo "PEER $i is not active"
+    PEER_ID="peer_${i//[^[:alnum:]_-]/}"
+  fi
+
+  if grep -q "# ${PEER_ID}" /config/wg0.conf; then
+    echo "PEER ${i} QR code:"
+    qrencode -t ansiutf8 < /config/${PEER_ID}/${PEER_ID}.conf
+  else
+    echo "PEER ${i} is not active"
   fi
 done
