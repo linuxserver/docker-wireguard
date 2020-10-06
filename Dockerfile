@@ -26,6 +26,7 @@ RUN \
 	jq \
 	libc6 \
 	libelf-dev \
+	net-tools \
 	openresolv \
 	perl \
 	pkg-config \

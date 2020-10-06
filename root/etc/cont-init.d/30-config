@@ -266,21 +266,18 @@ if [ -n "$PEERS" ]; then
     fi
   fi
 else
-  echo "**** Client mode selected."
+  echo "**** Client mode selected. ****"
   if [ ! -f /config/wg0.conf ]; then
     echo "**** No client conf found. Provide your own client conf as \"/config/wg0.conf\" and restart the container. ****"
     sleep infinity
   fi
+  echo "**** Disabling CoreDNS ****"
+  rm -rf /etc/services.d/coredns
 fi
 
-# set up or disable CoreDNS
-if ip addr show dev docker0 > /dev/null 2>&1; then
-  echo "Host networking detected, disabling CoreDNS"
-  rm -rf /etc/services.d/coredns
-else
-  [[ ! -f /config/coredns/Corefile ]] && \
-    cp /defaults/Corefile /config/coredns/Corefile
-fi
+# set up CoreDNS
+[[ ! -f /config/coredns/Corefile ]] && \
+  cp /defaults/Corefile /config/coredns/Corefile
 
 # permissions
 chown -R abc:abc \

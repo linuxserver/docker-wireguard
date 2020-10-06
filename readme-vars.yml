@@ -103,7 +103,7 @@ app_setup_block: |
   
 # changelog
 changelogs:
-  - { date: "06.10.20:", desc: "Disable CoreDNS when Host networking is detected." }
+  - { date: "06.10.20:", desc: "Disable CoreDNS in client mode, or if port 53 is already in use in server mode." }
   - { date: "04.10.20:", desc: "Allow to specify a list of names as PEERS and add ALLOWEDIPS environment variable. Also, add peer name/id to each one of the peer sections in wg0.conf. Important: Existing users need to delete `/config/templates/peer.conf` and restart" }
   - { date: "27.09.20:", desc: "Cleaning service binding example to have accurate PreDown script." }
   - { date: "06.08.20:", desc: "Replace resolvconf with openresolv due to dns issues when a client based on this image is connected to a server also based on this image. Add IPv6 info to readme. Display kernel version in logs." }
