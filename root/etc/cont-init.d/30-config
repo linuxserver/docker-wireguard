@@ -231,7 +231,7 @@ if [ -n "$PEERS" ]; then
   fi
   PEERS_COUNT=$(echo "${#PEERS_ARRAY[@]}")
   if [ -z "$SERVERURL" ] || [ "$SERVERURL" = "auto" ]; then
-    SERVERURL=$(curl icanhazip.com)
+    SERVERURL=$(curl -s icanhazip.com)
     echo "**** SERVERURL var is either not set or is set to \"auto\", setting external IP to auto detected value of $SERVERURL ****"
   else
     echo "**** External server address is set to $SERVERURL ****"
@@ -266,11 +266,13 @@ if [ -n "$PEERS" ]; then
     fi
   fi
 else
-  echo "**** Client mode selected."
+  echo "**** Client mode selected. ****"
   if [ ! -f /config/wg0.conf ]; then
     echo "**** No client conf found. Provide your own client conf as \"/config/wg0.conf\" and restart the container. ****"
     sleep infinity
   fi
+  echo "**** Disabling CoreDNS ****"
+  rm -rf /etc/services.d/coredns
 fi
 
 # set up CoreDNS

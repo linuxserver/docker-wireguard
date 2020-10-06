@@ -2,5 +2,10 @@
 
 cd /config/coredns
 
-exec \
+if netstat -apn | grep -q ":53 "; then
+  echo "Another service is using port 53, disabling CoreDNS"
+  sleep infinity
+else
+  exec \
     /app/coredns -dns.port=53
+fi
