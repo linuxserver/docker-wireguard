@@ -190,6 +190,7 @@ mount2.31.1-0.4ubuntu3.7
 multiarch-support2.27-3ubuntu1.2
 ncurses-base6.1-1ubuntu1.18.04
 ncurses-bin6.1-1ubuntu1.18.04
+net-tools1.60+git20161116.90da8a0-1ubuntu1
 openresolv3.8.0-1
 openssl1.1.1-1ubuntu2.1~18.04.6
 passwd1:4.5-1ubuntu2
