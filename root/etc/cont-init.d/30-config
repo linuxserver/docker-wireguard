@@ -273,9 +273,14 @@ else
   fi
 fi
 
-# set up CoreDNS
-[[ ! -f /config/coredns/Corefile ]] && \
-  cp /defaults/Corefile /config/coredns/Corefile
+# set up or disable CoreDNS
+if ip addr show dev docker0 > /dev/null 2>&1; then
+  echo "Host networking detected, disabling CoreDNS"
+  rm -rf /etc/services.d/coredns
+else
+  [[ ! -f /config/coredns/Corefile ]] && \
+    cp /defaults/Corefile /config/coredns/Corefile
+fi
 
 # permissions
 chown -R abc:abc \
