@@ -11,7 +11,7 @@ binutils-x86-64-linux-gnu2.30-21ubuntu1~18.04.4
 bsdutils1:2.31.1-0.4ubuntu3.7
 build-essential12.4ubuntu1
 bzip21.0.6-8.1ubuntu0.2
-ca-certificates20190110~18.04.1
+ca-certificates20201027ubuntu0.18.04.1
 coreutils8.28-1ubuntu1
 cpp4:7.4.0-1ubuntu2.3
 cpp-77.5.0-3ubuntu1~18.04
@@ -146,7 +146,7 @@ libpam-modules1.1.8-3.6ubuntu2.18.04.2
 libpam-modules-bin1.1.8-3.6ubuntu2.18.04.2
 libpam-runtime1.1.8-3.6ubuntu2.18.04.2
 libpcre32:8.39-9
-libperl5.265.26.1-6ubuntu0.3
+libperl5.265.26.1-6ubuntu0.5
 libpng16-161.6.34-1ubuntu0.18.04.2
 libprocps62:3.3.12-3ubuntu1.2
 libpsl50.19.1-5build1
@@ -195,9 +195,9 @@ openresolv3.8.0-1
 openssl1.1.1-1ubuntu2.1~18.04.6
 passwd1:4.5-1ubuntu2
 patch2.7.6-2ubuntu1.1
-perl5.26.1-6ubuntu0.3
-perl-base5.26.1-6ubuntu0.3
-perl-modules-5.265.26.1-6ubuntu0.3
+perl5.26.1-6ubuntu0.5
+perl-base5.26.1-6ubuntu0.5
+perl-modules-5.265.26.1-6ubuntu0.5
 pinentry-curses1.1.0-1
 pkg-config0.29.1-0ubuntu2
 procps2:3.3.12-3ubuntu1.2
