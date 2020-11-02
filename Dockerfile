@@ -1,4 +1,4 @@
-FROM lsiobase/ubuntu:bionic
+FROM ghcr.io/linuxserver/baseimage-ubuntu:bionic
 
 # set version label
 ARG BUILD_DATE
