@@ -208,7 +208,7 @@ sed4.4-2
 sensible-utils0.0.12
 sysvinit-utils2.88dsf-59.10ubuntu1
 tar1.29b-2ubuntu0.1
-tzdata2020a-0ubuntu0.18.04
+tzdata2020d-0ubuntu0.18.04
 ubuntu-keyring2018.09.18.1~18.04.0
 util-linux2.31.1-0.4ubuntu3.7
 xz-utils5.2.2-1.3
