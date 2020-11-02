@@ -45,7 +45,7 @@ Find us at:
 
 Our images support multiple architectures such as `x86-64`, `arm64` and `armhf`. We utilise the docker manifest for multi-platform awareness. More information is available from docker [here](https://github.com/docker/distribution/blob/master/docs/spec/manifest-v2-2.md#manifest-list) and our announcement [here](https://blog.linuxserver.io/2019/02/21/the-lsio-pipeline-project/).
 
-Simply pulling `linuxserver/wireguard` should retrieve the correct image for your arch, but you can also pull specific arch images via tags.
+Simply pulling `ghcr.io/linuxserver/wireguard` should retrieve the correct image for your arch, but you can also pull specific arch images via tags.
 
 The architectures supported by this image are:
 
@@ -69,7 +69,7 @@ Compatible with docker-compose v2 schemas.
 version: "2.1"
 services:
   wireguard:
-    image: linuxserver/wireguard
+    image: ghcr.io/linuxserver/wireguard
     container_name: wireguard
     cap_add:
       - NET_ADMIN
@@ -115,7 +115,7 @@ docker run -d \
   -v /lib/modules:/lib/modules \
   --sysctl="net.ipv4.conf.all.src_valid_mark=1" \
   --restart unless-stopped \
-  linuxserver/wireguard
+  ghcr.io/linuxserver/wireguard
 ```
 
 
@@ -233,7 +233,7 @@ We publish various [Docker Mods](https://github.com/linuxserver/docker-mods) to 
 * container version number
   * `docker inspect -f '{{ index .Config.Labels "build_version" }}' wireguard`
 * image version number
-  * `docker inspect -f '{{ index .Config.Labels "build_version" }}' linuxserver/wireguard`
+  * `docker inspect -f '{{ index .Config.Labels "build_version" }}' ghcr.io/linuxserver/wireguard`
 
 ## Updating Info
 
@@ -249,7 +249,7 @@ Below are the instructions for updating containers:
 * You can also remove the old dangling images: `docker image prune`
 
 ### Via Docker Run
-* Update the image: `docker pull linuxserver/wireguard`
+* Update the image: `docker pull ghcr.io/linuxserver/wireguard`
 * Stop the running container: `docker stop wireguard`
 * Delete the container: `docker rm wireguard`
 * Recreate a new container with the same docker run parameters as instructed above (if mapped correctly to a host folder, your `/config` folder and settings will be preserved)
@@ -279,7 +279,7 @@ cd docker-wireguard
 docker build \
   --no-cache \
   --pull \
-  -t linuxserver/wireguard:latest .
+  -t ghcr.io/linuxserver/wireguard:latest .
 ```
 
 The ARM variants can be built on x86_64 hardware using `multiarch/qemu-user-static`
