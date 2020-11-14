@@ -122,8 +122,8 @@ libkrb5-26-heimdal7.5.0+dfsg-1
 libkrb5-31.16-2ubuntu0.1
 libkrb5support01.16-2ubuntu0.1
 libksba81.3.5-2
-libldap-2.4-22.4.45+dfsg-1ubuntu1.6
-libldap-common2.4.45+dfsg-1ubuntu1.6
+libldap-2.4-22.4.45+dfsg-1ubuntu1.7
+libldap-common2.4.45+dfsg-1ubuntu1.7
 liblsan08.4.0-1ubuntu1~18.04
 liblz4-10.0~r131-2ubuntu3
 liblzma55.2.2-1.3
@@ -180,7 +180,7 @@ libuuid12.31.1-0.4ubuntu3.7
 libwind0-heimdal7.5.0+dfsg-1
 libxtables121.6.1-2ubuntu2
 libzstd11.3.3+dfsg-2ubuntu1.1
-linux-libc-dev4.15.0-122.124
+linux-libc-dev4.15.0-123.126
 locales2.27-3ubuntu1.3
 login1:4.5-1ubuntu2
 lsb-base9.20170808ubuntu1
