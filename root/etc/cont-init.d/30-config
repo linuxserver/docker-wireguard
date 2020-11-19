@@ -182,6 +182,9 @@ DUDE"
     if [ ! -f "/config/${PEER_ID}/privatekey-${PEER_ID}" ]; then
       umask 077
       wg genkey | tee /config/${PEER_ID}/privatekey-${PEER_ID} | wg pubkey > /config/${PEER_ID}/publickey-${PEER_ID}
+    fi
+    if [ ! -f "/config/${PEER_ID}/presharedkey-${PEER_ID}" ]; then
+      umask 077
       wg genpsk | tee /config/${PEER_ID}/presharedkey-${PEER_ID}
     fi
     if [ -f "/config/${PEER_ID}/${PEER_ID}.conf" ]; then
