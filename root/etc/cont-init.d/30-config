@@ -237,7 +237,7 @@ if [ -n "$PEERS" ]; then
     echo "**** External server address is set to $SERVERURL ****"
   fi
   SERVERPORT=${SERVERPORT:-51820}
-  echo "**** External server port is set to ${SERVERPORT}. Make sure that port is properly forwarded to port 51820 inside this container ****"
+  echo "**** External server port is set to ${SERVERPORT}. Make sure that port is properly forwarded to port ${SERVERPORT} inside this container ****"
   INTERNAL_SUBNET=${INTERNAL_SUBNET:-10.13.13.0}
   echo "**** Internal subnet is set to $INTERNAL_SUBNET ****"
   INTERFACE=$(echo "$INTERNAL_SUBNET" | awk 'BEGIN{FS=OFS="."} NF--')
