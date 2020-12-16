@@ -242,11 +242,11 @@ pipeline {
                 cd ${TEMPDIR}/docker-${CONTAINER_NAME}
                 mkdir -p ${TEMPDIR}/repo/${LS_REPO}/.github/workflows
                 mkdir -p ${TEMPDIR}/repo/${LS_REPO}/.github/ISSUE_TEMPLATE
-                rm ${TEMPDIR}/repo/${LS_REPO}/.github/ISSUE_TEMPLATE.md
+                rm -f ${TEMPDIR}/repo/${LS_REPO}/.github/ISSUE_TEMPLATE.md
                 cp --parents ${TEMPLATED_FILES} ${TEMPDIR}/repo/${LS_REPO}/ || :
                 cd ${TEMPDIR}/repo/${LS_REPO}/
                 git add ${TEMPLATED_FILES}
-                git rm .github/ISSUE_TEMPLATE.md
+                git rm .github/ISSUE_TEMPLATE.md || :
                 git commit -m 'Bot Updating Templated Files'
                 git push https://LinuxServer-CI:${GITHUB_TOKEN}@github.com/${LS_USER}/${LS_REPO}.git --all
                 echo "true" > /tmp/${COMMIT_SHA}-${BUILD_NUMBER}
