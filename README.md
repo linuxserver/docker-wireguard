@@ -31,7 +31,7 @@ Find us at:
 [![GitHub Stars](https://img.shields.io/github/stars/linuxserver/docker-wireguard.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-wireguard)
 [![GitHub Release](https://img.shields.io/github/release/linuxserver/docker-wireguard.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-wireguard/releases)
 [![GitHub Package Repository](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=GitHub%20Package&logo=github)](https://github.com/linuxserver/docker-wireguard/packages)
-[![GitLab Container Registry](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=GitLab%20Registry&logo=gitlab)](https://gitlab.com/Linuxserver.io/docker-wireguard/container_registry)
+[![GitLab Container Registry](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=GitLab%20Registry&logo=gitlab)](https://gitlab.com/linuxserver.io/docker-wireguard/container_registry)
 [![MicroBadger Layers](https://img.shields.io/microbadger/layers/linuxserver/wireguard.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge)](https://microbadger.com/images/linuxserver/wireguard "Get your own version badge on microbadger.com")
 [![Docker Pulls](https://img.shields.io/docker/pulls/linuxserver/wireguard.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=pulls&logo=docker)](https://hub.docker.com/r/linuxserver/wireguard)
 [![Docker Stars](https://img.shields.io/docker/stars/linuxserver/wireguard.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=stars&logo=docker)](https://hub.docker.com/r/linuxserver/wireguard)
@@ -83,7 +83,7 @@ services:
       - PEERS=1 #optional
       - PEERDNS=auto #optional
       - INTERNAL_SUBNET=10.13.13.0 #optional
-      - ALLOWEDIPS=192.168.1.0/24,192.168.2.0/24 #optional
+      - ALLOWEDIPS=0.0.0.0/0 #optional
       - PRESHARED_KEY=on #optional
     volumes:
       - /path/to/appdata/config:/config
@@ -110,7 +110,7 @@ docker run -d \
   -e PEERS=1 `#optional` \
   -e PEERDNS=auto `#optional` \
   -e INTERNAL_SUBNET=10.13.13.0 `#optional` \
-  -e ALLOWEDIPS=192.168.1.0/24,192.168.2.0/24 `#optional` \
+  -e ALLOWEDIPS=0.0.0.0/0 `#optional` \
   -e PRESHARED_KEY=on `#optional` \
   -p 51820:51820/udp \
   -v /path/to/appdata/config:/config \
@@ -136,7 +136,7 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-e PEERS=1` | Number of peers to create confs for. Required for server mode. Can be a list of names too: myPC,myPhone,myTablet... |
 | `-e PEERDNS=auto` | DNS server set in peer/client configs (can be set as `8.8.8.8`). Used in server mode. Defaults to `auto`, which uses wireguard docker host's DNS via included CoreDNS forward. |
 | `-e INTERNAL_SUBNET=10.13.13.0` | Internal subnet for the wireguard and server and peers (only change if it clashes). Used in server mode. |
-| `-e ALLOWEDIPS=192.168.1.0/24,192.168.2.0/24` | The IPs/Ranges that the peers will be able to reach using the VPN connection. If not specified the default value is: '0.0.0.0/0, ::0/0' |
+| `-e ALLOWEDIPS=0.0.0.0/0` | The IPs/Ranges that the peers will be able to reach using the VPN connection. If not specified the default value is: '0.0.0.0/0, ::0/0' This will cause ALL traffic to route through the VPN, if you want split tunneling, set this to only the IPs you would like to use the tunnel AND the ip of the server's WG ip, such as 10.13.13.1. |
 | `-e PRESHARED_KEY=on` | Use the pre-shared key to provide an additional layer of symmetric-key crypto. If set to `on`, the container will try to determine and generate the preshared key automatically. |
 | `-v /config` | Contains all relevant configuration files. |
 | `-v /lib/modules` | Maps host's modules folder. |
