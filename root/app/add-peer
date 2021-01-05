@@ -45,6 +45,9 @@ DUDE
       cat <<DUDE >> /config/wg0.conf
 PresharedKey = $(cat /config/peer${i}/presharedkey-peer${i})
 DUDE
+      cat <<DUDE >> /config/peer${i}/peer${i}.conf
+PresharedKey = $(cat /config/peer${i}/presharedkey-peer${i})
+DUDE
     fi
     echo "PEER ${i} QR code:"
     qrencode -t ansiutf8 < /config/peer${i}/peer${i}.conf
