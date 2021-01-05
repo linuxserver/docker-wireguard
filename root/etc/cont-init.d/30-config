@@ -183,10 +183,6 @@ DUDE"
       umask 077
       wg genkey | tee /config/${PEER_ID}/privatekey-${PEER_ID} | wg pubkey > /config/${PEER_ID}/publickey-${PEER_ID}
     fi
-    if [ ! -f "/config/${PEER_ID}/presharedkey-${PEER_ID}" ]; then
-      umask 077
-      wg genpsk | tee /config/${PEER_ID}/presharedkey-${PEER_ID}
-    fi
     if [ -f "/config/${PEER_ID}/${PEER_ID}.conf" ]; then
       CLIENT_IP=$(cat /config/${PEER_ID}/${PEER_ID}.conf | grep "Address" | awk '{print $NF}')
     else
@@ -206,11 +202,20 @@ DUDE"
 [Peer]
 # ${PEER_ID}
 PublicKey = $(cat /config/${PEER_ID}/publickey-${PEER_ID})
-PresharedKey = $(cat /config/${PEER_ID}/presharedkey-${PEER_ID})
-
 AllowedIPs = ${CLIENT_IP}/32
 
 DUDE
+
+    if [ "$PRESHARED_KEY" == "on" ]; then
+      if [ ! -f "/config/${PEER_ID}/presharedkey-${PEER_ID}" ]; then
+        umask 077
+        wg genpsk | tee /config/${PEER_ID}/presharedkey-${PEER_ID}
+      fi
+      cat <<DUDE >> /config/wg0.conf
+PresharedKey = $(cat /config/${PEER_ID}/presharedkey-${PEER_ID})
+DUDE
+    fi
+
     echo "PEER ${i} QR code:"
     qrencode -t ansiutf8 < /config/${PEER_ID}/${PEER_ID}.conf
     qrencode -o /config/${PEER_ID}/${PEER_ID}.png < /config/${PEER_ID}/${PEER_ID}.conf

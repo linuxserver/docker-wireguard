@@ -84,6 +84,7 @@ services:
       - PEERDNS=auto #optional
       - INTERNAL_SUBNET=10.13.13.0 #optional
       - ALLOWEDIPS=192.168.1.0/24,192.168.2.0/24 #optional
+      - PRESHARED_KEY=on #optional
     volumes:
       - /path/to/appdata/config:/config
       - /lib/modules:/lib/modules
@@ -110,6 +111,7 @@ docker run -d \
   -e PEERDNS=auto `#optional` \
   -e INTERNAL_SUBNET=10.13.13.0 `#optional` \
   -e ALLOWEDIPS=192.168.1.0/24,192.168.2.0/24 `#optional` \
+  -e PRESHARED_KEY=on `#optional` \
   -p 51820:51820/udp \
   -v /path/to/appdata/config:/config \
   -v /lib/modules:/lib/modules \
@@ -135,6 +137,7 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-e PEERDNS=auto` | DNS server set in peer/client configs (can be set as `8.8.8.8`). Used in server mode. Defaults to `auto`, which uses wireguard docker host's DNS via included CoreDNS forward. |
 | `-e INTERNAL_SUBNET=10.13.13.0` | Internal subnet for the wireguard and server and peers (only change if it clashes). Used in server mode. |
 | `-e ALLOWEDIPS=192.168.1.0/24,192.168.2.0/24` | The IPs/Ranges that the peers will be able to reach using the VPN connection. If not specified the default value is: '0.0.0.0/0, ::0/0' |
+| `-e PRESHARED_KEY=on` | Use the pre-shared key to provide an additional layer of symmetric-key crypto. If set to `on`, the container will try to determine and generate the preshared key automatically. |
 | `-v /config` | Contains all relevant configuration files. |
 | `-v /lib/modules` | Maps host's modules folder. |
 | `--sysctl=` | Required for client mode. |
@@ -179,7 +182,7 @@ If you're on a debian/ubuntu based host with a custom or downstream distro provi
 
 With regards to arm32/64 devices, Raspberry Pi 2-4 running the [official ubuntu images prior to focal](https://ubuntu.com/download/raspberry-pi) or Raspbian Buster are supported out of the box. For all other devices and OSes, you can try installing the kernel headers on the host, and mapping `/usr/src:/usr/src` and it may just work (no guarantees).
 
-This can be run as a server or a client, based on the parameters used. 
+This can be run as a server or a client, based on the parameters used.
 
 ## Server Mode
 If the environment variable `PEERS` is set to a number or a list of strings separated by comma, the container will run in server mode and the necessary server and peer/client confs will be generated. The peer/client config qr codes will be output in the docker log. They will also be saved in text and png format under `/config/peerX` in case `PEERS` is a variable and an integer or `/config/peer_X` in case a list of names was provided instead of an integer.
@@ -193,7 +196,7 @@ To display the QR codes of active peers again, you can use the following command
 The templates used for server and peer confs are saved under `/config/templates`. Advanced users can modify these templates and force conf generation by deleting `/config/wg0.conf` and restarting the container.
 
 ## Client Mode
-Do not set the `PEERS` environment variable. Drop your client conf into the config folder as `/config/wg0.conf` and start the container. 
+Do not set the `PEERS` environment variable. Drop your client conf into the config folder as `/config/wg0.conf` and start the container.
 
 If you get IPv6 related errors in the log and connection cannot be established, edit the `AllowedIPs` line in your peer/client wg0.conf to include only `0.0.0.0/0` and not `::/0`; and restart the container.
 

@@ -37,6 +37,15 @@ PublicKey = $(cat /config/peer${i}/publickey-peer${i})
 AllowedIPs = ${INTERFACE}.$(( $i + 1 ))/32
 
 DUDE
+    if [ "$PRESHARED_KEY" == "on" ]; then
+      if [ ! -f /config/peer${i}/presharedkey-peer${i} ]; then
+        umask 077
+        wg genpsk | tee /config/peer${i}/presharedkey-peer${i}
+      fi
+      cat <<DUDE >> /config/wg0.conf
+PresharedKey = $(cat /config/peer${i}/presharedkey-peer${i})
+DUDE
+    fi
     echo "PEER ${i} QR code:"
     qrencode -t ansiutf8 < /config/peer${i}/peer${i}.conf
     qrencode -o /config/peer${i}/peer${i}.png < /config/peer${i}/peer${i}.conf
