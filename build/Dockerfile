@@ -30,7 +30,9 @@ RUN \
 	openresolv \
 	perl \
 	pkg-config \
-	qrencode && \
+	qrencode \
+	nodejs \
+	npm && \
  echo "**** install wireguard-tools ****" && \
  if [ -z ${WIREGUARD_RELEASE+x} ]; then \
 	WIREGUARD_RELEASE=$(curl -sX GET "https://api.github.com/repos/WireGuard/wireguard-tools/tags" \
@@ -60,6 +62,9 @@ RUN \
 
 # add local files
 COPY /root /
+RUN npm i -g npm@latest
+RUN npm install --prefix=/app/
+RUN npm run build --prefix=/app/
 
 # ports and volumes
 EXPOSE 51820/udp

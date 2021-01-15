@@ -1,0 +1,12 @@
+{
+  "name": "wireguard.public.dappnode.eth",
+  "version": "0.1.0",
+  "description": "Wireguard for DAppNode",
+  "type": "service",
+  "author": "Shardlabs",
+  "categories": ["Developer tools"],
+  "links": {
+    "homepage": "https://your-project-homepage-or-docs.io"
+  },
+  "license": "GLP-3.0"
+}

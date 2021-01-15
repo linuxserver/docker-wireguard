@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+      "allowJs": true,
+      "target": "es5",
+      "sourceMap": true,
+      "esModuleInterop": true,
+      "strict": true,
+      "outDir": "dist"
+    },
+    "include": ["./src"]
+  }
+  

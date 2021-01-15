@@ -4,3 +4,5 @@
 .gitattributes
 READMETEMPLATE.md
 README.md
+root/app/node_modules
+root/app/dist
