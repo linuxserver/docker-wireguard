@@ -180,7 +180,7 @@ libuuid12.31.1-0.4ubuntu3.7
 libwind0-heimdal7.5.0+dfsg-1
 libxtables121.6.1-2ubuntu2
 libzstd11.3.3+dfsg-2ubuntu1.1
-linux-libc-dev4.15.0-130.134
+linux-libc-dev4.15.0-132.136
 locales2.27-3ubuntu1.4
 login1:4.5-1ubuntu2
 lsb-base9.20170808ubuntu1
@@ -207,8 +207,8 @@ readline-common7.0-3
 sed4.4-2
 sensible-utils0.0.12
 sysvinit-utils2.88dsf-59.10ubuntu1
-tar1.29b-2ubuntu0.1
-tzdata2020d-0ubuntu0.18.04
+tar1.29b-2ubuntu0.2
+tzdata2020f-0ubuntu0.18.04
 ubuntu-keyring2018.09.18.1~18.04.0
 util-linux2.31.1-0.4ubuntu3.7
 xz-utils5.2.2-1.3
