@@ -8,5 +8,9 @@
   "links": {
     "homepage": "https://github.com/Shard-Labs/docker-wireguard"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Shard-Labs/docker-wireguard"
+  },
   "license": "GLP-3.0"
 }

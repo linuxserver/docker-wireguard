@@ -8,14 +8,13 @@ services:
       - NET_ADMIN
       - SYS_MODULE
     environment:
+      - PEERS=dappnode_admin
+      - SERVERURL=
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/Zagreb
       - SERVERPORT=51820
-      - PEERS=
       - PEERDNS=172.33.1.2
-      - SERVERURL=
-      - INTERNAL_SUBNET=172.33.10.0
+      - INTERNAL_SUBNET=172.34.1.0
       - ALLOWEDIPS=172.33.0.0/16
     volumes:
       - "wg-config:/config"

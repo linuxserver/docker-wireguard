@@ -4,7 +4,6 @@ fields:
     target:
       type: environment
       name: PEERS
-      service: wireguard
     title: Devices
     description: >-
       Please enter your names of your devices separated by commas and without whitespaces
@@ -14,7 +13,7 @@ fields:
     target:
       type: environment
       name: SERVERURL
-      service: node
     title: Dappnode domain
     description: >-
       Dappnode domain name you would like to use (*.dyndns.dappnode.io domains are recommended).
+    required: true
