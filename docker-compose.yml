@@ -11,16 +11,18 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Zagreb
-      - SERVERPORT=51820 
+      - SERVERPORT=51820
       - PEERS=
-      - PEERDNS=172.33.1.2 
-      - SERVERURL=dappnode.shardlabs.io
-      - INTERNAL_SUBNET=172.33.10.0 
-      - ALLOWEDIPS=172.33.0.0/16 
+      - PEERDNS=172.33.1.2
+      - SERVERURL=
+      - INTERNAL_SUBNET=172.33.10.0
+      - ALLOWEDIPS=172.33.0.0/16
     volumes:
-      - /path/to/appdata/config:/config
-      - /lib/modules:/lib/modules
+      - "wg-config:/config"
+      - "/lib/modules:/lib/modules"
     ports:
-      - 51820:51820/udp
+      - "51820:51820/udp"
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
+volumes:
+  wg-config: {}
