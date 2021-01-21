@@ -5,11 +5,8 @@
   "type": "service",
   "author": "Shardlabs",
   "categories": ["Developer tools"],
-  "globalEnvs": {
-    "all": true
-  },
   "links": {
-    "homepage": "https://your-project-homepage-or-docs.io"
+    "homepage": "https://github.com/Shard-Labs/docker-wireguard"
   },
   "license": "GLP-3.0"
 }
