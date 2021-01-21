@@ -14,7 +14,7 @@ services:
       - SERVERPORT=51820 
       - PEERS=
       - PEERDNS=172.33.1.2 
-      - SERVERURL=dappnode.shardlabs.io
+      - SERVERURL=${_DAPPNODE_GLOBAL_HOSTNAME}
       - INTERNAL_SUBNET=172.33.10.0 
       - ALLOWEDIPS=172.33.0.0/16 
     volumes:
