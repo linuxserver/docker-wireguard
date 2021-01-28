@@ -10,6 +10,7 @@ services:
     environment:
       - PEERS=dappnode_admin
       - SERVERURL=
+      - WIREGUARD_RELEASE=
       - PUID=1000
       - PGID=1000
       - SERVERPORT=51820

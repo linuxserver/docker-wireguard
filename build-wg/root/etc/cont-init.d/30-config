@@ -134,6 +134,12 @@ DUDE
     fi
     cd /app
     echo "**** Building the module ****"
+    if [ -z ${WIREGUARD_RELEASE} ] ;  then
+          echo "Wireguard release set, checking out correct version"
+          cd wireguard-linux-compat
+          git checkout $WIREGUARD_RELEASE
+          cd .. 
+    fi
     make -C wireguard-linux-compat/src -j$(nproc)
     make -C wireguard-linux-compat/src install
     echo "**** Let's test our new module. ****"

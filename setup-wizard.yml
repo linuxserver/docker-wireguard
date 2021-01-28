@@ -4,6 +4,7 @@ fields:
     target:
       type: environment
       name: PEERS
+      service: wireguard
     title: Devices
     description: >-
       Please enter your names of your devices separated by commas and without whitespaces
