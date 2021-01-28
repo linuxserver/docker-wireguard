@@ -10,7 +10,7 @@ fi
 INTERNAL_SUBNET=${INTERNAL_SUBNET:-10.13.13.0}
 INTERFACE=$(echo "$INTERNAL_SUBNET" | awk 'BEGIN{FS=OFS="."} NF--')
 if [ -z "$SERVERURL" ] || [ "$SERVERURL" = "auto" ]; then
-  SERVERURL=$(curl icanhazip.com)
+  SERVERURL=$(curl my.dappnode/global-envs/HOSTNAME)
 fi
 SERVERPORT=${SERVERPORT:-51820}
 if [ -z "$PEERDNS" ] || [ "$PEERDNS" = "auto" ]; then
