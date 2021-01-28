@@ -2,7 +2,7 @@ version: "3.4"
 services:
   wireguard:
     build: ./build-wg
-    image: "core.wireguard.public.dappnode.eth:0.1.0"
+    image: "wireguard.wireguard.public.dappnode.eth:0.1.0"
     restart: always
     cap_add:
       - NET_ADMIN
