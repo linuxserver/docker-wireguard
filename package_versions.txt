@@ -64,8 +64,8 @@ libasn1-8-heimdal7.5.0+dfsg-1
 libassuan02.5.1-2
 libatomic18.4.0-1ubuntu1~18.04
 libattr11:2.4.47-2build1
-libaudit11:2.8.2-1ubuntu1
-libaudit-common1:2.8.2-1ubuntu1
+libaudit11:2.8.2-1ubuntu1.1
+libaudit-common1:2.8.2-1ubuntu1.1
 libbinutils2.30-21ubuntu1~18.04.4
 libblkid12.31.1-0.4ubuntu3.7
 libbz2-1.01.0.6-8.1ubuntu0.2
@@ -180,7 +180,7 @@ libuuid12.31.1-0.4ubuntu3.7
 libwind0-heimdal7.5.0+dfsg-1
 libxtables121.6.1-2ubuntu2
 libzstd11.3.3+dfsg-2ubuntu1.1
-linux-libc-dev4.15.0-134.138
+linux-libc-dev4.15.0-135.139
 locales2.27-3ubuntu1.4
 login1:4.5-1ubuntu2
 lsb-base9.20170808ubuntu1
