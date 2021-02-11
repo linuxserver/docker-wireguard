@@ -185,10 +185,13 @@ DUDE"
     fi
     if [ -f "/config/${PEER_ID}/${PEER_ID}.conf" ]; then
       CLIENT_IP=$(cat /config/${PEER_ID}/${PEER_ID}.conf | grep "Address" | awk '{print $NF}')
+      if [ -n "${ORIG_INTERFACE}" ] && [ "${INTERFACE}" != "${ORIG_INTERFACE}" ]; then
+        CLIENT_IP=$(echo "${CLIENT_IP}" | sed "s|${ORIG_INTERFACE}|${INTERFACE}|")
+      fi
     else
       for idx in {2..254}; do
         PROPOSED_IP="${INTERFACE}.${idx}"
-        if ! grep -q -R "${PROPOSED_IP}" /config/peer*/*.conf; then
+        if ! grep -q -R "${PROPOSED_IP}" /config/peer*/*.conf && ([ -z "${ORIG_INTERFACE}" ] || ! grep -q -R "${ORIG_INTERFACE}.${idx}" /config/peer*/*.conf); then
           CLIENT_IP="${PROPOSED_IP}"
           break
         fi
