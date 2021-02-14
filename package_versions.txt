@@ -11,7 +11,7 @@ binutils-x86-64-linux-gnu2.30-21ubuntu1~18.04.4
 bsdutils1:2.31.1-0.4ubuntu3.7
 build-essential12.4ubuntu1
 bzip21.0.6-8.1ubuntu0.2
-ca-certificates20201027ubuntu0.18.04.1
+ca-certificates20210119~18.04.1
 coreutils8.28-1ubuntu1
 cpp4:7.4.0-1ubuntu2.3
 cpp-77.5.0-3ubuntu1~18.04
@@ -122,8 +122,8 @@ libkrb5-26-heimdal7.5.0+dfsg-1
 libkrb5-31.16-2ubuntu0.2
 libkrb5support01.16-2ubuntu0.2
 libksba81.3.5-2
-libldap-2.4-22.4.45+dfsg-1ubuntu1.8
-libldap-common2.4.45+dfsg-1ubuntu1.8
+libldap-2.4-22.4.45+dfsg-1ubuntu1.9
+libldap-common2.4.45+dfsg-1ubuntu1.9
 liblsan08.4.0-1ubuntu1~18.04
 liblz4-10.0~r131-2ubuntu3
 liblzma55.2.2-1.3
