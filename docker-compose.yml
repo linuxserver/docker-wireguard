@@ -15,7 +15,7 @@ services:
       - PGID=1000
       - SERVERPORT=51820
       - PEERDNS=172.33.1.2
-      - INTERNAL_SUBNET=172.34.1.0
+      - INTERNAL_SUBNET=10.24.0.0
       - ALLOWEDIPS=172.33.0.0/16
     volumes:
       - "wg-config:/config"
