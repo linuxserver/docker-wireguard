@@ -1,13 +1,19 @@
-FROM node:12 AS builder
+FROM node:12-alpine AS builder
 WORKDIR /app
 COPY . .
-RUN npm install
-RUN npm run clean
-RUN npm run build
+RUN yarn
+RUN yarn build
+
+RUN rm -rf node_modules && yarn --production
+
+
 # Our Second stage, that creates an image for production
-FROM node:12-alpine
+FROM alpine
 WORKDIR /app
-COPY --from=builder ./app/dist ./dist
-COPY package* ./
-RUN npm install --production
-CMD npm start
+
+RUN apk add --update --no-cache nodejs
+
+COPY --from=builder /app/dist/ ./
+COPY --from=builder /app/node_modules/ ./node_modules
+
+ENTRYPOINT [ "node", "index" ]
