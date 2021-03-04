@@ -1,5 +1,4 @@
 {
-  "extends": "typestrict",
   "rules": {
     "no-debugger": true,
     "mocha-avoid-only": true,

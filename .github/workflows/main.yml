@@ -1,0 +1,33 @@
+name: "Main"
+on:
+  pull_request:
+  push:
+    branches:
+      - "main"
+      - "master"
+      - "v[0-9]+.[0-9]+.[0-9]+"
+    paths-ignore:
+      - "README.md"
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    name: Build test
+    if: github.event_name != 'push'
+    steps:
+      - uses: actions/checkout@v2
+      - run: npx @dappnode/dappnodesdk build --skip_save
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish
+        run: npx @dappnode/dappnodesdk publish patch --dappnode_team_preset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PINATA_API_KEY: ${{ secrets.PINATA_API_KEY }}
+          PINATA_SECRET_API_KEY: ${{ secrets.PINATA_SECRET_API_KEY }}
+          DEVELOPER_ADDRESS: "0xf35960302a07022aba880dffaec2fdd64d5bf1c1"
