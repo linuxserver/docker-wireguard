@@ -5,6 +5,7 @@
   "type": "service",
   "author": "Shardlabs",
   "categories": ["Developer tools"],
+  "architectures": ["linux/amd64", "linux/arm64"],
   "links": {
     "homepage": "https://github.com/Shard-Labs/docker-wireguard"
   },

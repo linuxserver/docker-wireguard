@@ -4,6 +4,7 @@ FROM ghcr.io/linuxserver/baseimage-ubuntu:bionic
 ARG BUILD_DATE
 ARG VERSION
 ARG WIREGUARD_RELEASE
+ARG TARGETPLATFORM
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="aptalca"
 
@@ -48,7 +49,7 @@ RUN \
 	| awk '/tag_name/{print $4;exit}' FS='[""]' | awk '{print substr($1,2); }') && \
  curl -o \
 	/tmp/coredns.tar.gz -L \
-	"https://github.com/coredns/coredns/releases/download/v${COREDNS_VERSION}/coredns_${COREDNS_VERSION}_linux_amd64.tgz" && \
+	"https://github.com/coredns/coredns/releases/download/v${COREDNS_VERSION}/coredns_${COREDNS_VERSION}_$(echo ${TARGETPLATFORM:-linux/amd64} | sed 's:/:_:g' | sed 's/arm_v7/arm/').tgz" && \
  tar xf \
 	/tmp/coredns.tar.gz -C \
 	/app && \
