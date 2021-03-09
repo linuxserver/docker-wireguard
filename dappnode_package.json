@@ -1,8 +1,8 @@
 {
-  "name": "wireguard.public.dappnode.eth",
+  "name": "wireguard.dnp.dappnode.eth",
   "version": "0.1.0",
   "description": "Wireguard for DAppNode",
-  "type": "service",
+  "type": "dncore",
   "author": "Shardlabs",
   "categories": ["Developer tools"],
   "architectures": ["linux/amd64", "linux/arm64"],
