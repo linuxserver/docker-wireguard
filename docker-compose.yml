@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   wireguard:
-    build: ./build-wg
+    build: .
     image: "wireguard.wireguard.dnp.dappnode.eth:0.1.0"
     restart: always
     cap_add:
@@ -25,7 +25,7 @@ services:
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
   api:
-    build: ./build-api
+    build: ./api
     image: "api.wireguard.dnp.dappnode.eth:0.1.0"
     volumes:
       - "wg-config:/config"
