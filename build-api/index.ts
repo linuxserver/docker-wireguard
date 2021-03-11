@@ -25,4 +25,11 @@ app.get("/:device/:mode?", (req: express.Request, res: express.Response) => {
   }
 });
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+const server = app.listen(port, () => console.log(`Listening on port ${port}`));
+
+process.on("SIGTERM", shutdown);
+process.on("SIGINT", shutdown);
+function shutdown() {
+  console.log("Closing server...");
+  server.close((err) => console.log(err || "Bye"));
+}
