@@ -15,7 +15,7 @@ ca-certificates20210119~18.04.1
 coreutils8.28-1ubuntu1
 cpp4:7.4.0-1ubuntu2.3
 cpp-77.5.0-3ubuntu1~18.04
-curl7.58.0-2ubuntu3.12
+curl7.58.0-2ubuntu3.13
 dash0.5.8-2.10
 debconf1.5.66ubuntu1
 debianutils4.8.4
@@ -78,8 +78,8 @@ libcc1-08.4.0-1ubuntu1~18.04
 libc-dev-bin2.27-3ubuntu1.4
 libcilkrts57.5.0-3ubuntu1~18.04
 libcom-err21.44.1-1ubuntu1.3
-libcurl3-gnutls7.58.0-2ubuntu3.12
-libcurl47.58.0-2ubuntu3.12
+libcurl3-gnutls7.58.0-2ubuntu3.13
+libcurl47.58.0-2ubuntu3.13
 libdb5.35.3.28-13.1ubuntu1.1
 libdebconfclient00.213ubuntu1
 libdpkg-perl1.19.0.5ubuntu2.3
@@ -166,7 +166,7 @@ libsepol12.7-1
 libsmartcols12.31.1-0.4ubuntu3.7
 libsqlite3-03.22.0-1ubuntu0.4
 libss21.44.1-1ubuntu1.3
-libssl1.11.1.1-1ubuntu2.1~18.04.8
+libssl1.11.1.1-1ubuntu2.1~18.04.9
 libstdc++68.4.0-1ubuntu1~18.04
 libstdc++-7-dev7.5.0-3ubuntu1~18.04
 libsystemd0237-3ubuntu10.45
@@ -192,7 +192,7 @@ ncurses-base6.1-1ubuntu1.18.04
 ncurses-bin6.1-1ubuntu1.18.04
 net-tools1.60+git20161116.90da8a0-1ubuntu1
 openresolv3.8.0-1
-openssl1.1.1-1ubuntu2.1~18.04.8
+openssl1.1.1-1ubuntu2.1~18.04.9
 passwd1:4.5-1ubuntu2
 patch2.7.6-2ubuntu1.1
 perl5.26.1-6ubuntu0.5
