@@ -11,7 +11,7 @@ if ip link add dev test type wireguard; then
   ip link del dev test
 else
   echo "**** The wireguard module is not active, will attempt kernel header install and module compilation. ****"
-fi  
+fi
 
 # install headers if necessary
 if [ "$SKIP_COMPILE" != "true" ] && [ ! -e /lib/modules/$(uname -r)/build ]; then
@@ -107,7 +107,7 @@ DUDE
 fi
 
 if [ "$SKIP_COMPILE" != "true" ]; then
-  if [ -e /lib/modules/$(uname -r)/build ]; then 
+  if [ -e /lib/modules/$(uname -r)/build ]; then
     echo "**** Kernel headers seem to be present, attempting to build the wireguard module. . . ****"
     if [ ! -f /lib/modules/$(uname -r)/build/certs/signing_key.pem ]; then
       mkdir -p /lib/modules/$(uname -r)/build/certs
@@ -208,6 +208,20 @@ PublicKey = $(cat /config/${PEER_ID}/publickey-${PEER_ID})
 AllowedIPs = ${CLIENT_IP}/32
 
 DUDE
+
+    if [ "$PRESHARED_KEY" == "on" ]; then
+      if [ ! -f "/config/${PEER_ID}/presharedkey-${PEER_ID}" ]; then
+        umask 077
+        wg genpsk | tee /config/${PEER_ID}/presharedkey-${PEER_ID}
+      fi
+      cat <<DUDE >> /config/${PEER_ID}/${PEER_ID}.conf
+PresharedKey = $(cat /config/${PEER_ID}/presharedkey-${PEER_ID})
+DUDE
+      cat <<DUDE >> /config/wg0.conf
+PresharedKey = $(cat /config/${PEER_ID}/presharedkey-${PEER_ID})
+DUDE
+    fi
+
     echo "PEER ${i} QR code:"
     qrencode -t ansiutf8 < /config/${PEER_ID}/${PEER_ID}.conf
     qrencode -o /config/${PEER_ID}/${PEER_ID}.png < /config/${PEER_ID}/${PEER_ID}.conf
