@@ -18,7 +18,7 @@ jobs:
           fi
           echo "**** External trigger running off of master branch. To disable this trigger, set a Github secret named \"PAUSE_EXTERNAL_TRIGGER_WIREGUARD_MASTER\". ****"
           echo "**** Retrieving external version ****"
-          EXT_RELEASE=$(curl -sX GET https://api.github.com/repos/WireGuard/wireguard-tools/tags | jq -r .[0].name)
+          EXT_RELEASE=$(curl -u ${{ secrets.CR_USER }}:${{ secrets.CR_PAT }} -sX GET https://api.github.com/repos/WireGuard/wireguard-tools/tags | jq -r .[0].name)
           if [ -z "${EXT_RELEASE}" ] || [ "${EXT_RELEASE}" == "null" ]; then
             echo "**** Can't retrieve external version, exiting ****"
             FAILURE_REASON="Can't retrieve external version for wireguard branch master"
