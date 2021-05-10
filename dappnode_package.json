@@ -7,11 +7,11 @@
   "categories": ["Developer tools"],
   "architectures": ["linux/amd64", "linux/arm64"],
   "links": {
-    "homepage": "https://github.com/Shard-Labs/docker-wireguard"
+    "homepage": "https://github.com/dappnode/DNP_WIREGUARD"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Shard-Labs/docker-wireguard"
+    "url": "https://github.com/dappnode/DNP_WIREGUARD"
   },
   "license": "GLP-3.0"
 }
