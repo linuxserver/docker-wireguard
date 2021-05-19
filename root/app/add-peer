@@ -7,11 +7,18 @@ if [ ! -f /config/wg0.conf ] || [ -z "$PEERS" ]; then
   exit 0
 fi
 
+# 1 argument: remote/local
+function get_serverurl() {
+  if [ $1 === "remote" ]; then
+    SERVERURL=$(curl my.dappnode/global-envs/HOSTNAME)
+  elif [ $1 === "local" ]; then
+    SERVERURL=$(curl my.dappnode/global-envs/INTERNAL_IP)
+  fi
+}
+
 INTERNAL_SUBNET=${INTERNAL_SUBNET:-10.13.13.0}
 INTERFACE=$(echo "$INTERNAL_SUBNET" | awk 'BEGIN{FS=OFS="."} NF--')
-if [ -z "$SERVERURL" ] || [ "$SERVERURL" = "auto" ]; then
-  SERVERURL=$(curl my.dappnode/global-envs/HOSTNAME)
-fi
+
 SERVERPORT=${SERVERPORT:-51820}
 if [ -z "$PEERDNS" ] || [ "$PEERDNS" = "auto" ]; then
   PEERDNS="${INTERFACE}.1"
@@ -27,8 +34,16 @@ for i in {1..254}; do
       umask 077
       wg genkey | tee /config/peer${i}/privatekey-peer${i} | wg pubkey > /config/peer${i}/publickey-peer${i}
     fi
+    # Remote peer
+    get_serverurl "remote"
     eval "`printf %s`
-    cat <<DUDE > /config/peer${i}/peer${i}.conf
+    cat <<DUDE > /config/peer${i}/peer${i}.remote.conf
+`cat /config/templates/peer.conf`
+DUDE"
+    # Local peer
+    get_serverurl "local"
+    eval "`printf %s`
+    cat <<DUDE > /config/peer${i}/peer${i}.local.conf
 `cat /config/templates/peer.conf`
 DUDE"
     cat <<DUDE >> /config/wg0.conf
