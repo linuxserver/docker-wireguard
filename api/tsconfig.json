@@ -7,5 +7,5 @@
     "strict": true,
     "outDir": "dist"
   },
-  "include": ["./src", "index.ts", "createLocalConfigFile.ts", "test/*"]
+  "include": ["src/**/*", "test/*"]
 }
