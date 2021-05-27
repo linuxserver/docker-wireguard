@@ -25,7 +25,7 @@ export async function createLocalConfigFile(device: string): Promise<string> {
 
 async function getLocalIp(): Promise<string> {
   try {
-    const localIp = await got(params.DAPPNODE_INTERNAL_IP).text();
+    const localIp = await got(params.DAPPNODE_API_URL_GET_INTERNAL_IP).text();
     if (!localIp) throw Error("localIp is empty");
     if (!ipRegex({ exact: true }).test(localIp)) throw Error("Invalida localIp");
     return localIp;
