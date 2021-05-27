@@ -17,9 +17,7 @@ COPY --from=builder /app/dist/ ./
 COPY --from=builder /app/node_modules/ ./node_modules
 
 # Prepare external executables
-RUN chmod +x /app/src/executables/getWireguardCredentialsLocal.js && \
-    chmod +x /app/src/executables/getWireguardCredentialsRemote.js && \
-    ln -s /app/src/executables/getWireguardCredentialsLocal.js /usr/local/bin/getWireguardCredentialsLocal && \
-    ln -s /app/src/executables/getWireguardCredentialsRemote.js /usr/local/bin/getWireguardCredentialsRemote
+RUN chmod +x /app/src/executables/getWireguardCredentials.js && \
+    ln -s /app/src/executables/getWireguardCredentials.js /usr/local/bin/getWireguardCredentials
 
 ENTRYPOINT [ "node", "src/index" ]
