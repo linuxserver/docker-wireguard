@@ -7,7 +7,10 @@
 
 import { renderQrCode } from "../renderQrCode";
 import { params } from "../params";
-import { createLocalConfigFile, getRemoteConfigFilePath } from "../createLocalConfigFile";
+import {
+  createLocalConfigFile,
+  getRemoteConfigFilePath,
+} from "../createLocalConfigFile";
 import fs from "fs";
 
 (async function (): Promise<void> {
@@ -21,45 +24,31 @@ import fs from "fs";
     const isQr = process.argv.includes("--qr");
     const isLocal = process.argv.includes("--local");
 
-    console.log(createStartingLog(isLocal ? "local" : "remote", isQr ? "qr" : "text"));
-    console.log(await getCredentials(isLocal, isQr));
+    const configName = isLocal ? "local" : "remote";
+    const configFormat = isQr ? "qr" : "text";
+    console.log(
+      `Preparing ${configName} ${configFormat} Wireguard credentials; use CTRL + C to stop`
+    );
+
+    const config = isLocal
+      ? await createLocalConfigFile(params.MASTER_ADMIN)
+      : fs.readFileSync(
+          getRemoteConfigFilePath(params.MASTER_ADMIN, "conf"),
+          "utf-8"
+        );
+
+    const str = isQr
+      ? // If rendering the QR fails, show error and the raw remoteTextCreds
+        await renderQrCode(config).catch((e) => {
+          console.error("Error rendering remote QR code", e);
+          return config;
+        })
+      : config;
+
+    console.log(str);
   } catch (e) {
     // Exit process cleanly to prevent showing 'Unhandled rejection'
     console.error(e);
     process.exit(1);
   }
 })();
-
-// Utils
-function createStartingLog(credentials: "local" | "remote", mode: "qr" | "text"): string {
-  return `Preparing ${credentials} ${mode} Wireguard credentials; use CTRL + C to stop`;
-}
-
-async function getCredentials(isLocal: boolean, isQr: boolean) {
-  // LOCAL
-  if (isLocal) {
-    const localTextCreds = await createLocalConfigFile(params.MASTER_ADMIN);
-    if (!isQr) return localTextCreds;
-    // If rendering the QR fails, show error and the raw config
-    const localQrCreds = await renderQrCode(localTextCreds).catch((e) => {
-      console.error("Error rendering local QR code", e);
-      return localTextCreds;
-    });
-
-    return localQrCreds;
-  }
-
-  //REMOTE
-  const remoteFilePath = getRemoteConfigFilePath(params.MASTER_ADMIN, "conf");
-  const remoteTextCreds = fs.readFileSync(remoteFilePath, "utf-8");
-
-  if (!isQr) return remoteTextCreds;
-
-  // If rendering the QR fails, show error and the raw remoteTextCreds
-  const remoteQrCreds = await renderQrCode(remoteTextCreds).catch((e) => {
-    console.error("Error rendering remote QR code", e);
-    return remoteTextCreds;
-  });
-
-  return remoteQrCreds;
-}
