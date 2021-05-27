@@ -45,7 +45,7 @@ import fs from "fs";
         })
       : config;
 
-    console.log(str);
+    console.log(`\n\n${str}\n\n`);
   } catch (e) {
     // Exit process cleanly to prevent showing 'Unhandled rejection'
     console.error(e);
