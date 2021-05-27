@@ -2,17 +2,13 @@ import fs from "fs";
 import got from "got";
 import ipRegex from "ip-regex";
 import path from "path";
-
-// Params
-const dappnodeApiInternalIp = "http://my.dappnode/global-envs/INTERNAL_IP";
-const serverPort = 51820;
-const dataDir: string = process.env.DATA_DIR || "/config";
+import { params } from "./params";
 
 export async function createLocalConfigFile(device: string): Promise<string> {
   try {
     const remoteFilePath = getRemoteConfigFilePath(device, "conf");
     const localIp = await getLocalIp();
-    const localEndpoint = `${localIp}:${serverPort}`;
+    const localEndpoint = `${localIp}:${params.SERVER_PORT}`;
 
     const remoteConfigFile = fs.readFileSync(remoteFilePath, "utf8");
     const localConfigFile = setLocalEndpoint(remoteConfigFile, localEndpoint);
@@ -29,7 +25,7 @@ export async function createLocalConfigFile(device: string): Promise<string> {
 
 async function getLocalIp(): Promise<string> {
   try {
-    const localIp = await got(dappnodeApiInternalIp).text();
+    const localIp = await got(params.DAPPNODE_API_URL_GET_INTERNAL_IP).text();
     if (!localIp) throw Error("localIp is empty");
     if (!ipRegex({ exact: true }).test(localIp)) throw Error("Invalida localIp");
     return localIp;
@@ -47,5 +43,5 @@ export function setLocalEndpoint(configFile: string, localEndpoint: string): str
 }
 
 export function getRemoteConfigFilePath(device: string, mode: string): string {
-  return path.join(dataDir, `peer_${device}`, `peer_${device}.local.${mode}`);
+  return path.join(params.DATA_DIR, `peer_${device}`, `peer_${device}.local.${mode}`);
 }

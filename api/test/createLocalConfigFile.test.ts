@@ -1,6 +1,6 @@
 import "mocha";
 import { expect } from "chai";
-import { setLocalEndpoint } from "../createLocalConfigFile";
+import { setLocalEndpoint } from "../src/createLocalConfigFile";
 
 describe("Config files", function () {
   it("Create localConfig file from remoteConfigFile with local endpoint", function () {

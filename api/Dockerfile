@@ -16,4 +16,8 @@ RUN apk add --update --no-cache nodejs
 COPY --from=builder /app/dist/ ./
 COPY --from=builder /app/node_modules/ ./node_modules
 
-ENTRYPOINT [ "node", "index" ]
+# Prepare external executables
+RUN chmod +x /app/src/executables/getWireguardCredentials.js && \
+    ln -s /app/src/executables/getWireguardCredentials.js /usr/local/bin/getWireguardCredentials
+
+ENTRYPOINT [ "node", "src/index" ]
