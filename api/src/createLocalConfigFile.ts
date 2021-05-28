@@ -43,5 +43,5 @@ export function setLocalEndpoint(configFile: string, localEndpoint: string): str
 }
 
 export function getRemoteConfigFilePath(device: string, mode: string): string {
-  return path.join(params.DATA_DIR, `peer_${device}`, `peer_${device}.local.${mode}`);
+  return path.join(params.DATA_DIR, `peer_${device}`, `peer_${device}.${mode}`);
 }
