@@ -101,6 +101,11 @@ DUDE
         rm -rf /etc/apt/sources.list.d/debian.list
       fi
     fi
+  elif [[ "$(uname -r)" == *"amzn2"* ]]; then
+        echo "**** Attempting to install kernel headers from the Amazon Linux repo ****"
+        apt-get install -y yum yum-utils
+        yumdownloader kernel-devel-$(uname -r)
+        rpm -i --force --nodeps kernel-devel-$(uname -r).rpm
   else
     echo "**** No kernel headers found in the Ubuntu or Debian repos!! Will try the headers from host (if mapped), may or may not work ****"
   fi
