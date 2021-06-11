@@ -3,8 +3,8 @@ services:
   wireguard:
     build: .
     image: "wireguard.wireguard.dnp.dappnode.eth:0.1.0"
-    container_name: "DAppNodeCore-wireguard.wireguard.dnp.dappnode.eth"
-    restart: always
+    container_name: DAppNodeCore-wireguard.wireguard.dnp.dappnode.eth
+    restart: unless-stopped
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
@@ -15,9 +15,9 @@ services:
       - PUID=1000
       - PGID=1000
       - SERVERPORT=51820
-      - PEERDNS=172.33.1.2,10.20.0.2
+      - "PEERDNS=172.33.1.2,10.20.0.2"
       - INTERNAL_SUBNET=10.24.0.0
-      - ALLOWEDIPS=172.33.0.0/16,10.20.0.0/24
+      - "ALLOWEDIPS=172.33.0.0/16,10.20.0.0/24"
     volumes:
       - "wg-config:/config"
       - "/lib/modules:/lib/modules"
@@ -31,8 +31,9 @@ services:
           - wireguard.wireguard.dappnode
   api:
     build: ./api
+    restart: unless-stopped
     image: "api.wireguard.dnp.dappnode.eth:0.1.0"
-    container_name: "DAppNodeCore-api.wireguard.dnp.dappnode.eth"
+    container_name: DAppNodeCore-api.wireguard.dnp.dappnode.eth
     volumes:
       - "wg-config:/config"
     networks:
@@ -41,7 +42,6 @@ services:
           - api.wireguard.dappnode
 volumes:
   wg-config: {}
-
 networks:
   dncore_network:
     name: dncore_network
