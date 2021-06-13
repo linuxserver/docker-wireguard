@@ -125,7 +125,7 @@ libksba81.3.5-2
 libldap-2.4-22.4.45+dfsg-1ubuntu1.10
 libldap-common2.4.45+dfsg-1ubuntu1.10
 liblsan08.4.0-1ubuntu1~18.04
-liblz4-10.0~r131-2ubuntu3
+liblz4-10.0~r131-2ubuntu3.1
 liblzma55.2.2-1.3
 libmnl01.0.4-2
 libmount12.31.1-0.4ubuntu3.7
@@ -141,10 +141,10 @@ libnghttp2-141.30.0-1ubuntu1
 libnpth01.5-3
 libonig46.7.0-1
 libp11-kit00.23.9-2ubuntu0.1
-libpam0g1.1.8-3.6ubuntu2.18.04.2
-libpam-modules1.1.8-3.6ubuntu2.18.04.2
-libpam-modules-bin1.1.8-3.6ubuntu2.18.04.2
-libpam-runtime1.1.8-3.6ubuntu2.18.04.2
+libpam0g1.1.8-3.6ubuntu2.18.04.3
+libpam-modules1.1.8-3.6ubuntu2.18.04.3
+libpam-modules-bin1.1.8-3.6ubuntu2.18.04.3
+libpam-runtime1.1.8-3.6ubuntu2.18.04.3
 libpcre32:8.39-9
 libperl5.265.26.1-6ubuntu0.5
 libpng16-161.6.34-1ubuntu0.18.04.2
