@@ -9,6 +9,10 @@ trap _term SIGTERM
 
 wg-quick up wg0
 
-sleep infinity &
-
-wait
+if [ "true" == "$LOG" ]; then
+  echo "**** Logging activated ****"
+  /app/logging.sh
+else
+  sleep infinity &
+  wait
+fi
