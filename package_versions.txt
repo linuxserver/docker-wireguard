@@ -15,7 +15,7 @@ ca-certificates20210119~18.04.1
 coreutils8.28-1ubuntu1
 cpp4:7.4.0-1ubuntu2.3
 cpp-77.5.0-3ubuntu1~18.04
-curl7.58.0-2ubuntu3.13
+curl7.58.0-2ubuntu3.14
 dash0.5.8-2.10
 debconf1.5.66ubuntu1
 debianutils4.8.4
@@ -46,7 +46,7 @@ gpgv2.2.4-1ubuntu1.4
 gpg-wks-client2.2.4-1ubuntu1.4
 gpg-wks-server2.2.4-1ubuntu1.4
 grep3.1-2build1
-gzip1.6-5ubuntu1
+gzip1.6-5ubuntu1.1
 hostname3.20
 ifupdown0.8.17ubuntu1.1
 init-system-helpers1.51
@@ -78,8 +78,8 @@ libcc1-08.4.0-1ubuntu1~18.04
 libc-dev-bin2.27-3ubuntu1.4
 libcilkrts57.5.0-3ubuntu1~18.04
 libcom-err21.44.1-1ubuntu1.3
-libcurl3-gnutls7.58.0-2ubuntu3.13
-libcurl47.58.0-2ubuntu3.13
+libcurl3-gnutls7.58.0-2ubuntu3.14
+libcurl47.58.0-2ubuntu3.14
 libdb5.35.3.28-13.1ubuntu1.1
 libdebconfclient00.213ubuntu1
 libdpkg-perl1.19.0.5ubuntu2.3
@@ -180,7 +180,7 @@ libuuid12.31.1-0.4ubuntu3.7
 libwind0-heimdal7.5.0+dfsg-1
 libxtables121.6.1-2ubuntu2
 libzstd11.3.3+dfsg-2ubuntu1.2
-linux-libc-dev4.15.0-147.151
+linux-libc-dev4.15.0-151.157
 locales2.27-3ubuntu1.4
 login1:4.5-1ubuntu2
 lsb-base9.20170808ubuntu1
