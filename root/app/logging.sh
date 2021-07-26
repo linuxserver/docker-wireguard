@@ -27,14 +27,14 @@ do
         # if the last handshake is older than the TIMEOUT log the peer as disconnected
         if [ "$diff" -gt "$TIMEOUT" ] && [ "1" == "${connected[$pub_key_hash]}" ]
         then
-            echo "time=$(date +%s), event=disconnect, interface=$interface, pub_key_hash=$pub_key_hash, preshared_key=$preshared_key, endpoint=$endpoint, allowed_ips=$allowed_ips last_handshake=$last_handshake, transfer_rx=$transfer_rx, transfer_tx=$transfer_tx, peer=$peer"
+            echo "time=$(date +%s), event=disconnect, interface=$interface, pub_key_hash=$pub_key_hash, preshared_key=$preshared_key, endpoint=$endpoint, allowed_ips=$allowed_ips last_handshake=$last_handshake, transfer_rx=$transfer_rx, transfer_tx=$transfer_tx, peer=$peer" >> /proc/1/fd/1 # redirect output to stdout of PID 1 (needed to send logs to docker log after docker daemon restart)
             connected[$pub_key_hash]=0 # set the peer as not connected
         fi
 
         # if the last handshake is younger than the TIMEOUT and the peer is not connected, log the peer as connected 
         if [ "$diff" -lt "$TIMEOUT" ] && ( [ "0" == "${connected[$pub_key_hash]}" ] ||  [ "" == "${connected[$pub_key_hash]}" ] )
         then
-            echo "time=$last_handshake, event=connect, interface=$interface, pub_key_hash=$pub_key_hash, preshared_key=$preshared_key, endpoint=$endpoint, allowed_ips=$allowed_ips last_handshake=$last_handshake, transfer_rx=$transfer_rx, transfer_tx=$transfer_tx, peer=$peer"
+            echo "time=$last_handshake, event=connect, interface=$interface, pub_key_hash=$pub_key_hash, preshared_key=$preshared_key, endpoint=$endpoint, allowed_ips=$allowed_ips last_handshake=$last_handshake, transfer_rx=$transfer_rx, transfer_tx=$transfer_tx, peer=$peer" >> /proc/1/fd/1 # redirect output to stdout of PID 1 (needed to send logs to docker log after docker daemon restart)
             connected[$pub_key_hash]=1 # set the peer as connected
         fi
     done <<< $(wg show all dump | tail -n +2)

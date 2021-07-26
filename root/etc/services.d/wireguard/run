@@ -10,7 +10,7 @@ trap _term SIGTERM
 wg-quick up wg0
 
 if [ "true" == "$LOG" ]; then
-  echo "**** Logging activated ****"
+  echo "**** Logging activated ****" >> /proc/1/fd/1 # redirect output to stdout of PID 1 (needed to send logs to docker log after docker daemon restart)
   /app/logging.sh
 else
   sleep infinity &
