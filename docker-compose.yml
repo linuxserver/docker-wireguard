@@ -2,7 +2,7 @@ version: "3.5"
 services:
   wireguard:
     build: .
-    image: "wireguard.wireguard.dnp.dappnode.eth:0.1.0"
+    image: "wireguard.wireguard.dnp.dappnode.eth:0.1.1"
     container_name: DAppNodeCore-wireguard.wireguard.dnp.dappnode.eth
     restart: unless-stopped
     cap_add:
@@ -29,7 +29,7 @@ services:
           - wireguard.wireguard.dappnode
   api:
     build: ./api
-    image: "api.wireguard.dnp.dappnode.eth:0.1.0"
+    image: "api.wireguard.dnp.dappnode.eth:0.1.1"
     container_name: DAppNodeCore-api.wireguard.dnp.dappnode.eth
     restart: unless-stopped
     volumes:
