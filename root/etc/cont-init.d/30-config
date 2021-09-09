@@ -107,7 +107,7 @@ DUDE
 fi
 
 if [ "$SKIP_COMPILE" != "true" ]; then
-  if [ -e /lib/modules/$(uname -r)/build ]; then 
+  if [ -e /lib/modules/$(uname -r)/build ]; then
     echo "**** Kernel headers seem to be present, attempting to build the wireguard module. . . ****"
     if [ ! -f /lib/modules/$(uname -r)/build/certs/signing_key.pem ]; then
       mkdir -p /lib/modules/$(uname -r)/build/certs
@@ -155,9 +155,7 @@ fi
 rm -rf /etc/wireguard
 mkdir -p /etc/wireguard
 ln -s /config/wg0.conf /etc/wireguard/wg0.conf
-# prepare templates
-[[ ! -f /config/templates/server.conf ]] && \
-  cp /defaults/server.conf /config/templates/server.conf
+
 [[ ! -f /config/templates/peer.conf ]] && \
   cp /defaults/peer.conf /config/templates/peer.conf
 
