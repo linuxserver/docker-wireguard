@@ -1,8 +1,7 @@
-#!/usr/bin/execlineb -P
+#!/bin/bash
 
 docker_networks=$(ip link | awk -F': ' '$0 !~ "lo|wg|tun|tap|^[^0-9]"{print $2;getline}' | cut -d@ -f1 | (
-  while read interface
-  do
+  while read -r interface ; do
     network="$(ip -o addr show dev "$interface" | awk '$3 == "inet" {print $4}')"
     if [ -z "$result" ]; then
       result=$network
@@ -10,10 +9,10 @@ docker_networks=$(ip link | awk -F': ' '$0 !~ "lo|wg|tun|tap|^[^0-9]"{print $2;g
       result=$result,$network
     fi
   done
-  echo $result
+  echo "$result"
 ))
 if [ -z "$docker_networks" ]; then
-  >&2 echo "No inet network"
+  echo "No inet network"
   exit
 fi
 

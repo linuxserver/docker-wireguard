@@ -1,4 +1,4 @@
-#!/usr/bin/execlineb -P
+#!/bin/bash
 
 echo "Uname info: $(uname -a)"
 # check for wireguard module
@@ -13,6 +13,7 @@ else
   exit 1
 fi
 
+exit
 # install headers if necessary
 if [ "$SKIP_COMPILE" != "true" ] && [ ! -e /lib/modules/$(uname -r)/build ]; then
   echo "**** Attempting kernel header install ****"

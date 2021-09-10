@@ -9,6 +9,7 @@ LABEL maintainer="aptalca"
 
 ENV DEBIAN_FRONTEND="noninteractive"
 
+COPY wg-quick.patch /tmp/
 RUN \
  echo "**** install dependencies ****" && \
  apt-get update && \
@@ -42,6 +43,7 @@ RUN \
  git checkout "${WIREGUARD_RELEASE}" && \
  make -C src -j$(nproc) && \
  make -C src install && \
+ cd / && patch --verbose -p0 < /tmp/wg-quick.patch && \
  echo "**** clean up ****" && \
  rm -rf \
 	/tmp/* \
