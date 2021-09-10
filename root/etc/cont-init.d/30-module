@@ -1,6 +1,4 @@
-#!/usr/bin/with-contenv bash
-
-mkdir -p /config/{templates,coredns}
+#!/usr/bin/execlineb -P
 
 echo "Uname info: $(uname -a)"
 # check for wireguard module
@@ -11,7 +9,9 @@ if ip link add dev test type wireguard; then
   ip link del dev test
 else
   echo "**** The wireguard module is not active, will attempt kernel header install and module compilation. ****"
-fi  
+  #TODO
+  exit 1
+fi
 
 # install headers if necessary
 if [ "$SKIP_COMPILE" != "true" ] && [ ! -e /lib/modules/$(uname -r)/build ]; then

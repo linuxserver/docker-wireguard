@@ -1,0 +1,10 @@
+#!/usr/bin/with-contenv bash
+
+if [ -n "$NET_LOCAL" ]; then
+   gw="$(ip route | awk '/default/{print $3}')"
+   for net in ${NET_LOCAL//[;,]/ }; do
+      iptables -A INPUT -i eth0 -s "$net" -j ACCEPT
+      iptables -A OUTPUT -o eth0 -d "$net" -j ACCEPT
+      ip route | grep -q "$net" || ip route add "$net" via "$gw" dev eth0
+  done
+fi

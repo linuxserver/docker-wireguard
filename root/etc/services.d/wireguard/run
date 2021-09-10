@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/usr/bin/execlineb -P
 
 _term() {
   echo "Caught SIGTERM signal!"

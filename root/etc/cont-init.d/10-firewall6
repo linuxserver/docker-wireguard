@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/execlineb -P
 
 docker_networks=$(ip link | awk -F': ' '$0 !~ "lo|wg|tun|tap|^[^0-9]"{print $2;getline}' | cut -d@ -f1 | (
   while read interface
@@ -20,8 +20,8 @@ fi
 ip6tables -F
 ip6tables -X
 ip6tables -P INPUT DROP
-ip6tables -P FORWARD DROP
 ip6tables -P OUTPUT DROP
+ip6tables -P FORWARD DROP
 
 ip6tables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 ip6tables -A INPUT -i lo -j ACCEPT
@@ -32,7 +32,7 @@ ip6tables -A OUTPUT -o lo -j ACCEPT
 ip6tables -A OUTPUT -d "${docker_networks}" -j ACCEPT
 ip6tables -A OUTPUT -o wg+ -j ACCEPT
 ip6tables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
-ip6tables -A OUTPUT -p udp -m udp --dport "${WIREGUARD_PORT:-51820}" -j ACCEPT
+ip6tables -A OUTPUT -p udp -m udp --dport 51820 -j ACCEPT
 
 ip6tables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 ip6tables -A FORWARD -i lo -j ACCEPT
@@ -40,12 +40,3 @@ ip6tables -A FORWARD -d "${docker_networks}" -j ACCEPT
 ip6tables -A FORWARD -s "${docker_networks}" -j ACCEPT
 
 ip6tables -t nat -A POSTROUTING -o wg+ -j MASQUERADE
-
-if [ -n "$NET6_LOCAL" ]; then
-   docker_network_gw="$(ip -6 route | awk '/default/{print $3}')"
-   for net in ${NET6_LOCAL//[;,]/ }; do
-      ip6tables -A INPUT -i eth0 -s "$net" -j ACCEPT
-      ip6tables -A OUTPUT -o eth0 -d "$net" -j ACCEPT
-      ip route add "$net" via "$docker_network_gw" dev eth0
-  done
-fi

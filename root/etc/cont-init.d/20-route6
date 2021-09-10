@@ -1,0 +1,10 @@
+#!/usr/bin/with-contenv bash
+
+if [ -n "$NET6_LOCAL" ]; then
+   gw="$(ip -6 route | awk '/default/{print $3}')"
+   for net in ${NET6_LOCAL//[;,]/ }; do
+      ip6tables -A INPUT -i eth0 -s "$net" -j ACCEPT
+      ip6tables -A OUTPUT -o eth0 -d "$net" -j ACCEPT
+      ip -6 route | grep -q "$net" || ip route add "$net" via "$gw" dev eth0
+  done
+fi
