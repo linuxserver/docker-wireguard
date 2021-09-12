@@ -1,0 +1,26 @@
+#!/usr/bin/with-contenv bash
+
+#TODO wip!
+
+wg0="/etc/wireguard/wg0.conf"
+cat >${wg0} <<EOL
+[Interface]
+PrivateKey = ${PRIVATE_KEY}
+ListenPort = 51820
+Address = ${IP_ADDRESS:-"10.5.0.2"}
+DNS = ${DNS:-"103.86.96.100,103.86.99.100"}
+#Table = off
+
+EOL
+
+peers=${MAX_PEERS:-1}
+recommendations=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?&filters\[servers_technologies\]\[identifier\]=wireguard_udp&limit=${peers}")
+((peers--))
+for i in $( seq 0 "${peers}" ); do
+  echo  "[Peer]" >> ${wg0}
+  echo  "PublicKey = $(jq --argjson i "$i" -r '.[$i] | (.technologies|.[].metadata|.[].value)' <<< "${recommendations}")" >> ${wg0}
+  echo  "Endpoint = $(jq --argjson i "$i" -r '.[$i] | .hostname' <<< "${recommendations}"):51820" >> ${wg0}
+  echo  "AllowedIPs = 0.0.0.0/0" >> ${wg0}
+  echo  "PersistentKeepalive = 25" >> ${wg0}
+  echo  "" >> ${wg0}
+done
