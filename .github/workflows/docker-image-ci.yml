@@ -1,0 +1,53 @@
+name: Docker Image CI
+
+on:
+  schedule:
+    - cron: '4 20 * * *'
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log into DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Log into GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get Tags
+        id: meta
+        run: |
+          tags="ghcr.io/${{ github.repository }}:daily,${{ github.repository }}:daily,\
+                ghcr.io/${{ github.repository }}:edge,${{ github.repository }}:edge"
+          if [[ $(date '+%d') == 01 || "${{ github.event_name }}" == "push" ]]; then
+            tags="${tags},ghcr.io/${{ github.repository }}:latest,${{ github.repository }}:latest,\
+                  ghcr.io/${{ github.repository }}:monthly,${{ github.repository }}:monthly,\
+                  ghcr.io/${{ github.repository }}:$(date '+%Y%m%d'),${{ github.repository }}:$(date '+%Y%m%d')"
+          fi
+          echo "::set-output name=tags::${tags}"
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/386,linux/ppc64le,linux/s390x

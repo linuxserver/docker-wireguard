@@ -1,36 +1,18 @@
-FROM ghcr.io/linuxserver/baseimage-ubuntu:bionic
+FROM ghcr.io/bubuntux/s6-alpine
+LABEL maintainer="Julio Gutierrez julio.guti+nordlynx@pm.me"
 
-# set version label
-ARG BUILD_DATE
-ARG VERSION
-ARG WIREGUARD_RELEASE
-LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="aptalca"
+COPY /rootfs /
 
-ENV DEBIAN_FRONTEND="noninteractive"
-
-COPY wg-quick.patch /tmp/
-RUN \
- echo "**** install dependencies ****" && \
- apt-get update && \
- apt-get install -y --no-install-recommends \
-	bc \
-	build-essential \
-	curl \
-	dkms \
-	git \
-	gnupg \ 
-	ifupdown \
-	iproute2 \
-	iptables \
-	iputils-ping \
-	jq \
-	libc6 \
-	libelf-dev \
-	net-tools \
-	openresolv \
-	perl \
-	pkg-config && \
+RUN apt-get install -y \
+		curl \
+		dkms \
+		ifupdown \
+		iproute2 \
+		iptables \
+		iputils-ping \
+		jq \
+		net-tools \
+		wireguard && \
  echo "**** install wireguard-tools ****" && \
  if [ -z ${WIREGUARD_RELEASE+x} ]; then \
 	WIREGUARD_RELEASE=$(curl -sX GET "https://api.github.com/repos/WireGuard/wireguard-tools/tags" \
@@ -50,5 +32,3 @@ RUN \
 	/var/lib/apt/lists/* \
 	/var/tmp/*
 
-# add local files
-COPY /root /
