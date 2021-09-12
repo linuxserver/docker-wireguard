@@ -31,7 +31,7 @@ iptables -A OUTPUT -d "${docker_networks}" -j ACCEPT
 iptables -A OUTPUT -o wg+ -j ACCEPT
 iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
 iptables -A OUTPUT -p udp -m udp --dport 51820 -j ACCEPT
-iptables -A OUTPUT -o eth0 -d api.nordvpn.com -j ACCEPT
+iptables -A OUTPUT -o eth0 -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT
 
 iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 iptables -A FORWARD -i lo -j ACCEPT

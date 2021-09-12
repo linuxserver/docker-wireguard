@@ -31,6 +31,7 @@ ip6tables -A OUTPUT -d "${docker_networks}" -j ACCEPT
 ip6tables -A OUTPUT -o wg+ -j ACCEPT
 ip6tables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
 ip6tables -A OUTPUT -p udp -m udp --dport 51820 -j ACCEPT
+ip6tables -A OUTPUT -o eth0 -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT
 
 ip6tables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 ip6tables -A FORWARD -i lo -j ACCEPT
