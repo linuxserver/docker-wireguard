@@ -18,6 +18,9 @@ fi
 
 echo "Enabling connection to secure interface6 and docker network6"
 
+ip6tables -F
+ip6tables -X
+
 ip6tables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 ip6tables -A INPUT -i lo -j ACCEPT
 ip6tables -A INPUT -s "${docker_networks}" -j ACCEPT
