@@ -1,0 +1,19 @@
+#!/usr/bin/with-contenv bash
+
+if [ -n "$NET_LOCAL" ]; then
+   gw="$(ip route | awk '/default/{print $3}')"
+   for net in ${NET_LOCAL//[;,]/ }; do
+      echo "[$(date -Iseconds)] Enabling connection to network ${net}"
+      iptables -A INPUT -i eth0 -s "$net" -j ACCEPT
+      iptables -A OUTPUT -o eth0 -d "$net" -j ACCEPT
+      ip route | grep -q "$net" || ip route add "$net" via "$gw" dev eth0
+  done
+fi
+
+if [[ -n ${WHITELIST} ]]; then
+  for domain in ${WHITELIST//[;,]/ }; do
+    domain=$(echo "$domain" | sed 's/^.*:\/\///;s/\/.*$//')
+    echo "[$(date -Iseconds)] Enabling connection to host ${domain}"
+    iptables  -A OUTPUT -o eth0 -d "${domain}" -j ACCEPT
+  done
+fi

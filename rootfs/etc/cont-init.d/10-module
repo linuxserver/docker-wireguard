@@ -1,19 +1,19 @@
 #!/bin/bash
 
-echo "Uname info: $(uname -a)"
+echo "[$(date -Iseconds)] Uname info: $(uname -a)"
 # check for wireguard module
 ip link del dev test 2>/dev/null
 if ip link add dev test type wireguard; then
-  echo "**** It seems the wireguard module is already active. Skipping kernel header install and module compilation. ****"
-  SKIP_COMPILE="true"
+  echo "[$(date -Iseconds)] Wireguard module is active"
   ip link del dev test
-else
-  echo "**** The wireguard module is not active, will attempt kernel header install and module compilation. ****"
-  #TODO
-  exit 1
+  exit
 fi
 
-exit
+echo "[$(date -Iseconds)] The wireguard module is not active, please install it on the host and try again (https://www.wireguard.com/install/)"
+exit 1
+
+#TODO install module ? 
+
 # install headers if necessary
 if [ "$SKIP_COMPILE" != "true" ] && [ ! -e /lib/modules/$(uname -r)/build ]; then
   echo "**** Attempting kernel header install ****"
@@ -151,21 +151,3 @@ DUDE
     sleep infinity
   fi
 fi
-
-# prepare symlinks
-rm -rf /etc/wireguard
-mkdir -p /etc/wireguard
-ln -s /config/wg0.conf /etc/wireguard/wg0.conf
-
-[[ ! -f /config/templates/peer.conf ]] && \
-  cp /defaults/peer.conf /config/templates/peer.conf
-
-echo "**** Client mode selected. ****"
-if [ ! -f /config/wg0.conf ]; then
-  echo "**** No client conf found. Provide your own client conf as \"/config/wg0.conf\" and restart the container. ****"
-  sleep infinity
-fi
-
-# permissions
-chown -R abc:abc \
-	/config

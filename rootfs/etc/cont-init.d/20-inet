@@ -12,15 +12,11 @@ docker_networks=$(ip link | awk -F': ' '$0 !~ "lo|wg|tun|tap|^[^0-9]"{print $2;g
   echo "$result"
 ))
 if [ -z "$docker_networks" ]; then
-  echo "No inet network"
+  echo "[$(date -Iseconds)] No inet network"
   exit
 fi
 
-iptables -F
-iptables -X
-iptables -P INPUT DROP
-iptables -P OUTPUT DROP
-iptables -P FORWARD DROP
+echo "[$(date -Iseconds)] Enabling connection to secure interface and docker network"
 
 iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 iptables -A INPUT -i lo -j ACCEPT
@@ -32,6 +28,7 @@ iptables -A OUTPUT -d "${docker_networks}" -j ACCEPT
 iptables -A OUTPUT -o wg+ -j ACCEPT
 iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
 iptables -A OUTPUT -p udp -m udp --dport 51820 -j ACCEPT
+iptables -A OUTPUT -o eth0 -d api.nordvpn.com -j ACCEPT
 
 iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 iptables -A FORWARD -i lo -j ACCEPT
