@@ -12,11 +12,11 @@ docker_networks=$(ip link | awk -F': ' '$0 !~ "lo|wg|tun|tap|^[^0-9]"{print $2;g
   echo "$result"
 ))
 if [ -z "$docker_networks" ]; then
-  echo "[$(date -Iseconds)] No inet6 network"
+  echo "No inet6 network"
   exit
 fi
 
-echo "[$(date -Iseconds)] Enabling connection to secure interface6 and docker network6"
+echo "Enabling connection to secure interface6 and docker network6"
 
 ip6tables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 ip6tables -A INPUT -i lo -j ACCEPT

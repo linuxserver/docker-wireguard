@@ -1,18 +1,18 @@
 #!/bin/bash
 
-echo "[$(date -Iseconds)] Uname info: $(uname -a)"
+echo "Uname info: $(uname -a)"
 # check for wireguard module
 ip link del dev test 2>/dev/null
 if ip link add dev test type wireguard; then
-  echo "[$(date -Iseconds)] Wireguard module is active"
+  echo "Wireguard module is active"
   ip link del dev test
   exit
 fi
 
-echo "[$(date -Iseconds)] The wireguard module is not active, please install it on the host and try again (https://www.wireguard.com/install/)"
+echo "The wireguard module is not active, please install it on the host and try again (https://www.wireguard.com/install/)"
 exit 1
 
-#TODO install module ? 
+#TODO install module ?
 
 # install headers if necessary
 if [ "$SKIP_COMPILE" != "true" ] && [ ! -e /lib/modules/$(uname -r)/build ]; then
