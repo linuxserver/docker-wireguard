@@ -9,11 +9,3 @@ if [ -n "$NET_LOCAL" ]; then
       ip route | grep -q "$net" || ip route add "$net" via "$gw" dev eth0
   done
 fi
-
-if [[ -n ${WHITELIST} ]]; then
-  for domain in ${WHITELIST//[;,]/ }; do
-    domain=$(echo "$domain" | sed 's/^.*:\/\///;s/\/.*$//')
-    echo "Enabling connection to host ${domain}"
-    iptables  -A OUTPUT -o eth0 -d "${domain}" -j ACCEPT
-  done
-fi
