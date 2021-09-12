@@ -1,26 +1,18 @@
 #!/usr/bin/with-contenv bash
 
 #TODO wip!
+recommendations=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?&filters\[servers_technologies\]\[identifier\]=wireguard_udp&limit=1")
 
-wg0="/etc/wireguard/wg0.conf"
-cat >${wg0} <<EOL
+cat >/etc/wireguard/wg0.conf <<EOL
 [Interface]
 PrivateKey = ${PRIVATE_KEY}
 ListenPort = 51820
-Address = ${IP_ADDRESS:-"10.5.0.2"}
-DNS = ${DNS:-"103.86.96.100,103.86.99.100"}
-#Table = off
+Address = ${IP_ADDRESS:-"10.5.0.2/32"}
+DNS = ${DNS:-"8.8.8.8"}
 
+[Peer]
+PublicKey = $(jq -r '.[0] | (.technologies|.[].metadata|.[].value)' <<< "${recommendations}")
+AllowedIPs = 0.0.0.0/0
+Endpoint = $(jq -r '.[0] | .hostname' <<< "${recommendations}"):51820
+PersistentKeepalive = 25
 EOL
-
-peers=${MAX_PEERS:-1}
-recommendations=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?&filters\[servers_technologies\]\[identifier\]=wireguard_udp&limit=${peers}")
-((peers--))
-for i in $( seq 0 "${peers}" ); do
-  echo  "[Peer]" >> ${wg0}
-  echo  "PublicKey = $(jq --argjson i "$i" -r '.[$i] | (.technologies|.[].metadata|.[].value)' <<< "${recommendations}")" >> ${wg0}
-  echo  "Endpoint = $(jq --argjson i "$i" -r '.[$i] | .hostname' <<< "${recommendations}"):51820" >> ${wg0}
-  echo  "AllowedIPs = 0.0.0.0/0" >> ${wg0}
-  echo  "PersistentKeepalive = 25" >> ${wg0}
-  echo  "" >> ${wg0}
-done
