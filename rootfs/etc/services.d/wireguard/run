@@ -4,7 +4,7 @@ _term() {
   wg-quick down wg0
 }
 
-trap _term SIGTERM SIGINT EXIT
+trap _term SIGTERM
 
 wg-quick up wg0
 
