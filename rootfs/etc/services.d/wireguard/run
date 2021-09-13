@@ -1,10 +1,22 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 
-_term() {
-  wg-quick down wg0
-}
+#TODO wip!
+recommendations=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?&filters\[servers_technologies\]\[identifier\]=wireguard_udp&limit=1")
 
-trap _term SIGTERM
+cat >/etc/wireguard/wg0.conf <<EOL
+[Interface]
+PrivateKey = ${PRIVATE_KEY}
+ListenPort = 51820
+Address = ${IP_ADDRESS:-"10.5.0.2/32"}
+#DNS = ${DNS:-"8.8.8.8"}
+#Table = off
+
+[Peer]
+PublicKey = $(jq -r '.[0] | (.technologies|.[].metadata|.[].value)' <<< "${recommendations}")
+AllowedIPs = 0.0.0.0/0
+Endpoint = $(jq -r '.[0] | .hostname' <<< "${recommendations}"):51820
+PersistentKeepalive = ${PERSISTENT_KEEP_ALIVE:-25}
+EOL
 
 wg-quick up wg0
 
