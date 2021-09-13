@@ -33,8 +33,8 @@ gcc4:7.4.0-1ubuntu2.3
 gcc-77.5.0-3ubuntu1~18.04
 gcc-7-base7.5.0-3ubuntu1~18.04
 gcc-8-base8.4.0-1ubuntu1~18.04
-git1:2.17.1-1ubuntu0.8
-git-man1:2.17.1-1ubuntu0.8
+git1:2.17.1-1ubuntu0.9
+git-man1:2.17.1-1ubuntu0.9
 gnupg2.2.4-1ubuntu1.4
 gnupg-l10n2.2.4-1ubuntu1.4
 gnupg-utils2.2.4-1ubuntu1.4
