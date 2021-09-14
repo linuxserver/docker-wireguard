@@ -88,19 +88,6 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-e PRIVATE_KEY=xxxxxxxxx` | External IP or domain name for docker host. Used in server mode. If set to `auto`, the container will try to determine and set the external IP automatically |
 | `--sysctl=net.ipv4.conf.all.src_valid_mark=1` | Required. |
 
-## Environment variables from files (Docker secrets)
-
-You can set any environment variable from a file by using a special prepend `FILE__`.
-
-As an example:
-
-```bash
--e FILE__PASSWORD=/run/secrets/mysecretpassword
-```
-
-Will set the environment variable `PASSWORD` based on the contents of the `/run/secrets/mysecretpassword` file.
-
-
 ## Updating Info
 
 ### Via Docker Compose
