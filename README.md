@@ -55,15 +55,15 @@ Here are some example snippets to help you get started creating a container.
 ---
 version: "3"
 services:
-  wireguard:
+  nordlynx:
     image: ghcr.io/bbtux/nordlynx
-    container_name: wireguard
+    container_name: nordlynx
     cap_add:
-      - NET_ADMIN
+      - NET_ADMIN #required
     environment:
       - PRIVATE_KEY=xxxxxxxxx #required
     sysctls:
-      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv4.conf.all.src_valid_mark=1 #required
     restart: unless-stopped
 ```
 
@@ -72,9 +72,9 @@ services:
 ```bash
 docker run -d \
   --name=nordlynx \
-  --cap-add=NET_ADMIN \
+  --cap-add=NET_ADMIN `#required` \
   -e PRIVATE_KEY=xxxxxxxxx `#required` \
-  --sysctl="net.ipv4.conf.all.src_valid_mark=1" \
+  --sysctl="net.ipv4.conf.all.src_valid_mark=1" `#required` \
   --restart unless-stopped \
   ghcr.io/bbtux/nordlynx
 ```
@@ -93,17 +93,16 @@ Container images are configured using parameters passed at runtime (such as thos
 ### Via Docker Compose
 
 * Update all images: `docker-compose pull`
-  * or update a single image: `docker-compose pull wireguard`
+  * or update a single image: `docker-compose pull nordlynx`
 * Let compose update all containers as necessary: `docker-compose up -d`
-  * or update a single container: `docker-compose up -d wireguard`
+  * or update a single container: `docker-compose up -d nordlynx`
 * You can also remove the old dangling images: `docker image prune`
 
 ### Via Docker Run
 
-* Update the image: `docker pull ghcr.io/linuxserver/wireguard`
-* Stop the running container: `docker stop wireguard`
-* Delete the container: `docker rm wireguard`
-* Recreate a new container with the same docker run parameters as instructed above (if mapped correctly to a host folder, your `/config` folder and settings will be preserved)
+* Update the image: `docker pull ghcr.io/bbtux/nordlynx`
+* Stop the running container: `docker stop nordlynx`
+* Delete the container: `docker rm nordlynx`
 * You can also remove the old dangling images: `docker image prune`
 
 ### Via Watchtower auto-updater (only use if you don't remember the original parameters)
@@ -114,12 +113,12 @@ Container images are configured using parameters passed at runtime (such as thos
   docker run --rm \
   -v /var/run/docker.sock:/var/run/docker.sock \
   containrrr/watchtower \
-  --run-once wireguard
+  --run-once nordlynx
   ```
 
 * You can also remove the old dangling images: `docker image prune`
 
-**Note:** We do not endorse the use of Watchtower as a solution to automated updates of existing Docker containers. In fact we generally discourage automated updates. However, this is a useful tool for one-time manual updates of containers where you have forgotten the original parameters. In the long term, we highly recommend using [Docker Compose](https://docs.linuxserver.io/general/docker-compose).
+**Note:** We do not endorse the use of Watchtower as a solution to automated updates of existing Docker containers. In fact we generally discourage automated updates. However, this is a useful tool for one-time manual updates of containers where you have forgotten the original parameters. In the long term, we highly recommend using [Docker Compose](https://docs.docker.com/compose/).
 
 ### Image Update Notifications - Diun (Docker Image Update Notifier)
 
