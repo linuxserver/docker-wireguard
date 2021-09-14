@@ -1,9 +1,13 @@
-# [bbtux/nordlynx](https://github.com/bbtux/nordlynx)
-
-[![GitHub Stars](https://img.shields.io/github/stars/bbtux/nordlynx.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/bbtux/nordlynx)
-[![GitHub Package Repository](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=nordlynx&message=GitHub%20Package&logo=github)](https://github.com/bbtux/nordlynx/packages)
-[![Docker Pulls](https://img.shields.io/docker/pulls/bbtux/nordlynx.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=pulls&logo=docker)](https://hub.docker.com/r/bbtux/nordlynx)
-[![Docker Stars](https://img.shields.io/docker/stars/bbtux/nordlynx.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=stars&logo=docker)](https://hub.docker.com/r/bbtux/nordlynx)
+<p align="center">
+    <a href="https://github.com/bbtux/nordlynx">bbtux/nordlynx</a>
+    <br>
+    <a href="https://github.com/bbtux/nordlynx/blob/master/LICENSE"><img src="https://badgen.net/github/license/bbtux/nordlynx?color=cyan"/></a>
+    <a href="https://cloud.docker.com/u/bbtux/repository/docker/bbtux/nordlynx"><img src="https://badgen.net/docker/size/bbtux/nordlynx?icon=docker&label=size"/></a>
+    <a href="https://cloud.docker.com/u/bbtux/repository/docker/bbtux/nordlynx"><img src="https://badgen.net/docker/pulls/bbtux/nordlynx?icon=docker&label=pulls"/></a>
+    <a href="https://cloud.docker.com/u/bbtux/repository/docker/bbtux/nordlynx"><img src="https://badgen.net/docker/stars/bbtux/nordlynx?icon=docker&label=stars"/></a>
+    <a href="https://github.com/bbtux/nordlynx"><img src="https://badgen.net/github/forks/bbtux/nordlynx?icon=github&label=forks&color=black"/></a>
+    <a href="https://github.com/bbtux/nordlynx"><img src="https://badgen.net/github/stars/bbtux/nordlynx?icon=github&label=stars&color=black"/></a>
+</p>
 
 ## Quick reference
 
@@ -13,8 +17,8 @@
 ## Supported tags
 
 - edge (created nightly)
-- latest (created monthly)
-- YYYYmmdd 
+- latest (created monthly or on demand)
+- YYYYmmdd (created monthly or on demand)
 
 ## Quick reference (cont.)
 
