@@ -1,6 +1,5 @@
 # [bbtux/nordlynx](https://github.com/bbtux/nordlynx)
 
----
 [![GitHub Stars](https://img.shields.io/github/stars/bbtux/nordlynx.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/bbtux/nordlynx)
 [![GitHub Release](https://img.shields.io/github/release/bbtux/nordlynx.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/bbtux/nordlynx/releases)
 [![GitHub Package Repository](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=nordlynx&message=GitHub%20Package&logo=github)](https://github.com/bbtux/nordlynx/packages)
@@ -9,20 +8,17 @@
 
 ## Quick reference
 
----
 - **Maintained by**: [Julio Gutierrez](https://github.com/bubuntux)
 - **Where to get help**: [Github discussions](https://github.com/bbtux/nordlynx/discussions)
 
 ## Supported tags
 
----
 - edge (created nightly)
 - latest (created monthly)
 - YYYYmmdd 
 
 ## Quick reference (cont.)
 
----
 - **Where to file issues**: [Github issues](https://github.com/bbtux/nordlynx/issues)
 - **Supported architecture**: ([more info](https://github.com/docker-library/official-images#architectures-other-than-amd64)) amd64, arm32v6, arm32v7, arm64, i386, ppc64le, s390x
 - **Published image artifact details**: [DockerHub](https://hub.docker.com/r/bbtux/nordlynx), [Github packages](https://github.com/bbtux/nordlynx/pkgs/container/nordlynx)
@@ -31,13 +27,11 @@
 
 ## What is NordLynx?
 
----
 NordLynx is a technology built around the WireGuard® VPN protocol. It lets you experience WireGuard’s speed benefits without compromising your privacy. You can find more information about NordLynx in [this blog post](https://nordvpn.com/blog/nordlynx-protocol-wireguard/).
 [![nordlynx](https://nordvpn.com/wp-content/uploads/2019/07/nordvpn-nordlynx-infographic.png)](https://nordvpn.com/blog/nordlynx-protocol-wireguard/)
 
 ## What is WireGuard?
 
----
 [WireGuard®](https://www.wireguard.com/) is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography. It aims to be faster, simpler, leaner, and more useful than IPsec, while avoiding the massive headache. It intends to be considerably more performant than OpenVPN. WireGuard is designed as a general purpose VPN for running on embedded interfaces and super computers alike, fit for many different circumstances. Initially released for the Linux kernel, it is now cross-platform (Windows, macOS, BSD, iOS, Android) and widely deployable. It is currently under heavy development, but already it might be regarded as the most secure, easiest to use, and simplest VPN solution in the industry.
 
 [![wireguard](https://www.wireguard.com/img/wireguard.svg)](https://www.wireguard.com/)
@@ -45,7 +39,6 @@ NordLynx is a technology built around the WireGuard® VPN protocol. It lets you 
 
 ## Road warriors, roaming and returning home
 
----
 If you plan to use Wireguard both remotely and locally, say on your mobile phone, you will need to consider routing. Most firewalls will not route ports forwarded on your WAN interface correctly to the LAN out of the box. This means that when you return home, even though you can see the Wireguard server, the return packets will probably get lost.
 
 This is not a Wireguard specific issue and the two generally accepted solutions are NAT reflection (setting your edge router/firewall up in such a way as it translates internal packets correctly) or split horizon DNS (setting your internal DNS to return the private rather than public IP when connecting locally).
@@ -54,7 +47,6 @@ Both of these approaches have positives and negatives however their setup is out
 
 ## Usage
 
----
 Here are some example snippets to help you get started creating a container.
 
 ### docker-compose (recommended, [click here for more info](https://docs.docker.com/compose/))
@@ -89,7 +81,6 @@ docker run -d \
 
 ## Parameters
 
----
 Container images are configured using parameters passed at runtime (such as those above). These parameters are separated by a colon and indicate `<external>:<internal>` respectively. For example, `-p 8080:80` would expose port `80` from inside the container to be accessible from the host's IP on port `8080` outside the container.
 
 | Parameter | Function |
@@ -112,7 +103,6 @@ Will set the environment variable `PASSWORD` based on the contents of the `/run/
 
 ## Updating Info
 
----
 ### Via Docker Compose
 
 * Update all images: `docker-compose pull`
