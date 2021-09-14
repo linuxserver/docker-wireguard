@@ -1,6 +1,5 @@
 #!/usr/bin/with-contenv bash
 
-#TODO wip!
 recommendations=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?&filters\[servers_technologies\]\[identifier\]=wireguard_udp&limit=1")
 
 cat >/etc/wireguard/wg0.conf <<EOL

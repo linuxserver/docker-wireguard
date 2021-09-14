@@ -10,7 +10,7 @@ if ip link add dev test type wireguard; then
 fi
 
 echo "The wireguard module is not active, please install it on the host and try again (https://www.wireguard.com/install/)"
-exit 1
+sleep infinity
 
 #TODO install module ?
 

@@ -26,11 +26,9 @@ jobs:
       - name: Get Tags
         id: meta
         run: |
-          tags="ghcr.io/${{ github.repository }}:daily,${{ github.repository }}:daily,\
-                ghcr.io/${{ github.repository }}:edge,${{ github.repository }}:edge"
+          tags="ghcr.io/${{ github.repository }}:edge,${{ github.repository }}:edge"
           if [[ $(date '+%d') == 01 || "${{ github.event_name }}" == "push" ]]; then
             tags="${tags},ghcr.io/${{ github.repository }}:latest,${{ github.repository }}:latest,\
-                  ghcr.io/${{ github.repository }}:monthly,${{ github.repository }}:monthly,\
                   ghcr.io/${{ github.repository }}:$(date '+%Y%m%d'),${{ github.repository }}:$(date '+%Y%m%d')"
           fi
           echo "::set-output name=tags::${tags}"
