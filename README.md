@@ -84,7 +84,7 @@ Container images are configured using parameters passed at runtime (such as thos
 
 | Parameter | Function |
 | :----: | --- |
-| `-e PRIVATE_KEY=xxxxxxxxx` | External IP or domain name for docker host. Used in server mode. If set to `auto`, the container will try to determine and set the external IP automatically |
+| `-e PRIVATE_KEY=xxxxxxxxx` | The private key can be obtained using the instructions of [this post](https://forum.openwrt.org/t/instruction-config-nordvpn-wireguard-nordlynx-on-openwrt/89976). |
 | `--sysctl=net.ipv4.conf.all.src_valid_mark=1` | Required. |
 
 ## Updating Info
