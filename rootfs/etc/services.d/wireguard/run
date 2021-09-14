@@ -7,9 +7,8 @@ cat >/etc/wireguard/wg0.conf <<EOL
 [Interface]
 PrivateKey = ${PRIVATE_KEY}
 ListenPort = 51820
-Address = ${IP_ADDRESS:-"10.5.0.2/32"}
-#DNS = ${DNS:-"8.8.8.8"}
-#Table = off
+Address = ${IP_ADDRESS:-"10.5.0.2"}/32
+DNS = ${DNS:-"8.8.8.8"}
 
 [Peer]
 PublicKey = $(jq -r '.[0] | (.technologies|.[].metadata|.[].value)' <<< "${recommendations}")
@@ -19,6 +18,7 @@ PersistentKeepalive = ${PERSISTENT_KEEP_ALIVE:-25}
 EOL
 
 wg-quick up wg0
+wg show wg0
 
 sleep infinity &
 
