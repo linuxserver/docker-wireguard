@@ -1,7 +1,6 @@
 # [bbtux/nordlynx](https://github.com/bbtux/nordlynx)
 
 [![GitHub Stars](https://img.shields.io/github/stars/bbtux/nordlynx.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/bbtux/nordlynx)
-[![GitHub Release](https://img.shields.io/github/release/bbtux/nordlynx.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/bbtux/nordlynx/releases)
 [![GitHub Package Repository](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=nordlynx&message=GitHub%20Package&logo=github)](https://github.com/bbtux/nordlynx/packages)
 [![Docker Pulls](https://img.shields.io/docker/pulls/bbtux/nordlynx.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=pulls&logo=docker)](https://hub.docker.com/r/bbtux/nordlynx)
 [![Docker Stars](https://img.shields.io/docker/stars/bbtux/nordlynx.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=stars&logo=docker)](https://hub.docker.com/r/bbtux/nordlynx)
