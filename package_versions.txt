@@ -1,7 +1,7 @@
 adduser3.116ubuntu1
 apt1.6.14
 apt-utils1.6.14
-base-files10.1ubuntu2.10
+base-files10.1ubuntu2.11
 base-passwd3.5.44
 bash4.4.18-2ubuntu1.2
 bc1.07.1-2
@@ -15,7 +15,7 @@ ca-certificates20210119~18.04.1
 coreutils8.28-1ubuntu1
 cpp4:7.4.0-1ubuntu2.3
 cpp-77.5.0-3ubuntu1~18.04
-curl7.58.0-2ubuntu3.14
+curl7.58.0-2ubuntu3.15
 dash0.5.8-2.10
 debconf1.5.66ubuntu1
 debianutils4.8.4
@@ -78,8 +78,8 @@ libcc1-08.4.0-1ubuntu1~18.04
 libc-dev-bin2.27-3ubuntu1.4
 libcilkrts57.5.0-3ubuntu1~18.04
 libcom-err21.44.1-1ubuntu1.3
-libcurl3-gnutls7.58.0-2ubuntu3.14
-libcurl47.58.0-2ubuntu3.14
+libcurl3-gnutls7.58.0-2ubuntu3.15
+libcurl47.58.0-2ubuntu3.15
 libdb5.35.3.28-13.1ubuntu1.1
 libdebconfclient00.213ubuntu1
 libdpkg-perl1.19.0.5ubuntu2.3
