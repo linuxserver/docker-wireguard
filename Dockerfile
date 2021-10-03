@@ -1,4 +1,4 @@
-FROM ghcr.io/bubuntux/s6-alpine
+FROM s6on/alpine
 LABEL maintainer="Julio Gutierrez julio.guti+nordlynx@pm.me"
 
 COPY /rootfs /

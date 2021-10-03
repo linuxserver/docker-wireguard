@@ -7,7 +7,7 @@ cat >/etc/wireguard/wg0.conf <<EOL
 PrivateKey = ${PRIVATE_KEY}
 ListenPort = 51820
 Address = ${IP_ADDRESS:-"10.5.0.2"}/32
-DNS = ${DNS:-"8.8.8.8"}
+DNS = ${DNS:-"103.86.96.100,103.86.99.100"}
 
 [Peer]
 PublicKey = $(jq -r '.[0] | (.technologies|.[].metadata|.[].value)' <<< "${recommendations}")
