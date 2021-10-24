@@ -6,12 +6,12 @@ cat >/etc/wireguard/wg0.conf <<EOL
 [Interface]
 PrivateKey = ${PRIVATE_KEY}
 ListenPort = 51820
-Address = ${IP_ADDRESS:-"10.5.0.2"}/32
+Address = ${ADDRESS:-"10.5.0.2/32"}
 DNS = ${DNS:-"103.86.96.100,103.86.99.100"}
 
 [Peer]
 PublicKey = $(jq -r '.[0] | (.technologies|.[].metadata|.[].value)' <<< "${recommendations}")
-AllowedIPs = 0.0.0.0/0
+AllowedIPs = ${ALLOWED_IPS:-"0.0.0.0/0"}
 Endpoint = $(jq -r '.[0] | .hostname' <<< "${recommendations}"):51820
 PersistentKeepalive = ${PERSISTENT_KEEP_ALIVE:-25}
 EOL
