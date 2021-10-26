@@ -207,7 +207,7 @@ DUDE"
 [Peer]
 # ${PEER_ID}
 PublicKey = $(cat /config/${PEER_ID}/publickey-${PEER_ID})
-AllowedIPs = ${!SERVER_ALLOWEDIPS}
+AllowedIPs = ${CLIENT_IP}/32,${!SERVER_ALLOWEDIPS}
 
 DUDE
     else
