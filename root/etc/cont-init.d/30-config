@@ -201,13 +201,24 @@ DUDE"
     cat <<DUDE > /config/${PEER_ID}/${PEER_ID}.conf
 `cat /config/templates/peer.conf`
 DUDE"
-    cat <<DUDE >> /config/wg0.conf
+    SERVER_ALLOWEDIPS=SERVER_ALLOWEDIPS_PEER_${PEER_ID}
+    if [ -n "${!SERVER_ALLOWEDIPS}" ]; then
+      cat <<DUDE >> /config/wg0.conf
+[Peer]
+# ${PEER_ID}
+PublicKey = $(cat /config/${PEER_ID}/publickey-${PEER_ID})
+AllowedIPs = ${!SERVER_ALLOWEDIPS}
+
+DUDE
+    else
+      cat <<DUDE >> /config/wg0.conf
 [Peer]
 # ${PEER_ID}
 PublicKey = $(cat /config/${PEER_ID}/publickey-${PEER_ID})
 AllowedIPs = ${CLIENT_IP}/32
 
 DUDE
+    fi
     echo "PEER ${i} QR code:"
     qrencode -t ansiutf8 < /config/${PEER_ID}/${PEER_ID}.conf
     qrencode -o /config/${PEER_ID}/${PEER_ID}.png < /config/${PEER_ID}/${PEER_ID}.conf
