@@ -81,7 +81,7 @@ app_setup_block: |
   
   `SERVER_ALLOWEDIPS_PEER_laptop="192.168.1.0/24,192.168.2.0/24"` will result in the wg0.conf entry `AllowedIPs = 10.13.13.2,192.168.1.0/24,192.168.2.0/24` for the peer named `laptop`.
   
-  Keep in mind that this var will only be considered when the confs are regenerated. Adding this var for an existing peer won't force a regeneration. You can remove and readd a peer to force regeneration if necessary.
+  Keep in mind that this var will only be considered when the confs are regenerated. Adding this var for an existing peer won't force a regeneration. You can delete wg0.conf and restart the container to force regeneration if necessary.
 
   ## Client Mode
   Do not set the `PEERS` environment variable. Drop your client conf into the config folder as `/config/wg0.conf` and start the container. 

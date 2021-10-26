@@ -201,8 +201,9 @@ DUDE"
     cat <<DUDE > /config/${PEER_ID}/${PEER_ID}.conf
 `cat /config/templates/peer.conf`
 DUDE"
-    SERVER_ALLOWEDIPS=SERVER_ALLOWEDIPS_PEER_${PEER_ID}
+    SERVER_ALLOWEDIPS=SERVER_ALLOWEDIPS_PEER_${i}
     if [ -n "${!SERVER_ALLOWEDIPS}" ]; then
+      echo "Adding ${!SERVER_ALLOWEDIPS} to wg0.conf's AllowedIPs for peer ${i}"
       cat <<DUDE >> /config/wg0.conf
 [Peer]
 # ${PEER_ID}
