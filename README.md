@@ -58,11 +58,13 @@ The architectures supported by this image are:
 
 ## Application Setup
 
-This image is designed for Ubuntu and Debian based systems mainly (it works on some others, but ymmv). During container start, it will first check if the wireguard module is already installed and loaded. If not, it will then check if the kernel headers are already installed (in `/usr/src`) and if not, attempt to download the necessary kernel headers from the ubuntu/debian/raspbian repos; then will compile and install the kernel module.
+During container start, it will first check if the wireguard module is already installed and loaded. Kernels newer than 5.6 generally have the wireguard module built-in (along with some older custom kernels). However, the module may not be enabled. Make sure it is enabled prior to starting the container.
+
+If the kernel is not built-in, or installed on host, the container will check if the kernel headers are present (in `/usr/src`) and if not, it will attempt to download the necessary kernel headers from the `ubuntu xenial/bionic`, `debian/raspbian buster` repos; then will attempt to compile and install the kernel module. If the kernel headers are not found in either `usr/src` or in the repos mentioned, container will sleep indefinitely as wireguard cannot be installed.
 
 If you're on a debian/ubuntu based host with a custom or downstream distro provided kernel (ie. Pop!_OS), the container won't be able to install the kernel headers from the regular ubuntu and debian repos. In those cases, you can try installing the headers on the host via `sudo apt install linux-headers-$(uname -r)` (if distro version) and then add a volume mapping for `/usr/src:/usr/src`, or if custom built, map the location of the existing headers to allow the container to use host installed headers to build the kernel module (tested successful on Pop!_OS, ymmv).
 
-With regards to arm32/64 devices, Raspberry Pi 2-4 running the [official ubuntu images prior to focal](https://ubuntu.com/download/raspberry-pi) or Raspbian Buster are supported out of the box. For all other devices and OSes, you can try installing the kernel headers on the host, and mapping `/usr/src:/usr/src` and it may just work (no guarantees).
+With regards to arm32/64 devices, Raspberry Pi 2-4 running the [official ubuntu images](https://ubuntu.com/download/raspberry-pi) or Raspbian Buster are supported out of the box. For all other devices and OSes, you can try installing the kernel headers on the host, and mapping `/usr/src:/usr/src` and it may just work (no guarantees).
 
 This can be run as a server or a client, based on the parameters used. 
 
