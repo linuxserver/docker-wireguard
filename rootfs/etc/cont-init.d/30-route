@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bash
 
+[[ -n ${NETWORK} && -z ${NET_LOCAL} ]] && NET_LOCAL=${NETWORK}
 if [ -n "$NET_LOCAL" ]; then
    gw="$(ip route | awk '/default/{print $3}')"
    for net in ${NET_LOCAL//[;,]/ }; do

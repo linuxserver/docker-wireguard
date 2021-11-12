@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 
 echo "Uname info: $(uname -a)"
 # check for wireguard module
@@ -6,16 +6,13 @@ ip link del dev test 2>/dev/null
 if ip link add dev test type wireguard; then
   echo "Wireguard module is active"
   ip link del dev test
-  exit
+  exit 0
 fi
 
-echo "The wireguard module is not active, please install it on the host and try again (https://www.wireguard.com/install/)"
-sleep infinity
-
-#TODO install module ?
+echo "**** The wireguard module is not active, will attempt kernel header install and module compilation. ****" 
 
 # install headers if necessary
-if [ "$SKIP_COMPILE" != "true" ] && [ ! -e /lib/modules/$(uname -r)/build ]; then
+if [ ! -e /lib/modules/$(uname -r)/build ]; then
   echo "**** Attempting kernel header install ****"
   apt-get update
   if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
@@ -107,13 +104,12 @@ DUDE
   fi
 fi
 
-if [ "$SKIP_COMPILE" != "true" ]; then
-  if [ -e /lib/modules/$(uname -r)/build ]; then
-    echo "**** Kernel headers seem to be present, attempting to build the wireguard module. . . ****"
-    if [ ! -f /lib/modules/$(uname -r)/build/certs/signing_key.pem ]; then
-      mkdir -p /lib/modules/$(uname -r)/build/certs
-      cd /lib/modules/$(uname -r)/build/certs
-      cat <<DUDE >> x509.genkey
+if [ -e /lib/modules/$(uname -r)/build ]; then 
+  echo "**** Kernel headers seem to be present, attempting to build the wireguard module. . . ****"
+  if [ ! -f /lib/modules/$(uname -r)/build/certs/signing_key.pem ]; then
+    mkdir -p /lib/modules/$(uname -r)/build/certs
+    cd /lib/modules/$(uname -r)/build/certs
+    cat <<DUDE >> x509.genkey
 [ req ]
 default_bits = 4096
 distinguished_name = req_distinguished_name
@@ -130,24 +126,23 @@ keyUsage=digitalSignature
 subjectKeyIdentifier=hash
 authorityKeyIdentifier=keyid
 DUDE
-      echo "**** Generating signing key ****"
-      openssl req -new -nodes -utf8 -sha512 -days 36500 -batch -x509 -config x509.genkey -outform DER -out signing_key.x509 -keyout signing_key.pem
-    fi
-    cd /app
-    echo "**** Building the module ****"
-    make -C wireguard-linux-compat/src -j$(nproc)
-    make -C wireguard-linux-compat/src install
-    echo "**** Let's test our new module. ****"
-    ip link del dev test 2>/dev/null
-    if ip link add dev test type wireguard; then
-      echo "**** The module is active, moving forward with setup. ****"
-      ip link del dev test
-    else
-      echo "**** The module is not active, review the logs. Sleeping now. . . ****"
-      sleep infinity
-    fi
+    echo "**** Generating signing key ****"
+    openssl req -new -nodes -utf8 -sha512 -days 36500 -batch -x509 -config x509.genkey -outform DER -out signing_key.x509 -keyout signing_key.pem
+  fi
+  cd /app
+  echo "**** Building the module ****"
+  make -C wireguard-linux-compat/src -j$(nproc)
+  make -C wireguard-linux-compat/src install
+  echo "**** Let's test our new module. ****"
+  ip link del dev test 2>/dev/null
+  if ip link add dev test type wireguard; then
+    echo "**** The module is active, moving forward with setup. ****"
+    ip link del dev test
   else
-    echo "**** Kernel headers don't seem to be available, can't compile the module. Sleeping now. . . ****"
+    echo "**** The module is not active, review the logs. Sleeping now. . . ****"
     sleep infinity
   fi
+else
+  echo "**** Kernel headers don't seem to be available, can't compile the module. Sleeping now. . . ****"
+  sleep infinity
 fi

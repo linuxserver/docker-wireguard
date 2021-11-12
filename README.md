@@ -1,18 +1,18 @@
 <p align="center">
-    <a href="https://github.com/bbtux/nordlynx">bbtux/nordlynx</a>
+    <a href="https://github.com/bubuntux/nordlynx">bubuntux/nordlynx</a>
     <br>
-    <a href="https://github.com/bbtux/nordlynx/blob/master/LICENSE"><img src="https://badgen.net/github/license/bbtux/nordlynx?color=cyan"/></a>
-    <a href="https://cloud.docker.com/u/bbtux/repository/docker/bbtux/nordlynx"><img src="https://badgen.net/docker/size/bbtux/nordlynx?icon=docker&label=size"/></a>
-    <a href="https://cloud.docker.com/u/bbtux/repository/docker/bbtux/nordlynx"><img src="https://badgen.net/docker/pulls/bbtux/nordlynx?icon=docker&label=pulls"/></a>
-    <a href="https://cloud.docker.com/u/bbtux/repository/docker/bbtux/nordlynx"><img src="https://badgen.net/docker/stars/bbtux/nordlynx?icon=docker&label=stars"/></a>
-    <a href="https://github.com/bbtux/nordlynx"><img src="https://badgen.net/github/forks/bbtux/nordlynx?icon=github&label=forks&color=black"/></a>
-    <a href="https://github.com/bbtux/nordlynx"><img src="https://badgen.net/github/stars/bbtux/nordlynx?icon=github&label=stars&color=black"/></a>
+    <a href="https://github.com/bubuntux/nordlynx/blob/master/LICENSE"><img src="https://badgen.net/github/license/bubuntux/nordlynx?color=cyan"/></a>
+    <a href="https://cloud.docker.com/u/bubuntux/repository/docker/bubuntux/nordlynx"><img src="https://badgen.net/docker/size/bubuntux/nordlynx?icon=docker&label=size"/></a>
+    <a href="https://cloud.docker.com/u/bubuntux/repository/docker/bubuntux/nordlynx"><img src="https://badgen.net/docker/pulls/bubuntux/nordlynx?icon=docker&label=pulls"/></a>
+    <a href="https://cloud.docker.com/u/bubuntux/repository/docker/bubuntux/nordlynx"><img src="https://badgen.net/docker/stars/bubuntux/nordlynx?icon=docker&label=stars"/></a>
+    <a href="https://github.com/bubuntux/nordlynx"><img src="https://badgen.net/github/forks/bubuntux/nordlynx?icon=github&label=forks&color=black"/></a>
+    <a href="https://github.com/bubuntux/nordlynx"><img src="https://badgen.net/github/stars/bubuntux/nordlynx?icon=github&label=stars&color=black"/></a>
 </p>
 
 ## Quick reference
 
 - **Maintained by**: [Julio Gutierrez](https://github.com/bubuntux)
-- **Where to get help**: [Github discussions](https://github.com/bbtux/nordlynx/discussions)
+- **Where to get help**: [Github discussions](https://github.com/bubuntux/nordlynx/discussions)
 
 ## Supported tags
 
@@ -22,11 +22,11 @@
 
 ## Quick reference (cont.)
 
-- **Where to file issues**: [Github issues](https://github.com/bbtux/nordlynx/issues)
-- **Supported architecture**: ([more info](https://github.com/docker-library/official-images#architectures-other-than-amd64)) amd64, arm32v6, arm32v7, arm64, i386, ppc64le, s390x
-- **Published image artifact details**: [DockerHub](https://hub.docker.com/r/bbtux/nordlynx), [Github packages](https://github.com/bbtux/nordlynx/pkgs/container/nordlynx)
-- **Continuous integration**: [Github actions](https://github.com/bbtux/nordlynx/actions)
-- **Source**: [Github](https://github.com/bbtux/nordlynx)
+- **Where to file issues**: [Github issues](https://github.com/bubuntux/nordlynx/issues)
+- **Supported architecture**: ([more info](https://github.com/docker-library/official-images#architectures-other-than-amd64)) amd64, arm32v6, arm32v7, arm64, s390x
+- **Published image artifact details**: [DockerHub](https://hub.docker.com/r/bubuntux/nordlynx), [Github packages](https://github.com/bubuntux/nordlynx/pkgs/container/nordlynx)
+- **Continuous integration**: [Github actions](https://github.com/bubuntux/nordlynx/actions)
+- **Source**: [Github](https://github.com/bubuntux/nordlynx)
 
 ## What is NordLynx?
 
@@ -59,7 +59,7 @@ Here are some example snippets to help you get started creating a container.
 version: "3"
 services:
   nordlynx:
-    image: ghcr.io/bbtux/nordlynx
+    image: ghcr.io/bubuntux/nordlynx
     container_name: nordlynx
     cap_add:
       - NET_ADMIN #required
@@ -79,7 +79,7 @@ docker run -d \
   -e PRIVATE_KEY=xxxxxxxxx `#required` \
   --sysctl="net.ipv4.conf.all.src_valid_mark=1" `#required` \
   --restart unless-stopped \
-  ghcr.io/bbtux/nordlynx
+  ghcr.io/bubuntux/nordlynx
 ```
 
 ## Parameters
@@ -103,7 +103,7 @@ Container images are configured using parameters passed at runtime (such as thos
 
 ### Via Docker Run
 
-* Update the image: `docker pull ghcr.io/bbtux/nordlynx`
+* Update the image: `docker pull ghcr.io/bubuntux/nordlynx`
 * Stop the running container: `docker stop nordlynx`
 * Delete the container: `docker rm nordlynx`
 * You can also remove the old dangling images: `docker image prune`

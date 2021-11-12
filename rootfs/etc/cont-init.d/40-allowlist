@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bash
 
+[[ -n ${WHITELIST} && -z ${ALLOW_LIST} ]] && ALLOW_LIST=${WHITELIST}
 if [[ -n ${ALLOW_LIST} ]]; then
   for domain in ${ALLOW_LIST//[;,]/ }; do
     domain=$(echo "$domain" | sed 's/^.*:\/\///;s/\/.*$//')

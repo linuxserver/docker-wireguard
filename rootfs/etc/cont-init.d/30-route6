@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bash
 
+[[ -n ${NETWORK6} && -z ${NET6_LOCAL} ]] && NET6_LOCAL=${NETWORK6}
 if [ -n "$NET6_LOCAL" ]; then
    gw="$(ip -6 route | awk '/default/{print $3}')"
    for net in ${NET6_LOCAL//[;,]/ }; do
