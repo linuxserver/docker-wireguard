@@ -139,10 +139,11 @@ DUDE
     echo "**** The module is active, moving forward with setup. ****"
     ip link del dev test
   else
-    echo "**** The module is not active, review the logs. Sleeping now. . . ****"
-    sleep infinity
+    echo "**** The module is not active, review the logs. ****"
   fi
 else
-  echo "**** Kernel headers don't seem to be available, can't compile the module. Sleeping now. . . ****"
-  sleep infinity
+  echo "**** Kernel headers don't seem to be available, can't compile the module. ****"
 fi
+
+echo "**** Unable to enable the module, please install it on the host and try again (https://www.wireguard.com/install/). ****"
+sleep infinity
