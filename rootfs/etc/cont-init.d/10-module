@@ -129,7 +129,7 @@ DUDE
     echo "**** Generating signing key ****"
     openssl req -new -nodes -utf8 -sha512 -days 36500 -batch -x509 -config x509.genkey -outform DER -out signing_key.x509 -keyout signing_key.pem
   fi
-  cd /app
+  #cd /app
   echo "**** Building the module ****"
   make -C wireguard-linux-compat/src -j$(nproc)
   make -C wireguard-linux-compat/src install

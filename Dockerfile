@@ -4,7 +4,7 @@ LABEL maintainer="Julio Gutierrez julio.guti+nordlynx@pm.me"
 
 COPY /rootfs /
 RUN apt-get update -y && \
-    apt-get install -y curl jq patch iputils-ping wireguard && \
+    apt-get install -y curl jq patch net-tools iproute2 iptables openresolv iputils-ping wireguard && \
 	patch --verbose -p0 < /patch/wg-quick.patch && \
     rm -rf \
         /patch \
