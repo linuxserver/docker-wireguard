@@ -5,8 +5,8 @@
     <a href="https://cloud.docker.com/u/bubuntux/repository/docker/bubuntux/nordlynx"><img src="https://badgen.net/docker/size/bubuntux/nordlynx?icon=docker&label=size"/></a>
     <a href="https://cloud.docker.com/u/bubuntux/repository/docker/bubuntux/nordlynx"><img src="https://badgen.net/docker/pulls/bubuntux/nordlynx?icon=docker&label=pulls"/></a>
     <a href="https://cloud.docker.com/u/bubuntux/repository/docker/bubuntux/nordlynx"><img src="https://badgen.net/docker/stars/bubuntux/nordlynx?icon=docker&label=stars"/></a>
-    <a href="https://github.com/bubuntux/nordlynx"><img src="https://badgen.net/github/forks/bubuntux/nordlynx?icon=github&label=forks&color=black"/></a>
-    <a href="https://github.com/bubuntux/nordlynx"><img src="https://badgen.net/github/stars/bubuntux/nordlynx?icon=github&label=stars&color=black"/></a>
+    <a href="https://github.com/bubuntux/nordlynx/network/members"><img src="https://badgen.net/github/forks/bubuntux/nordlynx?icon=github&label=forks&color=black"/></a>
+    <a href="https://github.com/bubuntux/nordlynx/stargazers"><img src="https://badgen.net/github/stars/bubuntux/nordlynx?icon=github&label=stars&color=black"/></a>
 </p>
 
 ## Quick reference
@@ -25,7 +25,7 @@
 - **Where to file issues**: [Github issues](https://github.com/bubuntux/nordlynx/issues)
 - **Supported architecture**: ([more info](https://github.com/docker-library/official-images#architectures-other-than-amd64)) amd64, arm32v7, arm64, s390x
 - **Published image artifact details**: [DockerHub](https://hub.docker.com/r/bubuntux/nordlynx), [Github packages](https://github.com/bubuntux/nordlynx/pkgs/container/nordlynx)
-- **Continuous integration**: [Github actions](https://github.com/bubuntux/nordlynx/actions)
+- **Continuous integration**: [Github actions](https://github.com/bubuntux/nordlynx/actions/workflows/docker-image-ci.yml)
 - **Source**: [Github](https://github.com/bubuntux/nordlynx)
 
 ## What is NordLynx?
@@ -85,7 +85,7 @@ docker run -d \
 | :----: | --- | --- |
 | `PRIVATE_KEY` | **[Required]** | The private key can be obtained using `docker run --rm --cap-add=NET_ADMIN -e USER=XXX -e PASS=YYY bubuntux/nordvpn nord_private_key` or following these [instructions](https://forum.openwrt.org/t/instruction-config-nordvpn-wireguard-nordlynx-on-openwrt/89976).
 | `ADDRESS` | 10.5.0.2/32 | A comma-separated list of IP (v4 or v6) addresses (optionally with CIDR masks) to be assigned to the interface.
-|`DNS` | 103.86.96.100,103.86.99.100 | A comma-separated list of IP (v4 or v6) addresses to be set as the interface's DNS servers, or non-IP hostnames to be set as the interface's DNS search domains.
+|`DNS` | [103.86.96.100,103.86.99.100](https://support.nordvpn.com/General-info/1047409702/What-are-your-DNS-server-addresses.htm) | A comma-separated list of IP (v4 or v6) addresses to be set as the interface's DNS servers, or non-IP hostnames to be set as the interface's DNS search domains.
 |`ALLOWED_IPS` | 0.0.0.0/0 | A comma-separated list of IP (v4 or v6) addresses with CIDR masks from which incoming traffic for this peer is allowed and to which outgoing traffic for this peer is directed. Use 0.0.0.0/1 for Synology, read [this](https://github.com/bubuntux/nordlynx/issues/2).
 |`PERSISTENT_KEEP_ALIVE` | 25 | A second interval, between 1 and 65535 inclusive, of how often to send an authenticated empty packet to the peer for the purpose of keeping a stateful firewall or NAT mapping valid persistently.
 |`ALLOW_LIST` | | List of domains that are going to be accessible _outside_ vpn (IE rarbg.to,yts.mx).

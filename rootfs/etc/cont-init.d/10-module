@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 
 echo "Uname info: $(uname -a)"
 # check for wireguard module

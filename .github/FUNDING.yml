@@ -1,3 +1,2 @@
-github: [bubuntux,linuxserver]
-open_collective: linuxserver
-custom: "https://www.wireguard.com/donations/"
+github: [bubuntux]
+custom: ["https://www.wireguard.com/donations/","https://www.linuxserver.io/donate"]
