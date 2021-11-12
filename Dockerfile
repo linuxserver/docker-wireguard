@@ -3,13 +3,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 LABEL maintainer="Julio Gutierrez julio.guti+nordlynx@pm.me"
 
 COPY /rootfs /
-
-RUN apt update -y && \
-    apt install -y curl jq patch iputils-ping wireguard && \
+RUN apt-get update -y && \
+    apt-get install -y curl jq patch iputils-ping wireguard && \
 	patch --verbose -p0 < /patch/wg-quick.patch && \
-    apt remove -y patch && \
-    apt autoremove -y && \
-    apt autoclean -y && \
     rm -rf \
         /patch \
         /tmp/* \
