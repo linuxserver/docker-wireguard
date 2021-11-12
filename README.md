@@ -23,7 +23,7 @@
 ## Quick reference (cont.)
 
 - **Where to file issues**: [Github issues](https://github.com/bubuntux/nordlynx/issues)
-- **Supported architecture**: ([more info](https://github.com/docker-library/official-images#architectures-other-than-amd64)) amd64, arm32v6, arm32v7, arm64, s390x
+- **Supported architecture**: ([more info](https://github.com/docker-library/official-images#architectures-other-than-amd64)) amd64, arm32v7, arm64, s390x
 - **Published image artifact details**: [DockerHub](https://hub.docker.com/r/bubuntux/nordlynx), [Github packages](https://github.com/bubuntux/nordlynx/pkgs/container/nordlynx)
 - **Continuous integration**: [Github actions](https://github.com/bubuntux/nordlynx/actions)
 - **Source**: [Github](https://github.com/bubuntux/nordlynx)
@@ -82,23 +82,31 @@ docker run -d \
   ghcr.io/bubuntux/nordlynx
 ```
 
-## Parameters
+## Env Variables
 
-Container images are configured using parameters passed at runtime (such as those above). These parameters are separated by a colon and indicate `<external>:<internal>` respectively. For example, `-p 8080:80` would expose port `80` from inside the container to be accessible from the host's IP on port `8080` outside the container.
-
-| Parameter | Function |
+| Variable | Description |
 | :----: | --- |
-| `-e PRIVATE_KEY=xxxxxxxxx` | The private key can be obtained using the instructions of [this post](https://forum.openwrt.org/t/instruction-config-nordvpn-wireguard-nordlynx-on-openwrt/89976). |
-| `--sysctl=net.ipv4.conf.all.src_valid_mark=1` | Required. |
+| `PRIVATE_KEY` | **[Required]** The private key can be obtained using `docker run --rm -e ... bubuntux/nordvpn nord_private_key` or following these [instructions](https://forum.openwrt.org/t/instruction-config-nordvpn-wireguard-nordlynx-on-openwrt/89976).
+| `ADDRESS` | A comma-separated list of IP (v4 or v6) addresses (optionally with CIDR masks) to be assigned to the interface.
+|`DNS` | A comma-separated list of IP (v4 or v6) addresses to be set as the interface's DNS servers, or non-IP hostnames to be set as the interface's DNS search domains.
+|`ALLOWED_IPS` |  A comma-separated list of IP (v4 or v6) addresses with CIDR masks from which incoming traffic for this peer is allowed and to which outgoing traffic for this peer is directed. Use 0.0.0.0/1 for Synology, read [this](https://github.com/bubuntux/nordlynx/issues/2).
+|`PERSISTENT_KEEP_ALIVE` | A second interval, between 1 and 65535 inclusive, of how often to send an authenticated empty packet to the peer for the purpose of keeping a stateful firewall or NAT mapping valid persistently.
+|`ALLOW_LIST` | List of domains that are going to be accessible _outside_ vpn (IE rarbg.to,yts.mx).
+|`NET_LOCAL`  | CIDR networks (IE 192.168.1.0/24), add a route to allows replies once the VPN is up.
+|`NET6_LOCAL` | CIDR IPv6 networks (IE fe00:d34d:b33f::/64), add a route to allows replies once the VPN is up.
+
+## Sysctl 
+* `net.ipv4.conf.all.src_valid_mark=1` (Required)
+* `net.ipv6.conf.all.disable_ipv6=1` Recommended when only using ipv4.
 
 ## Updating Info
 
 ### Via Docker Compose
 
 * Update all images: `docker-compose pull`
-  * or update a single image: `docker-compose pull nordlynx`
+* or update a single image: `docker-compose pull nordlynx`
 * Let compose update all containers as necessary: `docker-compose up -d`
-  * or update a single container: `docker-compose up -d nordlynx`
+* or update a single container: `docker-compose up -d nordlynx`
 * You can also remove the old dangling images: `docker image prune`
 
 ### Via Docker Run
