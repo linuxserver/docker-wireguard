@@ -16,7 +16,7 @@
 
 ## Supported tags
 
-- edge (created nightly)
+- edge (created weekly)
 - latest (created monthly or on demand)
 - YYYYmmdd (created monthly or on demand)
 
