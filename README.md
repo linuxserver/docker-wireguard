@@ -16,9 +16,9 @@
 
 ## Supported tags
 
-- edge (created weekly)
-- latest (created monthly or on demand)
-- YYYYmmdd (created monthly or on demand)
+- edge (updated weekly)
+- latest (updated monthly)
+- YYYYmmdd (created monthly)
 
 ## Quick reference (cont.)
 
@@ -60,26 +60,22 @@ version: "3"
 services:
   nordlynx:
     image: ghcr.io/bubuntux/nordlynx
-    container_name: nordlynx
     cap_add:
       - NET_ADMIN #required
     environment:
       - PRIVATE_KEY=xxxxxxxxx #required
-    restart: unless-stopped
 ```
 
 ### docker cli ([click here for more info](https://docs.docker.com/engine/reference/commandline/cli/))
 
 ```bash
 docker run -d \
-  --name=nordlynx \
   --cap-add=NET_ADMIN `#required` \
   -e PRIVATE_KEY=xxxxxxxxx `#required` \
-  --restart unless-stopped \
   ghcr.io/bubuntux/nordlynx
 ```
 
-## Env Variables
+## Environment Variables
 
 | Variable | Default | Description |
 | :----: | --- | --- |
