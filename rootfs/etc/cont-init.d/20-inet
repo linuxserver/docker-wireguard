@@ -23,19 +23,19 @@ iptables -X
 
 iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 iptables -A INPUT -i lo -j ACCEPT
-iptables -A INPUT -s "${docker_networks}" -j ACCEPT
+iptables -A INPUT -i eth0 -s "${docker_networks}" -j ACCEPT
 
 iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 iptables -A OUTPUT -o lo -j ACCEPT
-iptables -A OUTPUT -d "${docker_networks}" -j ACCEPT
 iptables -A OUTPUT -o wg+ -j ACCEPT
-iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
-iptables -A OUTPUT -p udp -m udp --dport 51820 -j ACCEPT
-iptables -A OUTPUT -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT
+iptables -A OUTPUT -o eth0 -d "${docker_networks}" -j ACCEPT
+iptables -A OUTPUT -o eth0 -p udp -m udp --dport 53 -j ACCEPT
+iptables -A OUTPUT -o eth0 -p udp -m udp --dport 51820 -j ACCEPT
+iptables -A OUTPUT -o eth0 -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT
 
 iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 iptables -A FORWARD -i lo -j ACCEPT
-iptables -A FORWARD -d "${docker_networks}" -j ACCEPT
-iptables -A FORWARD -s "${docker_networks}" -j ACCEPT
+iptables -A FORWARD -i eth0 -d "${docker_networks}" -j ACCEPT
+iptables -A FORWARD -i eth0 -s "${docker_networks}" -j ACCEPT
 
 iptables -t nat -A POSTROUTING -o wg+ -j MASQUERADE
