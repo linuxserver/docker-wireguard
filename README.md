@@ -75,7 +75,13 @@ docker run -d \
   ghcr.io/bubuntux/nordlynx
 ```
 
-## Environment Variables
+Review the [wiki](https://github.com/bubuntux/nordlynx/wiki) for more practical usages and host specific instructions.
+
+## Module
+
+Wireguard module is required, please install it on the host https://www.wireguard.com/install . 
+
+## Environment
 
 | Variable | Default | Description |
 | :----: | --- | --- |
@@ -95,5 +101,6 @@ docker run -d \
 | `NET6_LOCAL` | | CIDR IPv6 networks (IE fe00:d34d:b33f::/64), add a route to allows replies once the VPN is up.
 
 ## Sysctl 
+
 * `net.ipv4.conf.all.src_valid_mark=1` May be required. (depends on multiple factors)
 * `net.ipv6.conf.all.disable_ipv6=1` Recommended when only using ipv4.
