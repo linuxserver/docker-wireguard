@@ -6,9 +6,9 @@ if [ -n "$NET_LOCAL" ]; then
    for net in ${NET_LOCAL//[;,]/ }; do
       echo "Enabling connection to network ${net}"
       ip route | grep -q "$net" || ip route add "$net" via "$gw" dev eth0
-      iptables -A INPUT -s "$net" -j ACCEPT
-      iptables -A OUTPUT -d "$net" -j ACCEPT
-      iptables -A FORWARD -d "$net" -j ACCEPT
-      iptables -A FORWARD -s "$net" -j ACCEPT
+      iptables -A INPUT   -i eth0 -s "$net" -j ACCEPT
+      iptables -A OUTPUT  -o eth0 -d "$net" -j ACCEPT
+      iptables -A FORWARD -i eth0 -d "$net" -j ACCEPT
+      iptables -A FORWARD -i eth0 -s "$net" -j ACCEPT
   done
 fi
