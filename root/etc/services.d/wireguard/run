@@ -14,8 +14,8 @@ if [[ -z ${PUBLIC_KEY} || -z ${END_POINT} ]]; then
   fi
 fi
 
-if [[ -n ${REFRESH} ]]; then
-  REFRESH="s6-sleep ${REFRESH} s6-svc -r /run/s6/services/wireguard &"
+if [[ -n ${RECONNECT} ]]; then
+  RECONNECT="s6-sleep ${RECONNECT} s6-svc -r /run/s6/services/wireguard &"
 fi
 
 cat >/etc/wireguard/wg0.conf <<EOL
@@ -29,7 +29,7 @@ PreUp = ${PRE_UP}
 PostUp = ${POST_UP}
 PreDown = ${PRE_DOWN}
 PostDown = ${POST_DOWN}
-PostUp = ${REFRESH}
+PostUp = ${RECONNECT}
 
 [Peer]
 PublicKey = ${PUBLIC_KEY}
