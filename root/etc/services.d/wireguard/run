@@ -6,16 +6,14 @@ mkdir -p /etc/wireguard
 if [[ -z ${PUBLIC_KEY} || -z ${END_POINT} ]]; then
   echo "Finding the best server..."
   recommendations=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?&filters\[servers_technologies\]\[identifier\]=wireguard_udp&limit=1&${QUERY}")
+  echo "Using server:"
+  jq -r '.[0]' <<< "${recommendations}"
   if [[ -z ${PUBLIC_KEY} ]]; then
     PUBLIC_KEY=$(jq -r '.[0].technologies[] | select( .identifier == "wireguard_udp" ) | .metadata[] | select( .name == "public_key" ) | .value' <<< "${recommendations}")
   fi
   if [[ -z ${END_POINT} ]]; then
     END_POINT=$(jq -r '.[0].hostname' <<< "${recommendations}"):51820
   fi
-fi
-
-if [[ -n ${RECONNECT} ]]; then
-  RECONNECT="s6-sleep ${RECONNECT} s6-svc -r /run/s6/services/wireguard &"
 fi
 
 cat >/etc/wireguard/wg0.conf <<EOL
@@ -29,7 +27,6 @@ PreUp = ${PRE_UP}
 PostUp = ${POST_UP}
 PreDown = ${PRE_DOWN}
 PostDown = ${POST_DOWN}
-PostUp = ${RECONNECT}
 
 [Peer]
 PublicKey = ${PUBLIC_KEY}
@@ -42,7 +39,15 @@ chmod 600 /etc/wireguard/wg0.conf
 
 echo "Connecting..."
 wg-quick up wg0 
-wg show wg0
+echo "Connected! \(ᵔᵕᵔ)/"
+
+if [[ -n ${RECONNECT} ]]; then
+  echo "Reconnecting in ${RECONNECT} seconds"
+  sleep "${RECONNECT}"
+  wg show wg0 | grep transfer
+  echo "Reconnecting..."
+  exit 0
+fi
 
 sleep infinity & PID=$!
 trap "kill $PID; exit" INT TERM
