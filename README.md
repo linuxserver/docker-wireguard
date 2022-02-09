@@ -104,6 +104,7 @@ Wireguard module is required, the container will try to install the module, inst
 | `ALLOW_LIST` | | List of domains that are going to be accessible _outside_ vpn (IE rarbg.to,yts.mx).
 | `NET_LOCAL` | | CIDR networks (IE 192.168.1.0/24), add a route to allows replies once the VPN is up.
 | `NET6_LOCAL` | | CIDR IPv6 networks (IE fe00:d34d:b33f::/64), add a route to allows replies once the VPN is up.
+| `REFRESH` | | Time in seconds to refresh the connection (reconnect).
 
 ## Sysctl 
 

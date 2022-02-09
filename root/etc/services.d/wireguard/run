@@ -4,6 +4,7 @@ rm -rf /etc/wireguard
 mkdir -p /etc/wireguard
 
 if [[ -z ${PUBLIC_KEY} || -z ${END_POINT} ]]; then
+  echo "Finding the best server..."
   recommendations=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?&filters\[servers_technologies\]\[identifier\]=wireguard_udp&limit=1&${QUERY}")
   if [[ -z ${PUBLIC_KEY} ]]; then
     PUBLIC_KEY=$(jq -r '.[0].technologies[] | select( .identifier == "wireguard_udp" ) | .metadata[] | select( .name == "public_key" ) | .value' <<< "${recommendations}")
@@ -11,6 +12,10 @@ if [[ -z ${PUBLIC_KEY} || -z ${END_POINT} ]]; then
   if [[ -z ${END_POINT} ]]; then
     END_POINT=$(jq -r '.[0].hostname' <<< "${recommendations}"):51820
   fi
+fi
+
+if [[ -n ${REFRESH} ]]; then
+  REFRESH="s6-sleep ${REFRESH} s6-svc -r /run/s6/services/wireguard &"
 fi
 
 cat >/etc/wireguard/wg0.conf <<EOL
@@ -24,6 +29,7 @@ PreUp = ${PRE_UP}
 PostUp = ${POST_UP}
 PreDown = ${PRE_DOWN}
 PostDown = ${POST_DOWN}
+PostUp = ${REFRESH}
 
 [Peer]
 PublicKey = ${PUBLIC_KEY}
@@ -34,14 +40,10 @@ EOL
 
 chmod 600 /etc/wireguard/wg0.conf
 
-_term() {
-  echo "Caught SIGTERM signal!"
-  wg-quick down wg0
-}
-trap _term SIGTERM
-
+echo "Connecting..."
 wg-quick up wg0 
 wg show wg0
 
-sleep infinity &
+sleep infinity & PID=$!
+trap "kill $PID; exit" INT TERM
 wait
