@@ -1,5 +1,8 @@
 #!/usr/bin/with-contenv bash
 
+rm -rf /etc/wireguard
+mkdir -p /etc/wireguard
+
 if [[ -z ${PUBLIC_KEY} || -z ${END_POINT} ]]; then
   recommendations=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?&filters\[servers_technologies\]\[identifier\]=wireguard_udp&limit=1&${QUERY}")
   if [[ -z ${PUBLIC_KEY} ]]; then
@@ -29,8 +32,4 @@ Endpoint = ${END_POINT}
 PersistentKeepalive = ${PERSISTENT_KEEP_ALIVE:-25}
 EOL
 
-wg-quick up wg0
-wg show wg0
-
-sleep infinity &
-wait
+chmod 600 /etc/wireguard/wg0.conf

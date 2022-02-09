@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv bash
+
+if [[ -z ${PRIVATE_KEY} ]] ; then
+  echo "**** Missing PRIVATE_KEY please review the documentation. ****"
+  sleep infinity
+fi
