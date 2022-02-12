@@ -6,8 +6,12 @@ mkdir -p /etc/wireguard
 if [[ -z ${PUBLIC_KEY} || -z ${END_POINT} ]]; then
   echo "[$(date -Iseconds)] Finding the best server..."
   recommendations=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?&filters\[servers_technologies\]\[identifier\]=wireguard_udp&limit=1&${QUERY}")
-  echo "[$(date -Iseconds)] Using server:"
-  jq -r '.[0]' <<< "${recommendations}"
+  server=$(jq -r '.[0] | del(.services, .technologies)' <<< "${recommendations}")
+  if [[ -z ${server} ]]; then
+    echo "[$(date -Iseconds)] Unable to select a server ¯\_(⊙︿⊙)_/¯"
+    sleep infinity
+  fi
+  echo "[$(date -Iseconds)] Using server: ${server}"
   if [[ -z ${PUBLIC_KEY} ]]; then
     PUBLIC_KEY=$(jq -r '.[0].technologies[] | select( .identifier == "wireguard_udp" ) | .metadata[] | select( .name == "public_key" ) | .value' <<< "${recommendations}")
   fi
