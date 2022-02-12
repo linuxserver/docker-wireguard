@@ -1,41 +1,42 @@
 #!/bin/bash
 
-docker_networks=$(ip link | awk -F': ' '$0 !~ "lo|wg|tun|tap|^[^0-9]"{print $2;getline}' | cut -d@ -f1 | (
-  while read -r interface ; do
-    network="$(ip -o addr show dev "$interface" | awk '$3 == "inet6" {print $4; exit}')"
-    if [ -z "$result" ]; then
-      result=$network
-    else
-      result=$result,$network
-    fi
-  done
-  echo "$result"
-))
-if [ -z "$docker_networks" ]; then
-  echo "No inet6 network"
+network_found=false
+interfaces=$(ip link | awk -F': ' '$0 !~ "lo|wg|tun|tap|^[^0-9]"{print $2;getline}' | cut -d@ -f1)
+for iface in "${interfaces[@]}"; do
+  inet="$(ip -o addr show dev "${iface}" | awk '$3 == "inet6" {print $4; exit}')"
+  if [[ -z "$inet" ]]; then
+    continue
+  fi
+  if [ "$network_found" = false ]; then
+    ip6tables -F
+    ip6tables -X
+  fi
+  echo "[$(date -Iseconds)] Enabling connection to ${iface} ${inet}"
+  ip6tables -A INPUT -i "$iface" -s "${inet}" -j ACCEPT
+  ip6tables -A OUTPUT -o "$iface" -d "${inet}" -j ACCEPT
+  ip6tables -A FORWARD -i "$iface" -d "${inet}" -j ACCEPT
+  ip6tables -A FORWARD -i "$iface" -s "${inet}" -j ACCEPT
+  network_found=true
+done
+
+if [ "$network_found" = false ]; then
+  echo "[$(date -Iseconds)] No interface network6 detected"
   exit
 fi
 
-echo "Enabling connection to secure interface6 and docker network6"
-
-ip6tables -F
-ip6tables -X
+echo "[$(date -Iseconds)] Enabling connection to secure interfaces"
 
 ip6tables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-ip6tables -A INPUT -i lo -j ACCEPT
-ip6tables -A INPUT -i eth0 -s "${docker_networks}" -j ACCEPT
-
 ip6tables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+ip6tables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+ip6tables -A INPUT -i lo -j ACCEPT
 ip6tables -A OUTPUT -o lo -j ACCEPT
+ip6tables -A FORWARD -i lo -j ACCEPT
+
 ip6tables -A OUTPUT -o wg+ -j ACCEPT
-ip6tables -A OUTPUT -o eth0 -d "${docker_networks}" -j ACCEPT
+ip6tables -t nat -A POSTROUTING -o wg+ -j MASQUERADE
+
 ip6tables -A OUTPUT -o eth0 -p udp -m udp --dport 53 -j ACCEPT
 ip6tables -A OUTPUT -o eth0 -p udp -m udp --dport 51820 -j ACCEPT
 ip6tables -A OUTPUT -o eth0 -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT
-
-ip6tables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-ip6tables -A FORWARD -i lo -j ACCEPT
-ip6tables -A FORWARD -i eth0 -d "${docker_networks}" -j ACCEPT
-ip6tables -A FORWARD -i eth0 -s "${docker_networks}" -j ACCEPT
-
-ip6tables -t nat -A POSTROUTING -o wg+ -j MASQUERADE
