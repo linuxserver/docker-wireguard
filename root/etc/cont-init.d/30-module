@@ -1,14 +1,14 @@
 #!/usr/bin/with-contenv bash
 
-echo "Uname info: $(uname -a)"
+echo "[$(date -Iseconds)] Uname info: $(uname -a)"
 # check for wireguard module
 ip link del dev test 2>/dev/null
 if ip link add dev test type wireguard; then
-  echo "**** It seems the wireguard module is already active. Skipping kernel header install and module compilation. ****"
+  echo "[$(date -Iseconds)] **** It seems the wireguard module is already active. Skipping kernel header install and module compilation. ****"
   SKIP_COMPILE="true"
   ip link del dev test
 else
-  echo "**** The wireguard module is not active, will attempt kernel header install and module compilation. ****"
+  echo "[$(date -Iseconds)] **** The wireguard module is not active, will attempt kernel header install and module compilation. ****"
 fi  
 
 # install headers if necessary

@@ -18,7 +18,7 @@
 
 - edge (updated weekly)
 - latest (updated monthly)
-- YYYYmmdd (created monthly)
+- YYYY-mm-dd (created monthly)
 
 ## Quick reference (cont.)
 

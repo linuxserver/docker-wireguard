@@ -7,4 +7,4 @@ ip6tables -P OUTPUT DROP 2>/dev/null
 ip6tables -P INPUT DROP 2>/dev/null
 ip6tables -P FORWARD DROP 2>/dev/null
 
-echo "Firewall is up, everything has to go through the vpn"
+echo "[$(date -Iseconds)] Firewall is up, everything has to go through the vpn"

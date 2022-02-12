@@ -4,9 +4,9 @@ rm -rf /etc/wireguard
 mkdir -p /etc/wireguard
 
 if [[ -z ${PUBLIC_KEY} || -z ${END_POINT} ]]; then
-  echo "Finding the best server..."
+  echo "[$(date -Iseconds)] Finding the best server..."
   recommendations=$(curl -s "https://api.nordvpn.com/v1/servers/recommendations?&filters\[servers_technologies\]\[identifier\]=wireguard_udp&limit=1&${QUERY}")
-  echo "Using server:"
+  echo "[$(date -Iseconds)] Using server:"
   jq -r '.[0]' <<< "${recommendations}"
   if [[ -z ${PUBLIC_KEY} ]]; then
     PUBLIC_KEY=$(jq -r '.[0].technologies[] | select( .identifier == "wireguard_udp" ) | .metadata[] | select( .name == "public_key" ) | .value' <<< "${recommendations}")
@@ -37,15 +37,15 @@ EOL
 
 chmod 600 /etc/wireguard/wg0.conf
 
-echo "Connecting..."
+echo "[$(date -Iseconds)] Connecting..."
 wg-quick up wg0 
-echo "Connected! \(ᵔᵕᵔ)/"
+echo "[$(date -Iseconds)] Connected! \(ᵔᵕᵔ)/"
 
 if [[ -n ${RECONNECT} ]]; then
-  echo "Reconnecting in ${RECONNECT} seconds"
+  echo "[$(date -Iseconds)] Reconnecting in ${RECONNECT} seconds"
   sleep "${RECONNECT}"
   wg show wg0 | grep transfer
-  echo "Reconnecting..."
+  echo "[$(date -Iseconds)] Reconnecting..."
   exit 0
 fi
 

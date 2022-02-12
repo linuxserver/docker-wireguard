@@ -4,7 +4,7 @@
 if [[ -n ${ALLOW_LIST} ]]; then
   for domain in ${ALLOW_LIST//[;,]/ }; do
     domain=$(echo "$domain" | sed 's/^.*:\/\///;s/\/.*$//')
-    echo "Enabling connection to host ${domain}"
+   echo "[$(date -Iseconds)] Enabling connection to host ${domain}"
     iptables  -A OUTPUT -o eth0 -d "${domain}" -j ACCEPT 2>/dev/null
     ip6tables -A OUTPUT -o eth0 -d "${domain}" -j ACCEPT 2>/dev/null
   done
