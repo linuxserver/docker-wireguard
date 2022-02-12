@@ -1,7 +1,7 @@
 #!/bin/bash
 
 network_found=false
-interfaces=$(ip link | awk -F': ' '$0 !~ "lo|wg|tun|tap|^[^0-9]"{print $2;getline}' | cut -d@ -f1)
+interfaces=($(ip link | awk -F': ' '$0 !~ "lo|wg|tun|tap|^[^0-9]"{print $2;getline}' | cut -d@ -f1))
 for iface in "${interfaces[@]}"; do
   inet="$(ip -o addr show dev "${iface}" | awk '$3 == "inet" {print $4}')"
   if [[ -z "$inet" ]]; then
