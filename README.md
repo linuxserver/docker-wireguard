@@ -62,21 +62,16 @@ services:
     image: ghcr.io/bubuntux/nordlynx
     cap_add:
       - NET_ADMIN #required
-      - NET_RAW #required in some cases
-      - SYS_MODULE #requiered to install wireguard module
     environment:
       - PRIVATE_KEY=xxxxxxxxx #required
-    volumes:
-      - /lib/modules:/lib/modules #requiered to install wireguard module
 ```
 
 ### docker cli ([click here for more info](https://docs.docker.com/engine/reference/commandline/cli/))
 
 ```bash
 docker run -d \
-  --cap-add=NET_ADMIN,NET_RAW,SYS_MODULE #required \
+  --cap-add=NET_ADMIN #required \
   -e PRIVATE_KEY=xxxxxxxxx #required \
-  -v /lib/modules:/lib/modules #requiered to install wireguard module \
   ghcr.io/bubuntux/nordlynx
 ```
 
@@ -84,7 +79,7 @@ Review the [wiki](https://github.com/bubuntux/nordlynx/wiki) for more practical 
 
 ## Module
 
-Wireguard module is required, the container will try to install the module, install [manually](https://www.wireguard.com/install) if need it. 
+Wireguard module is required, please install it [manually](https://www.wireguard.com/install) if need it. 
 
 ## Environment
 

@@ -1,6 +1,0 @@
-#!/usr/bin/with-contenv bash
-
-if [[ -z ${PRIVATE_KEY} ]] ; then
-  echo "[$(date -Iseconds)] **** Missing PRIVATE_KEY please review the documentation. ****"
-  sleep infinity
-fi
