@@ -14,6 +14,6 @@ if ! iptables -L > /dev/null 2>&1; then
 fi
 
 if [[ -z ${PRIVATE_KEY} ]] ; then
-  echo "[$(date -Iseconds)] Missing PRIVATE_KEY please review the documentation."
+  echo "[$(date -Iseconds)] Missing PRIVATE_KEY, try \`docker run --rm --cap-add=NET_ADMIN -e USER=XXX -e PASS=YYY bubuntux/nordvpn:get_private_key\` or follow this instructions https://forum.openwrt.org/t/instruction-config-nordvpn-wireguard-nordlynx-on-openwrt/89976 to obtain the private key."
   sleep infinity
 fi
