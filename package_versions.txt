@@ -86,7 +86,7 @@ libdpkg-perl1.19.0.5ubuntu2.3
 libelf10.170-0.4ubuntu0.1
 libelf-dev0.170-0.4ubuntu0.1
 liberror-perl0.17025-1
-libexpat12.2.5-3ubuntu0.2
+libexpat12.2.5-3ubuntu0.4
 libext2fs21.44.1-1ubuntu1.3
 libfdisk12.31.1-0.4ubuntu3.7
 libffi63.2.1-8
@@ -180,7 +180,7 @@ libuuid12.31.1-0.4ubuntu3.7
 libwind0-heimdal7.5.0+dfsg-1
 libxtables121.6.1-2ubuntu2
 libzstd11.3.3+dfsg-2ubuntu1.2
-linux-libc-dev4.15.0-167.175
+linux-libc-dev4.15.0-169.177
 locales2.27-3ubuntu1.4
 login1:4.5-1ubuntu2.2
 lsb-base9.20170808ubuntu1
