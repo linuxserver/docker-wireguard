@@ -117,6 +117,17 @@ app_setup_block: |
 
   Don't forget to set the necessary POSTUP and POSTDOWN rules in your client's peer conf for lan access.
 
+  ## Rancher specific usage
+
+  A number of people appear to have been having an issue when running Wireguard in Rancher where they are able to connect and a handshake is listed under `wg show`, however they're not able to access their local network, nor the internet. A fix for this appears to be to add an init container sidecar that runs a command in the main container on creation.
+  
+  To add this container through the Rancher cluster explorer UI, (after you've created the Wireguard deployment) go to its deployment page and click the kebab menu button (three vertical dots) in the top right corner and then click `add sidecar`.
+
+  In the general tab, first enter the image as `busybox`, select init container and give it a name if you wish. Next, for the command, enter `sysctl` and for the arguments, enter `-w net.ipv4.ip_forward=1`. Thirdly, select the security context tab and under privileged, select yes. Lastly, hit save in the bottom right corner and the deployment status at the top should go from active to updating. 
+  
+  You may see an error message at the bottom saying `services "wireguard" already exists`, but you can ignore it. When the deployment status returns to active, Wireguard should hopefully be running and you should be able to access your local network and the internet. You have to click cancel to exit the config page.
+  
+  Credit to u/Mr_Prometius on reddit for finding this solution, you can view the original reddit post [here](https://www.reddit.com/r/WireGuard/comments/ltibaj/wireguard_in_docker_using_rancher/)
 
 # changelog
 changelogs:
