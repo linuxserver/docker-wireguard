@@ -73,7 +73,7 @@ libc62.27-3ubuntu1.5
 libc6-dev2.27-3ubuntu1.5
 libcap21:2.25-1.2
 libcap-ng00.7.7-3.1
-libc-bin2.27-3ubuntu1.4
+libc-bin2.27-3ubuntu1.5
 libcc1-08.4.0-1ubuntu1~18.04
 libc-dev-bin2.27-3ubuntu1.5
 libcilkrts57.5.0-3ubuntu1~18.04
@@ -166,7 +166,7 @@ libsepol12.7-1
 libsmartcols12.31.1-0.4ubuntu3.7
 libsqlite3-03.22.0-1ubuntu0.4
 libss21.44.1-1ubuntu1.3
-libssl1.11.1.1-1ubuntu2.1~18.04.14
+libssl1.11.1.1-1ubuntu2.1~18.04.15
 libstdc++68.4.0-1ubuntu1~18.04
 libstdc++-7-dev7.5.0-3ubuntu1~18.04
 libsystemd0237-3ubuntu10.53
@@ -180,7 +180,7 @@ libuuid12.31.1-0.4ubuntu3.7
 libwind0-heimdal7.5.0+dfsg-1
 libxtables121.6.1-2ubuntu2
 libzstd11.3.3+dfsg-2ubuntu1.2
-linux-libc-dev4.15.0-171.180
+linux-libc-dev4.15.0-173.182
 locales2.27-3ubuntu1.5
 login1:4.5-1ubuntu2.2
 lsb-base9.20170808ubuntu1
@@ -192,7 +192,7 @@ ncurses-base6.1-1ubuntu1.18.04
 ncurses-bin6.1-1ubuntu1.18.04
 net-tools1.60+git20161116.90da8a0-1ubuntu1
 openresolv3.8.0-1
-openssl1.1.1-1ubuntu2.1~18.04.14
+openssl1.1.1-1ubuntu2.1~18.04.15
 passwd1:4.5-1ubuntu2.2
 patch2.7.6-2ubuntu1.1
 perl5.26.1-6ubuntu0.5
@@ -207,7 +207,7 @@ readline-common7.0-3
 sed4.4-2
 sensible-utils0.0.12
 sysvinit-utils2.88dsf-59.10ubuntu1
-tar1.29b-2ubuntu0.2
+tar1.29b-2ubuntu0.3
 tzdata2021e-0ubuntu0.18.04
 ubuntu-keyring2018.09.18.1~18.04.2
 util-linux2.31.1-0.4ubuntu3.7
