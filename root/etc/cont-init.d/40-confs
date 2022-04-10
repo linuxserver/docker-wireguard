@@ -69,8 +69,12 @@ AllowedIPs = ${CLIENT_IP}/32
 
 DUDE
     fi
-    echo "PEER ${i} QR code:"
-    qrencode -t ansiutf8 < /config/${PEER_ID}/${PEER_ID}.conf
+    if [ -z "${LOG_CONFS}" ] || [ "${LOG_CONFS}" = "true" ]; then
+      echo "PEER ${i} QR code:"
+      qrencode -t ansiutf8 < /config/${PEER_ID}/${PEER_ID}.conf
+    else
+      echo "PEER ${i} conf and QR code png saved in /config/${PEER_ID}"
+    fi
     qrencode -o /config/${PEER_ID}/${PEER_ID}.png < /config/${PEER_ID}/${PEER_ID}.conf
   done
 }

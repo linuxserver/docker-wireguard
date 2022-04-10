@@ -48,6 +48,7 @@ opt_param_env_vars:
   - { env_var: "PEERDNS", env_value: "auto", desc: "DNS server set in peer/client configs (can be set as `8.8.8.8`). Used in server mode. Defaults to `auto`, which uses wireguard docker host's DNS via included CoreDNS forward."}
   - { env_var: "INTERNAL_SUBNET", env_value: "10.13.13.0", desc: "Internal subnet for the wireguard and server and peers (only change if it clashes). Used in server mode."}
   - { env_var: "ALLOWEDIPS", env_value: "0.0.0.0/0", desc: "The IPs/Ranges that the peers will be able to reach using the VPN connection. If not specified the default value is: '0.0.0.0/0, ::0/0' This will cause ALL traffic to route through the VPN, if you want split tunneling, set this to only the IPs you would like to use the tunnel AND the ip of the server's WG ip, such as 10.13.13.1."}
+  - { env_var: "LOG_CONFS", env_value: "true", desc: "Generated QR codes will be displayed in the docker log. Set to `false` to skip log output."}
 
 optional_block_1: false
 optional_block_1_items: ""
@@ -120,6 +121,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "10.04.22:", desc: "Rebase to Ubuntu Focal. Add `LOG_CONFS` env var. Remove deprecated `add-peer` command." }
   - { date: "28.10.21:", desc: "Add site-to-site vpn support." }
   - { date: "11.02.21:", desc: "Fix bug related to changing internal subnet and named peer confs not updating." }
   - { date: "06.10.20:", desc: "Disable CoreDNS in client mode, or if port 53 is already in use in server mode." }
