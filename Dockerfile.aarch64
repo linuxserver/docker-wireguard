@@ -1,4 +1,4 @@
-FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-bionic
+FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-focal
 
 # set version label
 ARG BUILD_DATE
