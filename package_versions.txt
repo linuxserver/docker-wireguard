@@ -35,8 +35,8 @@ gcc-10-base10.3.0-1ubuntu1~20.04
 gcc4:9.3.0-1ubuntu2
 gcc-99.4.0-1ubuntu1~20.04.1
 gcc-9-base9.4.0-1ubuntu1~20.04.1
-git1:2.25.1-1ubuntu3.2
-git-man1:2.25.1-1ubuntu3.2
+git1:2.25.1-1ubuntu3.3
+git-man1:2.25.1-1ubuntu3.3
 gnupg2.2.19-3ubuntu2.1
 gnupg-l10n2.2.19-3ubuntu2.1
 gnupg-utils2.2.19-3ubuntu2.1
@@ -229,6 +229,6 @@ tar1.30+dfsg-7ubuntu0.20.04.2
 tzdata2022a-0ubuntu0.20.04
 ubuntu-keyring2020.02.11.4
 util-linux2.34-0.1ubuntu9.3
-xz-utils5.2.4-1ubuntu1
+xz-utils5.2.4-1ubuntu1.1
 zlib1g1:1.2.11.dfsg-2ubuntu1.3
 zlib1g-dev1:1.2.11.dfsg-2ubuntu1.3
