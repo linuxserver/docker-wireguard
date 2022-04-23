@@ -121,6 +121,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "23.04.22:", desc: "Add pre-shared key support. Automatically added to all new peer confs generated, existing ones are left without to ensure no breaking changes." }
   - { date: "10.04.22:", desc: "Rebase to Ubuntu Focal. Add `LOG_CONFS` env var. Remove deprecated `add-peer` command." }
   - { date: "28.10.21:", desc: "Add site-to-site vpn support." }
   - { date: "11.02.21:", desc: "Fix bug related to changing internal subnet and named peer confs not updating." }
