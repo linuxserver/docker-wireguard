@@ -11,7 +11,7 @@ ln -s /config/wg0.conf /etc/wireguard/wg0.conf
   cp /defaults/peer.conf /config/templates/peer.conf
 # add preshared key to user templates (backwards compatibility)
 if ! grep -q 'PresharedKey' /config/templates/peer.conf; then
-  sed -i 's|^PrivateKey|PresharedKey = \$\(cat /config/\${PEER_ID}/presharedkey-\${PEER_ID}\)\nPrivateKey|' /config/templates/peer.conf
+  sed -i 's|^Endpoint|PresharedKey = \$\(cat /config/\${PEER_ID}/presharedkey-\${PEER_ID}\)\nEndpoint|' /config/templates/peer.conf
 fi
 
 generate_confs () {
