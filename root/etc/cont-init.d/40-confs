@@ -9,6 +9,10 @@ ln -s /config/wg0.conf /etc/wireguard/wg0.conf
   cp /defaults/server.conf /config/templates/server.conf
 [[ ! -f /config/templates/peer.conf ]] && \
   cp /defaults/peer.conf /config/templates/peer.conf
+# add preshared key to user templates (backwards compatibility)
+if ! grep -q 'PresharedKey' /config/templates/peer.conf; then
+  sed -i 's|^Endpoint|PresharedKey = \$\(cat /config/\${PEER_ID}/presharedkey-\${PEER_ID}\)\nEndpoint|' /config/templates/peer.conf
+fi
 
 generate_confs () {
   mkdir -p /config/server
@@ -31,6 +35,7 @@ DUDE"
     if [ ! -f "/config/${PEER_ID}/privatekey-${PEER_ID}" ]; then
       umask 077
       wg genkey | tee /config/${PEER_ID}/privatekey-${PEER_ID} | wg pubkey > /config/${PEER_ID}/publickey-${PEER_ID}
+      wg genpsk > /config/${PEER_ID}/presharedkey-${PEER_ID}
     fi
     if [ -f "/config/${PEER_ID}/${PEER_ID}.conf" ]; then
       CLIENT_IP=$(cat /config/${PEER_ID}/${PEER_ID}.conf | grep "Address" | awk '{print $NF}')
@@ -46,25 +51,43 @@ DUDE"
         fi
       done
     fi
-    eval "`printf %s`
-    cat <<DUDE > /config/${PEER_ID}/${PEER_ID}.conf
+    if [ -f "/config/${PEER_ID}/presharedkey-${PEER_ID}" ]; then
+      # create peer conf with presharedkey
+      eval "`printf %s`
+      cat <<DUDE > /config/${PEER_ID}/${PEER_ID}.conf
 `cat /config/templates/peer.conf`
 DUDE"
-    SERVER_ALLOWEDIPS=SERVER_ALLOWEDIPS_PEER_${i}
-    if [ -n "${!SERVER_ALLOWEDIPS}" ]; then
-      echo "Adding ${!SERVER_ALLOWEDIPS} to wg0.conf's AllowedIPs for peer ${i}"
+      # add peer info to server conf with presharedkey
       cat <<DUDE >> /config/wg0.conf
 [Peer]
 # ${PEER_ID}
 PublicKey = $(cat /config/${PEER_ID}/publickey-${PEER_ID})
+PresharedKey = $(cat /config/${PEER_ID}/presharedkey-${PEER_ID})
+DUDE
+    else
+      echo "**** Existing keys with no preshared key found for ${PEER_ID}, creating confs without preshared key for backwards compatibility ****"
+      # create peer conf without presharedkey
+      eval "`printf %s`
+      cat <<DUDE > /config/${PEER_ID}/${PEER_ID}.conf
+`cat /config/templates/peer.conf | sed '/PresharedKey/d'`
+DUDE"
+      # add peer info to server conf without presharedkey
+      cat <<DUDE >> /config/wg0.conf
+[Peer]
+# ${PEER_ID}
+PublicKey = $(cat /config/${PEER_ID}/publickey-${PEER_ID})
+DUDE
+    fi
+    SERVER_ALLOWEDIPS=SERVER_ALLOWEDIPS_PEER_${i}
+    # add peer's allowedips to server conf
+    if [ -n "${!SERVER_ALLOWEDIPS}" ]; then
+      echo "Adding ${!SERVER_ALLOWEDIPS} to wg0.conf's AllowedIPs for peer ${i}"
+      cat <<DUDE >> /config/wg0.conf
 AllowedIPs = ${CLIENT_IP}/32,${!SERVER_ALLOWEDIPS}
 
 DUDE
     else
       cat <<DUDE >> /config/wg0.conf
-[Peer]
-# ${PEER_ID}
-PublicKey = $(cat /config/${PEER_ID}/publickey-${PEER_ID})
 AllowedIPs = ${CLIENT_IP}/32
 
 DUDE
