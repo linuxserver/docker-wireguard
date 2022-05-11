@@ -150,7 +150,7 @@ services:
       - LOG_CONFS=true #optional
     volumes:
       - /path/to/appdata/config:/config
-      - /lib/modules:/lib/modules
+      - /lib/modules:/lib/modules:ro
     ports:
       - 51820:51820/udp
     sysctls:
@@ -177,7 +177,7 @@ docker run -d \
   -e LOG_CONFS=true `#optional` \
   -p 51820:51820/udp \
   -v /path/to/appdata/config:/config \
-  -v /lib/modules:/lib/modules \
+  -v /lib/modules:/lib/modules:ro \
   --sysctl="net.ipv4.conf.all.src_valid_mark=1" \
   --restart unless-stopped \
   lscr.io/linuxserver/wireguard:latest
