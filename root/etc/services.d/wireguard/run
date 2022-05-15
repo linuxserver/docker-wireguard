@@ -17,10 +17,7 @@ if [[ -z ${PUBLIC_KEY} || -z ${END_POINT} ]]; then
   fi
 fi
 
-echo "Private Key: $PRIVATE_KEY"
-echo "Private Key File: $PRIVATE_KEY_FILE"
 [[ -z "${PRIVATE_KEY}" ]] && [[ -f "${PRIVATE_KEY_FILE}" ]] && PRIVATE_KEY="$(head -n 1 "${PRIVATE_KEY_FILE}")"
-echo "Private key: $PRIVATE_KEY"
 
 ( umask 077 && { cat >/etc/wireguard/wg0.conf <<-EOF
 [Interface]
