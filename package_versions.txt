@@ -1,6 +1,6 @@
 adduser3.118ubuntu2
-apt2.0.6
-apt-utils2.0.6
+apt2.0.8
+apt-utils2.0.8
 base-files11ubuntu5.5
 base-passwd3.5.47
 bash5.0-6ubuntu1.1
@@ -25,7 +25,7 @@ dirmngr2.2.19-3ubuntu2.1
 distro-info-data0.43ubuntu1.10
 dkms2.8.1-5ubuntu2
 dpkg1.19.7ubuntu3
-dpkg-dev1.19.7ubuntu3
+dpkg-dev1.19.7ubuntu3.2
 e2fsprogs1.45.5-2ubuntu1
 fdisk2.34-0.1ubuntu9.3
 findutils4.7.0-1ubuntu1
@@ -59,7 +59,7 @@ jq1.6-1ubuntu0.20.04.1
 kmod27-1ubuntu2
 krb5-locales1.17-6ubuntu4.1
 libacl12.2.53-6
-libapt-pkg6.02.0.6
+libapt-pkg6.02.0.8
 libasan59.4.0-1ubuntu1~20.04.1
 libasn1-8-heimdal7.7.0+dfsg-1ubuntu1
 libassuan02.5.3-7ubuntu2
@@ -89,7 +89,7 @@ libcurl3-gnutls7.68.0-1ubuntu2.11
 libcurl47.68.0-1ubuntu2.11
 libdb5.35.3.28+dfsg1-0.6ubuntu2
 libdebconfclient00.251ubuntu1
-libdpkg-perl1.19.7ubuntu3
+libdpkg-perl1.19.7ubuntu3.2
 libelf10.176-1.1build1
 libelf-dev0.176-1.1build1
 liberror-perl0.17029-1
@@ -127,8 +127,8 @@ libkrb5-26-heimdal7.7.0+dfsg-1ubuntu1
 libkrb5-31.17-6ubuntu4.1
 libkrb5support01.17-6ubuntu4.1
 libksba81.3.5-2
-libldap-2.4-22.4.49+dfsg-2ubuntu1.8
-libldap-common2.4.49+dfsg-2ubuntu1.8
+libldap-2.4-22.4.49+dfsg-2ubuntu1.9
+libldap-common2.4.49+dfsg-2ubuntu1.9
 liblsan010.3.0-1ubuntu1~20.04
 liblz4-11.9.2-2ubuntu0.20.04.1
 liblzma55.2.4-1ubuntu1
@@ -191,7 +191,7 @@ libuuid12.34-0.1ubuntu9.3
 libwind0-heimdal7.7.0+dfsg-1ubuntu1
 libxtables121.8.4-3ubuntu2
 libzstd11.4.4+dfsg-3ubuntu0.1
-linux-libc-dev5.4.0-110.124
+linux-libc-dev5.4.0-113.127
 locales2.31-0ubuntu9.9
 login1:4.8.1-1ubuntu5.20.04.1
 logsave1.45.5-2ubuntu1
