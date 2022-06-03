@@ -49,6 +49,7 @@ opt_param_env_vars:
   - { env_var: "INTERNAL_SUBNET", env_value: "10.13.13.0", desc: "Internal subnet for the wireguard and server and peers (only change if it clashes). Used in server mode."}
   - { env_var: "ALLOWEDIPS", env_value: "0.0.0.0/0", desc: "The IPs/Ranges that the peers will be able to reach using the VPN connection. If not specified the default value is: '0.0.0.0/0, ::0/0' This will cause ALL traffic to route through the VPN, if you want split tunneling, set this to only the IPs you would like to use the tunnel AND the ip of the server's WG ip, such as 10.13.13.1."}
   - { env_var: "LOG_CONFS", env_value: "true", desc: "Generated QR codes will be displayed in the docker log. Set to `false` to skip log output."}
+  - { env_var: "DISABLE_NAT", env_value: "true", desc: "Option for disabling NAT inside the container."}
 
 optional_block_1: false
 optional_block_1_items: ""
@@ -121,6 +122,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "03.06.22:", desc: "Added option for disabling NAT inside the container." }
   - { date: "16.05.22:", desc: "Improve NAT handling in server mode when multiple ethernet devices are present." }
   - { date: "23.04.22:", desc: "Add pre-shared key support. Automatically added to all new peer confs generated, existing ones are left without to ensure no breaking changes." }
   - { date: "10.04.22:", desc: "Rebase to Ubuntu Focal. Add `LOG_CONFS` env var. Remove deprecated `add-peer` command." }
