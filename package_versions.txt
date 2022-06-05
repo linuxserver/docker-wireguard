@@ -56,7 +56,7 @@ iproute25.5.0-1ubuntu1
 iptables1.8.4-3ubuntu2
 iputils-ping3:20190709-3
 jq1.6-1ubuntu0.20.04.1
-kmod27-1ubuntu2
+kmod27-1ubuntu2.1
 krb5-locales1.17-6ubuntu4.1
 libacl12.2.53-6
 libapt-pkg6.02.0.8
@@ -122,7 +122,7 @@ libitm110.3.0-1ubuntu1~20.04
 libjq11.6-1ubuntu0.20.04.1
 libk5crypto31.17-6ubuntu4.1
 libkeyutils11.6-6ubuntu1
-libkmod227-1ubuntu2
+libkmod227-1ubuntu2.1
 libkrb5-26-heimdal7.7.0+dfsg-1ubuntu1
 libkrb5-31.17-6ubuntu4.1
 libkrb5support01.17-6ubuntu4.1
