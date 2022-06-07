@@ -53,10 +53,24 @@ RUN \
 	/tmp/coredns.tar.gz -C \
 	/app && \
  echo "**** clean up ****" && \
+ cd / && \
+ apt-get remove -y \
+	bc \
+	build-essential \
+	curl \
+	dkms \
+	git \
+	perl \
+	pkg-config \
+    libelf-dev \
+	 && \
+ apt-get autoremove -y && \
  rm -rf \
 	/tmp/* \
+	/app/wireguard-tools \
+	/app/wireguard-linux-compat \
 	/var/lib/apt/lists/* \
-	/var/tmp/*
+	/var/tmp/* 
 
 # add local files
 COPY /root /
