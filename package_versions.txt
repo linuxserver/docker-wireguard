@@ -121,7 +121,7 @@ libisl220.22.1-1
 libitm110.3.0-1ubuntu1~20.04
 libjq11.6-1ubuntu0.20.04.1
 libk5crypto31.17-6ubuntu4.1
-libkeyutils11.6-6ubuntu1
+libkeyutils11.6-6ubuntu1.1
 libkmod227-1ubuntu2.1
 libkrb5-26-heimdal7.7.0+dfsg-1ubuntu1
 libkrb5-31.17-6ubuntu4.1
@@ -191,7 +191,7 @@ libuuid12.34-0.1ubuntu9.3
 libwind0-heimdal7.7.0+dfsg-1ubuntu1
 libxtables121.8.4-3ubuntu2
 libzstd11.4.4+dfsg-3ubuntu0.1
-linux-libc-dev5.4.0-113.127
+linux-libc-dev5.4.0-117.132
 locales2.31-0ubuntu9.9
 login1:4.8.1-1ubuntu5.20.04.1
 logsave1.45.5-2ubuntu1
