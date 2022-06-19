@@ -11,7 +11,7 @@ binutils-x86-64-linux-gnu2.34-6ubuntu1.3
 bsdutils1:2.34-0.1ubuntu9.3
 build-essential12.8ubuntu1.1
 bzip21.0.8-2
-ca-certificates20210119~20.04.2
+ca-certificates20211016~20.04.1
 coreutils8.30-3ubuntu2
 cpp4:9.3.0-1ubuntu2
 cpp-99.4.0-1ubuntu1~20.04.1
@@ -191,7 +191,7 @@ libuuid12.34-0.1ubuntu9.3
 libwind0-heimdal7.7.0+dfsg-1ubuntu1
 libxtables121.8.4-3ubuntu2
 libzstd11.4.4+dfsg-3ubuntu0.1
-linux-libc-dev5.4.0-117.132
+linux-libc-dev5.4.0-120.136
 locales2.31-0ubuntu9.9
 login1:4.8.1-1ubuntu5.20.04.1
 logsave1.45.5-2ubuntu1
