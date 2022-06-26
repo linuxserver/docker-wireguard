@@ -110,6 +110,8 @@ ORIG_PEERDNS="$PEERDNS"
 ORIG_PEERS="$PEERS"
 ORIG_INTERFACE="$INTERFACE"
 ORIG_ALLOWEDIPS="$ALLOWEDIPS"
+ORIG_POST_UP="$POST_UP"
+ORIG_POST_DOWN="$POST_DOWN"
 DUDE
 }
 
@@ -140,6 +142,10 @@ if [ -n "$PEERS" ]; then
   else
     echo "**** Peer DNS servers will be set to $PEERDNS ****"
   fi
+  POST_UP="iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth+ -j MASQUERADE"
+  POST_DOWN="iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth+ -j MASQUERADE"
+  echo "**** PostUp rule is set to '${POST_UP}' ****"
+  echo "**** PostDown rule is set to '${POST_DOWN}' ****"
   if [ ! -f /config/wg0.conf ]; then
     echo "**** No wg0.conf found (maybe an initial install), generating 1 server and ${PEERS} peer/client confs ****"
     generate_confs
