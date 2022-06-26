@@ -1,6 +1,6 @@
 adduser3.118ubuntu2
-apt2.0.8
-apt-utils2.0.8
+apt2.0.9
+apt-utils2.0.9
 base-files11ubuntu5.5
 base-passwd3.5.47
 bash5.0-6ubuntu1.1
@@ -59,7 +59,7 @@ jq1.6-1ubuntu0.20.04.1
 kmod27-1ubuntu2.1
 krb5-locales1.17-6ubuntu4.1
 libacl12.2.53-6
-libapt-pkg6.02.0.8
+libapt-pkg6.02.0.9
 libasan59.4.0-1ubuntu1~20.04.1
 libasn1-8-heimdal7.7.0+dfsg-1ubuntu1
 libassuan02.5.3-7ubuntu2
@@ -191,7 +191,7 @@ libuuid12.34-0.1ubuntu9.3
 libwind0-heimdal7.7.0+dfsg-1ubuntu1
 libxtables121.8.4-3ubuntu2
 libzstd11.4.4+dfsg-3ubuntu0.1
-linux-libc-dev5.4.0-120.136
+linux-libc-dev5.4.0-121.137
 locales2.31-0ubuntu9.9
 login1:4.8.1-1ubuntu5.20.04.1
 logsave1.45.5-2ubuntu1
