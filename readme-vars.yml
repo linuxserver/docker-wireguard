@@ -49,6 +49,8 @@ opt_param_env_vars:
   - { env_var: "INTERNAL_SUBNET", env_value: "10.13.13.0", desc: "Internal subnet for the wireguard and server and peers (only change if it clashes). Used in server mode."}
   - { env_var: "ALLOWEDIPS", env_value: "0.0.0.0/0", desc: "The IPs/Ranges that the peers will be able to reach using the VPN connection. If not specified the default value is: '0.0.0.0/0, ::0/0' This will cause ALL traffic to route through the VPN, if you want split tunneling, set this to only the IPs you would like to use the tunnel AND the ip of the server's WG ip, such as 10.13.13.1."}
   - { env_var: "LOG_CONFS", env_value: "true", desc: "Generated QR codes will be displayed in the docker log. Set to `false` to skip log output."}
+  - { env_var: "POST_UP", env_value: "iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT", desc: "Post-up interface rules (delimited with semicolon)"}
+  - { env_var: "POST_DOWN", env_value: "iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT", desc: "Post-down interface rules (delimited with semicolon)"}
 
 optional_block_1: false
 optional_block_1_items: ""
@@ -57,36 +59,36 @@ optional_block_1_items: ""
 app_setup_block_enabled: true
 app_setup_block: |
   During container start, it will first check if the wireguard module is already installed and loaded. Kernels newer than 5.6 generally have the wireguard module built-in (along with some older custom kernels). However, the module may not be enabled. Make sure it is enabled prior to starting the container.
-  
+
   If the kernel is not built-in, or installed on host, the container will check if the kernel headers are present (in `/usr/src`) and if not, it will attempt to download the necessary kernel headers from the `ubuntu xenial/bionic`, `debian/raspbian buster` repos; then will attempt to compile and install the kernel module. If the kernel headers are not found in either `usr/src` or in the repos mentioned, container will sleep indefinitely as wireguard cannot be installed.
 
   If you're on a debian/ubuntu based host with a custom or downstream distro provided kernel (ie. Pop!_OS), the container won't be able to install the kernel headers from the regular ubuntu and debian repos. In those cases, you can try installing the headers on the host via `sudo apt install linux-headers-$(uname -r)` (if distro version) and then add a volume mapping for `/usr/src:/usr/src`, or if custom built, map the location of the existing headers to allow the container to use host installed headers to build the kernel module (tested successful on Pop!_OS, ymmv).
 
   With regards to arm32/64 devices, Raspberry Pi 2-4 running the [official ubuntu images](https://ubuntu.com/download/raspberry-pi) or Raspbian Buster are supported out of the box. For all other devices and OSes, you can try installing the kernel headers on the host, and mapping `/usr/src:/usr/src` and it may just work (no guarantees).
 
-  This can be run as a server or a client, based on the parameters used. 
+  This can be run as a server or a client, based on the parameters used.
 
   ## Server Mode
   If the environment variable `PEERS` is set to a number or a list of strings separated by comma, the container will run in server mode and the necessary server and peer/client confs will be generated. The peer/client config qr codes will be output in the docker log. They will also be saved in text and png format under `/config/peerX` in case `PEERS` is a variable and an integer or `/config/peer_X` in case a list of names was provided instead of an integer.
-  
+
   Variables `SERVERURL`, `SERVERPORT`, `INTERNAL_SUBNET` and `PEERDNS` are optional variables used for server mode. Any changes to these environment variables will trigger regeneration of server and peer confs. Peer/client confs will be recreated with existing private/public keys. Delete the peer folders for the keys to be recreated along with the confs.
-  
+
   To add more peers/clients later on, you increment the `PEERS` environment variable or add more elements to the list and recreate the container.
-  
+
   To display the QR codes of active peers again, you can use the following command and list the peer numbers as arguments: `docker exec -it wireguard /app/show-peer 1 4 5` or `docker exec -it wireguard /app/show-peer myPC myPhone myTablet` (Keep in mind that the QR codes are also stored as PNGs in the config folder).
 
   The templates used for server and peer confs are saved under `/config/templates`. Advanced users can modify these templates and force conf generation by deleting `/config/wg0.conf` and restarting the container.
 
   ## Client Mode
-  Do not set the `PEERS` environment variable. Drop your client conf into the config folder as `/config/wg0.conf` and start the container. 
+  Do not set the `PEERS` environment variable. Drop your client conf into the config folder as `/config/wg0.conf` and start the container.
 
   If you get IPv6 related errors in the log and connection cannot be established, edit the `AllowedIPs` line in your peer/client wg0.conf to include only `0.0.0.0/0` and not `::/0`; and restart the container.
 
   ## Road warriors, roaming and returning home
   If you plan to use Wireguard both remotely and locally, say on your mobile phone, you will need to consider routing. Most firewalls will not route ports forwarded on your WAN interface correctly to the LAN out of the box. This means that when you return home, even though you can see the Wireguard server, the return packets will probably get lost.
-  
+
   This is not a Wireguard specific issue and the two generally accepted solutions are NAT reflection (setting your edge router/firewall up in such a way as it translates internal packets correctly) or split horizon DNS (setting your internal DNS to return the private rather than public IP when connecting locally).
-  
+
   Both of these approaches have positives and negatives however their setup is out of scope for this document as everyone's network layout and equipment will be different.
 
   ## Maintaining local access to attached services
@@ -111,9 +113,9 @@ app_setup_block: |
   Site-to-site VPN in server mode requires customizing the `AllowedIPs` statement for a specific peer in `wg0.conf`. Since `wg0.conf` is autogenerated when server vars are changed, it is not recommended to edit it manually.
 
   In order to customize the `AllowedIPs` statement for a specific peer in `wg0.conf`, you can set an env var `SERVER_ALLOWEDIPS_PEER_<peer name or number>` to the additional subnets you'd like to add, comma separated and excluding the peer IP (ie. `"192.168.1.0/24,192.168.2.0/24"`). Replace `<peer name or number>` with either the name or number of a peer (whichever is used in the `PEERS` var).
-  
+
   For instance `SERVER_ALLOWEDIPS_PEER_laptop="192.168.1.0/24,192.168.2.0/24"` will result in the wg0.conf entry `AllowedIPs = 10.13.13.2,192.168.1.0/24,192.168.2.0/24` for the peer named `laptop`.
-  
+
   Keep in mind that this var will only be considered when the confs are regenerated. Adding this var for an existing peer won't force a regeneration. You can delete wg0.conf and restart the container to force regeneration if necessary.
 
   Don't forget to set the necessary POSTUP and POSTDOWN rules in your client's peer conf for lan access.
