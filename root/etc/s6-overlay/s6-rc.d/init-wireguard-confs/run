@@ -154,7 +154,7 @@ if [ -n "$PEERS" ]; then
     echo "**** Server mode is selected ****"
     [[ -f /config/.donoteditthisfile ]] && \
       . /config/.donoteditthisfile
-    if [ "$SERVERURL" != "$ORIG_SERVERURL" ] || [ "$SERVERPORT" != "$ORIG_SERVERPORT" ] || [ "$PEERDNS" != "$ORIG_PEERDNS" ] || [ "$PEERS" != "$ORIG_PEERS" ] || [ "$INTERFACE" != "$ORIG_INTERFACE" ] || [ "$ALLOWEDIPS" != "$ORIG_ALLOWEDIPS" ]; then
+    if [ "$SERVERURL" != "$ORIG_SERVERURL" ] || [ "$SERVERPORT" != "$ORIG_SERVERPORT" ] || [ "$PEERDNS" != "$ORIG_PEERDNS" ] || [ "$PEERS" != "$ORIG_PEERS" ] || [ "$INTERFACE" != "$ORIG_INTERFACE" ] || [ "$ALLOWEDIPS" != "$ORIG_ALLOWEDIPS" ] || [ "$POST_UP" != "$ORIG_POST_UP" ] || [ "$POST_DOWN" != "$ORIG_POST_DOWN" ]; then
       echo "**** Server related environment variables changed, regenerating 1 server and ${PEERS} peer/client confs ****"
       generate_confs
       save_vars
