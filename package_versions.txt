@@ -35,8 +35,8 @@ gcc-10-base10.3.0-1ubuntu1~20.04
 gcc4:9.3.0-1ubuntu2
 gcc-99.4.0-1ubuntu1~20.04.1
 gcc-9-base9.4.0-1ubuntu1~20.04.1
-git1:2.25.1-1ubuntu3.4
-git-man1:2.25.1-1ubuntu3.4
+git1:2.25.1-1ubuntu3.5
+git-man1:2.25.1-1ubuntu3.5
 gnupg2.2.19-3ubuntu2.2
 gnupg-l10n2.2.19-3ubuntu2.2
 gnupg-utils2.2.19-3ubuntu2.2
@@ -157,8 +157,8 @@ libperl5.305.30.0-9ubuntu0.2
 libpng16-161.6.37-2
 libprocps82:3.3.16-1ubuntu2.3
 libpsl50.21.0-1ubuntu1
-libpython3.8-minimal3.8.10-0ubuntu1~20.04.4
-libpython3.8-stdlib3.8.10-0ubuntu1~20.04.4
+libpython3.8-minimal3.8.10-0ubuntu1~20.04.5
+libpython3.8-stdlib3.8.10-0ubuntu1~20.04.5
 libpython3-stdlib3.8.2-0ubuntu2
 libqrencode44.0.2-2
 libquadmath010.3.0-1ubuntu1~20.04
@@ -191,7 +191,7 @@ libuuid12.34-0.1ubuntu9.3
 libwind0-heimdal7.7.0+dfsg-1ubuntu1
 libxtables121.8.4-3ubuntu2
 libzstd11.4.4+dfsg-3ubuntu0.1
-linux-libc-dev5.4.0-121.137
+linux-libc-dev5.4.0-122.138
 locales2.31-0ubuntu9.9
 login1:4.8.1-1ubuntu5.20.04.1
 logsave1.45.5-2ubuntu1
@@ -217,8 +217,8 @@ pkg-config0.29.1-0ubuntu4
 procps2:3.3.16-1ubuntu2.3
 publicsuffix20200303.0012-1
 python33.8.2-0ubuntu2
-python3.83.8.10-0ubuntu1~20.04.4
-python3.8-minimal3.8.10-0ubuntu1~20.04.4
+python3.83.8.10-0ubuntu1~20.04.5
+python3.8-minimal3.8.10-0ubuntu1~20.04.5
 python3-minimal3.8.2-0ubuntu2
 qrencode4.0.2-2
 readline-common8.0-4
