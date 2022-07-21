@@ -70,6 +70,24 @@ services:
       - PRIVATE_KEY=xxxxxxxxx #required
 ```
 
+### docker-compose (using secret)
+
+```yaml
+version: "3.9"
+services:
+  nordlynx:
+    image: ghcr.io/bubuntux/nordlynx
+    cap_add:
+      - NET_ADMIN #required
+    environment:
+      - PRIVATE_KEY_FILE=/run/secrets/privatekey
+    secrets:
+      - privatekey 
+secrets:
+  privatekey:
+    file: ./privatekey.txt
+```
+
 ### docker cli ([click here for more info](https://docs.docker.com/engine/reference/commandline/cli/))
 
 ```bash
@@ -90,6 +108,7 @@ Wireguard module is required, please install it [manually](https://www.wireguard
 |                 Variable                 |    Default     | Description |
 |:----------------------------------------:|:--------------:| --- |
 |              `PRIVATE_KEY`               | **[Required]** | The private key can be obtained using `docker run --rm --cap-add=NET_ADMIN -e USER=XXX -e PASS=YYY bubuntux/nordvpn:get_private_key` or following these [instructions](https://forum.openwrt.org/t/instruction-config-nordvpn-wireguard-nordlynx-on-openwrt/89976).
+|              `PRIVATE_KEY_FILE`          |                | File from which to get PASS, if using docker secrets this should be set to /run/secrets/<secret_name>. This file should contain just the account password on the first line.
 |              `LISTEN_PORT`               |     51820      | A 16-bit port for listening.
 |                `ADDRESS`                 |  10.5.0.2/32   | A comma-separated list of IP (v4 or v6) addresses (optionally with CIDR masks) to be assigned to the interface.
 |                  `DNS`                   |                | A comma-separated list of IP (v4 or v6) addresses to be set as the interface's DNS servers, or non-IP hostnames to be set as the interface's DNS search domains.
