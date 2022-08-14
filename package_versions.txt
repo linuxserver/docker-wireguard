@@ -191,7 +191,7 @@ libuuid12.34-0.1ubuntu9.3
 libwind0-heimdal7.7.0+dfsg-1ubuntu1
 libxtables121.8.4-3ubuntu2
 libzstd11.4.4+dfsg-3ubuntu0.1
-linux-libc-dev5.4.0-122.138
+linux-libc-dev5.4.0-124.140
 locales2.31-0ubuntu9.9
 login1:4.8.1-1ubuntu5.20.04.1
 logsave1.45.5-2ubuntu1
