@@ -346,6 +346,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **<UNRELEASE>** - Add support IPv6 from `INTERNAL_SUBNET_IPV6` and update `INTERNAL_SUBNET` to `INTERNAL_SUBNET_IPV4`.
 * **16.05.22:** - Improve NAT handling in server mode when multiple ethernet devices are present.
 * **23.04.22:** - Add pre-shared key support. Automatically added to all new peer confs generated, existing ones are left without to ensure no breaking changes.
 * **10.04.22:** - Rebase to Ubuntu Focal. Add `LOG_CONFS` env var. Remove deprecated `add-peer` command.
@@ -364,7 +365,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 * **28.04.20:** - Add Buster/Stretch backports repos for Debian. Tested with OMV 5 and OMV 4 (on kernel 4.19.0-0.bpo.8-amd64).
 * **20.04.20:** - Fix typo in client mode conf existence check.
 * **13.04.20:** - Fix bug that forced conf recreation on every start.
-* **08.04.20:** - Add arm32/64 builds and enable multi-arch (rpi4 with ubuntu and raspbian buster tested). Add CoreDNS for `PEERDNS=auto` setting. Update the `add-peer`/`show-peer` scripts to utilize the templates and the `INTERNAL_SUBNET_IPV4`, `INTERNAL_SUBNET_IPV6` var (previously missed, oops).
-* **05.04.20:** - Add `INTERNAL_SUBNET_IPV4` variable to prevent subnet clashes. Add templates for server and peer confs.
+* **08.04.20:** - Add arm32/64 builds and enable multi-arch (rpi4 with ubuntu and raspbian buster tested). Add CoreDNS for `PEERDNS=auto` setting. Update the `add-peer`/`show-peer` scripts to utilize the templates and the `INTERNAL_SUBNET` var (previously missed, oops).
+* **05.04.20:** - Add `INTERNAL_SUBNET` variable to prevent subnet clashes. Add templates for server and peer confs.
 * **01.04.20:** - Add `show-peer` script and include info on host installed headers.
 * **31.03.20:** - Initial Release.
