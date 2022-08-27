@@ -38,15 +38,28 @@ DUDE"
       wg genpsk > /config/${PEER_ID}/presharedkey-${PEER_ID}
     fi
     if [ -f "/config/${PEER_ID}/${PEER_ID}.conf" ]; then
-      CLIENT_IP=$(cat /config/${PEER_ID}/${PEER_ID}.conf | grep "Address" | awk '{print $NF}')
-      if [ -n "${ORIG_INTERFACE}" ] && [ "${INTERFACE}" != "${ORIG_INTERFACE}" ]; then
-        CLIENT_IP=$(echo "${CLIENT_IP}" | sed "s|${ORIG_INTERFACE}|${INTERFACE}|")
+      # Create CLIENT_IPV4
+      CLIENT_IPV4=$(cat /config/${PEER_ID}/${PEER_ID}.conf | grep "Address" | awk '{print substr($3, 1, length($3)-1)}')
+      if [ -n "${ORIG_INTERFACE_IPV4}" ] && [ "${INTERFACE_IPV4}" != "${ORIG_INTERFACE_IPV4}" ]; then
+        CLIENT_IPV4=$(echo "${CLIENT_IPV4}" | sed "s|${ORIG_INTERFACE_IPV4}|${INTERFACE_IPV4}|")
+      fi
+      # Create CLIENT_IPV6
+      CLIENT_IPV6=$(cat /config/${PEER_ID}/${PEER_ID}.conf | grep "Address" | awk '{print $NF}')
+      if [ -n "${ORIG_INTERFACE_IPV6}" ] && [ "${INTERFACE_IPV6}" != "${ORIG_INTERFACE_IPV6}" ]; then
+        CLIENT_IPV6=$(echo "${CLIENT_IPV6}" | sed "s|${ORIG_INTERFACE_IPV6}|${INTERFACE_IPV6}|")
       fi
     else
       for idx in {2..254}; do
-        PROPOSED_IP="${INTERFACE}.${idx}"
-        if ! grep -q -R "${PROPOSED_IP}" /config/peer*/*.conf && ([ -z "${ORIG_INTERFACE}" ] || ! grep -q -R "${ORIG_INTERFACE}.${idx}" /config/peer*/*.conf); then
-          CLIENT_IP="${PROPOSED_IP}"
+        PROPOSED_IPV4="${INTERFACE_IPV4}.${idx}"
+        if ! grep -q -R "${PROPOSED_IPV4}" /config/peer*/*.conf && ([ -z "${ORIG_INTERFACE_IPV4}" ] || ! grep -q -R "${ORIG_INTERFACE_IPV4}.${idx}" /config/peer*/*.conf); then
+          CLIENT_IPV4="${PROPOSED_IPV4}"
+          break
+        fi
+      done
+      for idx in {2..254}; do
+        PROPOSED_IPV6="${INTERFACE_IPV6}::${idx}"
+        if ! grep -q -R "${PROPOSED_IPV6}" /config/peer*/*.conf && ([ -z "${ORIG_INTERFACE_IPV6}" ] || ! grep -q -R "${ORIG_INTERFACE_IPV6}::${idx}" /config/peer*/*.conf); then
+          CLIENT_IPV6="${PROPOSED_IPV6}"
           break
         fi
       done
@@ -83,12 +96,12 @@ DUDE
     if [ -n "${!SERVER_ALLOWEDIPS}" ]; then
       echo "Adding ${!SERVER_ALLOWEDIPS} to wg0.conf's AllowedIPs for peer ${i}"
       cat <<DUDE >> /config/wg0.conf
-AllowedIPs = ${CLIENT_IP}/32,${!SERVER_ALLOWEDIPS}
+AllowedIPs = ${CLIENT_IPV4}/32,${!SERVER_ALLOWEDIPS}
 
 DUDE
     else
       cat <<DUDE >> /config/wg0.conf
-AllowedIPs = ${CLIENT_IP}/32
+AllowedIPs = ${CLIENT_IPV4}/32,${CLIENT_IPV6}/128
 
 DUDE
     fi
@@ -108,7 +121,8 @@ ORIG_SERVERURL="$SERVERURL"
 ORIG_SERVERPORT="$SERVERPORT"
 ORIG_PEERDNS="$PEERDNS"
 ORIG_PEERS="$PEERS"
-ORIG_INTERFACE="$INTERFACE"
+ORIG_INTERFACE_IPV4="$INTERFACE_IPV4"
+ORIG_INTERFACE_IPV6="$INTERFACE_IPV6"
 ORIG_ALLOWEDIPS="$ALLOWEDIPS"
 DUDE
 }
@@ -129,14 +143,17 @@ if [ -n "$PEERS" ]; then
   fi
   SERVERPORT=${SERVERPORT:-51820}
   echo "**** External server port is set to ${SERVERPORT}. Make sure that port is properly forwarded to port 51820 inside this container ****"
-  INTERNAL_SUBNET=${INTERNAL_SUBNET:-10.13.13.0}
-  echo "**** Internal subnet is set to $INTERNAL_SUBNET ****"
-  INTERFACE=$(echo "$INTERNAL_SUBNET" | awk 'BEGIN{FS=OFS="."} NF--')
+  INTERNAL_SUBNET_IPV4=${INTERNAL_SUBNET_IPV4:-10.13.13.0}
+  echo "**** Internal subnet is set to $INTERNAL_SUBNET_IPV4 ****"
+  INTERFACE_IPV4=$(echo "$INTERNAL_SUBNET_IPV4" | awk 'BEGIN{FS=OFS="."} NF--')
+  INTERNAL_SUBNET_IPV6=${INTERNAL_SUBNET_IPV6:-fd42:42:42::0}
+  echo "**** Internal subnet is set to $INTERNAL_SUBNET_IPV6 ****"
+  INTERFACE_IPV6=$(echo "$INTERNAL_SUBNET_IPV6" | awk 'BEGIN{FS=OFS="::"} NF--')
   ALLOWEDIPS=${ALLOWEDIPS:-0.0.0.0/0, ::/0}
   echo "**** AllowedIPs for peers $ALLOWEDIPS ****"
   if [ -z "$PEERDNS" ] || [ "$PEERDNS" = "auto" ]; then
-    PEERDNS="${INTERFACE}.1"
-    echo "**** PEERDNS var is either not set or is set to \"auto\", setting peer DNS to ${INTERFACE}.1 to use wireguard docker host's DNS. ****"
+    PEERDNS="${INTERFACE_IPV4}.1, ${INTERFACE_IPV6}::1"
+    echo "**** PEERDNS var is either not set or is set to \"auto\", setting peer DNS to ${INTERFACE_IPV4}.1 and ${INTERFACE_IPV6}::1 to use wireguard docker host's DNS. ****"
   else
     echo "**** Peer DNS servers will be set to $PEERDNS ****"
   fi
@@ -148,7 +165,7 @@ if [ -n "$PEERS" ]; then
     echo "**** Server mode is selected ****"
     [[ -f /config/.donoteditthisfile ]] && \
       . /config/.donoteditthisfile
-    if [ "$SERVERURL" != "$ORIG_SERVERURL" ] || [ "$SERVERPORT" != "$ORIG_SERVERPORT" ] || [ "$PEERDNS" != "$ORIG_PEERDNS" ] || [ "$PEERS" != "$ORIG_PEERS" ] || [ "$INTERFACE" != "$ORIG_INTERFACE" ] || [ "$ALLOWEDIPS" != "$ORIG_ALLOWEDIPS" ]; then
+    if [ "$SERVERURL" != "$ORIG_SERVERURL" ] || [ "$SERVERPORT" != "$ORIG_SERVERPORT" ] || [ "$PEERDNS" != "$ORIG_PEERDNS" ] || [ "$PEERS" != "$ORIG_PEERS" ] || [ "$INTERFACE_IPV4" != "$ORIG_INTERFACE_IPV4" ] || [ "$INTERFACE_IPV6" != "$ORIG_INTERFACE_IPV6" ] || [ "$ALLOWEDIPS" != "$ORIG_ALLOWEDIPS" ]; then
       echo "**** Server related environment variables changed, regenerating 1 server and ${PEERS} peer/client confs ****"
       generate_confs
       save_vars
