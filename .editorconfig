@@ -17,4 +17,4 @@ indent_size = 2
 
 [{**.sh,root/etc/cont-init.d/**,root/etc/services.d/**}]
 indent_style = space
-indent_size = 4
+indent_size = 2
