@@ -1,6 +1,13 @@
+.dockerignore
+.editorconfig
 .git
 .gitignore
 .github
 .gitattributes
 READMETEMPLATE.md
 README.md
+Jenkinsfile
+jenkins-vars.yml
+LICENSE
+readme-vars.yml
+package_versions.txt
