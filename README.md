@@ -299,6 +299,8 @@ Below are the instructions for updating containers:
 
 ## Building locally
 
+### Docker
+
 If you want to make local modifications to these images for development purposes or just to customize the logic:
 
 ```bash
@@ -320,6 +322,8 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ### Podman
 
+If you want to make local modifications to these images for development purposes or just to customize the logic:
+
 ```bash
 git clone https://github.com/linuxserver/docker-wireguard.git
 cd docker-wireguard
@@ -329,8 +333,16 @@ podman build \
   --build-arg BUILD_DATE=20220827 \
   --build-arg VERSION=1.0 \
   --build-arg WIREGUARD_RELEASE=v1.0.20210914 \
-  --tag rusian/wireguard -f Dockerfile .
+  --tag lscr.io/linuxserver/wireguard:latest -f Dockerfile .
 ```
+
+The ARM variants can be built on x86_64 hardware using `multiarch/qemu-user-static`
+
+```bash
+podman run --rm --privileged multiarch/qemu-user-static:register --reset
+```
+
+Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64`.
 
 ## Versions
 
