@@ -18,7 +18,7 @@ RUN \
 	curl \
 	dkms \
 	git \
-	gnupg \ 
+	gnupg \
 	ifupdown \
 	iproute2 \
 	iptables \
