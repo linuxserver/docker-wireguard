@@ -15,7 +15,7 @@ ca-certificates20211016~20.04.1
 coreutils8.30-3ubuntu2
 cpp4:9.3.0-1ubuntu2
 cpp-99.4.0-1ubuntu1~20.04.1
-curl7.68.0-1ubuntu2.12
+curl7.68.0-1ubuntu2.13
 dash0.5.10.2-6
 dctrl-tools2.24-3
 debconf1.5.73
@@ -85,8 +85,8 @@ libcrypt11:4.4.10-10ubuntu4
 libcrypt-dev1:4.4.10-10ubuntu4
 libctf02.34-6ubuntu1.3
 libctf-nobfd02.34-6ubuntu1.3
-libcurl3-gnutls7.68.0-1ubuntu2.12
-libcurl47.68.0-1ubuntu2.12
+libcurl3-gnutls7.68.0-1ubuntu2.13
+libcurl47.68.0-1ubuntu2.13
 libdb5.35.3.28+dfsg1-0.6ubuntu2
 libdebconfclient00.251ubuntu1
 libdpkg-perl1.19.7ubuntu3.2
@@ -226,7 +226,7 @@ sed4.7-1
 sensible-utils0.0.12+nmu1
 sysvinit-utils2.96-2.1ubuntu1
 tar1.30+dfsg-7ubuntu0.20.04.2
-tzdata2022a-0ubuntu0.20.04
+tzdata2022c-0ubuntu0.20.04.0
 ubuntu-keyring2020.02.11.4
 util-linux2.34-0.1ubuntu9.3
 xz-utils5.2.4-1ubuntu1.1
