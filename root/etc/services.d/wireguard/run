@@ -24,7 +24,7 @@ fi
 PrivateKey = ${PRIVATE_KEY}
 ListenPort = ${LISTEN_PORT:-51820}
 Address = ${ADDRESS:-10.5.0.2/32}
-DNS = ${DNS}
+DNS = ${DNS:-103.86.96.100,103.86.99.100}
 Table = ${TABLE}
 PreUp = ${PRE_UP}
 PostUp = ${POST_UP}
