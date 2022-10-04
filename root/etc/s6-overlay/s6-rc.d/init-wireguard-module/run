@@ -30,31 +30,39 @@ if [ "$SKIP_COMPILE" != "true" ] && [ ! -e /lib/modules/$(uname -r)/build ]; the
     apt-get install -y \
       raspberrypi-kernel-headers
   elif uname -v | grep -q 'Ubuntu'; then
-    echo "**** Ubuntu kernel detected, but likely not Focal. ****"
-    echo "**** Attempting to install kernel headers from Ubuntu Bionic repo ****"
+    echo "**** Ubuntu kernel detected, but likely not Jammy. ****"
+    echo "**** Attempting to install kernel headers from Ubuntu Focal repo ****"
     if uname -m | grep -q 'x86_64'; then
       echo -e \
-        "deb http://archive.ubuntu.com/ubuntu/ bionic main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ bionic main restricted\n\ndeb http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted" \
-        > /etc/apt/sources.list.d/xenial-bionic.list
+        "deb http://archive.ubuntu.com/ubuntu/ focal main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ focal main restricted\n\ndeb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted\ndeb-src http://archive.ubuntu.com/ubuntu/ focal-updates main restricted" \
+        > /etc/apt/sources.list.d/xenial-bionic-focal.list
     else
       echo -e \
-      "deb http://ports.ubuntu.com/ubuntu-ports/ bionic main restricted\ndeb-src http://ports.ubuntu.com/ubuntu-ports/ bionic main restricted\n\ndeb http://ports.ubuntu.com/ubuntu-ports/ bionic-updates main restricted\ndeb-src http://ports.ubuntu.com/ubuntu-ports/ bionic-updates main restricted" \
-        > /etc/apt/sources.list.d/xenial-bionic.list
+      "deb http://ports.ubuntu.com/ubuntu-ports/ focal main restricted\ndeb-src http://ports.ubuntu.com/ubuntu-ports/ focal main restricted\n\ndeb http://ports.ubuntu.com/ubuntu-ports/ focal-updates main restricted\ndeb-src http://ports.ubuntu.com/ubuntu-ports/ focal-updates main restricted" \
+        > /etc/apt/sources.list.d/xenial-bionic-focal.list
     fi
     apt-get update
     if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
       apt-get install -y \
         linux-headers-$(uname -r)
     else
-      echo "**** No kernel headers found in the Ubuntu Bionic repo!! Trying Ubuntu Xenial. ****"
-      sed -i 's/bionic/xenial/g' /etc/apt/sources.list.d/xenial-bionic.list
+      echo "**** No kernel headers found in the Ubuntu Focal repo!! Trying Ubuntu Bionic. ****"
+      sed -i 's/focal/bionic/g' /etc/apt/sources.list.d/xenial-bionic-focal.list
       apt-get update
       if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
         apt-get install -y \
           linux-headers-$(uname -r)
       else
-        echo "**** No kernel headers found in the Ubuntu repos!! Will try the headers from host (if mapped), may or may not work ****"
-        rm -rf /etc/apt/sources.list.d/xenial-bionic.list
+        echo "**** No kernel headers found in the Ubuntu Bionic repo!! Trying Ubuntu Xenial. ****"
+        sed -i 's/bionic/xenial/g' /etc/apt/sources.list.d/xenial-bionic-focal.list
+        apt-get update
+        if apt-cache show linux-headers-$(uname -r) 2&>1 >/dev/null; then
+          apt-get install -y \
+            linux-headers-$(uname -r)
+        else
+          echo "**** No kernel headers found in the Ubuntu repos!! Will try the headers from host (if mapped), may or may not work ****"
+          rm -rf /etc/apt/sources.list.d/xenial-bionic-focal.list
+        fi
       fi
     fi
   elif uname -v | grep -q 'Debian'; then
@@ -150,4 +158,3 @@ DUDE
     sleep infinity
   fi
 fi
-

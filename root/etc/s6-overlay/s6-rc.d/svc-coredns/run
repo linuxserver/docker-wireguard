@@ -1,11 +1,11 @@
 #!/usr/bin/with-contenv bash
 
-cd /config/coredns
-
 if netstat -apn | grep -q ":53 "; then
   echo "Another service is using port 53, disabling CoreDNS"
   sleep infinity
 else
   exec \
-    /app/coredns -dns.port=53
+    s6-notifyoncheck -d -n 300 -w 1000 -c "nc -z -u 127.0.0.1 53" \
+        cd /config/coredns \
+        /app/coredns -dns.port=53
 fi
