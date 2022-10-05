@@ -1,9 +1,13 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 
 network_found=false
+iface=${INTERFACE:-eth0}
 interfaces=($(ip link | awk -F': ' '$0 !~ "lo|wg|tun|tap|^[^0-9]"{print $2;getline}' | cut -d@ -f1))
-for iface in "${interfaces[@]}"; do
-  inet="$(ip -o addr show dev "${iface}" | awk '$3 == "inet6" {print $4; exit}')"
+if [[ ! " ${interfaces[*]} " =~ " $iface " ]]; then
+    interfaces+=("$iface")
+fi
+for interface in "${interfaces[@]}"; do
+  inet="$(ip -o addr show dev "${interface}" | awk '$3 == "inet6" {print $4; exit}')"
   if [[ -z "$inet" ]]; then
     continue
   fi
@@ -11,11 +15,11 @@ for iface in "${interfaces[@]}"; do
     ip6tables -F
     ip6tables -X
   fi
-  echo "[$(date -Iseconds)] Enabling connection to ${iface} ${inet}"
-  ip6tables -A INPUT -i "$iface" -s "${inet}" -j ACCEPT
-  ip6tables -A OUTPUT -o "$iface" -d "${inet}" -j ACCEPT
-  ip6tables -A FORWARD -i "$iface" -d "${inet}" -j ACCEPT
-  ip6tables -A FORWARD -i "$iface" -s "${inet}" -j ACCEPT
+  echo "[$(date -Iseconds)] Enabling connection to ${interface} ${inet}"
+  ip6tables -A INPUT -i "$interface" -s "${inet}" -j ACCEPT
+  ip6tables -A OUTPUT -o "$interface" -d "${inet}" -j ACCEPT
+  ip6tables -A FORWARD -i "$interface" -d "${inet}" -j ACCEPT
+  ip6tables -A FORWARD -i "$interface" -s "${inet}" -j ACCEPT
   network_found=true
 done
 
@@ -37,6 +41,6 @@ ip6tables -A FORWARD -i lo -j ACCEPT
 ip6tables -A OUTPUT -o wg+ -j ACCEPT
 ip6tables -t nat -A POSTROUTING -o wg+ -j MASQUERADE
 
-ip6tables -A OUTPUT -o eth0 -p udp -m udp --dport 53 -j ACCEPT
-ip6tables -A OUTPUT -o eth0 -p udp -m udp --dport 51820 -j ACCEPT
-ip6tables -A OUTPUT -o eth0 -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT
+ip6tables -A OUTPUT -o "$iface" -p udp -m udp --dport 53 -j ACCEPT
+ip6tables -A OUTPUT -o "$iface" -p udp -m udp --dport 51820 -j ACCEPT
+ip6tables -A OUTPUT -o "$iface" -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT
