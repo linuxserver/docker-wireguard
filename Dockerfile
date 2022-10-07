@@ -1,4 +1,4 @@
-FROM ghcr.io/linuxserver/baseimage-ubuntu:focal
+FROM ghcr.io/linuxserver/baseimage-ubuntu:jammy
 
 # set version label
 ARG BUILD_DATE
@@ -27,6 +27,7 @@ RUN \
 	libc6 \
 	libelf-dev \
 	net-tools \
+	netcat \
 	openresolv \
 	perl \
 	pkg-config \
