@@ -317,6 +317,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **09.10.22:** - Switch back to iptables-legacy due to issues on some hosts.
 * **04.10.22:** - Rebase to Jammy. Upgrade to s6v3.
 * **16.05.22:** - Improve NAT handling in server mode when multiple ethernet devices are present.
 * **23.04.22:** - Add pre-shared key support. Automatically added to all new peer confs generated, existing ones are left without to ensure no breaking changes.
