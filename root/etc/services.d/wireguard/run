@@ -2,7 +2,7 @@
 
 if [[ -z ${PUBLIC_KEY} || -z ${END_POINT} ]]; then
   echo "[$(date -Iseconds)] Finding the best server..."
-  recommendations=$(sg vpn -c "curl --retry 3 -LsS \"https://api.nordvpn.com/v1/servers/recommendations?&filters\[servers_technologies\]\[identifier\]=wireguard_udp&limit=1&${QUERY}\"")
+  recommendations=$(curl --retry 3 -LsS "https://api.nordvpn.com/v1/servers/recommendations?&filters\[servers_technologies\]\[identifier\]=wireguard_udp&limit=1&${QUERY}")
   server=$(jq -r '.[0] | del(.services, .technologies)' <<< "${recommendations}")
   if [[ -z ${server} ]]; then
     echo "[$(date -Iseconds)] Unable to select a server ¯\_(⊙︿⊙)_/¯"
@@ -40,7 +40,7 @@ EOF
 } && sync )
 
 echo "[$(date -Iseconds)] Connecting..."
-sg vpn -c "wg-quick up wg0"
+wg-quick up wg0 
 echo "[$(date -Iseconds)] Connected! \(ᵔᵕᵔ)/"
 
 if [[ -n ${RECONNECT} ]]; then
