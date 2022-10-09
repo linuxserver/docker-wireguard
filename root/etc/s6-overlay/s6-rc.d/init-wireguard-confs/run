@@ -163,7 +163,7 @@ else
     sleep infinity
   fi
   echo "**** Disabling CoreDNS ****"
-  rm -rf /etc/services.d/coredns
+  printf "false" > /run/s6/container_environment/USE_COREDNS
 fi
 
 # set up CoreDNS

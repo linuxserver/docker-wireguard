@@ -1,6 +1,10 @@
 #!/usr/bin/with-contenv bash
 
 if netstat -apn | grep -q ":53 "; then
+    USE_COREDNS="false"
+fi
+
+if [[ ${USE_COREDNS} == "false" ]]; then
     echo "Another service is using port 53, disabling CoreDNS"
     sleep infinity
 else
