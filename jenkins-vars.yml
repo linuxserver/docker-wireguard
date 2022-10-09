@@ -5,8 +5,8 @@ project_name: docker-wireguard
 external_type: na
 custom_version_command: "curl -sX GET https://api.github.com/repos/WireGuard/wireguard-tools/tags | jq -r .[0].name"
 release_type: stable
-release_tag: latest
-ls_branch: master
+release_tag: alpine
+ls_branch: alpine
 repo_vars:
   - CONTAINER_NAME = 'wireguard'
   - BUILD_VERSION_ARG = 'WIREGUARD_VERSION'
@@ -15,7 +15,7 @@ repo_vars:
   - DOCKERHUB_IMAGE = 'linuxserver/wireguard'
   - DEV_DOCKERHUB_IMAGE = 'lsiodev/wireguard'
   - PR_DOCKERHUB_IMAGE = 'lspipepr/wireguard'
-  - DIST_IMAGE = 'ubuntu'
+  - DIST_IMAGE = 'alpine'
   - MULTIARCH='true'
   - CI='false'
   - CI_WEB='false'

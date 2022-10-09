@@ -14,10 +14,10 @@ available_architectures:
   - { arch: "{{ arch_armhf }}", tag: "arm32v7-latest"}
 
 # development version
-development_versions: false
+development_versions: true
 development_versions_items:
-  - { tag: "latest", desc: "Stable releases" }
-  - { tag: "development", desc: "Prereleases from their GitHub" }
+  - { tag: "latest", desc: "Stable releases with support for compiling Wireguard modules" }
+  - { tag: "alpine", desc: "Stable releases based on Alpine *without* support for compiling Wireguard modules" }
 
 # container parameters
 common_param_env_vars_enabled: true
