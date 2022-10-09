@@ -41,6 +41,10 @@ ip6tables -A FORWARD -i lo -j ACCEPT
 ip6tables -A OUTPUT -o wg+ -j ACCEPT
 ip6tables -t nat -A POSTROUTING -o wg+ -j MASQUERADE
 
-ip6tables -A OUTPUT -o "$iface" -p udp -m udp --dport 53 -j ACCEPT
-ip6tables -A OUTPUT -o "$iface" -p udp -m udp --dport 51820 -j ACCEPT
-ip6tables -A OUTPUT -o "$iface" -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT
+ip6tables -A OUTPUT -p tcp -m owner --gid-owner vpn -j ACCEPT &&
+ip6tables -A OUTPUT -p udp -m owner --gid-owner vpn -j ACCEPT || {
+  echo "[$(date -Iseconds)] Possible dns leak..."
+  ip6tables -A OUTPUT -o "$iface" -p udp -m udp --dport 53 -j ACCEPT
+  ip6tables -A OUTPUT -o "$iface" -p udp -m udp --dport 51820 -j ACCEPT
+  ip6tables -A OUTPUT -o "$iface" -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT
+}
