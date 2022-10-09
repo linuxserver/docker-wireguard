@@ -41,6 +41,7 @@ RUN \
   git checkout "${WIREGUARD_RELEASE}" && \
   make -C src -j$(nproc) && \
   make -C src install && \
+  sed -i '/\[\[ $proto == -4 \]\] && cmd sysctl -q net\.ipv4\.conf\.all\.src_valid_mark=1/d' /usr/bin/wg-quick && \
   echo "**** clean up ****" && \
   apk del --no-network build-dependencies && \
   rm -rf \
