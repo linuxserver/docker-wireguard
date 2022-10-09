@@ -5,7 +5,7 @@ if netstat -apn | grep -q ":53 "; then
 fi
 
 if [[ ${USE_COREDNS} == "false" ]]; then
-    echo "Another service is using port 53, disabling CoreDNS"
+    echo "**** Disabling CoreDNS ****"
     sleep infinity
 else
     if grep -q "health" /config/coredns/Corefile; then
