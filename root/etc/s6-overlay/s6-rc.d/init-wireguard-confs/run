@@ -162,8 +162,7 @@ else
     echo "**** No client conf found. Provide your own client conf as \"/config/wg0.conf\" and restart the container. ****"
     sleep infinity
   fi
-  echo "**** Disabling CoreDNS ****"
-  rm -rf /etc/services.d/coredns
+  printf "false" > /run/s6/container_environment/USE_COREDNS
 fi
 
 # set up CoreDNS
