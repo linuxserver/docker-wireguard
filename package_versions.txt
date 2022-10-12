@@ -187,7 +187,7 @@ libuuid12.37.2-4ubuntu3
 libxtables121.8.7-1ubuntu5
 libxxhash00.8.1-1
 libzstd11.4.8+dfsg-3build1
-linux-libc-dev5.15.0-48.54
+linux-libc-dev5.15.0-50.56
 locales2.35-0ubuntu3.1
 login1:4.8.1-2ubuntu2
 logsave1.46.5-2ubuntu1.1

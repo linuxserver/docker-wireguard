@@ -14,10 +14,10 @@ available_architectures:
   - { arch: "{{ arch_armhf }}", tag: "arm32v7-latest"}
 
 # development version
-development_versions: false
+development_versions: true
 development_versions_items:
-  - { tag: "latest", desc: "Stable releases" }
-  - { tag: "development", desc: "Prereleases from their GitHub" }
+  - { tag: "latest", desc: "Stable releases with support for compiling Wireguard modules" }
+  - { tag: "alpine", desc: "Stable releases based on Alpine *without* support for compiling Wireguard modules" }
 
 # container parameters
 common_param_env_vars_enabled: true
@@ -121,7 +121,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
-  - { date: "12.10.22:", desc: "Optimize wg and coredns services." }
+  - { date: "12.10.22:", desc: "Add Alpine branch. Optimize wg and coredns services." }
   - { date: "09.10.22:", desc: "Switch back to iptables-legacy due to issues on some hosts." }
   - { date: "04.10.22:", desc: "Rebase to Jammy. Upgrade to s6v3." }
   - { date: "16.05.22:", desc: "Improve NAT handling in server mode when multiple ethernet devices are present." }
