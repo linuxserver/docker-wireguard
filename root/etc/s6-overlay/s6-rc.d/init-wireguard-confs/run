@@ -29,7 +29,7 @@ DUDE"
     if [[ "${i}" =~ ^[0-9]+$ ]]; then
       PEER_ID="peer${i}"
     else
-      PEER_ID="peer_${i//[^[:alnum:]_-]/}"
+      PEER_ID="peer_${i//[^[:alnum:]]/}"
     fi
     mkdir -p /config/${PEER_ID}
     if [ ! -f "/config/${PEER_ID}/privatekey-${PEER_ID}" ]; then
@@ -78,10 +78,10 @@ DUDE"
 PublicKey = $(cat /config/${PEER_ID}/publickey-${PEER_ID})
 DUDE
     fi
-    SERVER_ALLOWEDIPS=SERVER_ALLOWEDIPS_PEER_${i}
+    SERVER_ALLOWEDIPS=SERVER_ALLOWEDIPS_PEER_${PEER_ID}
     # add peer's allowedips to server conf
     if [ -n "${!SERVER_ALLOWEDIPS}" ]; then
-      echo "Adding ${!SERVER_ALLOWEDIPS} to wg0.conf's AllowedIPs for peer ${i}"
+      echo "Adding ${!SERVER_ALLOWEDIPS} to wg0.conf's AllowedIPs for peer ${PEER_ID}"
       cat <<DUDE >> /config/wg0.conf
 AllowedIPs = ${CLIENT_IP}/32,${!SERVER_ALLOWEDIPS}
 
@@ -93,10 +93,10 @@ AllowedIPs = ${CLIENT_IP}/32
 DUDE
     fi
     if [ -z "${LOG_CONFS}" ] || [ "${LOG_CONFS}" = "true" ]; then
-      echo "PEER ${i} QR code:"
+      echo "PEER ${PEER_ID} QR code:"
       qrencode -t ansiutf8 < /config/${PEER_ID}/${PEER_ID}.conf
     else
-      echo "PEER ${i} conf and QR code png saved in /config/${PEER_ID}"
+      echo "PEER ${PEER_ID} conf and QR code png saved in /config/${PEER_ID}"
     fi
     qrencode -o /config/${PEER_ID}/${PEER_ID}.png < /config/${PEER_ID}/${PEER_ID}.conf
   done
