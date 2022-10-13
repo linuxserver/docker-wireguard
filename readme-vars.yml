@@ -121,6 +121,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "13.10.22:", desc: "Handle non-alphanumeric peer names gracefully without crashing run script." }
   - { date: "12.10.22:", desc: "Add Alpine branch." }
   - { date: "09.10.22:", desc: "Switch back to iptables-legacy due to issues on some hosts." }
   - { date: "04.10.22:", desc: "Rebase to Jammy. Upgrade to s6v3." }
