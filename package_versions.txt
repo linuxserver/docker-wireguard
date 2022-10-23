@@ -34,8 +34,8 @@ gcc-1111.2.0-19ubuntu1
 gcc-11-base11.2.0-19ubuntu1
 gcc-12-base12.1.0-2ubuntu1~22.04
 gcc4:11.2.0-1ubuntu1
-git1:2.34.1-1ubuntu1.4
-git-man1:2.34.1-1ubuntu1.4
+git1:2.34.1-1ubuntu1.5
+git-man1:2.34.1-1ubuntu1.5
 gnupg2.2.27-3ubuntu2.1
 gnupg-l10n2.2.27-3ubuntu2.1
 gnupg-utils2.2.27-3ubuntu2.1
@@ -147,7 +147,7 @@ libpam-modules-bin1.4.0-11ubuntu2
 libpam-runtime1.4.0-11ubuntu2
 libpcre2-8-010.39-3ubuntu0.1
 libpcre32:8.39-13ubuntu0.22.04.1
-libperl5.345.34.0-3ubuntu1
+libperl5.345.34.0-3ubuntu1.1
 libpng16-161.6.37-3build5
 libprocps82:3.3.17-6ubuntu2
 libpsl50.21.0-1.2build2
@@ -187,7 +187,7 @@ libuuid12.37.2-4ubuntu3
 libxtables121.8.7-1ubuntu5
 libxxhash00.8.1-1
 libzstd11.4.8+dfsg-3build1
-linux-libc-dev5.15.0-50.56
+linux-libc-dev5.15.0-52.58
 locales2.35-0ubuntu3.1
 login1:4.8.1-2ubuntu2
 logsave1.46.5-2ubuntu1.1
@@ -208,9 +208,9 @@ openresolv3.12.0-2
 openssl3.0.2-0ubuntu1.6
 passwd1:4.8.1-2ubuntu2
 patch2.7.6-7build2
-perl5.34.0-3ubuntu1
-perl-base5.34.0-3ubuntu1
-perl-modules-5.345.34.0-3ubuntu1
+perl5.34.0-3ubuntu1.1
+perl-base5.34.0-3ubuntu1.1
+perl-modules-5.345.34.0-3ubuntu1.1
 pinentry-curses1.1.1-1build2
 pkg-config0.29.2-1ubuntu3
 procps2:3.3.17-6ubuntu2
@@ -231,5 +231,5 @@ ubuntu-keyring2021.03.26
 usrmerge25ubuntu2
 util-linux2.37.2-4ubuntu3
 xz-utils5.2.5-2ubuntu1
-zlib1g1:1.2.11.dfsg-2ubuntu9.1
-zlib1g-dev1:1.2.11.dfsg-2ubuntu9.1
+zlib1g1:1.2.11.dfsg-2ubuntu9.2
+zlib1g-dev1:1.2.11.dfsg-2ubuntu9.2
