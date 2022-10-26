@@ -1,0 +1,20 @@
+#!/usr/bin/with-contenv bash
+
+if netstat -apn | grep -q ":53 "; then
+    USE_COREDNS="false"
+fi
+
+if [[ ${USE_COREDNS} == "false" ]]; then
+    s6-notifyoncheck -d -n 300 -w 1000 -c "echo **** Disabling CoreDNS ****" \
+        sleep infinity
+elif grep -q "health" /config/coredns/Corefile; then
+    exec \
+        s6-notifyoncheck -d -n 300 -w 1000 -c "redirfd -w 1 /dev/null curl -s http://localhost:8080/health" \
+            cd /config/coredns \
+            /app/coredns -dns.port=53
+else
+    exec \
+        s6-notifyoncheck -d -n 300 -w 1000 -c "nc -zu localhost 53" \
+            cd /config/coredns \
+            /app/coredns -dns.port=53
+fi

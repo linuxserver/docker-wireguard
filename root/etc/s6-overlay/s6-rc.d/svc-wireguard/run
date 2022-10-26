@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv bash
+
+wg-quick up wg0
