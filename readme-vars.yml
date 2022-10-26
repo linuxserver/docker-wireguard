@@ -121,6 +121,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "26.10.22:", desc: "Better handle unsupported peer names. Improve logging." }
   - { date: "12.10.22:", desc: "Add Alpine branch. Optimize wg and coredns services." }
   - { date: "09.10.22:", desc: "Switch back to iptables-legacy due to issues on some hosts." }
   - { date: "04.10.22:", desc: "Rebase to Jammy. Upgrade to s6v3." }

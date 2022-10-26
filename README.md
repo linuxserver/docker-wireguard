@@ -326,6 +326,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **26.10.22:** - Better handle unsupported peer names. Improve logging.
 * **12.10.22:** - Add Alpine branch. Optimize wg and coredns services.
 * **09.10.22:** - Switch back to iptables-legacy due to issues on some hosts.
 * **04.10.22:** - Rebase to Jammy. Upgrade to s6v3.
