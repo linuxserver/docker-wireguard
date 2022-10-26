@@ -121,6 +121,8 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "26.10.22:", desc: "Better handle unsupported peer names. Improve logging." }
+  - { date: "12.10.22:", desc: "Add Alpine branch. Optimize wg and coredns services." }
   - { date: "04.10.22:", desc: "Rebase to Jammy. Upgrade to s6v3." }
   - { date: "16.05.22:", desc: "Improve NAT handling in server mode when multiple ethernet devices are present." }
   - { date: "23.04.22:", desc: "Add pre-shared key support. Automatically added to all new peer confs generated, existing ones are left without to ensure no breaking changes." }
