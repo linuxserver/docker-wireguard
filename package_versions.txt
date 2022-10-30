@@ -15,7 +15,7 @@ ca-certificates20211016
 coreutils8.32-4.1ubuntu1
 cpp-1111.3.0-1ubuntu1~22.04
 cpp4:11.2.0-1ubuntu1
-curl7.81.0-1ubuntu1.4
+curl7.81.0-1ubuntu1.6
 dash0.5.11+git20210903+057cd650a4ed-3build1
 dctrl-tools2.24-3build2
 debconf1.5.79ubuntu1
@@ -83,8 +83,8 @@ libcrypt11:4.4.27-1
 libcrypt-dev1:4.4.27-1
 libctf02.38-4ubuntu2
 libctf-nobfd02.38-4ubuntu2
-libcurl3-gnutls7.81.0-1ubuntu1.4
-libcurl47.81.0-1ubuntu1.4
+libcurl3-gnutls7.81.0-1ubuntu1.6
+libcurl47.81.0-1ubuntu1.6
 libdb5.35.3.28+dfsg1-0.8ubuntu3
 libdebconfclient00.261ubuntu1
 libdpkg-perl1.21.1ubuntu2.1
