@@ -23,6 +23,7 @@ RUN \
     gnupg \ 
     iproute2 \
     iptables \
+    ip6tables \
     iputils \
     libqrencode \
     net-tools \
