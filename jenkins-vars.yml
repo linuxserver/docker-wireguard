@@ -4,7 +4,7 @@
 project_name: docker-wireguard
 external_type: na
 custom_version_command: "curl -sX GET https://api.github.com/repos/WireGuard/wireguard-tools/tags | jq -r .[0].name"
-release_type: stable
+release_type: prerelease
 release_tag: alpine
 ls_branch: alpine
 repo_vars:
