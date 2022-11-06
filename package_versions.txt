@@ -60,7 +60,7 @@ libtasn1-4.18.0-r0
 libunistring-1.0-r0
 linux-pam-1.5.2-r0
 mii-tool-2.10-r0
-musl-1.2.3-r0
+musl-1.2.3-r1
 musl-utils-1.2.3-r0
 ncurses-libs-6.3_p20220521-r0
 ncurses-terminfo-base-6.3_p20220521-r0
