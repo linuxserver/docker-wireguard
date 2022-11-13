@@ -167,10 +167,10 @@ libsemanage23.3-1build2
 libsemanage-common3.3-1build2
 libsepol23.3-1build1
 libsmartcols12.37.2-4ubuntu3
-libsqlite3-03.37.2-2
+libsqlite3-03.37.2-2ubuntu0.1
 libss21.46.5-2ubuntu1.1
 libssh-40.9.6-2build1
-libssl33.0.2-0ubuntu1.6
+libssl33.0.2-0ubuntu1.7
 libstdc++-11-dev11.3.0-1ubuntu1~22.04
 libstdc++612.1.0-2ubuntu1~22.04
 libsystemd0249.11-0ubuntu3.6
@@ -226,7 +226,7 @@ sed4.8-1ubuntu2
 sensible-utils0.0.17
 sysvinit-utils3.01-1ubuntu1
 tar1.34+dfsg-1build3
-tzdata2022e-0ubuntu0.22.04.0
+tzdata2022f-0ubuntu0.22.04.0
 ubuntu-keyring2021.03.26
 usrmerge25ubuntu2
 util-linux2.37.2-4ubuntu3
