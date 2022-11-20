@@ -91,7 +91,7 @@ libdpkg-perl1.21.1ubuntu2.1
 libelf10.186-1build1
 libelf-dev0.186-1build1
 liberror-perl0.17029-1
-libexpat12.4.7-1
+libexpat12.4.7-1ubuntu0.1
 libext2fs21.46.5-2ubuntu1.1
 libffi83.4.2-4
 libgcc-11-dev11.3.0-1ubuntu1~22.04
@@ -187,7 +187,7 @@ libuuid12.37.2-4ubuntu3
 libxtables121.8.7-1ubuntu5
 libxxhash00.8.1-1
 libzstd11.4.8+dfsg-3build1
-linux-libc-dev5.15.0-52.58
+linux-libc-dev5.15.0-53.59
 locales2.35-0ubuntu3.1
 login1:4.8.1-2ubuntu2
 logsave1.46.5-2ubuntu1.1
