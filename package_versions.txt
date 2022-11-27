@@ -14,6 +14,7 @@ bzip21.0.8-5build1
 ca-certificates20211016
 coreutils8.32-4.1ubuntu1
 cpp-1111.3.0-1ubuntu1~22.04
+cpp-1212.1.0-2ubuntu1~22.04
 cpp4:11.2.0-1ubuntu1
 curl7.81.0-1ubuntu1.6
 dash0.5.11+git20210903+057cd650a4ed-3build1
@@ -23,7 +24,7 @@ debianutils5.5-1ubuntu2
 diffutils1:3.8-0ubuntu2
 dirmngr2.2.27-3ubuntu2.1
 distro-info-data0.52ubuntu0.2
-dkms2.8.7-2ubuntu2
+dkms2.8.7-2ubuntu2.1
 dpkg1.21.1ubuntu2.1
 dpkg-dev1.21.1ubuntu2.1
 e2fsprogs1.46.5-2ubuntu1.1
@@ -32,6 +33,7 @@ g++-1111.3.0-1ubuntu1~22.04
 g++4:11.2.0-1ubuntu1
 gcc-1111.3.0-1ubuntu1~22.04
 gcc-11-base11.3.0-1ubuntu1~22.04
+gcc-1212.1.0-2ubuntu1~22.04
 gcc-12-base12.1.0-2ubuntu1~22.04
 gcc4:11.2.0-1ubuntu1
 git1:2.34.1-1ubuntu1.5
@@ -59,6 +61,7 @@ kmod29-1ubuntu1
 libacl12.3.1-1
 libapt-pkg6.02.4.8
 libasan611.3.0-1ubuntu1~22.04
+libasan812.1.0-2ubuntu1~22.04
 libassuan02.5.5-1build1
 libatomic112.1.0-2ubuntu1~22.04
 libattr11:2.5.1-1build1
@@ -91,10 +94,11 @@ libdpkg-perl1.21.1ubuntu2.1
 libelf10.186-1build1
 libelf-dev0.186-1build1
 liberror-perl0.17029-1
-libexpat12.4.7-1ubuntu0.1
+libexpat12.4.7-1ubuntu0.2
 libext2fs21.46.5-2ubuntu1.1
 libffi83.4.2-4
 libgcc-11-dev11.3.0-1ubuntu1~22.04
+libgcc-12-dev12.1.0-2ubuntu1~22.04
 libgcc-s112.1.0-2ubuntu1~22.04
 libgcrypt201.9.4-3ubuntu3
 libgdbm61.23-1
@@ -180,6 +184,7 @@ libtirpc31.3.2-2ubuntu0.1
 libtirpc-common1.3.2-2ubuntu0.1
 libtirpc-dev1.3.2-2ubuntu0.1
 libtsan011.3.0-1ubuntu1~22.04
+libtsan212.1.0-2ubuntu1~22.04
 libubsan112.1.0-2ubuntu1~22.04
 libudev1249.11-0ubuntu3.6
 libunistring21.0-1
@@ -226,7 +231,7 @@ sed4.8-1ubuntu2
 sensible-utils0.0.17
 sysvinit-utils3.01-1ubuntu1
 tar1.34+dfsg-1build3
-tzdata2022f-0ubuntu0.22.04.0
+tzdata2022f-0ubuntu0.22.04.1
 ubuntu-keyring2021.03.26
 usrmerge25ubuntu2
 util-linux2.37.2-4ubuntu3
