@@ -85,7 +85,9 @@ Variables `SERVERURL`, `SERVERPORT`, `INTERNAL_SUBNET` and `PEERDNS` are optiona
 
 To add more peers/clients later on, you increment the `PEERS` environment variable or add more elements to the list and recreate the container.
 
-To display the QR codes of active peers again, you can use the following command and list the peer numbers as arguments: `docker exec -it wireguard /app/show-peer 1 4 5` or `docker exec -it wireguard /app/show-peer myPC myPhone myTablet` (Keep in mind that the QR codes are also stored as PNGs in the config folder).
+To display active peers QR codes again, you can use the following command and list the peer numbers as arguments: `docker exec -it wireguard /app/show-peer-QR-code 1 4 5` or `docker exec -it wireguard /app/show-peer-QR-code myPC myPhone myTablet` (Keep in mind that the QR codes are also stored as PNGs in the config folder).
+
+To display active peers configurations, you can use the following command and list the peer numbers as arguments: `docker exec -it wireguard /app/show-peer-configuration 1 4 5` or `docker exec -it wireguard /app/show-peer-configuration myPC myPhone myTablet`.
 
 The templates used for server and peer confs are saved under `/config/templates`. Advanced users can modify these templates and force conf generation by deleting `/config/wg0.conf` and restarting the container.
 
@@ -326,6 +328,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **29.11.22:** - Add `show-peer-configuration` script and rename `show-peer` script to `show-peer-QR-code` to avoid confusion.
 * **26.10.22:** - Better handle unsupported peer names. Improve logging.
 * **12.10.22:** - Add Alpine branch. Optimize wg and coredns services.
 * **09.10.22:** - Switch back to iptables-legacy due to issues on some hosts.

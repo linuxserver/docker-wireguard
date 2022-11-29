@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bash
 
 if [ ! $# -gt 0 ]; then
-  echo "You need to specify which peers to show"
+  echo "You need to specify which peer(s) QR code to show"
   exit 0
 fi
 
@@ -13,7 +13,7 @@ for i in "$@"; do
   fi
 
   if grep -q "# ${PEER_ID}" /config/wg0.conf; then
-    echo "PEER ${i} QR code:"
+    echo -e "PEER ${i}'s QR code:\n"
     qrencode -t ansiutf8 < /config/${PEER_ID}/${PEER_ID}.conf
   else
     echo "PEER ${i} is not active"
