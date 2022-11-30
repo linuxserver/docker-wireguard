@@ -159,7 +159,7 @@ services:
       - LOG_CONFS=true #optional
     volumes:
       - /path/to/appdata/config:/config
-      - /lib/modules:/lib/modules
+      - /lib/modules:/lib/modules #optional
     ports:
       - 51820:51820/udp
     sysctls:
@@ -186,7 +186,7 @@ docker run -d \
   -e LOG_CONFS=true `#optional` \
   -p 51820:51820/udp \
   -v /path/to/appdata/config:/config \
-  -v /lib/modules:/lib/modules \
+  -v /lib/modules:/lib/modules `#optional` \
   --sysctl="net.ipv4.conf.all.src_valid_mark=1" \
   --restart unless-stopped \
   lscr.io/linuxserver/wireguard:latest
@@ -210,7 +210,7 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-e ALLOWEDIPS=0.0.0.0/0` | The IPs/Ranges that the peers will be able to reach using the VPN connection. If not specified the default value is: '0.0.0.0/0, ::0/0' This will cause ALL traffic to route through the VPN, if you want split tunneling, set this to only the IPs you would like to use the tunnel AND the ip of the server's WG ip, such as 10.13.13.1. |
 | `-e LOG_CONFS=true` | Generated QR codes will be displayed in the docker log. Set to `false` to skip log output. |
 | `-v /config` | Contains all relevant configuration files. |
-| `-v /lib/modules` | Maps host's modules folder. |
+| `-v /lib/modules` | Maps host's modules folder. Only required if compiling wireguard modules. |
 | `--sysctl=` | Required for client mode. |
 
 ### Portainer notice

@@ -25,7 +25,9 @@ param_container_name: "{{ project_name }}"
 param_usage_include_vols: true
 param_volumes:
   - { vol_path: "/config", vol_host_path: "/path/to/appdata/config", desc: "Contains all relevant configuration files." }
-  - { vol_path: "/lib/modules", vol_host_path: "/lib/modules", desc: "Maps host's modules folder." }
+opt_param_usage_include_vols: true
+opt_param_volumes:
+  - { vol_path: "/lib/modules", vol_host_path: "/lib/modules", desc: "Maps host's modules folder. Only required if compiling wireguard modules." }
 param_usage_include_ports: true
 param_ports:
   - { external_port: "51820", internal_port: "51820/udp", port_desc: "wireguard port" }
