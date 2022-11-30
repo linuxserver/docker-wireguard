@@ -8,6 +8,9 @@ ip link del dev test 2>/dev/null
 if ip link add dev test type wireguard; then
     echo "**** It seems the wireguard module is already active. Skipping kernel header install and module compilation. ****"
     ip link del dev test
+    if capsh --print | grep -qv '\!cap_sys_module'; then
+        echo "**** As the wireguard module is already active you can remove the SYS_MODULE capability from your container run/compose. ****"
+    fi
 else
     echo "**** The wireguard module is not active. If you believe that your kernel should have wireguard support already, make sure that it is activated via modprobe! ****"
     sleep infinity
