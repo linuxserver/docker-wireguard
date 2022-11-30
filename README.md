@@ -70,14 +70,6 @@ This image provides various versions that are available via tags. Please read th
 
 During container start, it will first check if the wireguard module is already installed and loaded. Kernels newer than 5.6 generally have the wireguard module built-in (along with some older custom kernels). However, the module may not be enabled. Make sure it is enabled prior to starting the container.
 
-If the kernel is not built-in, or installed on host, the container will check if the kernel headers are present (in `/usr/src`) and if not, it will attempt to download the necessary kernel headers from the `ubuntu xenial/bionic`, `debian/raspbian buster` repos; then will attempt to compile and install the kernel module. If the kernel headers are not found in either `usr/src` or in the repos mentioned, container will sleep indefinitely as wireguard cannot be installed.
-
-If you're on a debian/ubuntu based host with a custom or downstream distro provided kernel (ie. Pop!_OS), the container won't be able to install the kernel headers from the regular ubuntu and debian repos. In those cases, you can try installing the headers on the host via `sudo apt install linux-headers-$(uname -r)` (if distro version) and then add a volume mapping for `/usr/src:/usr/src`, or if custom built, map the location of the existing headers to allow the container to use host installed headers to build the kernel module (tested successful on Pop!_OS, ymmv).
-
-With regards to arm32/64 devices, Raspberry Pi 2-4 running the [official ubuntu images](https://ubuntu.com/download/raspberry-pi) or Raspbian Buster are supported out of the box. For all other devices and OSes, you can try installing the kernel headers on the host, and mapping `/usr/src:/usr/src` and it may just work (no guarantees).
-
-This can be run as a server or a client, based on the parameters used. 
-
 ## Server Mode
 If the environment variable `PEERS` is set to a number or a list of strings separated by comma, the container will run in server mode and the necessary server and peer/client confs will be generated. The peer/client config qr codes will be output in the docker log. They will also be saved in text and png format under `/config/peerX` in case `PEERS` is a variable and an integer or `/config/peer_X` in case a list of names was provided instead of an integer.
 
@@ -145,7 +137,6 @@ services:
     container_name: wireguard
     cap_add:
       - NET_ADMIN
-      - SYS_MODULE
     environment:
       - PUID=1000
       - PGID=1000
@@ -159,7 +150,6 @@ services:
       - LOG_CONFS=true #optional
     volumes:
       - /path/to/appdata/config:/config
-      - /lib/modules:/lib/modules
     ports:
       - 51820:51820/udp
     sysctls:
@@ -173,7 +163,6 @@ services:
 docker run -d \
   --name=wireguard \
   --cap-add=NET_ADMIN \
-  --cap-add=SYS_MODULE \
   -e PUID=1000 \
   -e PGID=1000 \
   -e TZ=Europe/London \
@@ -186,7 +175,6 @@ docker run -d \
   -e LOG_CONFS=true `#optional` \
   -p 51820:51820/udp \
   -v /path/to/appdata/config:/config \
-  -v /lib/modules:/lib/modules \
   --sysctl="net.ipv4.conf.all.src_valid_mark=1" \
   --restart unless-stopped \
   lscr.io/linuxserver/wireguard:alpine
@@ -210,7 +198,6 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-e ALLOWEDIPS=0.0.0.0/0` | The IPs/Ranges that the peers will be able to reach using the VPN connection. If not specified the default value is: '0.0.0.0/0, ::0/0' This will cause ALL traffic to route through the VPN, if you want split tunneling, set this to only the IPs you would like to use the tunnel AND the ip of the server's WG ip, such as 10.13.13.1. |
 | `-e LOG_CONFS=true` | Generated QR codes will be displayed in the docker log. Set to `false` to skip log output. |
 | `-v /config` | Contains all relevant configuration files. |
-| `-v /lib/modules` | Maps host's modules folder. |
 | `--sysctl=` | Required for client mode. |
 
 ### Portainer notice
