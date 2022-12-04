@@ -103,7 +103,7 @@ libgcc-s112.1.0-2ubuntu1~22.04
 libgcrypt201.9.4-3ubuntu3
 libgdbm61.23-1
 libgdbm-compat41.23-1
-libglib2.0-02.72.1-1
+libglib2.0-02.72.4-0ubuntu1
 libgmp102:6.2.1+dfsg-3ubuntu1
 libgnutls303.7.3-4ubuntu1.1
 libgomp112.1.0-2ubuntu1~22.04
@@ -192,7 +192,7 @@ libuuid12.37.2-4ubuntu3
 libxtables121.8.7-1ubuntu5
 libxxhash00.8.1-1
 libzstd11.4.8+dfsg-3build1
-linux-libc-dev5.15.0-53.59
+linux-libc-dev5.15.0-56.62
 locales2.35-0ubuntu3.1
 login1:4.8.1-2ubuntu2
 logsave1.46.5-2ubuntu1.1
