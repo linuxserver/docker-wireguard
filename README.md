@@ -86,7 +86,7 @@ The templates used for server and peer confs are saved under `/config/templates`
 
 ## Client Mode
 
-Do not set the `PEERS` environment variable. Drop your client conf into the config folder as `/config/wg0.conf` and start the container. 
+Do not set the `PEERS` environment variable. Drop your client conf into the config folder as `/config/wg0.conf` and start the container.
 
 If you get IPv6 related errors in the log and connection cannot be established, edit the `AllowedIPs` line in your peer/client wg0.conf to include only `0.0.0.0/0` and not `::/0`; and restart the container.
 
