@@ -155,8 +155,8 @@ libperl5.345.34.0-3ubuntu1.1
 libpng16-161.6.37-3build5
 libprocps82:3.3.17-6ubuntu2
 libpsl50.21.0-1.2build2
-libpython3.10-minimal3.10.6-1~22.04.1
-libpython3.10-stdlib3.10.6-1~22.04.1
+libpython3.10-minimal3.10.6-1~22.04.2
+libpython3.10-stdlib3.10.6-1~22.04.2
 libpython3-stdlib3.10.6-1~22.04
 libqrencode44.1.1-1
 libquadmath012.1.0-2ubuntu1~22.04
@@ -220,8 +220,8 @@ pinentry-curses1.1.1-1build2
 pkg-config0.29.2-1ubuntu3
 procps2:3.3.17-6ubuntu2
 publicsuffix20211207.1025-1
-python3.103.10.6-1~22.04.1
-python3.10-minimal3.10.6-1~22.04.1
+python3.103.10.6-1~22.04.2
+python3.10-minimal3.10.6-1~22.04.2
 python33.10.6-1~22.04
 python3-minimal3.10.6-1~22.04
 qrencode4.1.1-1
