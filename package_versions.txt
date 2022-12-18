@@ -231,7 +231,7 @@ sed4.8-1ubuntu2
 sensible-utils0.0.17
 sysvinit-utils3.01-1ubuntu1
 tar1.34+dfsg-1build3
-tzdata2022f-0ubuntu0.22.04.1
+tzdata2022g-0ubuntu0.22.04.1
 ubuntu-keyring2021.03.26
 usrmerge25ubuntu2
 util-linux2.37.2-4ubuntu3
