@@ -47,7 +47,7 @@ libffi-3.4.2-r1
 libgcrypt-1.10.1-r0
 libgpg-error-1.45-r0
 libintl-0.21-r2
-libksba-1.6.0-r0
+libksba-1.6.3-r0
 libldap-2.6.3-r3
 libmnl-1.0.5-r0
 libnftnl-1.2.3-r0
