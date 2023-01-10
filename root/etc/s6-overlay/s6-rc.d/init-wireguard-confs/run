@@ -135,7 +135,7 @@ if [ -n "$PEERS" ]; then
     PEERS_ARRAY=($(echo "$PEERS" | tr ',' ' '))
   fi
   PEERS_COUNT=$(echo "${#PEERS_ARRAY[@]}")
-  if [ "${PERSISTENTKEEPALIVE_PEERS}" = "all" ] || [ "${PERSISTENTKEEPALIVE_PEERS}" =~ *,* ]; then
+  if [ -n "${PERSISTENTKEEPALIVE_PEERS}" ]; then
     echo "**** PersistentKeepalive will be set for: ${PERSISTENTKEEPALIVE_PEERS/,/ } ****"
     PERSISTENTKEEPALIVE_PEERS_ARRAY=($(echo "$PERSISTENTKEEPALIVE_PEERS" | tr ',' ' '))
   fi
