@@ -121,7 +121,7 @@ libkeyutils11.6.1-2ubuntu3
 libkmod229-1ubuntu1
 libkrb5-31.19.2-2
 libkrb5support01.19.2-2
-libksba81.6.0-2ubuntu0.1
+libksba81.6.0-2ubuntu0.2
 libldap-2.5-02.5.13+dfsg-0ubuntu0.22.04.1
 libldap-common2.5.13+dfsg-0ubuntu0.22.04.1
 liblsan012.1.0-2ubuntu1~22.04
@@ -162,9 +162,9 @@ libqrencode44.1.1-1
 libquadmath012.1.0-2ubuntu1~22.04
 libreadline88.1.2-1
 librtmp12.4+20151223.gitfa8646d.1-2build4
-libsasl2-22.1.27+dfsg2-3ubuntu1
-libsasl2-modules2.1.27+dfsg2-3ubuntu1
-libsasl2-modules-db2.1.27+dfsg2-3ubuntu1
+libsasl2-22.1.27+dfsg2-3ubuntu1.1
+libsasl2-modules2.1.27+dfsg2-3ubuntu1.1
+libsasl2-modules-db2.1.27+dfsg2-3ubuntu1.1
 libseccomp22.5.3-2ubuntu2
 libselinux13.3-1build2
 libsemanage23.3-1build2
@@ -192,7 +192,7 @@ libuuid12.37.2-4ubuntu3
 libxtables121.8.7-1ubuntu5
 libxxhash00.8.1-1
 libzstd11.4.8+dfsg-3build1
-linux-libc-dev5.15.0-57.63
+linux-libc-dev5.15.0-58.64
 locales2.35-0ubuntu3.1
 login1:4.8.1-2ubuntu2.1
 logsave1.46.5-2ubuntu1.1
