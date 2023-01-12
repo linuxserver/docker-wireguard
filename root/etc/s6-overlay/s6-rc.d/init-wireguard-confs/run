@@ -87,16 +87,25 @@ DUDE
         echo "Adding ${!SERVER_ALLOWEDIPS} to wg0.conf's AllowedIPs for peer ${i}"
         cat <<DUDE >> /config/wg0.conf
 AllowedIPs = ${CLIENT_IP}/32,${!SERVER_ALLOWEDIPS}
+DUDE
+      else
+        cat <<DUDE >> /config/wg0.conf
+AllowedIPs = ${CLIENT_IP}/32
+DUDE
+      fi
+      # add PersistentKeepalive if the peer is specified
+      if [ -n "${PERSISTENTKEEPALIVE_PEERS_ARRAY}" ] && ([ "${PERSISTENTKEEPALIVE_PEERS_ARRAY[0]}" = "all" ] || printf '%s\0' "${PERSISTENTKEEPALIVE_PEERS_ARRAY[@]}" | grep -Fxqz -- "${i}"); then
+        cat <<DUDE >> /config/wg0.conf
+PersistentKeepalive = 25
 
 DUDE
-    else
-      cat <<DUDE >> /config/wg0.conf
-AllowedIPs = ${CLIENT_IP}/32
+      else
+        cat <<DUDE >> /config/wg0.conf
 
 DUDE
       fi
       if [ -z "${LOG_CONFS}" ] || [ "${LOG_CONFS}" = "true" ]; then
-        echo "PEER ${i} QR code:"
+        echo "PEER ${i} QR code (conf file is saved under /config/${PEER_ID}):"
         qrencode -t ansiutf8 < /config/${PEER_ID}/${PEER_ID}.conf
       else
         echo "PEER ${i} conf and QR code png saved in /config/${PEER_ID}"
@@ -114,6 +123,7 @@ ORIG_PEERDNS="$PEERDNS"
 ORIG_PEERS="$PEERS"
 ORIG_INTERFACE="$INTERFACE"
 ORIG_ALLOWEDIPS="$ALLOWEDIPS"
+ORIG_PERSISTENTKEEPALIVE_PEERS="$PERSISTENTKEEPALIVE_PEERS"
 DUDE
 }
 
@@ -125,6 +135,10 @@ if [ -n "$PEERS" ]; then
     PEERS_ARRAY=($(echo "$PEERS" | tr ',' ' '))
   fi
   PEERS_COUNT=$(echo "${#PEERS_ARRAY[@]}")
+  if [ -n "${PERSISTENTKEEPALIVE_PEERS}" ]; then
+    echo "**** PersistentKeepalive will be set for: ${PERSISTENTKEEPALIVE_PEERS/,/ } ****"
+    PERSISTENTKEEPALIVE_PEERS_ARRAY=($(echo "$PERSISTENTKEEPALIVE_PEERS" | tr ',' ' '))
+  fi
   if [ -z "$SERVERURL" ] || [ "$SERVERURL" = "auto" ]; then
     SERVERURL=$(curl -s icanhazip.com)
     echo "**** SERVERURL var is either not set or is set to \"auto\", setting external IP to auto detected value of $SERVERURL ****"
@@ -152,7 +166,7 @@ if [ -n "$PEERS" ]; then
     echo "**** Server mode is selected ****"
     [[ -f /config/.donoteditthisfile ]] && \
       . /config/.donoteditthisfile
-    if [ "$SERVERURL" != "$ORIG_SERVERURL" ] || [ "$SERVERPORT" != "$ORIG_SERVERPORT" ] || [ "$PEERDNS" != "$ORIG_PEERDNS" ] || [ "$PEERS" != "$ORIG_PEERS" ] || [ "$INTERFACE" != "$ORIG_INTERFACE" ] || [ "$ALLOWEDIPS" != "$ORIG_ALLOWEDIPS" ]; then
+    if [ "$SERVERURL" != "$ORIG_SERVERURL" ] || [ "$SERVERPORT" != "$ORIG_SERVERPORT" ] || [ "$PEERDNS" != "$ORIG_PEERDNS" ] || [ "$PEERS" != "$ORIG_PEERS" ] || [ "$INTERFACE" != "$ORIG_INTERFACE" ] || [ "$ALLOWEDIPS" != "$ORIG_ALLOWEDIPS" ] || [ "$PERSISTENTKEEPALIVE_PEERS" != "$ORIG_PERSISTENTKEEPALIVE_PEERS" ]; then
       echo "**** Server related environment variables changed, regenerating 1 server and ${PEERS} peer/client confs ****"
       generate_confs
       save_vars
