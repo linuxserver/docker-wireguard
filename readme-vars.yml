@@ -127,6 +127,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "02.03.23:", desc: "Include ulogd2 package, allowing iptables userspace logging." }
   - { date: "28.01.23:", desc: "Patch wg-quick to suppress false positive sysctl warning." }
   - { date: "10.01.23:", desc: "Add new var to add `PersistentKeepalive` to server config for select peers to survive server IP changes when domain name is used." }
   - { date: "26.10.22:", desc: "Better handle unsupported peer names. Improve logging." }
