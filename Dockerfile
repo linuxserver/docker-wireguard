@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 FROM ghcr.io/linuxserver/baseimage-ubuntu:jammy
 
 # set version label
@@ -15,19 +17,16 @@ RUN \
   apt-get install -y --no-install-recommends \
     bc \
     build-essential \
-    curl \
     dkms \
     git \
-    gnupg \ 
+    gnupg \
     ifupdown \
     iproute2 \
     iptables \
     iputils-ping \
-    jq \
     libc6 \
     libelf-dev \
     net-tools \
-    netcat \
     openresolv \
     perl \
     pkg-config \
@@ -43,6 +42,7 @@ RUN \
   git clone https://git.zx2c4.com/wireguard-tools && \
   cd wireguard-tools && \
   git checkout "${WIREGUARD_RELEASE}" && \
+  sed -i 's|\[\[ $proto == -4 \]\] && cmd sysctl -q net\.ipv4\.conf\.all\.src_valid_mark=1|[[ $proto == -4 ]] \&\& [[ $(sysctl -n net.ipv4.conf.all.src_valid_mark) != 1 ]] \&\& cmd sysctl -q net.ipv4.conf.all.src_valid_mark=1|' src/wg-quick/linux.bash && \
   make -C src -j$(nproc) && \
   make -C src install && \
   echo "**** install CoreDNS ****" && \
