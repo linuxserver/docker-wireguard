@@ -27,6 +27,7 @@ RUN \
     iptables \
     ip6tables \
     iputils \
+    libcap \
     libqrencode \
     net-tools \
     openresolv \
