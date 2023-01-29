@@ -14,7 +14,6 @@ RUN \
   apk add --no-cache --virtual=build-dependencies \
     bc \
     build-base \
-    coredns \
     elfutils-dev \
     gcc \
     git \
@@ -39,7 +38,6 @@ RUN \
     | jq -r .[0].name); \
   fi && \
   cd /app && \
-  git clone https://git.zx2c4.com/wireguard-linux-compat && \
   git clone https://git.zx2c4.com/wireguard-tools && \
   cd wireguard-tools && \
   git checkout "${WIREGUARD_RELEASE}" && \
