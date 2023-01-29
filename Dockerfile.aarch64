@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 FROM ghcr.io/linuxserver/baseimage-ubuntu:arm64v8-jammy
 
 # set version label
@@ -15,7 +17,6 @@ RUN \
   apt-get install -y --no-install-recommends \
     bc \
     build-essential \
-    curl \
     dkms \
     git \
     gnupg \
@@ -23,11 +24,9 @@ RUN \
     iproute2 \
     iptables \
     iputils-ping \
-    jq \
     libc6 \
     libelf-dev \
     net-tools \
-    netcat \
     openresolv \
     perl \
     pkg-config \
