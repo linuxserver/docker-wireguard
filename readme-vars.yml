@@ -117,6 +117,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "29.01.23:", desc: "Rebase to alpine 3.17." }
   - { date: "10.01.23:", desc: "Add new var to add `PersistentKeepalive` to server config for select peers to survive server IP changes when domain name is used." }
   - { date: "26.10.22:", desc: "Better handle unsupported peer names. Improve logging." }
   - { date: "12.10.22:", desc: "Add Alpine branch. Optimize wg and coredns services." }
