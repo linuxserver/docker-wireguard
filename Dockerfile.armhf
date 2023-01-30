@@ -12,7 +12,6 @@ LABEL maintainer="thespad"
 RUN \
   echo "**** install dependencies ****" && \
   apk add --no-cache --virtual=build-dependencies \
-    bc \
     build-base \
     elfutils-dev \
     gcc \
@@ -22,6 +21,7 @@ RUN \
     bc \
     coredns \
     gnupg \
+    grep \
     iproute2 \
     iptables \
     ip6tables \
