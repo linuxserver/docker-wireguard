@@ -223,6 +223,18 @@ Container images are configured using parameters passed at runtime (such as thos
 
 This image utilises `cap_add` or `sysctl` to work properly. This is not implemented properly in some versions of Portainer, thus this image may not work if deployed through Portainer.
 
+### Rootless Docker/Podman and SELinux unofficial support
+
+The additional parameters `--cap-add=NET_RAW`, `--security-opt label=disable` may be required on some systems like Fedora CoreOS.
+
+`--security-opt label=disable` disables SELinux labeling for the container, which allows `ip` to `module_request` wireguard if the kernel module has not been previously loaded. This is typically the case as most systems do not boot with wireguard kernel module loaded and would otherwise require a priviledged user to first `sudo modprobe wireguard` before the container could be run.
+
+`--cap-add=NET_RAW` is required on newer kernels to allow `0.0.0.0/0`, `0::0/0`. You should avoid `NET_RAW` if you do not need these routes.
+
+These parameters allow a completely unpriviledged user, without access to `sudo` or a root docker daemon, to run the container on SELinux enforcing systems without resorting to `--privileged`.
+
+Please note that this does not grant an unpriviledged user additional privileges on the host system. **This configuration is entirely unsupported and may break in a future release. No help will be provided if your system requires additional configuration not outlined in this section, any issue pertaining to running this container rootless is out of scope and invalid. Do not blindly add these parameters without understanding their purpose. This section is provided in a effort to improve host system security.**
+
 ## Environment variables from files (Docker secrets)
 
 You can set any environment variable from a file by using a special prepend `FILE__`.
