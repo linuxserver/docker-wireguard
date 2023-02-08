@@ -26,6 +26,7 @@ gpg-agent-2.2.40-r0
 gpg-wks-server-2.2.40-r0
 gpgsm-2.2.40-r0
 gpgv-2.2.40-r0
+grep-3.8-r1
 ip6tables-1.8.8-r2
 iproute2-6.0.0-r1
 iproute2-minimal-6.0.0-r1
@@ -74,6 +75,7 @@ npth-1.6-r2
 oniguruma-6.9.8-r0
 openresolv-3.12.0-r1
 p11-kit-0.24.1-r1
+pcre2-10.42-r0
 perl-5.36.0-r0
 pinentry-1.2.1-r0
 procps-3.3.17-r2
