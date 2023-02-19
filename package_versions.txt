@@ -1,7 +1,7 @@
 alpine-baselayout-3.4.0-r0
 alpine-baselayout-data-3.4.0-r0
 alpine-keys-2.4-r1
-alpine-release-3.17.1-r0
+alpine-release-3.17.2-r0
 apk-tools-2.12.10-r1
 bash-5.2.15-r0
 bc-1.07.1-r2
@@ -10,7 +10,7 @@ busybox-1.35.0-r29
 busybox-binsh-1.35.0-r29
 ca-certificates-20220614-r4
 ca-certificates-bundle-20220614-r4
-coredns-1.10.0-r3
+coredns-1.10.0-r4
 coreutils-9.1-r0
 curl-7.87.0-r1
 gdbm-1.23-r0
@@ -42,7 +42,7 @@ libbz2-1.0.8-r4
 libc-utils-0.7.2-r3
 libcap-utils-2.66-r0
 libcap2-2.66-r0
-libcrypto3-3.0.7-r2
+libcrypto3-3.0.8-r0
 libcurl-7.87.0-r1
 libelf-0.187-r2
 libevent-2.1.12-r5
@@ -58,7 +58,7 @@ libpng-1.6.38-r0
 libproc-3.3.17-r2
 libqrencode-4.1.1-r1
 libsasl-2.1.28-r3
-libssl3-3.0.7-r2
+libssl3-3.0.8-r0
 libtasn1-4.19.0-r0
 libunistring-1.1-r0
 linux-pam-1.5.2-r1
