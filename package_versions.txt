@@ -36,8 +36,8 @@ gcc-11-base11.3.0-1ubuntu1~22.04
 gcc-1212.1.0-2ubuntu1~22.04
 gcc-12-base12.1.0-2ubuntu1~22.04
 gcc4:11.2.0-1ubuntu1
-git1:2.34.1-1ubuntu1.6
-git-man1:2.34.1-1ubuntu1.6
+git1:2.34.1-1ubuntu1.8
+git-man1:2.34.1-1ubuntu1.8
 gnupg2.2.27-3ubuntu2.1
 gnupg-l10n2.2.27-3ubuntu2.1
 gnupg-utils2.2.27-3ubuntu2.1
@@ -210,7 +210,7 @@ netcat1.218-4ubuntu1
 netcat-openbsd1.218-4ubuntu1
 net-tools1.60+git20181103.0eebece-1ubuntu5
 openresolv3.12.0-2
-openssl3.0.2-0ubuntu1.7
+openssl3.0.2-0ubuntu1.8
 passwd1:4.8.1-2ubuntu2.1
 patch2.7.6-7build2
 perl5.34.0-3ubuntu1.1
