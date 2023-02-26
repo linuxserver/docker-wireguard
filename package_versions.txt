@@ -12,7 +12,7 @@ ca-certificates-20220614-r4
 ca-certificates-bundle-20220614-r4
 coredns-1.10.0-r4
 coreutils-9.1-r0
-curl-7.87.0-r1
+curl-7.87.0-r2
 gdbm-1.23-r0
 gmp-6.2.1-r2
 gnupg-2.2.40-r0
@@ -43,7 +43,7 @@ libc-utils-0.7.2-r3
 libcap-utils-2.66-r0
 libcap2-2.66-r0
 libcrypto3-3.0.8-r0
-libcurl-7.87.0-r1
+libcurl-7.87.0-r2
 libelf-0.187-r2
 libevent-2.1.12-r5
 libffi-3.4.4-r0
