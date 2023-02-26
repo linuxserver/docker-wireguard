@@ -1,7 +1,7 @@
 adduser3.118ubuntu5
 apt2.4.8
 apt-utils2.4.8
-base-files12ubuntu4.2
+base-files12ubuntu4.3
 base-passwd3.5.52build1
 bash5.1-6ubuntu1
 bc1.07.1-3build1
@@ -108,7 +108,7 @@ libgmp102:6.2.1+dfsg-3ubuntu1
 libgnutls303.7.3-4ubuntu1.1
 libgomp112.1.0-2ubuntu1~22.04
 libgpg-error01.43-3
-libgssapi-krb5-21.19.2-2
+libgssapi-krb5-21.19.2-2ubuntu0.1
 libhogweed63.7.3-1build2
 libidn2-02.3.2-2build1
 libip4tc21.8.7-1ubuntu5
@@ -116,11 +116,11 @@ libip6tc21.8.7-1ubuntu5
 libisl230.24-2build1
 libitm112.1.0-2ubuntu1~22.04
 libjq11.6-2.1ubuntu3
-libk5crypto31.19.2-2
+libk5crypto31.19.2-2ubuntu0.1
 libkeyutils11.6.1-2ubuntu3
 libkmod229-1ubuntu1
-libkrb5-31.19.2-2
-libkrb5support01.19.2-2
+libkrb5-31.19.2-2ubuntu0.1
+libkrb5support01.19.2-2ubuntu0.1
 libksba81.6.0-2ubuntu0.2
 libldap-2.5-02.5.13+dfsg-0ubuntu0.22.04.1
 libldap-common2.5.13+dfsg-0ubuntu0.22.04.1
@@ -145,10 +145,10 @@ libnsl21.3.0-2build2
 libnsl-dev1.3.0-2build2
 libonig56.9.7.1-2build1
 libp11-kit00.24.0-6build1
-libpam0g1.4.0-11ubuntu2
-libpam-modules1.4.0-11ubuntu2
-libpam-modules-bin1.4.0-11ubuntu2
-libpam-runtime1.4.0-11ubuntu2
+libpam0g1.4.0-11ubuntu2.3
+libpam-modules1.4.0-11ubuntu2.3
+libpam-modules-bin1.4.0-11ubuntu2.3
+libpam-runtime1.4.0-11ubuntu2.3
 libpcre2-8-010.39-3ubuntu0.1
 libpcre32:8.39-13ubuntu0.22.04.1
 libperl5.345.34.0-3ubuntu1.1
@@ -174,7 +174,7 @@ libsmartcols12.37.2-4ubuntu3
 libsqlite3-03.37.2-2ubuntu0.1
 libss21.46.5-2ubuntu1.1
 libssh-40.9.6-2build1
-libssl33.0.2-0ubuntu1.7
+libssl33.0.2-0ubuntu1.8
 libstdc++-11-dev11.3.0-1ubuntu1~22.04
 libstdc++612.1.0-2ubuntu1~22.04
 libsystemd0249.11-0ubuntu3.6
