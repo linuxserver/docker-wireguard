@@ -1,93 +1,208 @@
-alpine-baselayout-3.4.0-r0
-alpine-baselayout-data-3.4.0-r0
-alpine-keys-2.4-r1
-alpine-release-3.17.2-r0
-apk-tools-2.12.10-r1
-bash-5.2.15-r0
-bc-1.07.1-r2
-brotli-libs-1.0.9-r9
-busybox-1.35.0-r29
-busybox-binsh-1.35.0-r29
-ca-certificates-20220614-r4
-ca-certificates-bundle-20220614-r4
-coredns-1.10.0-r4
-coreutils-9.1-r0
-curl-7.87.0-r2
-gdbm-1.23-r0
-gmp-6.2.1-r2
-gnupg-2.2.40-r0
-gnupg-dirmngr-2.2.40-r0
-gnupg-gpgconf-2.2.40-r0
-gnupg-utils-2.2.40-r0
-gnupg-wks-client-2.2.40-r0
-gnutls-3.7.8-r3
-gpg-2.2.40-r0
-gpg-agent-2.2.40-r0
-gpg-wks-server-2.2.40-r0
-gpgsm-2.2.40-r0
-gpgv-2.2.40-r0
-grep-3.8-r1
-ip6tables-1.8.8-r2
-iproute2-6.0.0-r1
-iproute2-minimal-6.0.0-r1
-iproute2-ss-6.0.0-r1
-iproute2-tc-6.0.0-r1
-iptables-1.8.8-r2
-iputils-20211215-r0
-jq-1.6-r2
-libacl-2.3.1-r1
-libassuan-2.5.5-r1
-libattr-2.5.1-r2
-libbz2-1.0.8-r4
-libc-utils-0.7.2-r3
-libcap-utils-2.66-r0
-libcap2-2.66-r0
-libcrypto3-3.0.8-r0
-libcurl-7.87.0-r2
-libelf-0.187-r2
-libevent-2.1.12-r5
-libffi-3.4.4-r0
-libgcrypt-1.10.1-r0
-libgpg-error-1.46-r1
-libintl-0.21.1-r1
-libksba-1.6.3-r0
-libldap-2.6.3-r6
-libmnl-1.0.5-r0
-libnftnl-1.2.4-r0
-libpng-1.6.38-r0
-libproc-3.3.17-r2
-libqrencode-4.1.1-r1
-libsasl-2.1.28-r3
-libssl3-3.0.8-r0
-libtasn1-4.19.0-r0
-libunistring-1.1-r0
-linux-pam-1.5.2-r1
-mii-tool-2.10-r0
-musl-1.2.3-r4
-musl-fts-1.2.7-r3
-musl-utils-1.2.3-r4
-ncurses-libs-6.3_p20221119-r0
-ncurses-terminfo-base-6.3_p20221119-r0
-net-tools-2.10-r0
-nettle-3.8.1-r0
-nghttp2-libs-1.51.0-r0
-npth-1.6-r2
-oniguruma-6.9.8-r0
-openresolv-3.12.0-r1
-p11-kit-0.24.1-r1
-pcre2-10.42-r0
-perl-5.36.0-r0
-pinentry-1.2.1-r0
-procps-3.3.17-r2
-readline-8.2.0-r0
-scanelf-1.3.5-r1
-shadow-4.13-r0
-skalibs-2.12.0.1-r0
-sqlite-libs-3.40.1-r0
-ssl_client-1.35.0-r29
-tzdata-2022f-r1
-unbound-libs-1.17.1-r0
-utmps-libs-0.1.2.0-r1
-xz-5.2.9-r0
-xz-libs-5.2.9-r0
-zlib-1.2.13-r0
+NAME                                                 VERSION                             TYPE      
+alpine-baselayout                                    3.4.0-r0                            apk        
+alpine-baselayout-data                               3.4.0-r0                            apk        
+alpine-keys                                          2.4-r1                              apk        
+alpine-release                                       3.17.2-r0                           apk        
+apk-tools                                            2.12.10-r1                          apk        
+bash                                                 5.2.15-r0                           apk        
+bc                                                   1.07.1-r2                           apk        
+brotli-libs                                          1.0.9-r9                            apk        
+busybox                                              1.35.0                              binary     
+busybox                                              1.35.0-r29                          apk        
+busybox-binsh                                        1.35.0-r29                          apk        
+ca-certificates                                      20220614-r4                         apk        
+ca-certificates-bundle                               20220614-r4                         apk        
+cloud.google.com/go/compute                          v1.7.0                              go-module  
+coredns                                              1.10.0-r4                           apk        
+coreutils                                            9.1-r0                              apk        
+curl                                                 7.88.1-r0                           apk        
+gdbm                                                 1.23-r0                             apk        
+github.com/Azure/azure-sdk-for-go                    v66.0.0+incompatible                go-module  
+github.com/Azure/go-autorest/autorest                v0.11.28                            go-module  
+github.com/Azure/go-autorest/autorest/adal           v0.9.18                             go-module  
+github.com/Azure/go-autorest/autorest/azure/auth     v0.5.11                             go-module  
+github.com/Azure/go-autorest/autorest/azure/cli      v0.4.5                              go-module  
+github.com/Azure/go-autorest/autorest/date           v0.3.0                              go-module  
+github.com/Azure/go-autorest/autorest/to             v0.2.0                              go-module  
+github.com/Azure/go-autorest/logger                  v0.2.1                              go-module  
+github.com/Azure/go-autorest/tracing                 v0.6.0                              go-module  
+github.com/DataDog/datadog-agent/pkg/obfuscate       v0.0.0-20211129110424-6491aa3bf583  go-module  
+github.com/DataDog/datadog-go                        v4.8.2+incompatible                 go-module  
+github.com/DataDog/datadog-go/v5                     v5.0.2                              go-module  
+github.com/DataDog/sketches-go                       v1.2.1                              go-module  
+github.com/PuerkitoBio/purell                        v1.1.1                              go-module  
+github.com/PuerkitoBio/urlesc                        v0.0.0-20170810143723-de5bf2ad4578  go-module  
+github.com/apparentlymart/go-cidr                    v1.1.0                              go-module  
+github.com/aws/aws-sdk-go                            v1.44.95                            go-module  
+github.com/beorn7/perks                              v1.0.1                              go-module  
+github.com/cespare/xxhash/v2                         v2.1.2                              go-module  
+github.com/coredns/caddy                             v1.1.1                              go-module  
+github.com/coredns/coredns                           (devel)                             go-module  
+github.com/coredns/unbound                           v0.0.7                              go-module  
+github.com/coreos/go-semver                          v0.3.0                              go-module  
+github.com/coreos/go-systemd/v22                     v22.3.2                             go-module  
+github.com/davecgh/go-spew                           v1.1.1                              go-module  
+github.com/dgraph-io/ristretto                       v0.1.0                              go-module  
+github.com/dimchansky/utfbom                         v1.1.1                              go-module  
+github.com/dnstap/golang-dnstap                      v0.4.0                              go-module  
+github.com/dustin/go-humanize                        v1.0.0                              go-module  
+github.com/emicklei/go-restful/v3                    v3.8.0                              go-module  
+github.com/farsightsec/golang-framestream            v0.3.0                              go-module  
+github.com/flynn/go-shlex                            v0.0.0-20150515145356-3f9db97f8568  go-module  
+github.com/go-logr/logr                              v1.2.3                              go-module  
+github.com/go-openapi/jsonpointer                    v0.19.5                             go-module  
+github.com/go-openapi/jsonreference                  v0.19.5                             go-module  
+github.com/go-openapi/swag                           v0.19.14                            go-module  
+github.com/gogo/protobuf                             v1.3.2                              go-module  
+github.com/golang-jwt/jwt/v4                         v4.2.0                              go-module  
+github.com/golang/glog                               v0.0.0-20160126235308-23def4e6c14b  go-module  
+github.com/golang/groupcache                         v0.0.0-20210331224755-41bb18bfe9da  go-module  
+github.com/golang/protobuf                           v1.5.2                              go-module  
+github.com/google/gnostic                            v0.5.7-v3refs                       go-module  
+github.com/google/go-cmp                             v0.5.8                              go-module  
+github.com/google/gofuzz                             v1.2.0                              go-module  
+github.com/google/uuid                               v1.3.0                              go-module  
+github.com/googleapis/enterprise-certificate-proxy   v0.1.0                              go-module  
+github.com/googleapis/gax-go/v2                      v2.4.0                              go-module  
+github.com/grpc-ecosystem/grpc-opentracing           v0.0.0-20180507213350-8e809c8a8645  go-module  
+github.com/imdario/mergo                             v0.3.12                             go-module  
+github.com/infobloxopen/go-trees                     v0.0.0-20200715205103-96a057b8dfb9  go-module  
+github.com/jmespath/go-jmespath                      v0.4.0                              go-module  
+github.com/josharian/intern                          v1.0.0                              go-module  
+github.com/json-iterator/go                          v1.1.12                             go-module  
+github.com/mailru/easyjson                           v0.7.7                              go-module  
+github.com/matttproud/golang_protobuf_extensions     v1.0.1                              go-module  
+github.com/miekg/coredns-git                         v0.0.0-20210209133530-8360cff99ce7  go-module  
+github.com/miekg/dns                                 v1.1.50                             go-module  
+github.com/miekg/unbound                             v0.0.0-20210309082708-dbeefb4cdb29  go-module  
+github.com/mitchellh/go-homedir                      v1.1.0                              go-module  
+github.com/modern-go/concurrent                      v0.0.0-20180306012644-bacd9c7ef1dd  go-module  
+github.com/modern-go/reflect2                        v1.0.2                              go-module  
+github.com/munnerz/goautoneg                         v0.0.0-20191010083416-a7dc8b61c822  go-module  
+github.com/opentracing-contrib/go-observer           v0.0.0-20170622124052-a52f23424492  go-module  
+github.com/opentracing/opentracing-go                v1.2.0                              go-module  
+github.com/openzipkin-contrib/zipkin-go-opentracing  v0.4.5                              go-module  
+github.com/openzipkin/zipkin-go                      v0.4.0                              go-module  
+github.com/oschwald/geoip2-golang                    v1.8.0                              go-module  
+github.com/oschwald/maxminddb-golang                 v1.10.0                             go-module  
+github.com/oz123/coredns-netbox-plugin               v0.3.0                              go-module  
+github.com/philhofer/fwd                             v1.1.1                              go-module  
+github.com/pkg/errors                                v0.9.1                              go-module  
+github.com/prometheus/client_golang                  v1.13.0                             go-module  
+github.com/prometheus/client_model                   v0.2.0                              go-module  
+github.com/prometheus/common                         v0.37.0                             go-module  
+github.com/prometheus/procfs                         v0.8.0                              go-module  
+github.com/spf13/pflag                               v1.0.5                              go-module  
+github.com/tinylib/msgp                              v1.1.2                              go-module  
+gmp                                                  6.2.1-r2                            apk        
+gnupg                                                2.2.40-r0                           apk        
+gnupg-dirmngr                                        2.2.40-r0                           apk        
+gnupg-gpgconf                                        2.2.40-r0                           apk        
+gnupg-utils                                          2.2.40-r0                           apk        
+gnupg-wks-client                                     2.2.40-r0                           apk        
+gnutls                                               3.7.8-r3                            apk        
+go.etcd.io/etcd/api/v3                               v3.5.4                              go-module  
+go.etcd.io/etcd/client/pkg/v3                        v3.5.4                              go-module  
+go.etcd.io/etcd/client/v3                            v3.5.4                              go-module  
+go.opencensus.io                                     v0.23.0                             go-module  
+go.uber.org/atomic                                   v1.9.0                              go-module  
+go.uber.org/multierr                                 v1.6.0                              go-module  
+go.uber.org/zap                                      v1.17.0                             go-module  
+golang.org/x/crypto                                  v0.0.0-20220722155217-630584e8d5aa  go-module  
+golang.org/x/net                                     v0.0.0-20220722155237-a158d28d115b  go-module  
+golang.org/x/oauth2                                  v0.0.0-20220822191816-0ebed06d0094  go-module  
+golang.org/x/sys                                     v0.0.0-20220804214406-8e32c043e418  go-module  
+golang.org/x/term                                    v0.0.0-20210927222741-03fcf44c2211  go-module  
+golang.org/x/text                                    v0.3.7                              go-module  
+golang.org/x/time                                    v0.0.0-20220210224613-90d013bbcef8  go-module  
+golang.org/x/xerrors                                 v0.0.0-20220609144429-65e65417b02f  go-module  
+google.golang.org/api                                v0.95.0                             go-module  
+google.golang.org/genproto                           v0.0.0-20220624142145-8cd45d7dbd1f  go-module  
+google.golang.org/grpc                               v1.49.0                             go-module  
+google.golang.org/protobuf                           v1.28.1                             go-module  
+gopkg.in/DataDog/dd-trace-go.v1                      v1.41.0                             go-module  
+gopkg.in/inf.v0                                      v0.9.1                              go-module  
+gopkg.in/yaml.v2                                     v2.4.0                              go-module  
+gopkg.in/yaml.v3                                     v3.0.1                              go-module  
+gpg                                                  2.2.40-r0                           apk        
+gpg-agent                                            2.2.40-r0                           apk        
+gpg-wks-server                                       2.2.40-r0                           apk        
+gpgsm                                                2.2.40-r0                           apk        
+gpgv                                                 2.2.40-r0                           apk        
+grep                                                 3.8-r1                              apk        
+ip6tables                                            1.8.8-r2                            apk        
+iproute2                                             6.0.0-r1                            apk        
+iproute2-minimal                                     6.0.0-r1                            apk        
+iproute2-ss                                          6.0.0-r1                            apk        
+iproute2-tc                                          6.0.0-r1                            apk        
+iptables                                             1.8.8-r2                            apk        
+iputils                                              20211215-r0                         apk        
+jq                                                   1.6-r2                              apk        
+k8s.io/api                                           v0.25.0                             go-module  
+k8s.io/apimachinery                                  v0.25.0                             go-module  
+k8s.io/client-go                                     v0.24.4                             go-module  
+k8s.io/klog/v2                                       v2.80.1                             go-module  
+k8s.io/kube-openapi                                  v0.0.0-20220803162953-67bda5d908f1  go-module  
+k8s.io/utils                                         v0.0.0-20220728103510-ee6ede2d64ed  go-module  
+libacl                                               2.3.1-r1                            apk        
+libassuan                                            2.5.5-r1                            apk        
+libattr                                              2.5.1-r2                            apk        
+libbsd                                               0.11.7-r0                           apk        
+libbz2                                               1.0.8-r4                            apk        
+libc-utils                                           0.7.2-r3                            apk        
+libcap-utils                                         2.66-r0                             apk        
+libcap2                                              2.66-r0                             apk        
+libcrypto3                                           3.0.8-r0                            apk        
+libcurl                                              7.88.1-r0                           apk        
+libelf                                               0.187-r2                            apk        
+libevent                                             2.1.12-r5                           apk        
+libffi                                               3.4.4-r0                            apk        
+libgcrypt                                            1.10.1-r0                           apk        
+libgpg-error                                         1.46-r1                             apk        
+libintl                                              0.21.1-r1                           apk        
+libksba                                              1.6.3-r0                            apk        
+libldap                                              2.6.3-r6                            apk        
+libmd                                                1.0.4-r0                            apk        
+libmnl                                               1.0.5-r0                            apk        
+libnftnl                                             1.2.4-r0                            apk        
+libpng                                               1.6.38-r0                           apk        
+libproc                                              3.3.17-r2                           apk        
+libqrencode                                          4.1.1-r1                            apk        
+libsasl                                              2.1.28-r3                           apk        
+libssl3                                              3.0.8-r0                            apk        
+libtasn1                                             4.19.0-r0                           apk        
+libunistring                                         1.1-r0                              apk        
+linux-pam                                            1.5.2-r1                            apk        
+mii-tool                                             2.10-r0                             apk        
+musl                                                 1.2.3-r4                            apk        
+musl-fts                                             1.2.7-r3                            apk        
+musl-utils                                           1.2.3-r4                            apk        
+ncurses-libs                                         6.3_p20221119-r0                    apk        
+ncurses-terminfo-base                                6.3_p20221119-r0                    apk        
+net-tools                                            2.10-r0                             apk        
+netcat-openbsd                                       1.130-r4                            apk        
+nettle                                               3.8.1-r0                            apk        
+nghttp2-libs                                         1.51.0-r0                           apk        
+npth                                                 1.6-r2                              apk        
+oniguruma                                            6.9.8-r0                            apk        
+openresolv                                           3.12.0-r1                           apk        
+p11-kit                                              0.24.1-r1                           apk        
+pcre2                                                10.42-r0                            apk        
+perl                                                 5.36.0-r0                           apk        
+pinentry                                             1.2.1-r0                            apk        
+procps                                               3.3.17-r2                           apk        
+readline                                             8.2.0-r0                            apk        
+scanelf                                              1.3.5-r1                            apk        
+shadow                                               4.13-r0                             apk        
+sigs.k8s.io/json                                     v0.0.0-20220713155537-f223a00ba0e2  go-module  
+sigs.k8s.io/structured-merge-diff/v4                 v4.2.3                              go-module  
+sigs.k8s.io/yaml                                     v1.2.0                              go-module  
+skalibs                                              2.12.0.1-r0                         apk        
+sqlite-libs                                          3.40.1-r0                           apk        
+ssl_client                                           1.35.0-r29                          apk        
+tzdata                                               2022f-r1                            apk        
+unbound-libs                                         1.17.1-r0                           apk        
+utmps-libs                                           0.1.2.0-r1                          apk        
+xz                                                   5.2.9-r0                            apk        
+xz-libs                                              5.2.9-r0                            apk        
+zlib                                                 1.2.13-r0                           apk        
