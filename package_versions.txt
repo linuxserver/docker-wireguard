@@ -15,7 +15,7 @@ ca-certificates-bundle                               20220614-r4                
 cloud.google.com/go/compute                          v1.7.0                              go-module  
 coredns                                              1.10.0-r4                           apk        
 coreutils                                            9.1-r0                              apk        
-curl                                                 7.88.1-r0                           apk        
+curl                                                 7.88.1-r1                           apk        
 gdbm                                                 1.23-r0                             apk        
 github.com/Azure/azure-sdk-for-go                    v66.0.0+incompatible                go-module  
 github.com/Azure/go-autorest/autorest                v0.11.28                            go-module  
@@ -153,7 +153,7 @@ libc-utils                                           0.7.2-r3                   
 libcap-utils                                         2.66-r0                             apk        
 libcap2                                              2.66-r0                             apk        
 libcrypto3                                           3.0.8-r0                            apk        
-libcurl                                              7.88.1-r0                           apk        
+libcurl                                              7.88.1-r1                           apk        
 libelf                                               0.187-r2                            apk        
 libevent                                             2.1.12-r5                           apk        
 libffi                                               3.4.4-r0                            apk        
