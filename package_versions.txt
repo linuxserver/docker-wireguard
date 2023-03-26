@@ -18,7 +18,7 @@ coreutils                                                8.32-4.1ubuntu1        
 cpp                                                      4:11.2.0-1ubuntu1                        deb        
 cpp-11                                                   11.3.0-1ubuntu1~22.04                    deb        
 cpp-12                                                   12.1.0-2ubuntu1~22.04                    deb        
-curl                                                     7.81.0-1ubuntu1.8                        deb        
+curl                                                     7.81.0-1ubuntu1.10                       deb        
 dash                                                     0.5.11+git20210903+057cd650a4ed-3build1  deb        
 dctrl-tools                                              2.24-3build2                             deb        
 debconf                                                  1.5.79ubuntu1                            deb        
@@ -192,8 +192,8 @@ libcrypt-dev                                             1:4.4.27-1             
 libcrypt1                                                1:4.4.27-1                               deb        
 libctf-nobfd0                                            2.38-4ubuntu2.1                          deb        
 libctf0                                                  2.38-4ubuntu2.1                          deb        
-libcurl3-gnutls                                          7.81.0-1ubuntu1.8                        deb        
-libcurl4                                                 7.81.0-1ubuntu1.8                        deb        
+libcurl3-gnutls                                          7.81.0-1ubuntu1.10                       deb        
+libcurl4                                                 7.81.0-1ubuntu1.10                       deb        
 libdb5.3                                                 5.3.28+dfsg1-0.8ubuntu3                  deb        
 libdebconfclient0                                        0.261ubuntu1                             deb        
 libdpkg-perl                                             1.21.1ubuntu2.1                          deb        
@@ -228,8 +228,8 @@ libkmod2                                                 29-1ubuntu1            
 libkrb5-3                                                1.19.2-2ubuntu0.1                        deb        
 libkrb5support0                                          1.19.2-2ubuntu0.1                        deb        
 libksba8                                                 1.6.0-2ubuntu0.2                         deb        
-libldap-2.5-0                                            2.5.13+dfsg-0ubuntu0.22.04.1             deb        
-libldap-common                                           2.5.13+dfsg-0ubuntu0.22.04.1             deb        
+libldap-2.5-0                                            2.5.14+dfsg-0ubuntu0.22.04.1             deb        
+libldap-common                                           2.5.14+dfsg-0ubuntu0.22.04.1             deb        
 liblsan0                                                 12.1.0-2ubuntu1~22.04                    deb        
 liblz4-1                                                 1.9.3-2build2                            deb        
 liblzma5                                                 5.2.5-2ubuntu1                           deb        
@@ -262,8 +262,8 @@ libpng16-16                                              1.6.37-3build5         
 libprocps8                                               2:3.3.17-6ubuntu2                        deb        
 libpsl5                                                  0.21.0-1.2build2                         deb        
 libpython3-stdlib                                        3.10.6-1~22.04                           deb        
-libpython3.10-minimal                                    3.10.6-1~22.04.2                         deb        
-libpython3.10-stdlib                                     3.10.6-1~22.04.2                         deb        
+libpython3.10-minimal                                    3.10.6-1~22.04.2ubuntu1                  deb        
+libpython3.10-stdlib                                     3.10.6-1~22.04.2ubuntu1                  deb        
 libqrencode4                                             4.1.1-1                                  deb        
 libquadmath0                                             12.1.0-2ubuntu1~22.04                    deb        
 libreadline8                                             8.1.2-1                                  deb        
@@ -283,7 +283,7 @@ libssh-4                                                 0.9.6-2build1          
 libssl3                                                  3.0.2-0ubuntu1.8                         deb        
 libstdc++-11-dev                                         11.3.0-1ubuntu1~22.04                    deb        
 libstdc++6                                               12.1.0-2ubuntu1~22.04                    deb        
-libsystemd0                                              249.11-0ubuntu3.6                        deb        
+libsystemd0                                              249.11-0ubuntu3.7                        deb        
 libtasn1-6                                               4.18.0-4build1                           deb        
 libtinfo6                                                6.3-2                                    deb        
 libtirpc-common                                          1.3.2-2ubuntu0.1                         deb        
@@ -292,7 +292,7 @@ libtirpc3                                                1.3.2-2ubuntu0.1       
 libtsan0                                                 11.3.0-1ubuntu1~22.04                    deb        
 libtsan2                                                 12.1.0-2ubuntu1~22.04                    deb        
 libubsan1                                                12.1.0-2ubuntu1~22.04                    deb        
-libudev1                                                 249.11-0ubuntu3.6                        deb        
+libudev1                                                 249.11-0ubuntu3.7                        deb        
 libunistring2                                            1.0-1                                    deb        
 libuuid1                                                 2.37.2-4ubuntu3                          deb        
 libxtables12                                             1.8.7-1ubuntu5                           deb        
@@ -329,8 +329,8 @@ publicsuffix                                             20211207.1025-1        
 python                                                   3.10.6                                   binary     
 python3                                                  3.10.6-1~22.04                           deb        
 python3-minimal                                          3.10.6-1~22.04                           deb        
-python3.10                                               3.10.6-1~22.04.2                         deb        
-python3.10-minimal                                       3.10.6-1~22.04.2                         deb        
+python3.10                                               3.10.6-1~22.04.2ubuntu1                  deb        
+python3.10-minimal                                       3.10.6-1~22.04.2ubuntu1                  deb        
 qrencode                                                 4.1.1-1                                  deb        
 readline-common                                          8.1.2-1                                  deb        
 rpcsvc-proto                                             1.4.2-0ubuntu6                           deb        
