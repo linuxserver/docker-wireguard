@@ -298,7 +298,7 @@ libuuid1                                                 2.37.2-4ubuntu3        
 libxtables12                                             1.8.7-1ubuntu5                           deb        
 libxxhash0                                               0.8.1-1                                  deb        
 libzstd1                                                 1.4.8+dfsg-3build1                       deb        
-linux-libc-dev                                           5.15.0-67.74                             deb        
+linux-libc-dev                                           5.15.0-69.76                             deb        
 locales                                                  2.35-0ubuntu3.1                          deb        
 login                                                    1:4.8.1-2ubuntu2.1                       deb        
 logsave                                                  1.46.5-2ubuntu1.1                        deb        
