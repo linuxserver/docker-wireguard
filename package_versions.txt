@@ -152,7 +152,7 @@ libbz2                                               1.0.8-r4                   
 libc-utils                                           0.7.2-r3                            apk        
 libcap-utils                                         2.66-r0                             apk        
 libcap2                                              2.66-r0                             apk        
-libcrypto3                                           3.0.8-r0                            apk        
+libcrypto3                                           3.0.8-r1                            apk        
 libcurl                                              7.88.1-r1                           apk        
 libelf                                               0.187-r2                            apk        
 libevent                                             2.1.12-r5                           apk        
@@ -169,7 +169,7 @@ libpng                                               1.6.38-r0                  
 libproc                                              3.3.17-r2                           apk        
 libqrencode                                          4.1.1-r1                            apk        
 libsasl                                              2.1.28-r3                           apk        
-libssl3                                              3.0.8-r0                            apk        
+libssl3                                              3.0.8-r1                            apk        
 libtasn1                                             4.19.0-r0                           apk        
 libunistring                                         1.1-r0                              apk        
 linux-pam                                            1.5.2-r1                            apk        
@@ -200,7 +200,7 @@ sigs.k8s.io/yaml                                     v1.2.0                     
 skalibs                                              2.12.0.1-r0                         apk        
 sqlite-libs                                          3.40.1-r0                           apk        
 ssl_client                                           1.35.0-r29                          apk        
-tzdata                                               2022f-r1                            apk        
+tzdata                                               2023b-r1                            apk        
 unbound-libs                                         1.17.1-r0                           apk        
 utmps-libs                                           0.1.2.0-r1                          apk        
 xz                                                   5.2.9-r0                            apk        
