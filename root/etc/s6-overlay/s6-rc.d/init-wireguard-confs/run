@@ -3,8 +3,11 @@
 # shellcheck disable=SC2016,SC1091,SC2183
 
 # prepare symlinks
-rm -rf /etc/wireguard
-mkdir -p /etc/wireguard
+if [[ -d /etc/wireguard ]]; then 
+    rm -rf /etc/wireguard/*
+else
+    mkdir -p /etc/wireguard
+fi
 ln -s /config/wg0.conf /etc/wireguard/wg0.conf
 # prepare templates
 if [[ ! -f /config/templates/server.conf ]]; then
