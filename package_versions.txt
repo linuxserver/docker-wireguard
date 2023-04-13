@@ -13,7 +13,7 @@ busybox-binsh                                        1.35.0-r29                 
 ca-certificates                                      20220614-r4                         apk        
 ca-certificates-bundle                               20220614-r4                         apk        
 cloud.google.com/go/compute                          v1.7.0                              go-module  
-coredns                                              1.10.0-r4                           apk        
+coredns                                              1.10.0-r5                           apk        
 coreutils                                            9.1-r0                              apk        
 curl                                                 7.88.1-r1                           apk        
 gdbm                                                 1.23-r0                             apk        
@@ -85,7 +85,7 @@ github.com/openzipkin-contrib/zipkin-go-opentracing  v0.4.5                     
 github.com/openzipkin/zipkin-go                      v0.4.0                              go-module  
 github.com/oschwald/geoip2-golang                    v1.8.0                              go-module  
 github.com/oschwald/maxminddb-golang                 v1.10.0                             go-module  
-github.com/oz123/coredns-netbox-plugin               v0.3.0                              go-module  
+github.com/oz123/coredns-netbox-plugin               v0.4.0                              go-module  
 github.com/philhofer/fwd                             v1.1.1                              go-module  
 github.com/pkg/errors                                v0.9.1                              go-module  
 github.com/prometheus/client_golang                  v1.13.0                             go-module  
