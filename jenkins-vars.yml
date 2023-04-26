@@ -15,7 +15,7 @@ repo_vars:
   - DOCKERHUB_IMAGE = 'linuxserver/wireguard'
   - DEV_DOCKERHUB_IMAGE = 'lsiodev/wireguard'
   - PR_DOCKERHUB_IMAGE = 'lspipepr/wireguard'
-  - DIST_IMAGE = 'ubuntu'
+  - DIST_IMAGE = 'alpine'
   - MULTIARCH='true'
   - CI='false'
   - CI_WEB='false'

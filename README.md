@@ -63,17 +63,11 @@ This image provides various versions that are available via tags. Please read th
 
 | Tag | Available | Description |
 | :----: | :----: |--- |
-| latest | ✅ | Stable releases with support for compiling Wireguard modules |
-| alpine | ✅ | Stable releases based on Alpine *without* support for compiling Wireguard modules |
+| latest | ✅ | Stable releases based on Alpine *without* support for compiling Wireguard modules. |
+| legacy | ✅ | Stable releases with support for compiling Wireguard modules. |
 ## Application Setup
 
 During container start, it will first check if the wireguard module is already installed and loaded. Kernels newer than 5.6 generally have the wireguard module built-in (along with some older custom kernels). However, the module may not be enabled. Make sure it is enabled prior to starting the container.
-
-If the kernel is not built-in, or installed on host, the container will check if the kernel headers are present (in `/usr/src`) and if not, it will attempt to download the necessary kernel headers from the `ubuntu xenial/bionic`, `debian/raspbian buster` repos; then will attempt to compile and install the kernel module. If the kernel headers are not found in either `usr/src` or in the repos mentioned, container will sleep indefinitely as wireguard cannot be installed.
-
-If you're on a debian/ubuntu based host with a custom or downstream distro provided kernel (ie. Pop!_OS), the container won't be able to install the kernel headers from the regular ubuntu and debian repos. In those cases, you can try installing the headers on the host via `sudo apt install linux-headers-$(uname -r)` (if distro version) and then add a volume mapping for `/usr/src:/usr/src`, or if custom built, map the location of the existing headers to allow the container to use host installed headers to build the kernel module (tested successful on Pop!_OS, ymmv).
-
-With regards to arm32/64 devices, Raspberry Pi 2-4 running the [official ubuntu images](https://ubuntu.com/download/raspberry-pi) or Raspbian Buster are supported out of the box. For all other devices and OSes, you can try installing the kernel headers on the host, and mapping `/usr/src:/usr/src` and it may just work (no guarantees).
 
 This can be run as a server or a client, based on the parameters used.
 
@@ -147,7 +141,6 @@ services:
     container_name: wireguard
     cap_add:
       - NET_ADMIN
-      - SYS_MODULE
     environment:
       - PUID=1000
       - PGID=1000
@@ -162,7 +155,6 @@ services:
       - LOG_CONFS=true #optional
     volumes:
       - /path/to/appdata/config:/config
-      - /lib/modules:/lib/modules #optional
     ports:
       - 51820:51820/udp
     sysctls:
@@ -176,7 +168,6 @@ services:
 docker run -d \
   --name=wireguard \
   --cap-add=NET_ADMIN \
-  --cap-add=SYS_MODULE \
   -e PUID=1000 \
   -e PGID=1000 \
   -e TZ=Etc/UTC \
@@ -190,7 +181,6 @@ docker run -d \
   -e LOG_CONFS=true `#optional` \
   -p 51820:51820/udp \
   -v /path/to/appdata/config:/config \
-  -v /lib/modules:/lib/modules `#optional` \
   --sysctl="net.ipv4.conf.all.src_valid_mark=1" \
   --restart unless-stopped \
   lscr.io/linuxserver/wireguard:latest
@@ -216,7 +206,6 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-e PERSISTENTKEEPALIVE_PEERS=` | Set to `all` or a list of comma separated peers (ie. `1,4,laptop`) for the wireguard server to send keepalive packets to listed peers every 25 seconds. Useful if server is accessed via domain name and has dynamic IP. Used only in server mode. |
 | `-e LOG_CONFS=true` | Generated QR codes will be displayed in the docker log. Set to `false` to skip log output. |
 | `-v /config` | Contains all relevant configuration files. |
-| `-v /lib/modules` | Maps host's modules folder. Only required if compiling wireguard modules. |
 | `--sysctl=` | Required for client mode. |
 
 ### Portainer notice
@@ -332,11 +321,11 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
-* **28.01.23:** - Patch wg-quick to suppress false positive sysctl warning.
+* **26.04.23:** - Rework branches. Swap alpine and ubuntu builds.
+* **29.01.23:** - Rebase to alpine 3.17.
 * **10.01.23:** - Add new var to add `PersistentKeepalive` to server config for select peers to survive server IP changes when domain name is used.
 * **26.10.22:** - Better handle unsupported peer names. Improve logging.
 * **12.10.22:** - Add Alpine branch. Optimize wg and coredns services.
-* **09.10.22:** - Switch back to iptables-legacy due to issues on some hosts.
 * **04.10.22:** - Rebase to Jammy. Upgrade to s6v3.
 * **16.05.22:** - Improve NAT handling in server mode when multiple ethernet devices are present.
 * **23.04.22:** - Add pre-shared key support. Automatically added to all new peer confs generated, existing ones are left without to ensure no breaking changes.
