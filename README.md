@@ -64,7 +64,7 @@ This image provides various versions that are available via tags. Please read th
 | Tag | Available | Description |
 | :----: | :----: |--- |
 | latest | ✅ | Stable releases based on Alpine *without* support for compiling Wireguard modules. |
-| legacy | ✅ | Stable releases with support for compiling Wireguard modules. |
+| legacy | ✅ | Stable releases with support for compiling Wireguard modules for older kernels. |
 ## Application Setup
 
 During container start, it will first check if the wireguard module is already installed and loaded. Kernels newer than 5.6 generally have the wireguard module built-in (along with some older custom kernels). However, the module may not be enabled. Make sure it is enabled prior to starting the container.
