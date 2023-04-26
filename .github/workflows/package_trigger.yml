@@ -4,25 +4,28 @@ on:
   workflow_dispatch:
 
 jobs:
-  package-trigger-master:
+  package-trigger-legacy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.1.0
 
       - name: Package Trigger
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/legacy'
         run: |
-          if [ -n "${{ secrets.PAUSE_PACKAGE_TRIGGER_WIREGUARD_MASTER }}" ]; then
-            echo "**** Github secret PAUSE_PACKAGE_TRIGGER_WIREGUARD_MASTER is set; skipping trigger. ****"
+          if [ -n "${{ secrets.PAUSE_PACKAGE_TRIGGER_WIREGUARD_LEGACY }}" ]; then
+            echo "**** Github secret PAUSE_PACKAGE_TRIGGER_WIREGUARD_LEGACY is set; skipping trigger. ****"
+            echo "Github secret \`PAUSE_PACKAGE_TRIGGER_WIREGUARD_LEGACY\` is set; skipping trigger." >> $GITHUB_STEP_SUMMARY
             exit 0
           fi
-          if [ $(curl -s https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-wireguard/job/master/lastBuild/api/json | jq -r '.building') == "true" ]; then
+          if [ $(curl -s https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-wireguard/job/legacy/lastBuild/api/json | jq -r '.building') == "true" ]; then
             echo "**** There already seems to be an active build on Jenkins; skipping package trigger ****"
+            echo "There already seems to be an active build on Jenkins; skipping package trigger" >> $GITHUB_STEP_SUMMARY
             exit 0
           fi
-          echo "**** Package trigger running off of master branch. To disable, set a Github secret named \"PAUSE_PACKAGE_TRIGGER_WIREGUARD_MASTER\". ****"
+          echo "**** Package trigger running off of legacy branch. To disable, set a Github secret named \"PAUSE_PACKAGE_TRIGGER_WIREGUARD_LEGACY\". ****"
+          echo "Package trigger running off of legacy branch. To disable, set a Github secret named \`PAUSE_PACKAGE_TRIGGER_WIREGUARD_LEGACY\`" >> $GITHUB_STEP_SUMMARY
           response=$(curl -iX POST \
-            https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-wireguard/job/master/buildWithParameters?PACKAGE_CHECK=true \
+            https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-wireguard/job/legacy/buildWithParameters?PACKAGE_CHECK=true \
             --user ${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }} | grep -i location | sed "s|^[L|l]ocation: \(.*\)|\1|")
           echo "**** Jenkins job queue url: ${response%$'\r'} ****"
           echo "**** Sleeping 10 seconds until job starts ****"
@@ -30,6 +33,7 @@ jobs:
           buildurl=$(curl -s "${response%$'\r'}api/json" | jq -r '.executable.url')
           buildurl="${buildurl%$'\r'}"
           echo "**** Jenkins job build url: ${buildurl} ****"
+          echo "Jenkins job build url: ${buildurl}" >> $GITHUB_STEP_SUMMARY
           echo "**** Attempting to change the Jenkins job description ****"
           curl -iX POST \
             "${buildurl}submitDescription" \

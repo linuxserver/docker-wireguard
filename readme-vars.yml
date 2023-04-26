@@ -16,8 +16,8 @@ available_architectures:
 # development version
 development_versions: true
 development_versions_items:
-  - { tag: "latest", desc: "Stable releases with support for compiling Wireguard modules" }
-  - { tag: "alpine", desc: "Stable releases based on Alpine *without* support for compiling Wireguard modules" }
+  - { tag: "latest", desc: "Stable releases based on Alpine *without* support for compiling Wireguard modules." }
+  - { tag: "legacy", desc: "Stable releases with support for compiling Wireguard modules for older kernels." }
 
 # container parameters
 common_param_env_vars_enabled: true
@@ -127,6 +127,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "26.04.23:", desc: "Rework branches, swap alpine & ubuntu builds." }
   - { date: "28.01.23:", desc: "Patch wg-quick to suppress false positive sysctl warning." }
   - { date: "10.01.23:", desc: "Add new var to add `PersistentKeepalive` to server config for select peers to survive server IP changes when domain name is used." }
   - { date: "26.10.22:", desc: "Better handle unsupported peer names. Improve logging." }
