@@ -17,7 +17,7 @@ available_architectures:
 development_versions: true
 development_versions_items:
   - { tag: "latest", desc: "Stable releases based on Alpine *without* support for compiling Wireguard modules." }
-  - { tag: "legacy", desc: "Stable releases with support for compiling Wireguard modules." }
+  - { tag: "legacy", desc: "Stable releases with support for compiling Wireguard modules for older kernels." }
 
 # container parameters
 common_param_env_vars_enabled: true
