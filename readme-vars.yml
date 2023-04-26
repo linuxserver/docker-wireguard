@@ -16,8 +16,8 @@ available_architectures:
 # development version
 development_versions: true
 development_versions_items:
-  - { tag: "latest", desc: "Stable releases with support for compiling Wireguard modules" }
-  - { tag: "alpine", desc: "Stable releases based on Alpine *without* support for compiling Wireguard modules" }
+  - { tag: "latest", desc: "Stable releases based on Alpine *without* support for compiling Wireguard modules." }
+  - { tag: "legacy", desc: "Stable releases with support for compiling Wireguard modules for older kernels." }
 
 # container parameters
 common_param_env_vars_enabled: true
@@ -25,9 +25,6 @@ param_container_name: "{{ project_name }}"
 param_usage_include_vols: true
 param_volumes:
   - { vol_path: "/config", vol_host_path: "/path/to/appdata/config", desc: "Contains all relevant configuration files." }
-opt_param_usage_include_vols: true
-opt_param_volumes:
-  - { vol_path: "/lib/modules", vol_host_path: "/lib/modules", desc: "Maps host's modules folder. Only required if compiling wireguard modules." }
 param_usage_include_ports: true
 param_ports:
   - { external_port: "51820", internal_port: "51820/udp", port_desc: "wireguard port" }
@@ -37,7 +34,6 @@ param_env_vars:
 cap_add_param: true
 cap_add_param_vars:
   - { cap_add_var: "NET_ADMIN" }
-  - { cap_add_var: "SYS_MODULE" }
 custom_params:
   - { name: "sysctl", name_compose: "sysctls", value: ["net.ipv4.conf.all.src_valid_mark=1"], desc: "Required for client mode.", array: "true" }
 
@@ -60,12 +56,6 @@ optional_block_1_items: ""
 app_setup_block_enabled: true
 app_setup_block: |
   During container start, it will first check if the wireguard module is already installed and loaded. Kernels newer than 5.6 generally have the wireguard module built-in (along with some older custom kernels). However, the module may not be enabled. Make sure it is enabled prior to starting the container.
-
-  If the kernel is not built-in, or installed on host, the container will check if the kernel headers are present (in `/usr/src`) and if not, it will attempt to download the necessary kernel headers from the `ubuntu xenial/bionic`, `debian/raspbian buster` repos; then will attempt to compile and install the kernel module. If the kernel headers are not found in either `usr/src` or in the repos mentioned, container will sleep indefinitely as wireguard cannot be installed.
-
-  If you're on a debian/ubuntu based host with a custom or downstream distro provided kernel (ie. Pop!_OS), the container won't be able to install the kernel headers from the regular ubuntu and debian repos. In those cases, you can try installing the headers on the host via `sudo apt install linux-headers-$(uname -r)` (if distro version) and then add a volume mapping for `/usr/src:/usr/src`, or if custom built, map the location of the existing headers to allow the container to use host installed headers to build the kernel module (tested successful on Pop!_OS, ymmv).
-
-  With regards to arm32/64 devices, Raspberry Pi 2-4 running the [official ubuntu images](https://ubuntu.com/download/raspberry-pi) or Raspbian Buster are supported out of the box. For all other devices and OSes, you can try installing the kernel headers on the host, and mapping `/usr/src:/usr/src` and it may just work (no guarantees).
 
   This can be run as a server or a client, based on the parameters used.
 
@@ -127,11 +117,11 @@ app_setup_block: |
 
 # changelog
 changelogs:
-  - { date: "28.01.23:", desc: "Patch wg-quick to suppress false positive sysctl warning." }
+  - { date: "26.04.23:", desc: "Rework branches. Swap alpine and ubuntu builds." }
+  - { date: "29.01.23:", desc: "Rebase to alpine 3.17." }
   - { date: "10.01.23:", desc: "Add new var to add `PersistentKeepalive` to server config for select peers to survive server IP changes when domain name is used." }
   - { date: "26.10.22:", desc: "Better handle unsupported peer names. Improve logging." }
   - { date: "12.10.22:", desc: "Add Alpine branch. Optimize wg and coredns services." }
-  - { date: "09.10.22:", desc: "Switch back to iptables-legacy due to issues on some hosts." }
   - { date: "04.10.22:", desc: "Rebase to Jammy. Upgrade to s6v3." }
   - { date: "16.05.22:", desc: "Improve NAT handling in server mode when multiple ethernet devices are present." }
   - { date: "23.04.22:", desc: "Add pre-shared key support. Automatically added to all new peer confs generated, existing ones are left without to ensure no breaking changes." }
