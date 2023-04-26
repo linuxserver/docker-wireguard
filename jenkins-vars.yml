@@ -4,9 +4,9 @@
 project_name: docker-wireguard
 external_type: na
 custom_version_command: "curl -sX GET https://api.github.com/repos/WireGuard/wireguard-tools/tags | jq -r .[0].name"
-release_type: stable
-release_tag: latest
-ls_branch: master
+release_type: prerelease
+release_tag: legacy
+ls_branch: legacy
 repo_vars:
   - CONTAINER_NAME = 'wireguard'
   - BUILD_VERSION_ARG = 'WIREGUARD_VERSION'

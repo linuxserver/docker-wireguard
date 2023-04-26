@@ -39,10 +39,11 @@ pipeline {
     // Setup all the basic environment variables needed for the build
     stage("Set ENV Variables base"){
       steps{
+        sh '''docker pull quay.io/skopeo/stable:v1 || : '''
         script{
           env.EXIT_STATUS = ''
           env.LS_RELEASE = sh(
-            script: '''docker run --rm ghcr.io/linuxserver/alexeiled-skopeo sh -c 'skopeo inspect docker://docker.io/'${DOCKERHUB_IMAGE}':latest 2>/dev/null' | jq -r '.Labels.build_version' | awk '{print $3}' | grep '\\-ls' || : ''',
+            script: '''docker run --rm quay.io/skopeo/stable:v1 inspect docker://ghcr.io/${LS_USER}/${CONTAINER_NAME}:legacy 2>/dev/null | jq -r '.Labels.build_version' | awk '{print $3}' | grep '\\-ls' || : ''',
             returnStdout: true).trim()
           env.LS_RELEASE_NOTES = sh(
             script: '''cat readme-vars.yml | awk -F \\" '/date: "[0-9][0-9].[0-9][0-9].[0-9][0-9]:/ {print $4;exit;}' | sed -E ':a;N;$!ba;s/\\r{0,1}\\n/\\\\n/g' ''',
@@ -66,7 +67,7 @@ pipeline {
         script{
           env.LS_TAG_NUMBER = sh(
             script: '''#! /bin/bash
-                       tagsha=$(git rev-list -n 1 ${LS_RELEASE} 2>/dev/null)
+                       tagsha=$(git rev-list -n 1 legacy-${LS_RELEASE} 2>/dev/null)
                        if [ "${tagsha}" == "${COMMIT_SHA}" ]; then
                          echo ${LS_RELEASE_NUMBER}
                        elif [ -z "${GIT_COMMIT}" ]; then
@@ -144,10 +145,10 @@ pipeline {
         }
       }
     }
-    // If this is a master build use live docker endpoints
+    // If this is a legacy build use live docker endpoints
     stage("Set ENV live build"){
       when {
-        branch "master"
+        branch "legacy"
         environment name: 'CHANGE_ID', value: ''
       }
       steps {
@@ -157,20 +158,20 @@ pipeline {
           env.GITLABIMAGE = 'registry.gitlab.com/linuxserver.io/' + env.LS_REPO + '/' + env.CONTAINER_NAME
           env.QUAYIMAGE = 'quay.io/linuxserver.io/' + env.CONTAINER_NAME
           if (env.MULTIARCH == 'true') {
-            env.CI_TAGS = 'amd64-' + env.EXT_RELEASE_CLEAN + '-ls' + env.LS_TAG_NUMBER + '|arm32v7-' + env.EXT_RELEASE_CLEAN + '-ls' + env.LS_TAG_NUMBER + '|arm64v8-' + env.EXT_RELEASE_CLEAN + '-ls' + env.LS_TAG_NUMBER
+            env.CI_TAGS = 'amd64-legacy-' + env.EXT_RELEASE_CLEAN + '-ls' + env.LS_TAG_NUMBER + '|arm32v7-legacy-' + env.EXT_RELEASE_CLEAN + '-ls' + env.LS_TAG_NUMBER + '|arm64v8-legacy-' + env.EXT_RELEASE_CLEAN + '-ls' + env.LS_TAG_NUMBER
           } else {
-            env.CI_TAGS = env.EXT_RELEASE_CLEAN + '-ls' + env.LS_TAG_NUMBER
+            env.CI_TAGS = 'legacy-' + env.EXT_RELEASE_CLEAN + '-ls' + env.LS_TAG_NUMBER
           }
           env.VERSION_TAG = env.EXT_RELEASE_CLEAN + '-ls' + env.LS_TAG_NUMBER
-          env.META_TAG = env.EXT_RELEASE_CLEAN + '-ls' + env.LS_TAG_NUMBER
-          env.EXT_RELEASE_TAG = 'version-' + env.EXT_RELEASE_CLEAN
+          env.META_TAG = 'legacy-' + env.EXT_RELEASE_CLEAN + '-ls' + env.LS_TAG_NUMBER
+          env.EXT_RELEASE_TAG = 'legacy-version-' + env.EXT_RELEASE_CLEAN
         }
       }
     }
     // If this is a dev build use dev docker endpoints
     stage("Set ENV dev build"){
       when {
-        not {branch "master"}
+        not {branch "legacy"}
         environment name: 'CHANGE_ID', value: ''
       }
       steps {
@@ -180,13 +181,13 @@ pipeline {
           env.GITLABIMAGE = 'registry.gitlab.com/linuxserver.io/' + env.LS_REPO + '/lsiodev-' + env.CONTAINER_NAME
           env.QUAYIMAGE = 'quay.io/linuxserver.io/lsiodev-' + env.CONTAINER_NAME
           if (env.MULTIARCH == 'true') {
-            env.CI_TAGS = 'amd64-' + env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-dev-' + env.COMMIT_SHA + '|arm32v7-' + env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-dev-' + env.COMMIT_SHA + '|arm64v8-' + env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-dev-' + env.COMMIT_SHA
+            env.CI_TAGS = 'amd64-legacy-' + env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-dev-' + env.COMMIT_SHA + '|arm32v7-legacy-' + env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-dev-' + env.COMMIT_SHA + '|arm64v8-legacy-' + env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-dev-' + env.COMMIT_SHA
           } else {
-            env.CI_TAGS = env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-dev-' + env.COMMIT_SHA
+            env.CI_TAGS = 'legacy-' + env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-dev-' + env.COMMIT_SHA
           }
           env.VERSION_TAG = env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-dev-' + env.COMMIT_SHA
-          env.META_TAG = env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-dev-' + env.COMMIT_SHA
-          env.EXT_RELEASE_TAG = 'version-' + env.EXT_RELEASE_CLEAN
+          env.META_TAG = 'legacy-' + env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-dev-' + env.COMMIT_SHA
+          env.EXT_RELEASE_TAG = 'legacy-version-' + env.EXT_RELEASE_CLEAN
           env.DOCKERHUB_LINK = 'https://hub.docker.com/r/' + env.DEV_DOCKERHUB_IMAGE + '/tags/'
         }
       }
@@ -203,13 +204,13 @@ pipeline {
           env.GITLABIMAGE = 'registry.gitlab.com/linuxserver.io/' + env.LS_REPO + '/lspipepr-' + env.CONTAINER_NAME
           env.QUAYIMAGE = 'quay.io/linuxserver.io/lspipepr-' + env.CONTAINER_NAME
           if (env.MULTIARCH == 'true') {
-            env.CI_TAGS = 'amd64-' + env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-pr-' + env.PULL_REQUEST + '|arm32v7-' + env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-pr-' + env.PULL_REQUEST + '|arm64v8-' + env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-pr-' + env.PULL_REQUEST
+            env.CI_TAGS = 'amd64-legacy-' + env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-pr-' + env.PULL_REQUEST + '|arm32v7-legacy-' + env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-pr-' + env.PULL_REQUEST + '|arm64v8-legacy-' + env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-pr-' + env.PULL_REQUEST
           } else {
-            env.CI_TAGS = env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-pr-' + env.PULL_REQUEST
+            env.CI_TAGS = 'legacy-' + env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-pr-' + env.PULL_REQUEST
           }
           env.VERSION_TAG = env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-pr-' + env.PULL_REQUEST
-          env.META_TAG = env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-pr-' + env.PULL_REQUEST
-          env.EXT_RELEASE_TAG = 'version-' + env.EXT_RELEASE_CLEAN
+          env.META_TAG = 'legacy-' + env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-pr-' + env.PULL_REQUEST
+          env.EXT_RELEASE_TAG = 'legacy-version-' + env.EXT_RELEASE_CLEAN
           env.CODE_URL = 'https://github.com/' + env.LS_USER + '/' + env.LS_REPO + '/pull/' + env.PULL_REQUEST
           env.DOCKERHUB_LINK = 'https://hub.docker.com/r/' + env.PR_DOCKERHUB_IMAGE + '/tags/'
         }
@@ -228,7 +229,7 @@ pipeline {
           script{
             env.SHELLCHECK_URL = 'https://ci-tests.linuxserver.io/' + env.IMAGE + '/' + env.META_TAG + '/shellcheck-result.xml'
           }
-          sh '''curl -sL https://raw.githubusercontent.com/linuxserver/docker-shellcheck/master/checkrun.sh | /bin/bash'''
+          sh '''curl -sL https://raw.githubusercontent.com/linuxserver/docker-jenkins-builder/master/checkrun.sh | /bin/bash'''
           sh '''#! /bin/bash
                 docker run --rm \
                   -v ${WORKSPACE}:/mnt \
@@ -244,7 +245,7 @@ pipeline {
     // Use helper containers to render templated files
     stage('Update-Templates') {
       when {
-        branch "master"
+        branch "legacy"
         environment name: 'CHANGE_ID', value: ''
         expression {
           env.CONTAINER_NAME != null
@@ -255,13 +256,13 @@ pipeline {
               set -e
               TEMPDIR=$(mktemp -d)
               docker pull ghcr.io/linuxserver/jenkins-builder:latest
-              docker run --rm -e CONTAINER_NAME=${CONTAINER_NAME} -e GITHUB_BRANCH=master -v ${TEMPDIR}:/ansible/jenkins ghcr.io/linuxserver/jenkins-builder:latest 
+              docker run --rm -e CONTAINER_NAME=${CONTAINER_NAME} -e GITHUB_BRANCH=legacy -v ${TEMPDIR}:/ansible/jenkins ghcr.io/linuxserver/jenkins-builder:latest 
               # Stage 1 - Jenkinsfile update
               if [[ "$(md5sum Jenkinsfile | awk '{ print $1 }')" != "$(md5sum ${TEMPDIR}/docker-${CONTAINER_NAME}/Jenkinsfile | awk '{ print $1 }')" ]]; then
                 mkdir -p ${TEMPDIR}/repo
                 git clone https://github.com/${LS_USER}/${LS_REPO}.git ${TEMPDIR}/repo/${LS_REPO}
                 cd ${TEMPDIR}/repo/${LS_REPO}
-                git checkout -f master
+                git checkout -f legacy
                 cp ${TEMPDIR}/docker-${CONTAINER_NAME}/Jenkinsfile ${TEMPDIR}/repo/${LS_REPO}/
                 git add Jenkinsfile
                 git commit -m 'Bot Updating Templated Files'
@@ -284,7 +285,7 @@ pipeline {
                 mkdir -p ${TEMPDIR}/repo
                 git clone https://github.com/${LS_USER}/${LS_REPO}.git ${TEMPDIR}/repo/${LS_REPO}
                 cd ${TEMPDIR}/repo/${LS_REPO}
-                git checkout -f master
+                git checkout -f legacy
                 for i in ${TEMPLATES_TO_DELETE}; do
                   git rm "${i}"
                 done
@@ -305,7 +306,7 @@ pipeline {
                 mkdir -p ${TEMPDIR}/repo
                 git clone https://github.com/${LS_USER}/${LS_REPO}.git ${TEMPDIR}/repo/${LS_REPO}
                 cd ${TEMPDIR}/repo/${LS_REPO}
-                git checkout -f master
+                git checkout -f legacy
                 cd ${TEMPDIR}/docker-${CONTAINER_NAME}
                 mkdir -p ${TEMPDIR}/repo/${LS_REPO}/.github/workflows
                 mkdir -p ${TEMPDIR}/repo/${LS_REPO}/.github/ISSUE_TEMPLATE
@@ -363,7 +364,7 @@ pipeline {
     // Exit the build if the Templated files were just updated
     stage('Template-exit') {
       when {
-        branch "master"
+        branch "legacy"
         environment name: 'CHANGE_ID', value: ''
         environment name: 'FILES_UPDATED', value: 'true'
         expression {
@@ -373,6 +374,26 @@ pipeline {
       steps {
         script{
           env.EXIT_STATUS = 'ABORTED'
+        }
+      }
+    }
+    // If this is a legacy build check the S6 service file perms
+    stage("Check S6 Service file Permissions"){
+      when {
+        branch "legacy"
+        environment name: 'CHANGE_ID', value: ''
+        environment name: 'EXIT_STATUS', value: ''
+      }
+      steps {
+        script{
+          sh '''#! /bin/bash
+            WRONG_PERM=$(find ./  -path "./.git" -prune -o \\( -name "run" -o -name "finish" -o -name "check" \\) -not -perm -u=x,g=x,o=x -print)
+            if [[ -n "${WRONG_PERM}" ]]; then
+              echo "The following S6 service files are missing the executable bit; canceling the faulty build: ${WRONG_PERM}"
+              exit 1
+            else
+              echo "S6 service file perms look good."
+            fi '''
         }
       }
     }
@@ -402,7 +423,7 @@ pipeline {
     // Add package to Scarf.sh and set permissions
     stage("Scarf.sh package registry"){
       when {
-        branch "master"
+        branch "legacy"
         environment name: 'EXIT_STATUS', value: ''
       }
       steps{
@@ -563,7 +584,7 @@ pipeline {
     // Take the image we just built and dump package versions for comparison
     stage('Update-packages') {
       when {
-        branch "master"
+        branch "legacy"
         environment name: 'CHANGE_ID', value: ''
         environment name: 'EXIT_STATUS', value: ''
       }
@@ -586,7 +607,7 @@ pipeline {
               echo "Package tag sha from current packages in buit container is ${NEW_PACKAGE_TAG} comparing to old ${PACKAGE_TAG} from github"
               if [ "${NEW_PACKAGE_TAG}" != "${PACKAGE_TAG}" ]; then
                 git clone https://github.com/${LS_USER}/${LS_REPO}.git ${TEMPDIR}/${LS_REPO}
-                git --git-dir ${TEMPDIR}/${LS_REPO}/.git checkout -f master
+                git --git-dir ${TEMPDIR}/${LS_REPO}/.git checkout -f legacy
                 cp ${TEMPDIR}/package_versions.txt ${TEMPDIR}/${LS_REPO}/
                 cd ${TEMPDIR}/${LS_REPO}/
                 wait
@@ -610,7 +631,7 @@ pipeline {
     // Exit the build if the package file was just updated
     stage('PACKAGE-exit') {
       when {
-        branch "master"
+        branch "legacy"
         environment name: 'CHANGE_ID', value: ''
         environment name: 'PACKAGE_UPDATED', value: 'true'
         environment name: 'EXIT_STATUS', value: ''
@@ -631,7 +652,7 @@ pipeline {
     // Exit the build if this is just a package check and there are no changes to push
     stage('PACKAGECHECK-exit') {
       when {
-        branch "master"
+        branch "legacy"
         environment name: 'CHANGE_ID', value: ''
         environment name: 'PACKAGE_UPDATED', value: 'false'
         environment name: 'EXIT_STATUS', value: ''
@@ -668,6 +689,7 @@ pipeline {
         ]) {
           script{
             env.CI_URL = 'https://ci-tests.linuxserver.io/' + env.IMAGE + '/' + env.META_TAG + '/index.html'
+            env.CI_JSON_URL = 'https://ci-tests.linuxserver.io/' + env.IMAGE + '/' + env.META_TAG + '/report.json'
           }
           sh '''#! /bin/bash
                 set -e
@@ -694,8 +716,6 @@ pipeline {
                 -e WEB_SCREENSHOT=\"${CI_WEB}\" \
                 -e WEB_AUTH=\"${CI_AUTH}\" \
                 -e WEB_PATH=\"${CI_WEBPATH}\" \
-                -e DO_REGION="ams3" \
-                -e DO_BUCKET="lsio-ci" \
                 -t ghcr.io/linuxserver/ci:latest \
                 python3 test_build.py'''
         }
@@ -734,12 +754,12 @@ pipeline {
                   echo $QUAYPASS | docker login quay.io -u $QUAYUSER --password-stdin
                   for PUSHIMAGE in "${GITHUBIMAGE}" "${GITLABIMAGE}" "${QUAYIMAGE}" "${IMAGE}"; do
                     docker tag ${IMAGE}:${META_TAG} ${PUSHIMAGE}:${META_TAG}
-                    docker tag ${PUSHIMAGE}:${META_TAG} ${PUSHIMAGE}:latest
+                    docker tag ${PUSHIMAGE}:${META_TAG} ${PUSHIMAGE}:legacy
                     docker tag ${PUSHIMAGE}:${META_TAG} ${PUSHIMAGE}:${EXT_RELEASE_TAG}
                     if [ -n "${SEMVER}" ]; then
                       docker tag ${PUSHIMAGE}:${META_TAG} ${PUSHIMAGE}:${SEMVER}
                     fi
-                    docker push ${PUSHIMAGE}:latest
+                    docker push ${PUSHIMAGE}:legacy
                     docker push ${PUSHIMAGE}:${META_TAG}
                     docker push ${PUSHIMAGE}:${EXT_RELEASE_TAG}
                     if [ -n "${SEMVER}" ]; then
@@ -753,7 +773,7 @@ pipeline {
                   docker rmi \
                   ${DELETEIMAGE}:${META_TAG} \
                   ${DELETEIMAGE}:${EXT_RELEASE_TAG} \
-                  ${DELETEIMAGE}:latest || :
+                  ${DELETEIMAGE}:legacy || :
                   if [ -n "${SEMVER}" ]; then
                     docker rmi ${DELETEIMAGE}:${SEMVER} || :
                   fi
@@ -798,13 +818,13 @@ pipeline {
                   fi
                   for MANIFESTIMAGE in "${IMAGE}" "${GITLABIMAGE}" "${GITHUBIMAGE}" "${QUAYIMAGE}"; do
                     docker tag ${IMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:amd64-${META_TAG}
-                    docker tag ${MANIFESTIMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:amd64-latest
+                    docker tag ${MANIFESTIMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:amd64-legacy
                     docker tag ${MANIFESTIMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:amd64-${EXT_RELEASE_TAG}
                     docker tag ${IMAGE}:arm32v7-${META_TAG} ${MANIFESTIMAGE}:arm32v7-${META_TAG}
-                    docker tag ${MANIFESTIMAGE}:arm32v7-${META_TAG} ${MANIFESTIMAGE}:arm32v7-latest
+                    docker tag ${MANIFESTIMAGE}:arm32v7-${META_TAG} ${MANIFESTIMAGE}:arm32v7-legacy
                     docker tag ${MANIFESTIMAGE}:arm32v7-${META_TAG} ${MANIFESTIMAGE}:arm32v7-${EXT_RELEASE_TAG}
                     docker tag ${IMAGE}:arm64v8-${META_TAG} ${MANIFESTIMAGE}:arm64v8-${META_TAG}
-                    docker tag ${MANIFESTIMAGE}:arm64v8-${META_TAG} ${MANIFESTIMAGE}:arm64v8-latest
+                    docker tag ${MANIFESTIMAGE}:arm64v8-${META_TAG} ${MANIFESTIMAGE}:arm64v8-legacy
                     docker tag ${MANIFESTIMAGE}:arm64v8-${META_TAG} ${MANIFESTIMAGE}:arm64v8-${EXT_RELEASE_TAG}
                     if [ -n "${SEMVER}" ]; then
                       docker tag ${MANIFESTIMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:amd64-${SEMVER}
@@ -813,22 +833,22 @@ pipeline {
                     fi
                     docker push ${MANIFESTIMAGE}:amd64-${META_TAG}
                     docker push ${MANIFESTIMAGE}:amd64-${EXT_RELEASE_TAG}
-                    docker push ${MANIFESTIMAGE}:amd64-latest
+                    docker push ${MANIFESTIMAGE}:amd64-legacy
                     docker push ${MANIFESTIMAGE}:arm32v7-${META_TAG}
-                    docker push ${MANIFESTIMAGE}:arm32v7-latest
+                    docker push ${MANIFESTIMAGE}:arm32v7-legacy
                     docker push ${MANIFESTIMAGE}:arm32v7-${EXT_RELEASE_TAG}
                     docker push ${MANIFESTIMAGE}:arm64v8-${META_TAG}
-                    docker push ${MANIFESTIMAGE}:arm64v8-latest
+                    docker push ${MANIFESTIMAGE}:arm64v8-legacy
                     docker push ${MANIFESTIMAGE}:arm64v8-${EXT_RELEASE_TAG}
                     if [ -n "${SEMVER}" ]; then
                       docker push ${MANIFESTIMAGE}:amd64-${SEMVER}
                       docker push ${MANIFESTIMAGE}:arm32v7-${SEMVER}
                       docker push ${MANIFESTIMAGE}:arm64v8-${SEMVER}
                     fi
-                    docker manifest push --purge ${MANIFESTIMAGE}:latest || :
-                    docker manifest create ${MANIFESTIMAGE}:latest ${MANIFESTIMAGE}:amd64-latest ${MANIFESTIMAGE}:arm32v7-latest ${MANIFESTIMAGE}:arm64v8-latest
-                    docker manifest annotate ${MANIFESTIMAGE}:latest ${MANIFESTIMAGE}:arm32v7-latest --os linux --arch arm
-                    docker manifest annotate ${MANIFESTIMAGE}:latest ${MANIFESTIMAGE}:arm64v8-latest --os linux --arch arm64 --variant v8
+                    docker manifest push --purge ${MANIFESTIMAGE}:legacy || :
+                    docker manifest create ${MANIFESTIMAGE}:legacy ${MANIFESTIMAGE}:amd64-legacy ${MANIFESTIMAGE}:arm32v7-legacy ${MANIFESTIMAGE}:arm64v8-legacy
+                    docker manifest annotate ${MANIFESTIMAGE}:legacy ${MANIFESTIMAGE}:arm32v7-legacy --os linux --arch arm
+                    docker manifest annotate ${MANIFESTIMAGE}:legacy ${MANIFESTIMAGE}:arm64v8-legacy --os linux --arch arm64 --variant v8
                     docker manifest push --purge ${MANIFESTIMAGE}:${META_TAG} || :
                     docker manifest create ${MANIFESTIMAGE}:${META_TAG} ${MANIFESTIMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:arm32v7-${META_TAG} ${MANIFESTIMAGE}:arm64v8-${META_TAG}
                     docker manifest annotate ${MANIFESTIMAGE}:${META_TAG} ${MANIFESTIMAGE}:arm32v7-${META_TAG} --os linux --arch arm
@@ -843,7 +863,7 @@ pipeline {
                       docker manifest annotate ${MANIFESTIMAGE}:${SEMVER} ${MANIFESTIMAGE}:arm32v7-${SEMVER} --os linux --arch arm
                       docker manifest annotate ${MANIFESTIMAGE}:${SEMVER} ${MANIFESTIMAGE}:arm64v8-${SEMVER} --os linux --arch arm64 --variant v8
                     fi
-                    docker manifest push --purge ${MANIFESTIMAGE}:latest
+                    docker manifest push --purge ${MANIFESTIMAGE}:legacy
                     docker manifest push --purge ${MANIFESTIMAGE}:${META_TAG} 
                     docker manifest push --purge ${MANIFESTIMAGE}:${EXT_RELEASE_TAG} 
                     if [ -n "${SEMVER}" ]; then
@@ -856,13 +876,13 @@ pipeline {
                 for DELETEIMAGE in "${GITHUBIMAGE}" "${GITLABIMAGE}" "${QUAYIMAGE}" "${IMAGE}"; do
                   docker rmi \
                   ${DELETEIMAGE}:amd64-${META_TAG} \
-                  ${DELETEIMAGE}:amd64-latest \
+                  ${DELETEIMAGE}:amd64-legacy \
                   ${DELETEIMAGE}:amd64-${EXT_RELEASE_TAG} \
                   ${DELETEIMAGE}:arm32v7-${META_TAG} \
-                  ${DELETEIMAGE}:arm32v7-latest \
+                  ${DELETEIMAGE}:arm32v7-legacy \
                   ${DELETEIMAGE}:arm32v7-${EXT_RELEASE_TAG} \
                   ${DELETEIMAGE}:arm64v8-${META_TAG} \
-                  ${DELETEIMAGE}:arm64v8-latest \
+                  ${DELETEIMAGE}:arm64v8-legacy \
                   ${DELETEIMAGE}:arm64v8-${EXT_RELEASE_TAG} || :
                   if [ -n "${SEMVER}" ]; then
                     docker rmi \
@@ -881,7 +901,7 @@ pipeline {
     // If this is a public release tag it in the LS Github
     stage('Github-Tag-Push-Release') {
       when {
-        branch "master"
+        branch "legacy"
         expression {
           env.LS_RELEASE != env.EXT_RELEASE_CLEAN + '-ls' + env.LS_TAG_NUMBER
         }
@@ -893,17 +913,17 @@ pipeline {
         sh '''curl -H "Authorization: token ${GITHUB_TOKEN}" -X POST https://api.github.com/repos/${LS_USER}/${LS_REPO}/git/tags \
         -d '{"tag":"'${META_TAG}'",\
              "object": "'${COMMIT_SHA}'",\
-             "message": "Tagging Release '${EXT_RELEASE_CLEAN}'-ls'${LS_TAG_NUMBER}' to master",\
+             "message": "Tagging Release '${EXT_RELEASE_CLEAN}'-ls'${LS_TAG_NUMBER}' to legacy",\
              "type": "commit",\
              "tagger": {"name": "LinuxServer Jenkins","email": "jenkins@linuxserver.io","date": "'${GITHUB_DATE}'"}}' '''
         echo "Pushing New release for Tag"
         sh '''#! /bin/bash
               echo "Updating to ${EXT_RELEASE_CLEAN}" > releasebody.json
               echo '{"tag_name":"'${META_TAG}'",\
-                     "target_commitish": "master",\
+                     "target_commitish": "legacy",\
                      "name": "'${META_TAG}'",\
                      "body": "**LinuxServer Changes:**\\n\\n'${LS_RELEASE_NOTES}'\\n\\n**Remote Changes:**\\n\\n' > start
-              printf '","draft": false,"prerelease": false}' >> releasebody.json
+              printf '","draft": false,"prerelease": true}' >> releasebody.json
               paste -d'\\0' start releasebody.json > releasebody.json.done
               curl -H "Authorization: token ${GITHUB_TOKEN}" -X POST https://api.github.com/repos/${LS_USER}/${LS_REPO}/releases -d @releasebody.json.done'''
       }
@@ -949,8 +969,67 @@ pipeline {
         environment name: 'EXIT_STATUS', value: ''
       }
       steps {
-        sh '''curl -H "Authorization: token ${GITHUB_TOKEN}" -X POST https://api.github.com/repos/${LS_USER}/${LS_REPO}/issues/${PULL_REQUEST}/comments \
-        -d '{"body": "I am a bot, here are the test results for this PR: \\n'${CI_URL}' \\n'${SHELLCHECK_URL}'"}' '''
+        sh '''#! /bin/bash
+            # Function to retrieve JSON data from URL
+            get_json() {
+              local url="$1"
+              local response=$(curl -s "$url")
+              if [ $? -ne 0 ]; then
+                echo "Failed to retrieve JSON data from $url"
+                return 1
+              fi
+              local json=$(echo "$response" | jq .)
+              if [ $? -ne 0 ]; then
+                echo "Failed to parse JSON data from $url"
+                return 1
+              fi
+              echo "$json"
+            }
+
+            build_table() {
+              local data="$1"
+
+              # Get the keys in the JSON data
+              local keys=$(echo "$data" | jq -r 'to_entries | map(.key) | .[]')
+
+              # Check if keys are empty
+              if [ -z "$keys" ]; then
+                echo "JSON report data does not contain any keys or the report does not exist."
+                return 1
+              fi
+
+              # Build table header
+              local header="| Tag | Passed |\\n| --- | --- |\\n"
+
+              # Loop through the JSON data to build the table rows
+              local rows=""
+              for build in $keys; do
+                local status=$(echo "$data" | jq -r ".[\\"$build\\"].test_success")
+                if [ "$status" = "true" ]; then
+                  status="✅"
+                else
+                  status="❌"
+                fi
+                local row="| "$build" | "$status" |\\n"
+                rows="${rows}${row}"
+              done
+
+              local table="${header}${rows}"
+              local escaped_table=$(echo "$table" | sed 's/\"/\\\\"/g')
+              echo "$escaped_table"
+            }
+
+            # Retrieve JSON data from URL
+            data=$(get_json "$CI_JSON_URL")
+            # Create table from JSON data
+            table=$(build_table "$data")
+            echo -e "$table"
+
+            curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github.v3+json" \
+              "https://api.github.com/repos/$LS_USER/$LS_REPO/issues/$PULL_REQUEST/comments" \
+              -d "{\\"body\\": \\"I am a bot, here are the test results for this PR: \\n${CI_URL}\\n${SHELLCHECK_URL}\\n${table}\\"}"'''
+
       }
     }
   }
