@@ -7,6 +7,10 @@ project_logo: "https://www.wireguard.com/img/wireguard.svg"
 project_blurb: "[WireGuard®]({{ project_url }}) is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography. It aims to be faster, simpler, leaner, and more useful than IPsec, while avoiding the massive headache. It intends to be considerably more performant than OpenVPN. WireGuard is designed as a general purpose VPN for running on embedded interfaces and super computers alike, fit for many different circumstances. Initially released for the Linux kernel, it is now cross-platform (Windows, macOS, BSD, iOS, Android) and widely deployable. It is currently under heavy development, but already it might be regarded as the most secure, easiest to use, and simplest VPN solution in the industry."
 project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_name }}"
 
+project_deprecation_status: true
+project_deprecation_message: |
+  Please switch to using the "latest" tag to continue receiving updates.
+
 # supported architectures
 available_architectures:
   - { arch: "{{ arch_x86_64 }}", tag: "amd64-latest"}
@@ -16,8 +20,8 @@ available_architectures:
 # development version
 development_versions: true
 development_versions_items:
-  - { tag: "latest", desc: "Stable releases with support for compiling Wireguard modules" }
-  - { tag: "alpine", desc: "Stable releases based on Alpine *without* support for compiling Wireguard modules" }
+  - { tag: "latest", desc: "Stable releases based on Alpine *without* support for compiling Wireguard modules." }
+  - { tag: "legacy", desc: "Stable releases with support for compiling Wireguard modules." }
 
 # container parameters
 common_param_env_vars_enabled: true
@@ -117,6 +121,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "26.04.23:", desc: "Rework branchs. Swap alpine and ubuntu builds." }
   - { date: "29.01.23:", desc: "Rebase to alpine 3.17." }
   - { date: "10.01.23:", desc: "Add new var to add `PersistentKeepalive` to server config for select peers to survive server IP changes when domain name is used." }
   - { date: "26.10.22:", desc: "Better handle unsupported peer names. Improve logging." }
