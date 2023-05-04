@@ -27,6 +27,11 @@ Find us at:
 * [GitHub](https://github.com/linuxserver) - view the source for all of our repositories.
 * [Open Collective](https://opencollective.com/linuxserver) - please consider helping us by either donating or contributing to our budget
 
+# DEPRECATION NOTICE
+
+This image is deprecated. We will not offer support for this image and it will not be updated.
+Please switch to using the "latest" tag to continue receiving updates.
+
 # [linuxserver/wireguard](https://github.com/linuxserver/docker-wireguard)
 
 [![Scarf.io pulls](https://scarf.sh/installs-badge/linuxserver-ci/linuxserver%2Fwireguard?color=94398d&label-color=555555&logo-color=ffffff&style=for-the-badge&package-type=docker)](https://scarf.sh/gateway/linuxserver-ci/docker/linuxserver%2Fwireguard)
@@ -63,8 +68,8 @@ This image provides various versions that are available via tags. Please read th
 
 | Tag | Available | Description |
 | :----: | :----: |--- |
-| latest | ✅ | Stable releases with support for compiling Wireguard modules |
-| alpine | ✅ | Stable releases based on Alpine *without* support for compiling Wireguard modules |
+| latest | ✅ | Stable releases based on Alpine *without* support for compiling Wireguard modules. |
+| legacy | ✅ | Stable releases with support for compiling Wireguard modules. |
 ## Application Setup
 
 During container start, it will first check if the wireguard module is already installed and loaded. Kernels newer than 5.6 generally have the wireguard module built-in (along with some older custom kernels). However, the module may not be enabled. Make sure it is enabled prior to starting the container.
@@ -321,6 +326,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **26.04.23:** - Rework branchs. Swap alpine and ubuntu builds.
 * **29.01.23:** - Rebase to alpine 3.17.
 * **10.01.23:** - Add new var to add `PersistentKeepalive` to server config for select peers to survive server IP changes when domain name is used.
 * **26.10.22:** - Better handle unsupported peer names. Improve logging.

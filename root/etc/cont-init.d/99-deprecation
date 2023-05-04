@@ -1,0 +1,18 @@
+#!/usr/bin/with-contenv bash
+# shellcheck shell=bash
+
+echo '
+╔════════════════════════════════════════════════════╗
+╠════════════════════════════════════════════════════╣
+║                                                    ║
+║             This image is deprecated.              ║
+║      We will not offer support for this image      ║
+║            and it will not be updated.             ║
+║                                                    ║
+╠════════════════════════════════════════════════════╣
+╚════════════════════════════════════════════════════╝
+
+Please switch to using the "latest" tag to continue receiving updates.
+
+
+══════════════════════════════════════════════════════'
