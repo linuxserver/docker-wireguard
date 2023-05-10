@@ -117,6 +117,7 @@ Wireguard module is required, please install it [manually](https://www.wireguard
 |              `ALLOWED_IPS`               |   0.0.0.0/0    | A comma-separated list of IP (v4 or v6) addresses with CIDR masks from which incoming traffic for this peer is allowed and to which outgoing traffic for this peer is directed. For Synology, read [this](https://github.com/bubuntux/nordlynx/wiki/Synology).
 |         `PERSISTENT_KEEP_ALIVE`          |       25       | A second interval, between 1 and 65535 inclusive, of how often to send an authenticated empty packet to the peer for the purpose of keeping a stateful firewall or NAT mapping valid persistently.
 | `PRE_UP`/`POST_UP`<br/>`PRE_DOWN`/`POST_DOWN` |                | Script snippets which will be executed by bash before/after setting up/tearing down the interface, most commonly used to configure custom DNS options or firewall rules. The special string `%i` is expanded to INTERFACE. For Synology, read [this](https://github.com/bubuntux/nordlynx/wiki/Synology).
+|              `COUNTRY_CODE`              |                | Country code to filter server list.
 |                 `QUERY`                  |                | Query for the api nordvpn
 |               `PUBLIC_KEY`               |                | Public key of the server to connect (auto select base on recommendation api).
 |               `END_POINT`                |                | Ip address of the server to connect (auto select base on recommendation api).
