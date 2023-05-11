@@ -10,8 +10,8 @@ brotli-libs                                          1.0.9-r9                   
 busybox                                              1.35.0                              binary     
 busybox                                              1.35.0-r29                          apk        
 busybox-binsh                                        1.35.0-r29                          apk        
-ca-certificates                                      20220614-r4                         apk        
-ca-certificates-bundle                               20220614-r4                         apk        
+ca-certificates                                      20230506-r0                         apk        
+ca-certificates-bundle                               20230506-r0                         apk        
 cloud.google.com/go/compute                          v1.7.0                              go-module  
 coredns                                              1.10.0-r6                           apk        
 coreutils                                            9.1-r0                              apk        
