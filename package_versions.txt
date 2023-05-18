@@ -150,8 +150,8 @@ libattr                                              2.5.1-r2                   
 libbsd                                               0.11.7-r0                           apk        
 libbz2                                               1.0.8-r4                            apk        
 libc-utils                                           0.7.2-r3                            apk        
-libcap-utils                                         2.66-r0                             apk        
-libcap2                                              2.66-r0                             apk        
+libcap-utils                                         2.66-r1                             apk        
+libcap2                                              2.66-r1                             apk        
 libcrypto3                                           3.0.8-r4                            apk        
 libcurl                                              8.0.1-r0                            apk        
 libelf                                               0.187-r2                            apk        
