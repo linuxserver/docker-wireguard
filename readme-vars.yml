@@ -25,6 +25,9 @@ param_container_name: "{{ project_name }}"
 param_usage_include_vols: true
 param_volumes:
   - { vol_path: "/config", vol_host_path: "/path/to/appdata/config", desc: "Contains all relevant configuration files." }
+opt_param_usage_include_vols: true
+opt_param_volumes:
+  - { vol_path: "/lib/modules", vol_host_path: "/lib/modules", desc: "Host kernel modules for situations where they're not already loaded." }
 param_usage_include_ports: true
 param_ports:
   - { external_port: "51820", internal_port: "51820/udp", port_desc: "wireguard port" }
@@ -34,6 +37,9 @@ param_env_vars:
 cap_add_param: true
 cap_add_param_vars:
   - { cap_add_var: "NET_ADMIN" }
+opt_cap_add_param: true
+opt_cap_add_param_vars:
+  - { cap_add_var: "SYS_MODULE" }
 custom_params:
   - { name: "sysctl", name_compose: "sysctls", value: ["net.ipv4.conf.all.src_valid_mark=1"], desc: "Required for client mode.", array: "true" }
 
@@ -58,6 +64,10 @@ app_setup_block: |
   During container start, it will first check if the wireguard module is already installed and loaded. Kernels newer than 5.6 generally have the wireguard module built-in (along with some older custom kernels). However, the module may not be enabled. Make sure it is enabled prior to starting the container.
 
   This can be run as a server or a client, based on the parameters used.
+
+  ## Note on iptables
+
+  Some hosts may not load the iptables kernel modules by default. In order for the container to be able to load them, you need to assign the `SYS_MODULE` capability and add the optional `/lib/modules` volume mount. Alternatively you can `modprobe` them from the host before starting the container.
 
   ## Server Mode
 
