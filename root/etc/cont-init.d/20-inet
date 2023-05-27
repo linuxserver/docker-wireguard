@@ -3,6 +3,7 @@
 network_found=false
 iface=${INTERFACE:-eth0}
 interfaces=($(ip link | awk -F': ' '$0 !~ "lo|wg|tun|tap|^[^0-9]"{print $2;getline}' | cut -d@ -f1))
+no_connenction_retry=${NO_CONNECTION_RETRY:-5}
 if [[ ! " ${interfaces[*]} " =~ " $iface " ]]; then
     interfaces+=("$iface")
 fi
@@ -43,4 +44,12 @@ iptables -t nat -A POSTROUTING -o wg+ -j MASQUERADE
 
 iptables -A OUTPUT -o "$iface" -p udp -m udp --dport 53 -j ACCEPT
 iptables -A OUTPUT -o "$iface" -p udp -m udp --dport 51820 -j ACCEPT
-iptables -A OUTPUT -o "$iface" -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT
+while true; do
+  iptables -A OUTPUT -o "$iface" -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT\
+    || {
+      echo "Seems like we have no internet connection. Retrying in $no_connenction_retry seconds..."
+      sleep ${no_connenction_retry}
+      continue
+    }
+  break
+done
