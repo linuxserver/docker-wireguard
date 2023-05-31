@@ -106,7 +106,7 @@ Wireguard module is required, please install it [manually](https://www.wireguard
 ## Environment
 
 |                 Variable                 |    Default     | Description |
-|:----------------------------------------:|:--------------:| --- |
+|:-----------------------------------------|:--------------:| --- |
 |              `PRIVATE_KEY`               | **[Required]** | The private key can be obtained using `docker run --rm --cap-add=NET_ADMIN -e TOKEN=XXX ghcr.io/bubuntux/nordvpn:get_private_key` with access token or following these [instructions](https://forum.openwrt.org/t/instruction-config-nordvpn-wireguard-nordlynx-on-openwrt/89976).
 |              `PRIVATE_KEY_FILE`          |                | File from which to get PASS, if using docker secrets this should be set to /run/secrets/<secret_name>. This file should contain just the account password on the first line.
 |              `LISTEN_PORT`               |     51820      | A 16-bit port for listening.
@@ -126,7 +126,7 @@ Wireguard module is required, please install it [manually](https://www.wireguard
 |               `RECONNECT`                |                                                                                                                               | Time in seconds to re-establish the connection.
 |                   `TZ`                   |                                                              UTC                                                              | Specify a timezone to use EG Europe/London.
 
-### `PRIVATE_KEY`
+### How To Get Your `PRIVATE_KEY`
 
 To get your `PRIVATE_KEY` you will need to get an access token from the NordVPN website and then use the https://github.com/bubuntux/nordvpn container.
 
