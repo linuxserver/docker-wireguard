@@ -177,9 +177,9 @@ To get your `PRIVATE_KEY` you will need to get an access token from the NordVPN 
 | `net.ipv4.conf.all.src_valid_mark=1` | May be required; depends on multiple factors. |
 | `net.ipv6.conf.all.disable_ipv6=1`   | Recommended when only using ipv4.             |
 
-## Example
+## Examples
 
-### Stand-Alone
+### nordlynx VPN container
 
 This example will start a nordlynx VPN container on a `legacy_p2p` VPN server.
 
