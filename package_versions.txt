@@ -12,7 +12,7 @@ binutils-x86-64-linux-gnu                                2.38-4ubuntu2.2        
 bsdutils                                                 1:2.37.2-4ubuntu3                        deb        
 build-essential                                          12.9ubuntu3                              deb        
 bzip2                                                    1.0.8-5build1                            deb        
-ca-certificates                                          20211016ubuntu0.22.04.1                  deb        
+ca-certificates                                          20230311ubuntu0.22.04.1                  deb        
 cloud.google.com/go/compute/metadata                     v0.2.3                                   go-module  
 coreutils                                                8.32-4.1ubuntu1                          deb        
 cpp                                                      4:11.2.0-1ubuntu1                        deb        
@@ -154,7 +154,7 @@ hostname                                                 3.23ubuntu2            
 ifupdown                                                 0.8.36+nmu1ubuntu3                       deb        
 init-system-helpers                                      1.62                                     deb        
 iproute2                                                 5.15.0-1ubuntu2                          deb        
-iptables                                                 1.8.7-1ubuntu5                           deb        
+iptables                                                 1.8.7-1ubuntu5.1                         deb        
 iputils-ping                                             3:20211215-1                             deb        
 jq                                                       1.6-2.1ubuntu3                           deb        
 k8s.io/api                                               v0.26.1                                  go-module  
@@ -217,8 +217,8 @@ libgpg-error0                                            1.43-3                 
 libgssapi-krb5-2                                         1.19.2-2ubuntu0.1                        deb        
 libhogweed6                                              3.7.3-1build2                            deb        
 libidn2-0                                                2.3.2-2build1                            deb        
-libip4tc2                                                1.8.7-1ubuntu5                           deb        
-libip6tc2                                                1.8.7-1ubuntu5                           deb        
+libip4tc2                                                1.8.7-1ubuntu5.1                         deb        
+libip6tc2                                                1.8.7-1ubuntu5.1                         deb        
 libisl23                                                 0.24-2build1                             deb        
 libitm1                                                  12.1.0-2ubuntu1~22.04                    deb        
 libjq1                                                   1.6-2.1ubuntu3                           deb        
@@ -295,10 +295,10 @@ libubsan1                                                12.1.0-2ubuntu1~22.04  
 libudev1                                                 249.11-0ubuntu3.9                        deb        
 libunistring2                                            1.0-1                                    deb        
 libuuid1                                                 2.37.2-4ubuntu3                          deb        
-libxtables12                                             1.8.7-1ubuntu5                           deb        
+libxtables12                                             1.8.7-1ubuntu5.1                         deb        
 libxxhash0                                               0.8.1-1                                  deb        
 libzstd1                                                 1.4.8+dfsg-3build1                       deb        
-linux-libc-dev                                           5.15.0-72.79                             deb        
+linux-libc-dev                                           5.15.0-73.80                             deb        
 locales                                                  2.35-0ubuntu3.1                          deb        
 login                                                    1:4.8.1-2ubuntu2.1                       deb        
 logsave                                                  1.46.5-2ubuntu1.1                        deb        
@@ -316,7 +316,7 @@ netbase                                                  6.3                    
 netcat                                                   1.218-4ubuntu1                           deb        
 netcat-openbsd                                           1.218-4ubuntu1                           deb        
 openresolv                                               3.12.0-2                                 deb        
-openssl                                                  3.0.2-0ubuntu1.9                         deb        
+openssl                                                  3.0.2-0ubuntu1.10                        deb        
 passwd                                                   1:4.8.1-2ubuntu2.1                       deb        
 patch                                                    2.7.6-7build2                            deb        
 perl                                                     5.34.0-3ubuntu1.1                        deb        
