@@ -2,7 +2,7 @@ NAME                                                 VERSION                    
 alpine-baselayout                                    3.4.0-r0                            apk        
 alpine-baselayout-data                               3.4.0-r0                            apk        
 alpine-keys                                          2.4-r1                              apk        
-alpine-release                                       3.17.3-r0                           apk        
+alpine-release                                       3.17.4-r0                           apk        
 apk-tools                                            2.12.10-r1                          apk        
 bash                                                 5.2.15-r0                           apk        
 bc                                                   1.07.1-r2                           apk        
@@ -145,7 +145,7 @@ k8s.io/klog/v2                                       v2.80.1                    
 k8s.io/kube-openapi                                  v0.0.0-20220803162953-67bda5d908f1  go-module  
 k8s.io/utils                                         v0.0.0-20220728103510-ee6ede2d64ed  go-module  
 libacl                                               2.3.1-r1                            apk        
-libassuan                                            2.5.5-r1                            apk        
+libassuan                                            2.5.6-r0                            apk        
 libattr                                              2.5.1-r2                            apk        
 libbsd                                               0.11.7-r0                           apk        
 libbz2                                               1.0.8-r4                            apk        
@@ -160,7 +160,7 @@ libffi                                               3.4.4-r0                   
 libgcrypt                                            1.10.1-r0                           apk        
 libgpg-error                                         1.46-r1                             apk        
 libintl                                              0.21.1-r1                           apk        
-libksba                                              1.6.3-r0                            apk        
+libksba                                              1.6.4-r0                            apk        
 libldap                                              2.6.3-r6                            apk        
 libmd                                                1.0.4-r0                            apk        
 libmnl                                               1.0.5-r0                            apk        
