@@ -1,6 +1,7 @@
 #!/usr/bin/with-contenv bash
+# shellcheck shell=bash
 
-if [ ! $# -gt 0 ]; then
+if [[ ! $# -gt 0 ]]; then
   echo "You need to specify which peers to show"
   exit 0
 fi
