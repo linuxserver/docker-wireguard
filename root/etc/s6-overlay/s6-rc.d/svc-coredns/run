@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bash
+# shellcheck shell=bash
 
 if netstat -apn | grep -q ":53 "; then
     USE_COREDNS="false"

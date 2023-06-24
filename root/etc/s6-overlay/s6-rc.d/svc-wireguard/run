@@ -1,3 +1,4 @@
 #!/usr/bin/with-contenv bash
+# shellcheck shell=bash
 
 wg-quick up wg0
