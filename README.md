@@ -165,7 +165,7 @@ To get your `PRIVATE_KEY` you will need to get an access token from the NordVPN 
     IP: 10.5.0.2/32
     Private Key: [!!! THIS IS YOUR PRIVATE_KEY YOU NEED !!!]
     ＼(＾O＾)／############################################################
-    nacho@desk:~/docker> 
+    user@hostname:~/docker> 
     ```
 
 9. Copy everything after `Privatey Key: ` (note the space after `:`) to the end of the line -- this is your `PRIVATE_KEY`
