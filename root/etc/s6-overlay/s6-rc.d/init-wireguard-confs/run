@@ -39,7 +39,7 @@ DUDE"
         PEER_ID="peer_${i}"
       fi
       mkdir -p "/config/${PEER_ID}"
-      if [[ ! -f "/config/${PEER_ID}/privatekey-${PEER_ID}" ]]; then
+      if [[ ! -f "/config/${PEER_ID}/publickey-${PEER_ID}" ]]; then
         umask 077
         wg genkey | tee "/config/${PEER_ID}/privatekey-${PEER_ID}" | wg pubkey > "/config/${PEER_ID}/publickey-${PEER_ID}"
         wg genpsk > "/config/${PEER_ID}/presharedkey-${PEER_ID}"
