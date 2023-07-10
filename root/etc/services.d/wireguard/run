@@ -2,13 +2,28 @@
 
 if [[ -z ${PUBLIC_KEY} || -z ${END_POINT} ]]; then
   echo "[$(date -Iseconds)] Finding the best server..."
-  recommendations=$(curl --retry 3 -LsS "https://api.nordvpn.com/v1/servers/recommendations?&filters\[servers_technologies\]\[identifier\]=wireguard_udp&limit=1&${QUERY}")
+  api_url="https://api.nordvpn.com/v1/servers/recommendations?filters"
+  technology_filter="\[servers_technologies\]\[identifier\]=wireguard_udp"
+  
+  # Get the country code from the country name (if provided) and add it to the API URL as a filter
+  if [[ -n ${COUNTRY_CODE} ]]; then
+    country_id=$(curl --silent "https://api.nordvpn.com/v1/servers/countries" | jq --raw-output ".[] | select(.code == \"${COUNTRY_CODE}\") | [.name, .id] | \"\(.[1])\"")
+    echo "[$(date -Iseconds)] Country ID: ${country_id}"
+    country_filter="\[country_id\]=${country_id}"
+    api_url="${api_url}${country_filter}&${technology_filter}"
+    echo "[$(date -Iseconds)] API URL: ${api_url}"
+  else
+    api_url="${api_url}${technology_filter}"
+  fi
+
+  recommendations=$(curl --retry 3 -LsS "${api_url}&${QUERY}&limit=1")
   server=$(jq -r '.[0] | del(.services, .technologies)' <<< "${recommendations}")
+  echo "[$(date -Iseconds)] Server: ${server}"
   if [[ -z ${server} ]]; then
     echo "[$(date -Iseconds)] Unable to select a server ¯\_(⊙︿⊙)_/¯"
     sleep infinity
   fi
-  echo "[$(date -Iseconds)] Using server: ${server}"
+#   echo "[$(date -Iseconds)] Using server: ${server}"
   if [[ -z ${PUBLIC_KEY} ]]; then
     PUBLIC_KEY=$(jq -r '.[0].technologies[] | select( .identifier == "wireguard_udp" ) | .metadata[] | select( .name == "public_key" ) | .value' <<< "${recommendations}")
   fi
