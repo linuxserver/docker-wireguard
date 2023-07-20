@@ -192,7 +192,7 @@ libcrypt-dev                                             1:4.4.27-1             
 libcrypt1                                                1:4.4.27-1                               deb        
 libctf-nobfd0                                            2.38-4ubuntu2.2                          deb        
 libctf0                                                  2.38-4ubuntu2.2                          deb        
-libcurl3-gnutls                                          7.81.0-1ubuntu1.10                       deb        
+libcurl3-gnutls                                          7.81.0-1ubuntu1.13                       deb        
 libcurl4                                                 7.81.0-1ubuntu1.10                       deb        
 libdb5.3                                                 5.3.28+dfsg1-0.8ubuntu3                  deb        
 libdebconfclient0                                        0.261ubuntu1                             deb        
