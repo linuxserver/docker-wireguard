@@ -15,7 +15,7 @@ ca-certificates-bundle                               20230506-r0                
 cloud.google.com/go/compute                          v1.7.0                              go-module  
 coredns                                              1.10.0-r6                           apk        
 coreutils                                            9.1-r0                              apk        
-curl                                                 8.1.2-r0                            apk        
+curl                                                 8.2.0-r1                            apk        
 gdbm                                                 1.23-r0                             apk        
 github.com/Azure/azure-sdk-for-go                    v66.0.0+incompatible                go-module  
 github.com/Azure/go-autorest/autorest                v0.11.28                            go-module  
@@ -152,8 +152,8 @@ libbz2                                               1.0.8-r4                   
 libc-utils                                           0.7.2-r3                            apk        
 libcap-utils                                         2.66-r1                             apk        
 libcap2                                              2.66-r1                             apk        
-libcrypto3                                           3.0.9-r2                            apk        
-libcurl                                              8.1.2-r0                            apk        
+libcrypto3                                           3.0.9-r3                            apk        
+libcurl                                              8.2.0-r1                            apk        
 libelf                                               0.187-r2                            apk        
 libevent                                             2.1.12-r5                           apk        
 libffi                                               3.4.4-r0                            apk        
@@ -169,7 +169,7 @@ libpng                                               1.6.38-r0                  
 libproc                                              3.3.17-r2                           apk        
 libqrencode                                          4.1.1-r1                            apk        
 libsasl                                              2.1.28-r3                           apk        
-libssl3                                              3.0.9-r2                            apk        
+libssl3                                              3.0.9-r3                            apk        
 libtasn1                                             4.19.0-r0                           apk        
 libunistring                                         1.1-r0                              apk        
 linux-pam                                            1.5.2-r1                            apk        
@@ -182,7 +182,7 @@ ncurses-terminfo-base                                6.3_p20221119-r1           
 net-tools                                            2.10-r0                             apk        
 netcat-openbsd                                       1.130-r4                            apk        
 nettle                                               3.8.1-r0                            apk        
-nghttp2-libs                                         1.51.0-r0                           apk        
+nghttp2-libs                                         1.51.0-r1                           apk        
 npth                                                 1.6-r2                              apk        
 oniguruma                                            6.9.8-r0                            apk        
 openresolv                                           3.12.0-r1                           apk        
