@@ -126,6 +126,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "28.06.23:", desc: "Rebase master to Alpine 3.18 again." }
   - { date: "26.06.23:", desc: "Revert master to Alpine 3.17, due to issue with openresolv." }
   - { date: "24.06.23:", desc: "Rebase master to Alpine 3.18, deprecate armhf as per [https://www.linuxserver.io/armhf](https://www.linuxserver.io/armhf)." }
   - { date: "26.04.23:", desc: "Rework branches. Swap alpine and ubuntu builds." }
