@@ -8,14 +8,14 @@ bash                                                     5.2.15-r5              
 bc                                                       1.07.1-r4                           apk        
 brotli-libs                                              1.0.9-r14                           apk        
 busybox                                                  1.36.1                              binary     
-busybox                                                  1.36.1-r1                           apk        
-busybox-binsh                                            1.36.1-r1                           apk        
+busybox                                                  1.36.1-r2                           apk        
+busybox-binsh                                            1.36.1-r2                           apk        
 ca-certificates                                          20230506-r0                         apk        
 ca-certificates-bundle                                   20230506-r0                         apk        
 cloud.google.com/go/compute/metadata                     v0.2.3                              go-module  
 coredns                                                  1.10.1-r4                           apk        
 coreutils                                                9.3-r1                              apk        
-curl                                                     8.2.0-r1                            apk        
+curl                                                     8.2.1-r0                            apk        
 gdbm                                                     1.23-r1                             apk        
 github.com/Azure/azure-sdk-for-go                        v68.0.0+incompatible                go-module  
 github.com/Azure/go-autorest/autorest                    v0.11.28                            go-module  
@@ -159,7 +159,7 @@ libc-utils                                               0.7.2-r5               
 libcap-utils                                             2.69-r0                             apk        
 libcap2                                                  2.69-r0                             apk        
 libcrypto3                                               3.1.1-r3                            apk        
-libcurl                                                  8.2.0-r1                            apk        
+libcurl                                                  8.2.1-r0                            apk        
 libelf                                                   0.189-r2                            apk        
 libevent                                                 2.1.12-r6                           apk        
 libffi                                                   3.4.4-r2                            apk        
@@ -184,7 +184,7 @@ linux-pam                                                1.5.2-r10              
 mii-tool                                                 2.10-r3                             apk        
 musl                                                     1.2.4-r1                            apk        
 musl-fts                                                 1.2.7-r5                            apk        
-musl-utils                                               1.2.4-r0                            apk        
+musl-utils                                               1.2.4-r1                            apk        
 ncurses-terminfo-base                                    6.4_p20230506-r0                    apk        
 net-tools                                                2.10-r3                             apk        
 netcat-openbsd                                           1.219-r1                            apk        
@@ -206,7 +206,7 @@ sigs.k8s.io/structured-merge-diff/v4                     v4.2.3                 
 sigs.k8s.io/yaml                                         v1.3.0                              go-module  
 skalibs                                                  2.13.1.1-r1                         apk        
 sqlite-libs                                              3.41.2-r2                           apk        
-ssl_client                                               1.36.1-r1                           apk        
+ssl_client                                               1.36.1-r2                           apk        
 tzdata                                                   2023c-r1                            apk        
 unbound-libs                                             1.17.1-r1                           apk        
 utmps-libs                                               0.1.2.1-r1                          apk        
