@@ -13,7 +13,7 @@ busybox-binsh                                            1.36.1-r2              
 ca-certificates                                          20230506-r0                         apk        
 ca-certificates-bundle                                   20230506-r0                         apk        
 cloud.google.com/go/compute/metadata                     v0.2.3                              go-module  
-coredns                                                  1.10.1-r4                           apk        
+coredns                                                  1.10.1-r5                           apk        
 coreutils                                                9.3-r1                              apk        
 curl                                                     8.2.1-r0                            apk        
 gdbm                                                     1.23-r1                             apk        
@@ -158,7 +158,7 @@ libbz2                                                   1.0.8-r5               
 libc-utils                                               0.7.2-r5                            apk        
 libcap-utils                                             2.69-r0                             apk        
 libcap2                                                  2.69-r0                             apk        
-libcrypto3                                               3.1.1-r3                            apk        
+libcrypto3                                               3.1.2-r0                            apk        
 libcurl                                                  8.2.1-r0                            apk        
 libelf                                                   0.189-r2                            apk        
 libevent                                                 2.1.12-r6                           apk        
@@ -177,7 +177,7 @@ libpng                                                   1.6.39-r3              
 libproc2                                                 4.0.3-r1                            apk        
 libqrencode                                              4.1.1-r1                            apk        
 libsasl                                                  2.1.28-r4                           apk        
-libssl3                                                  3.1.1-r3                            apk        
+libssl3                                                  3.1.2-r0                            apk        
 libtasn1                                                 4.19.0-r1                           apk        
 libunistring                                             1.1-r1                              apk        
 linux-pam                                                1.5.2-r10                           apk        
