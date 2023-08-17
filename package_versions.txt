@@ -2,12 +2,11 @@ NAME                                                     VERSION                
 alpine-baselayout                                        3.4.3-r1                            apk        
 alpine-baselayout-data                                   3.4.3-r1                            apk        
 alpine-keys                                              2.4-r1                              apk        
-alpine-release                                           3.18.2-r0                           apk        
+alpine-release                                           3.18.3-r0                           apk        
 apk-tools                                                2.14.0-r2                           apk        
 bash                                                     5.2.15-r5                           apk        
 bc                                                       1.07.1-r4                           apk        
 brotli-libs                                              1.0.9-r14                           apk        
-busybox                                                  1.36.1                              binary     
 busybox                                                  1.36.1-r2                           apk        
 busybox-binsh                                            1.36.1-r2                           apk        
 ca-certificates                                          20230506-r0                         apk        
