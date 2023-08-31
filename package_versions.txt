@@ -5,6 +5,7 @@ apt-utils                                                2.4.10                 
 base-files                                               12ubuntu4.3                                  deb        
 base-passwd                                              3.5.52build1                                 deb        
 bash                                                     5.1-6ubuntu1                                 deb        
+bash                                                     5.1.16                                       binary     
 bc                                                       1.07.1-3build1                               deb        
 binutils                                                 2.38-4ubuntu2.3                              deb        
 binutils-common                                          2.38-4ubuntu2.3                              deb        
@@ -302,7 +303,7 @@ libuuid1                                                 2.37.2-4ubuntu3        
 libxtables12                                             1.8.7-1ubuntu5.1                             deb        
 libxxhash0                                               0.8.1-1                                      deb        
 libzstd1                                                 1.4.8+dfsg-3build1                           deb        
-linux-libc-dev                                           5.15.0-79.86                                 deb        
+linux-libc-dev                                           5.15.0-82.91                                 deb        
 locales                                                  2.35-0ubuntu3.1                              deb        
 login                                                    1:4.8.1-2ubuntu2.1                           deb        
 logsave                                                  1.46.5-2ubuntu1.1                            deb        
