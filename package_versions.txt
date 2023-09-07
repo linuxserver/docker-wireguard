@@ -173,7 +173,7 @@ libmnl                                                   1.0.5-r1               
 libncursesw                                              6.4_p20230506-r0                    apk        
 libnftnl                                                 1.2.5-r1                            apk        
 libpng                                                   1.6.39-r3                           apk        
-libproc2                                                 4.0.3-r1                            apk        
+libproc2                                                 4.0.4-r0                            apk        
 libqrencode                                              4.1.1-r1                            apk        
 libsasl                                                  2.1.28-r4                           apk        
 libssl3                                                  3.1.2-r0                            apk        
@@ -196,7 +196,7 @@ p11-kit                                                  0.24.1-r2              
 pcre2                                                    10.42-r1                            apk        
 perl                                                     5.36.1-r2                           apk        
 pinentry                                                 1.2.1-r1                            apk        
-procps-ng                                                4.0.3-r1                            apk        
+procps-ng                                                4.0.4-r0                            apk        
 readline                                                 8.2.1-r1                            apk        
 scanelf                                                  1.3.7-r1                            apk        
 shadow                                                   4.13-r4                             apk        
