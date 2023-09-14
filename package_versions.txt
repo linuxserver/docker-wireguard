@@ -12,7 +12,7 @@ busybox-binsh                                            1.36.1-r2              
 ca-certificates                                          20230506-r0                         apk        
 ca-certificates-bundle                                   20230506-r0                         apk        
 cloud.google.com/go/compute/metadata                     v0.2.3                              go-module  
-coredns                                                  1.10.1-r5                           apk        
+coredns                                                  1.10.1-r6                           apk        
 coreutils                                                9.3-r1                              apk        
 curl                                                     8.2.1-r0                            apk        
 gdbm                                                     1.23-r1                             apk        
