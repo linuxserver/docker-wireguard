@@ -1,4 +1,43 @@
 #!/usr/bin/with-contenv bash
 # shellcheck shell=bash
 
-wg-quick up wg0
+unset WG_CONFS
+rm -rf /app/activeconfs
+# Enumerate interfaces
+for wgconf in $(ls /config/*.conf); do
+    if grep -q "\[Interface\]" "${wgconf}"; then
+        echo "**** Found WG conf ${wgconf}, adding to list ****"
+        WG_CONFS+=("${wgconf}")
+    else
+        echo "**** Found WG conf ${wgconf}, but it doesn't seem to be valid, skipping. ****"
+    fi
+done
+
+if [[ -z "${WG_CONFS}" ]]; then
+    echo "**** No valid tunnel config found. Please create a valid config and restart the container ****"
+    ip route del default
+    exit 0
+fi
+
+unset FAILED
+for tunnel in ${WG_CONFS[@]}; do
+    echo "**** Activating tunnel ${tunnel} ****"
+    wgquick up "${tunnel}" || ( echo FAILED="${tunnel}" && break)
+done
+
+if [[ -z "${FAILED}" ]]; then
+    declare -p WG_CONFS > /app/activeconfs
+    echo "**** All tunnels are now active ****"
+else
+    echo "**** Tunnel ${FAILED} failed, will stop all others! ****"
+    for tunnel in ${WG_CONFS[@]}; do
+        if [[ "${tunnel}" = "${FAILED}" ]]; then
+            break
+        else
+            echo "**** Disabling tunnel ${tunnel} ****"
+            wgquick down "${tunnel}" || :
+        fi
+    done
+    ip route del default
+    echo "**** All tunnels are now down. Please fix the tunnel config ${FAILED} and restart the container ****"
+fi
