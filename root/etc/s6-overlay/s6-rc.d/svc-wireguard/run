@@ -4,7 +4,7 @@
 unset WG_CONFS
 rm -rf /app/activeconfs
 # Enumerate interfaces
-for wgconf in $(ls /config/*.conf); do
+for wgconf in $(ls /config/wg_confs/*.conf); do
     if grep -q "\[Interface\]" "${wgconf}"; then
         echo "**** Found WG conf ${wgconf}, adding to list ****"
         WG_CONFS+=("${wgconf}")
