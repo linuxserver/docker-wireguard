@@ -78,11 +78,13 @@ app_setup_block: |
 
   To display the QR codes of active peers again, you can use the following command and list the peer numbers as arguments: `docker exec -it wireguard /app/show-peer 1 4 5` or `docker exec -it wireguard /app/show-peer myPC myPhone myTablet` (Keep in mind that the QR codes are also stored as PNGs in the config folder).
 
-  The templates used for server and peer confs are saved under `/config/templates`. Advanced users can modify these templates and force conf generation by deleting `/config/wg0.conf` and restarting the container.
+  The templates used for server and peer confs are saved under `/config/templates`. Advanced users can modify these templates and force conf generation by deleting `/config/wg_confs/wg0.conf` and restarting the container.
+
+  The container managed server conf is hardcoded to `wg0.conf`. However, the users can add additional tunnel config files with `.conf` extensions into `/config/wg_confs/` and the container will attempt to start them all in alphabetical order. If any one of the tunnels fail, they will all be stopped and the default route will be deleted, requiring user intervention to fix the invalid conf and a container restart.
 
   ## Client Mode
 
-  Do not set the `PEERS` environment variable. Drop your client conf into the config folder as `/config/wg0.conf` and start the container.
+  Do not set the `PEERS` environment variable. Drop your client conf(s) into the config folder as `/config/wg_confs/<tunnel name>.conf` and start the container. If there are multiple tunnel configs, the container will attempt to start them all in alphabetical order. If any one of the tunnels fail, they will all be stopped and the default route will be deleted, requiring user intervention to fix the invalid conf and a container restart.
 
   If you get IPv6 related errors in the log and connection cannot be established, edit the `AllowedIPs` line in your peer/client wg0.conf to include only `0.0.0.0/0` and not `::/0`; and restart the container.
 
@@ -126,6 +128,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "03.10.23:", desc: "**Potentially Breaking Change:** Support for multiple interfaces added. Wireguard confs moved to `/config/wg_confs/`. Any file with a `.conf` extension in that folder will be treated as a live tunnel config and will be attempted to start. If any of the tunnels fail, all tunnels will be stopped. Tunnels are started in alphabetical order. Managed server conf will continue to be hardcoded to `wg0.conf`." }
   - { date: "28.06.23:", desc: "Rebase master to Alpine 3.18 again." }
   - { date: "26.06.23:", desc: "Revert master to Alpine 3.17, due to issue with openresolv." }
   - { date: "24.06.23:", desc: "Rebase master to Alpine 3.18, deprecate armhf as per [https://www.linuxserver.io/armhf](https://www.linuxserver.io/armhf)." }
