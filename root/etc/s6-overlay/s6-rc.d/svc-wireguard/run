@@ -22,7 +22,10 @@ fi
 unset FAILED
 for tunnel in ${WG_CONFS[@]}; do
     echo "**** Activating tunnel ${tunnel} ****"
-    wg-quick up "${tunnel}" || ( echo FAILED="${tunnel}" && break)
+    if ! wg-quick up "${tunnel}"; then
+      FAILED="${tunnel}"
+      break
+    fi
 done
 
 if [[ -z "${FAILED}" ]]; then
