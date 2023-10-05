@@ -185,9 +185,9 @@ libbrotli1                                               1.0.9-2build6          
 libbsd0                                                  0.11.5-1                                     deb        
 libbz2-1.0                                               1.0.8-5build1                                deb        
 libc-bin                                                 2.35-0ubuntu3.1                              deb        
-libc-dev-bin                                             2.35-0ubuntu3.3                              deb        
-libc6                                                    2.35-0ubuntu3.3                              deb        
-libc6-dev                                                2.35-0ubuntu3.3                              deb        
+libc-dev-bin                                             2.35-0ubuntu3.4                              deb        
+libc6                                                    2.35-0ubuntu3.4                              deb        
+libc6-dev                                                2.35-0ubuntu3.4                              deb        
 libcap-ng0                                               0.7.9-2.2build3                              deb        
 libcap2                                                  1:2.44-1ubuntu0.22.04.1                      deb        
 libcap2-bin                                              1:2.44-1ubuntu0.22.04.1                      deb        
@@ -303,8 +303,8 @@ libuuid1                                                 2.37.2-4ubuntu3        
 libxtables12                                             1.8.7-1ubuntu5.1                             deb        
 libxxhash0                                               0.8.1-1                                      deb        
 libzstd1                                                 1.4.8+dfsg-3build1                           deb        
-linux-libc-dev                                           5.15.0-84.93                                 deb        
-locales                                                  2.35-0ubuntu3.3                              deb        
+linux-libc-dev                                           5.15.0-86.96                                 deb        
+locales                                                  2.35-0ubuntu3.4                              deb        
 login                                                    1:4.8.1-2ubuntu2.1                           deb        
 logsave                                                  1.46.5-2ubuntu1.1                            deb        
 lsb-base                                                 11.1.0ubuntu4                                deb        
