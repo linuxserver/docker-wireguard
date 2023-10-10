@@ -181,9 +181,9 @@ libtasn1                                                 4.19.0-r1              
 libunistring                                             1.1-r1                              apk        
 linux-pam                                                1.5.2-r10                           apk        
 mii-tool                                                 2.10-r3                             apk        
-musl                                                     1.2.4-r1                            apk        
+musl                                                     1.2.4-r2                            apk        
 musl-fts                                                 1.2.7-r5                            apk        
-musl-utils                                               1.2.4-r1                            apk        
+musl-utils                                               1.2.4-r2                            apk        
 ncurses-terminfo-base                                    6.4_p20230506-r0                    apk        
 net-tools                                                2.10-r3                             apk        
 netcat-openbsd                                           1.219-r1                            apk        
@@ -206,6 +206,7 @@ sigs.k8s.io/yaml                                         v1.3.0                 
 skalibs                                                  2.13.1.1-r1                         apk        
 sqlite-libs                                              3.41.2-r2                           apk        
 ssl_client                                               1.36.1-r2                           apk        
+stdlib                                                   go1.20.8                            go-module  
 tzdata                                                   2023c-r1                            apk        
 unbound-libs                                             1.17.1-r1                           apk        
 utmps-libs                                               0.1.2.1-r1                          apk        
