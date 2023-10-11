@@ -197,7 +197,7 @@ libcrypt-dev                                             1:4.4.27-1             
 libcrypt1                                                1:4.4.27-1                                   deb        
 libctf-nobfd0                                            2.38-4ubuntu2.3                              deb        
 libctf0                                                  2.38-4ubuntu2.3                              deb        
-libcurl3-gnutls                                          7.81.0-1ubuntu1.13                           deb        
+libcurl3-gnutls                                          7.81.0-1ubuntu1.14                           deb        
 libcurl4                                                 7.81.0-1ubuntu1.13                           deb        
 libdb5.3                                                 5.3.28+dfsg1-0.8ubuntu3                      deb        
 libdebconfclient0                                        0.261ubuntu1                                 deb        
@@ -343,6 +343,7 @@ sensible-utils                                           0.0.17                 
 sigs.k8s.io/json                                         v0.0.0-20221116044647-bc3834ca7abd           go-module  
 sigs.k8s.io/structured-merge-diff/v4                     v4.2.3                                       go-module  
 sigs.k8s.io/yaml                                         v1.3.0                                       go-module  
+stdlib                                                   go1.20.7                                     go-module  
 sysvinit-utils                                           3.01-1ubuntu1                                deb        
 tar                                                      1.34+dfsg-1ubuntu0.1.22.04.1                 deb        
 tzdata                                                   2023c-0ubuntu0.22.04.2                       deb        
