@@ -171,17 +171,17 @@ if [[ -n "$PEERS" ]]; then
         generate_confs
         save_vars
     else
-      echo "**** Server mode is selected ****"
-      if [[ -f /config/.donoteditthisfile ]]; then
-          . /config/.donoteditthisfile
-      fi
-      if [[ "$SERVERURL" != "$ORIG_SERVERURL" ]] || [[ "$SERVERPORT" != "$ORIG_SERVERPORT" ]] || [[ "$PEERDNS" != "$ORIG_PEERDNS" ]] || [[ "$PEERS" != "$ORIG_PEERS" ]] || [[ "$INTERFACE" != "$ORIG_INTERFACE" ]] || [[ "$ALLOWEDIPS" != "$ORIG_ALLOWEDIPS" ]] || [[ "$PERSISTENTKEEPALIVE_PEERS" != "$ORIG_PERSISTENTKEEPALIVE_PEERS" ]]; then
-          echo "**** Server related environment variables changed, regenerating 1 server and ${PEERS} peer/client confs ****"
-          generate_confs
-          save_vars
-      else
-          echo "**** No changes to parameters. Existing configs are used. ****"
-      fi
+        echo "**** Server mode is selected ****"
+        if [[ -f /config/.donoteditthisfile ]]; then
+            . /config/.donoteditthisfile
+        fi
+        if [[ "$SERVERURL" != "$ORIG_SERVERURL" ]] || [[ "$SERVERPORT" != "$ORIG_SERVERPORT" ]] || [[ "$PEERDNS" != "$ORIG_PEERDNS" ]] || [[ "$PEERS" != "$ORIG_PEERS" ]] || [[ "$INTERFACE" != "$ORIG_INTERFACE" ]] || [[ "$ALLOWEDIPS" != "$ORIG_ALLOWEDIPS" ]] || [[ "$PERSISTENTKEEPALIVE_PEERS" != "$ORIG_PERSISTENTKEEPALIVE_PEERS" ]]; then
+            echo "**** Server related environment variables changed, regenerating 1 server and ${PEERS} peer/client confs ****"
+            generate_confs
+            save_vars
+        else
+            echo "**** No changes to parameters. Existing configs are used. ****"
+        fi
     fi
 else
     echo "**** Client mode selected. ****"
