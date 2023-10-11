@@ -45,6 +45,8 @@ RUN \
   sed -i 's|\[\[ $proto == -4 \]\] && cmd sysctl -q net\.ipv4\.conf\.all\.src_valid_mark=1|[[ $proto == -4 ]] \&\& [[ $(sysctl -n net.ipv4.conf.all.src_valid_mark) != 1 ]] \&\& cmd sysctl -q net.ipv4.conf.all.src_valid_mark=1|' src/wg-quick/linux.bash && \
   make -C src -j$(nproc) && \
   make -C src install && \
+  rm -rf /etc/wireguard && \
+  ln -s /config/wg_confs /etc/wireguard && \
   echo "**** install CoreDNS ****" && \
   COREDNS_VERSION=$(curl -sX GET "https://api.github.com/repos/coredns/coredns/releases/latest" \
     | awk '/tag_name/{print $4;exit}' FS='[""]' | awk '{print substr($1,2); }') && \
