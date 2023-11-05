@@ -14,7 +14,6 @@ RUN \
   apk add --no-cache --virtual=build-dependencies \
     build-base \
     elfutils-dev \
-    gcc \
     git \
     linux-headers && \
   apk add --no-cache \
