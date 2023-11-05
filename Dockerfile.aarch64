@@ -14,13 +14,11 @@ RUN \
   apk add --no-cache --virtual=build-dependencies \
     build-base \
     elfutils-dev \
-    gcc \
     git \
     linux-headers && \
   apk add --no-cache \
     bc \
     coredns \
-    gnupg \
     grep \
     iproute2 \
     iptables \
@@ -29,8 +27,7 @@ RUN \
     libcap-utils \
     libqrencode \
     net-tools \
-    openresolv \
-    perl && \
+    openresolv && \
   echo "wireguard" >> /etc/modules && \
   echo "**** install wireguard-tools ****" && \
   if [ -z ${WIREGUARD_RELEASE+x} ]; then \
