@@ -19,6 +19,7 @@ coreutils                                                8.32-4.1ubuntu1        
 cpp                                                      4:11.2.0-1ubuntu1                            deb        
 cpp-11                                                   11.4.0-1ubuntu1~22.04                        deb        
 cpp-12                                                   12.3.0-1ubuntu1~22.04                        deb        
+cron                                                     3.0pl1-137ubuntu3                            deb        
 curl                                                     7.81.0-1ubuntu1.14                           deb        
 dash                                                     0.5.11+git20210903+057cd650a4ed-3build1      deb        
 dctrl-tools                                              2.24-3build2                                 deb        
