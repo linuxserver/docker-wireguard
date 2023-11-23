@@ -12,7 +12,7 @@ busybox-binsh                                            1.36.1-r5              
 ca-certificates                                          20230506-r0                         apk        
 ca-certificates-bundle                                   20230506-r0                         apk        
 cloud.google.com/go/compute/metadata                     v0.2.3                              go-module  
-coredns                                                  1.10.1-r7                           apk        
+coredns                                                  1.10.1-r8                           apk        
 coreutils                                                9.3-r1                              apk        
 curl                                                     8.4.0-r0                            apk        
 github.com/Azure/azure-sdk-for-go                        v68.0.0+incompatible                go-module  
@@ -178,7 +178,7 @@ sigs.k8s.io/structured-merge-diff/v4                     v4.2.3                 
 sigs.k8s.io/yaml                                         v1.3.0                              go-module  
 skalibs                                                  2.13.1.1-r1                         apk        
 ssl_client                                               1.36.1-r5                           apk        
-stdlib                                                   go1.20.10                           go-module  
+stdlib                                                   go1.20.11                           go-module  
 tzdata                                                   2023c-r1                            apk        
 unbound-libs                                             1.17.1-r1                           apk        
 utmps-libs                                               0.1.2.1-r1                          apk        
