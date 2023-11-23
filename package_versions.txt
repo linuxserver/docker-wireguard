@@ -1,7 +1,7 @@
 NAME                                                     VERSION                                      TYPE      
 adduser                                                  3.118ubuntu5                                 deb        
-apt                                                      2.4.10                                       deb        
-apt-utils                                                2.4.10                                       deb        
+apt                                                      2.4.11                                       deb        
+apt-utils                                                2.4.11                                       deb        
 base-files                                               12ubuntu4.3                                  deb        
 base-passwd                                              3.5.52build1                                 deb        
 bash                                                     5.1-6ubuntu1                                 deb        
@@ -171,7 +171,7 @@ k8s.io/kube-openapi                                      v0.0.0-20230501164219-8
 k8s.io/utils                                             v0.0.0-20230209194617-a36077c30491           go-module  
 kmod                                                     29-1ubuntu1                                  deb        
 libacl1                                                  2.3.1-1                                      deb        
-libapt-pkg6.0                                            2.4.10                                       deb        
+libapt-pkg6.0                                            2.4.11                                       deb        
 libasan6                                                 11.4.0-1ubuntu1~22.04                        deb        
 libasan8                                                 12.3.0-1ubuntu1~22.04                        deb        
 libassuan0                                               2.5.5-1build1                                deb        
@@ -304,7 +304,7 @@ libuuid1                                                 2.37.2-4ubuntu3        
 libxtables12                                             1.8.7-1ubuntu5.1                             deb        
 libxxhash0                                               0.8.1-1                                      deb        
 libzstd1                                                 1.4.8+dfsg-3build1                           deb        
-linux-libc-dev                                           5.15.0-88.98                                 deb        
+linux-libc-dev                                           5.15.0-89.99                                 deb        
 locales                                                  2.35-0ubuntu3.4                              deb        
 login                                                    1:4.8.1-2ubuntu2.1                           deb        
 logsave                                                  1.46.5-2ubuntu1.1                            deb        
