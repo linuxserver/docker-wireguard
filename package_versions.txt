@@ -14,7 +14,7 @@ ca-certificates-bundle                                   20230506-r0            
 cloud.google.com/go/compute/metadata                     v0.2.3                              go-module  
 coredns                                                  1.10.1-r8                           apk        
 coreutils                                                9.3-r1                              apk        
-curl                                                     8.4.0-r0                            apk        
+curl                                                     8.5.0-r0                            apk        
 github.com/Azure/azure-sdk-for-go                        v68.0.0+incompatible                go-module  
 github.com/Azure/go-autorest/autorest                    v0.11.28                            go-module  
 github.com/Azure/go-autorest/autorest/adal               v0.9.18                             go-module  
@@ -128,7 +128,7 @@ iputils-arping                                           20221126-r2            
 iputils-clockdiff                                        20221126-r2                         apk        
 iputils-ping                                             20221126-r2                         apk        
 iputils-tracepath                                        20221126-r2                         apk        
-jq                                                       1.6-r3                              apk        
+jq                                                       1.6-r4                              apk        
 k8s.io/api                                               v0.26.1                             go-module  
 k8s.io/apimachinery                                      v0.26.1                             go-module  
 k8s.io/client-go                                         v0.26.1                             go-module  
@@ -143,7 +143,7 @@ libc-utils                                               0.7.2-r5               
 libcap-utils                                             2.69-r0                             apk        
 libcap2                                                  2.69-r0                             apk        
 libcrypto3                                               3.1.4-r1                            apk        
-libcurl                                                  8.4.0-r0                            apk        
+libcurl                                                  8.5.0-r0                            apk        
 libelf                                                   0.189-r2                            apk        
 libevent                                                 2.1.12-r6                           apk        
 libidn2                                                  2.3.4-r1                            apk        
