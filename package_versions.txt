@@ -186,9 +186,9 @@ libbrotli1                                               1.0.9-2build6          
 libbsd0                                                  0.11.5-1                                     deb        
 libbz2-1.0                                               1.0.8-5build1                                deb        
 libc-bin                                                 2.35-0ubuntu3.1                              deb        
-libc-dev-bin                                             2.35-0ubuntu3.5                              deb        
-libc6                                                    2.35-0ubuntu3.5                              deb        
-libc6-dev                                                2.35-0ubuntu3.5                              deb        
+libc-dev-bin                                             2.35-0ubuntu3.6                              deb        
+libc6                                                    2.35-0ubuntu3.6                              deb        
+libc6-dev                                                2.35-0ubuntu3.6                              deb        
 libcap-ng0                                               0.7.9-2.2build3                              deb        
 libcap2                                                  1:2.44-1ubuntu0.22.04.1                      deb        
 libcap2-bin                                              1:2.44-1ubuntu0.22.04.1                      deb        
@@ -283,7 +283,7 @@ libsemanage-common                                       3.3-1build2            
 libsemanage2                                             3.3-1build2                                  deb        
 libsepol2                                                3.3-1build1                                  deb        
 libsmartcols1                                            2.37.2-4ubuntu3                              deb        
-libsqlite3-0                                             3.37.2-2ubuntu0.1                            deb        
+libsqlite3-0                                             3.37.2-2ubuntu0.3                            deb        
 libss2                                                   1.46.5-2ubuntu1.1                            deb        
 libssh-4                                                 0.9.6-2ubuntu0.22.04.2                       deb        
 libssl3                                                  3.0.2-0ubuntu1.10                            deb        
