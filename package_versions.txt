@@ -142,7 +142,7 @@ libbz2                                                   1.0.8-r5               
 libc-utils                                               0.7.2-r5                            apk        
 libcap-utils                                             2.69-r0                             apk        
 libcap2                                                  2.69-r0                             apk        
-libcrypto3                                               3.1.4-r3                            apk        
+libcrypto3                                               3.1.4-r4                            apk        
 libcurl                                                  8.5.0-r0                            apk        
 libelf                                                   0.189-r2                            apk        
 libevent                                                 2.1.12-r6                           apk        
@@ -155,7 +155,7 @@ libnftnl                                                 1.2.5-r1               
 libpng                                                   1.6.39-r3                           apk        
 libproc2                                                 4.0.4-r0                            apk        
 libqrencode                                              4.1.1-r1                            apk        
-libssl3                                                  3.1.4-r3                            apk        
+libssl3                                                  3.1.4-r4                            apk        
 libunistring                                             1.1-r1                              apk        
 linux-pam                                                1.5.2-r10                           apk        
 mii-tool                                                 2.10-r3                             apk        
