@@ -285,7 +285,7 @@ libsepol2                                                3.3-1build1            
 libsmartcols1                                            2.37.2-4ubuntu3                              deb        
 libsqlite3-0                                             3.37.2-2ubuntu0.3                            deb        
 libss2                                                   1.46.5-2ubuntu1.1                            deb        
-libssh-4                                                 0.9.6-2ubuntu0.22.04.2                       deb        
+libssh-4                                                 0.9.6-2ubuntu0.22.04.3                       deb        
 libssl3                                                  3.0.2-0ubuntu1.10                            deb        
 libstdc++-11-dev                                         11.4.0-1ubuntu1~22.04                        deb        
 libstdc++6                                               12.3.0-1ubuntu1~22.04                        deb        
@@ -304,7 +304,7 @@ libuuid1                                                 2.37.2-4ubuntu3        
 libxtables12                                             1.8.7-1ubuntu5.1                             deb        
 libxxhash0                                               0.8.1-1                                      deb        
 libzstd1                                                 1.4.8+dfsg-3build1                           deb        
-linux-libc-dev                                           5.15.0-91.101                                deb        
+linux-libc-dev                                           5.15.0-92.102                                deb        
 locales                                                  2.35-0ubuntu3.6                              deb        
 login                                                    1:4.8.1-2ubuntu2.1                           deb        
 logsave                                                  1.46.5-2ubuntu1.1                            deb        
