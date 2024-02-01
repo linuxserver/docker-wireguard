@@ -234,8 +234,8 @@ libkmod2                                                 29-1ubuntu1            
 libkrb5-3                                                1.19.2-2ubuntu0.2                            deb        
 libkrb5support0                                          1.19.2-2ubuntu0.2                            deb        
 libksba8                                                 1.6.0-2ubuntu0.2                             deb        
-libldap-2.5-0                                            2.5.16+dfsg-0ubuntu0.22.04.1                 deb        
-libldap-common                                           2.5.16+dfsg-0ubuntu0.22.04.1                 deb        
+libldap-2.5-0                                            2.5.16+dfsg-0ubuntu0.22.04.2                 deb        
+libldap-common                                           2.5.16+dfsg-0ubuntu0.22.04.2                 deb        
 liblsan0                                                 12.3.0-1ubuntu1~22.04                        deb        
 liblz4-1                                                 1.9.3-2build2                                deb        
 liblzma5                                                 5.2.5-2ubuntu1                               deb        
@@ -322,7 +322,7 @@ netbase                                                  6.3                    
 netcat                                                   1.218-4ubuntu1                               deb        
 netcat-openbsd                                           1.218-4ubuntu1                               deb        
 openresolv                                               3.12.0-2                                     deb        
-openssl                                                  3.0.2-0ubuntu1.12                            deb        
+openssl                                                  3.0.2-0ubuntu1.13                            deb        
 passwd                                                   1:4.8.1-2ubuntu2.1                           deb        
 patch                                                    2.7.6-7build2                                deb        
 perl                                                     5.34.0-3ubuntu1.3                            deb        
