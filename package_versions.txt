@@ -2,7 +2,7 @@ NAME                                                     VERSION                
 alpine-baselayout                                        3.4.3-r1                            apk        
 alpine-baselayout-data                                   3.4.3-r1                            apk        
 alpine-keys                                              2.4-r1                              apk        
-alpine-release                                           3.18.5-r0                           apk        
+alpine-release                                           3.18.6-r0                           apk        
 apk-tools                                                2.14.0-r2                           apk        
 bash                                                     5.2.15-r5                           apk        
 bc                                                       1.07.1-r4                           apk        
@@ -13,7 +13,7 @@ ca-certificates                                          20230506-r0            
 ca-certificates-bundle                                   20230506-r0                         apk        
 cloud.google.com/go/compute/metadata                     v0.2.3                              go-module  
 coredns                                                  1.10.1-r8                           apk        
-coreutils                                                9.3-r1                              apk        
+coreutils                                                9.3-r2                              apk        
 curl                                                     8.5.0-r0                            apk        
 github.com/Azure/azure-sdk-for-go                        v68.0.0+incompatible                go-module  
 github.com/Azure/go-autorest/autorest                    v0.11.28                            go-module  
@@ -142,7 +142,7 @@ libbz2                                                   1.0.8-r5               
 libc-utils                                               0.7.2-r5                            apk        
 libcap-utils                                             2.69-r0                             apk        
 libcap2                                                  2.69-r0                             apk        
-libcrypto3                                               3.1.4-r4                            apk        
+libcrypto3                                               3.1.4-r5                            apk        
 libcurl                                                  8.5.0-r0                            apk        
 libelf                                                   0.189-r2                            apk        
 libevent                                                 2.1.12-r6                           apk        
@@ -155,7 +155,7 @@ libnftnl                                                 1.2.5-r1               
 libpng                                                   1.6.39-r3                           apk        
 libproc2                                                 4.0.4-r0                            apk        
 libqrencode                                              4.1.1-r1                            apk        
-libssl3                                                  3.1.4-r4                            apk        
+libssl3                                                  3.1.4-r5                            apk        
 libunistring                                             1.1-r1                              apk        
 linux-pam                                                1.5.2-r10                           apk        
 mii-tool                                                 2.10-r3                             apk        
