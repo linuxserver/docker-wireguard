@@ -304,7 +304,7 @@ libuuid1                                                 2.37.2-4ubuntu3        
 libxtables12                                             1.8.7-1ubuntu5.1                             deb        
 libxxhash0                                               0.8.1-1                                      deb        
 libzstd1                                                 1.4.8+dfsg-3build1                           deb        
-linux-libc-dev                                           5.15.0-92.102                                deb        
+linux-libc-dev                                           5.15.0-94.104                                deb        
 locales                                                  2.35-0ubuntu3.6                              deb        
 login                                                    1:4.8.1-2ubuntu2.1                           deb        
 logsave                                                  1.46.5-2ubuntu1.1                            deb        
@@ -322,7 +322,7 @@ netbase                                                  6.3                    
 netcat                                                   1.218-4ubuntu1                               deb        
 netcat-openbsd                                           1.218-4ubuntu1                               deb        
 openresolv                                               3.12.0-2                                     deb        
-openssl                                                  3.0.2-0ubuntu1.13                            deb        
+openssl                                                  3.0.2-0ubuntu1.14                            deb        
 passwd                                                   1:4.8.1-2ubuntu2.1                           deb        
 patch                                                    2.7.6-7build2                                deb        
 perl                                                     5.34.0-3ubuntu1.3                            deb        
