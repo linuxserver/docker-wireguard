@@ -160,7 +160,7 @@ hostname                                                 3.23ubuntu2            
 ifupdown                                                 0.8.36+nmu1ubuntu3.1                         deb        
 init-system-helpers                                      1.62                                         deb        
 iproute2                                                 5.15.0-1ubuntu2                              deb        
-iptables                                                 1.8.7-1ubuntu5.1                             deb        
+iptables                                                 1.8.7-1ubuntu5.2                             deb        
 iputils-ping                                             3:20211215-1                                 deb        
 jq                                                       1.6-2.1ubuntu3                               deb        
 k8s.io/api                                               v0.27.4                                      go-module  
@@ -223,8 +223,8 @@ libgpg-error0                                            1.43-3                 
 libgssapi-krb5-2                                         1.19.2-2ubuntu0.2                            deb        
 libhogweed6                                              3.7.3-1build2                                deb        
 libidn2-0                                                2.3.2-2build1                                deb        
-libip4tc2                                                1.8.7-1ubuntu5.1                             deb        
-libip6tc2                                                1.8.7-1ubuntu5.1                             deb        
+libip4tc2                                                1.8.7-1ubuntu5.2                             deb        
+libip6tc2                                                1.8.7-1ubuntu5.2                             deb        
 libisl23                                                 0.24-2build1                                 deb        
 libitm1                                                  12.3.0-1ubuntu1~22.04                        deb        
 libjq1                                                   1.6-2.1ubuntu3                               deb        
@@ -301,7 +301,7 @@ libubsan1                                                12.3.0-1ubuntu1~22.04  
 libudev1                                                 249.11-0ubuntu3.9                            deb        
 libunistring2                                            1.0-1                                        deb        
 libuuid1                                                 2.37.2-4ubuntu3                              deb        
-libxtables12                                             1.8.7-1ubuntu5.1                             deb        
+libxtables12                                             1.8.7-1ubuntu5.2                             deb        
 libxxhash0                                               0.8.1-1                                      deb        
 libzstd1                                                 1.4.8+dfsg-3build1                           deb        
 linux-libc-dev                                           5.15.0-94.104                                deb        
