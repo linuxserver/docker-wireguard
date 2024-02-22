@@ -180,7 +180,7 @@ skalibs                                                  2.13.1.1-r1            
 ssl_client                                               1.36.1-r5                           apk        
 stdlib                                                   go1.20.11                           go-module  
 tzdata                                                   2024a-r0                            apk        
-unbound-libs                                             1.17.1-r1                           apk        
+unbound-libs                                             1.19.1-r0                           apk        
 utmps-libs                                               0.1.2.1-r1                          apk        
 xz-libs                                                  5.4.3-r0                            apk        
 zlib                                                     1.2.13-r1                           apk        
