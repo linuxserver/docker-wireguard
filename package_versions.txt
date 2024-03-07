@@ -159,8 +159,10 @@ libmd                                                    1.1.0-r0               
 libmnl                                                   1.0.5-r2                                     apk          
 libncursesw                                              6.4_p20231125-r0                             apk          
 libnftnl                                                 1.2.6-r0                                     apk          
+libpng                                                   1.6.40-r0                                    apk          
 libproc2                                                 4.0.4-r0                                     apk          
 libqrencode                                              4.1.1-r2                                     apk          
+libqrencode-tools                                        4.1.1-r2                                     apk          
 libssl3                                                  3.1.4-r5                                     apk          
 libunistring                                             1.1-r2                                       apk          
 libxtables                                               1.8.10-r3                                    apk          
