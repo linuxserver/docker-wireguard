@@ -25,7 +25,7 @@ RUN \
     ip6tables \
     iputils \
     libcap-utils \
-    libqrencode \
+    libqrencode-tools \
     net-tools \
     openresolv && \
   echo "wireguard" >> /etc/modules && \
