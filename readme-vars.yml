@@ -128,6 +128,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "10.03.24:", desc: "USe iptables-legacy on Alpine 3.19." }
   - { date: "05.03.24:", desc: "Rebase master to Alpine 3.19." }
   - { date: "03.10.23:", desc: "**Potentially Breaking Change:** Support for multiple interfaces added. Wireguard confs moved to `/config/wg_confs/`. Any file with a `.conf` extension in that folder will be treated as a live tunnel config and will be attempted to start. If any of the tunnels fail, all tunnels will be stopped. Tunnels are started in alphabetical order. Managed server conf will continue to be hardcoded to `wg0.conf`." }
   - { date: "28.06.23:", desc: "Rebase master to Alpine 3.18 again." }
