@@ -30,7 +30,7 @@ dirmngr                                                  2.2.27-3ubuntu2.1      
 distro-info-data                                         0.52ubuntu0.6                                deb          
 dkms                                                     2.8.7-2ubuntu2.2                             deb          
 dpkg                                                     1.21.1ubuntu2.2                              deb          
-dpkg-dev                                                 1.21.1ubuntu2.2                              deb          
+dpkg-dev                                                 1.21.1ubuntu2.3                              deb          
 e2fsprogs                                                1.46.5-2ubuntu1.1                            deb          
 findutils                                                4.8.0-1ubuntu3                               deb          
 g++                                                      4:11.2.0-1ubuntu1                            deb          
@@ -202,7 +202,7 @@ libcurl3-gnutls                                          7.81.0-1ubuntu1.15     
 libcurl4                                                 7.81.0-1ubuntu1.15                           deb          
 libdb5.3                                                 5.3.28+dfsg1-0.8ubuntu3                      deb          
 libdebconfclient0                                        0.261ubuntu1                                 deb          
-libdpkg-perl                                             1.21.1ubuntu2.2                              deb          
+libdpkg-perl                                             1.21.1ubuntu2.3                              deb          
 libelf-dev                                               0.186-1build1                                deb          
 libelf1                                                  0.186-1build1                                deb          
 liberror-perl                                            0.17029-1                                    deb          
@@ -304,7 +304,7 @@ libuuid1                                                 2.37.2-4ubuntu3        
 libxtables12                                             1.8.7-1ubuntu5.2                             deb          
 libxxhash0                                               0.8.1-1                                      deb          
 libzstd1                                                 1.4.8+dfsg-3build1                           deb          
-linux-libc-dev                                           5.15.0-97.107                                deb          
+linux-libc-dev                                           5.15.0-100.110                               deb          
 locales                                                  2.35-0ubuntu3.6                              deb          
 login                                                    1:4.8.1-2ubuntu2.1                           deb          
 logsave                                                  1.46.5-2ubuntu1.1                            deb          
