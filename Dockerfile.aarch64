@@ -22,6 +22,7 @@ RUN \
     grep \
     iproute2 \
     iptables \
+    iptables-legacy \
     ip6tables \
     iputils \
     libcap-utils \
@@ -29,6 +30,13 @@ RUN \
     net-tools \
     openresolv && \
   echo "wireguard" >> /etc/modules && \
+  cd /sbin && \
+  for i in ! !-save !-restore; do \
+    rm -rf iptables$(echo "${i}" | cut -c2-) && \
+    rm -rf ip6tables$(echo "${i}" | cut -c2-) && \
+    ln -s iptables-legacy$(echo "${i}" | cut -c2-) iptables$(echo "${i}" | cut -c2-) && \
+    ln -s ip6tables-legacy$(echo "${i}" | cut -c2-) ip6tables$(echo "${i}" | cut -c2-); \
+  done && \
   echo "**** install wireguard-tools ****" && \
   if [ -z ${WIREGUARD_RELEASE+x} ]; then \
     WIREGUARD_RELEASE=$(curl -sX GET "https://api.github.com/repos/WireGuard/wireguard-tools/tags" \

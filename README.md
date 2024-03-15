@@ -382,6 +382,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **10.03.24:** - Use iptables-legacy on Alpine 3.19.
 * **05.03.24:** - Rebase master to Alpine 3.19.
 * **03.10.23:** - **Potentially Breaking Change:** Support for multiple interfaces added. Wireguard confs moved to `/config/wg_confs/`. Any file with a `.conf` extension in that folder will be treated as a live tunnel config and will be attempted to start. If any of the tunnels fail, all tunnels will be stopped. Tunnels are started in alphabetical order. Managed server conf will continue to be hardcoded to `wg0.conf`.
 * **28.06.23:** - Rebase master to Alpine 3.18 again.
