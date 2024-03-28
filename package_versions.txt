@@ -10,8 +10,8 @@ brotli-libs                                              1.1.0-r1               
 busybox                                                  1.36.1-r15                                   apk          
 busybox-binsh                                            1.36.1-r15                                   apk          
 c-ares                                                   1.24.0-r1                                    apk          
-ca-certificates                                          20230506-r0                                  apk          
-ca-certificates-bundle                                   20230506-r0                                  apk          
+ca-certificates                                          20240226-r0                                  apk          
+ca-certificates-bundle                                   20240226-r0                                  apk          
 cloud.google.com/go/compute/metadata                     v0.2.3                                       go-module    
 coredns                                                  1.11.1-r3                                    apk          
 coreutils                                                9.4-r2                                       apk          
