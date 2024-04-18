@@ -3,7 +3,7 @@ alpine-baselayout                                        3.4.3-r2               
 alpine-baselayout-data                                   3.4.3-r2                                     apk          
 alpine-keys                                              2.4-r1                                       apk          
 alpine-release                                           3.19.1-r0                                    apk          
-apk-tools                                                2.14.3-r1                                    apk          
+apk-tools                                                2.14.4-r0                                    apk          
 bash                                                     5.2.21-r0                                    apk          
 bc                                                       1.07.1-r4                                    apk          
 brotli-libs                                              1.1.0-r1                                     apk          
@@ -19,6 +19,7 @@ coreutils-env                                            9.4-r2                 
 coreutils-fmt                                            9.4-r2                                       apk          
 coreutils-sha512sum                                      9.4-r2                                       apk          
 curl                                                     8.5.0-r0                                     apk          
+findutils                                                4.9.0-r5                                     apk          
 github.com/Azure/azure-sdk-for-go                        v68.0.0+incompatible                         go-module    
 github.com/Azure/go-autorest/autorest                    v0.11.29                                     go-module    
 github.com/Azure/go-autorest/autorest/adal               v0.9.22                                      go-module    
@@ -150,7 +151,7 @@ libcap-getcap                                            2.69-r1                
 libcap-setcap                                            2.69-r1                                      apk          
 libcap-utils                                             2.69-r1                                      apk          
 libcap2                                                  2.69-r1                                      apk          
-libcrypto3                                               3.1.4-r5                                     apk          
+libcrypto3                                               3.1.4-r6                                     apk          
 libcurl                                                  8.5.0-r0                                     apk          
 libelf                                                   0.190-r1                                     apk          
 libevent                                                 2.1.12-r7                                    apk          
@@ -166,7 +167,7 @@ libpng                                                   1.6.40-r0              
 libproc2                                                 4.0.4-r0                                     apk          
 libqrencode                                              4.1.1-r2                                     apk          
 libqrencode-tools                                        4.1.1-r2                                     apk          
-libssl3                                                  3.1.4-r5                                     apk          
+libssl3                                                  3.1.4-r6                                     apk          
 libunistring                                             1.1-r2                                       apk          
 libxtables                                               1.8.10-r3                                    apk          
 linux-pam                                                1.5.3-r7                                     apk          
