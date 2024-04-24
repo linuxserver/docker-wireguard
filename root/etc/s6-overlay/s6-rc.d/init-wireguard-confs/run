@@ -56,7 +56,7 @@ DUDE"
         fi
       else
         for idx in {2..254}; do
-          PROPOSED_IP="${INTERFACE}.${idx}"
+          PROPOSED_IP="${INTERFACE}.${idx}/32"
           if ! grep -q -R "${PROPOSED_IP}" /config/peer*/*.conf 2>/dev/null && ([[ -z "${ORIG_INTERFACE}" ]] || ! grep -q -R "${ORIG_INTERFACE}.${idx}" /config/peer*/*.conf 2>/dev/null); then
             CLIENT_IP="${PROPOSED_IP}"
             break
