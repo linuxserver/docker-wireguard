@@ -251,7 +251,7 @@ libnetfilter-conntrack3                                  1.0.9-1                
 libnettle8                                               3.7.3-1build2                                deb          
 libnfnetlink0                                            1.0.1-3build3                                deb          
 libnftnl11                                               1.2.1-1build1                                deb          
-libnghttp2-14                                            1.43.0-1ubuntu0.1                            deb          
+libnghttp2-14                                            1.43.0-1ubuntu0.2                            deb          
 libnpth0                                                 1.6-3build2                                  deb          
 libnsl-dev                                               1.3.0-2build2                                deb          
 libnsl2                                                  1.3.0-2build2                                deb          
