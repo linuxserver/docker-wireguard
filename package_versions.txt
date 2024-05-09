@@ -14,6 +14,7 @@ bsdutils                                                 1:2.37.2-4ubuntu3.4    
 build-essential                                          12.9ubuntu3                                  deb          
 bzip2                                                    1.0.8-5build1                                deb          
 ca-certificates                                          20230311ubuntu0.22.04.1                      deb          
+catatonit                                                0.1.7-1                                      deb          
 cloud.google.com/go/compute/metadata                     v0.2.3                                       go-module    
 coreutils                                                8.32-4.1ubuntu1.2                            deb          
 cpp                                                      4:11.2.0-1ubuntu1                            deb          
@@ -27,7 +28,7 @@ debconf                                                  1.5.79ubuntu1          
 debianutils                                              5.5-1ubuntu2                                 deb          
 diffutils                                                1:3.8-0ubuntu2                               deb          
 dirmngr                                                  2.2.27-3ubuntu2.1                            deb          
-distro-info-data                                         0.52ubuntu0.6                                deb          
+distro-info-data                                         0.52ubuntu0.7                                deb          
 dkms                                                     2.8.7-2ubuntu2.2                             deb          
 dpkg                                                     1.21.1ubuntu2.3                              deb          
 dpkg-dev                                                 1.21.1ubuntu2.3                              deb          
@@ -304,7 +305,7 @@ libuuid1                                                 2.37.2-4ubuntu3.4      
 libxtables12                                             1.8.7-1ubuntu5.2                             deb          
 libxxhash0                                               0.8.1-1                                      deb          
 libzstd1                                                 1.4.8+dfsg-3build1                           deb          
-linux-libc-dev                                           5.15.0-105.115                               deb          
+linux-libc-dev                                           5.15.0-106.116                               deb          
 locales                                                  2.35-0ubuntu3.7                              deb          
 login                                                    1:4.8.1-2ubuntu2.2                           deb          
 logsave                                                  1.46.5-2ubuntu1.1                            deb          
