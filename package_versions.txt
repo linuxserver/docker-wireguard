@@ -5,7 +5,6 @@ apt-utils                                                2.4.12                 
 base-files                                               12ubuntu4.6                                  deb          
 base-passwd                                              3.5.52build1                                 deb          
 bash                                                     5.1-6ubuntu1.1                               deb          
-bash                                                     5.1.16                                       binary       
 bc                                                       1.07.1-3build1                               deb          
 binutils                                                 2.38-4ubuntu2.6                              deb          
 binutils-common                                          2.38-4ubuntu2.6                              deb          
@@ -216,7 +215,7 @@ libgcc-s1                                                12.3.0-1ubuntu1~22.04  
 libgcrypt20                                              1.9.4-3ubuntu3                               deb          
 libgdbm-compat4                                          1.23-1                                       deb          
 libgdbm6                                                 1.23-1                                       deb          
-libglib2.0-0                                             2.72.4-0ubuntu2.2                            deb          
+libglib2.0-0                                             2.72.4-0ubuntu2.3                            deb          
 libgmp10                                                 2:6.2.1+dfsg-3ubuntu1                        deb          
 libgnutls30                                              3.7.3-4ubuntu1.5                             deb          
 libgomp1                                                 12.3.0-1ubuntu1~22.04                        deb          
@@ -305,7 +304,7 @@ libuuid1                                                 2.37.2-4ubuntu3.4      
 libxtables12                                             1.8.7-1ubuntu5.2                             deb          
 libxxhash0                                               0.8.1-1                                      deb          
 libzstd1                                                 1.4.8+dfsg-3build1                           deb          
-linux-libc-dev                                           5.15.0-106.116                               deb          
+linux-libc-dev                                           5.15.0-107.117                               deb          
 locales                                                  2.35-0ubuntu3.7                              deb          
 login                                                    1:4.8.1-2ubuntu2.2                           deb          
 logsave                                                  1.46.5-2ubuntu1.1                            deb          
