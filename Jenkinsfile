@@ -25,14 +25,17 @@ pipeline {
     DEV_DOCKERHUB_IMAGE = 'lsiodev/wireguard'
     PR_DOCKERHUB_IMAGE = 'lspipepr/wireguard'
     DIST_IMAGE = 'alpine'
+    DIST_TAG = '3.20'
+    DIST_REPO = 'http://dl-cdn.alpinelinux.org/alpine/v3.20/main/'
+    DIST_REPO_PACKAGES = 'wireguard-tools'
     MULTIARCH='true'
     CI='false'
     CI_WEB='false'
     CI_PORT='8080'
     CI_SSL='false'
-    CI_DELAY='120'
-    CI_DOCKERENV='TZ=US/Pacific'
-    CI_AUTH='user:password'
+    CI_DELAY='60'
+    CI_DOCKERENV=''
+    CI_AUTH=''
     CI_WEBPATH=''
   }
   stages {
@@ -110,14 +113,15 @@ pipeline {
     /* ########################
        External Release Tagging
        ######################## */
-    // If this is a custom command to determine version use that command
-    stage("Set tag custom bash"){
+    // If this is an alpine repo change for external version determine an md5 from the version string
+    stage("Set tag Alpine Repo"){
       steps{
         script{
           env.EXT_RELEASE = sh(
-            script: ''' curl -sX GET https://api.github.com/repos/WireGuard/wireguard-tools/tags | jq -r .[0].name ''',
+            script: '''curl -sL "${DIST_REPO}x86_64/APKINDEX.tar.gz" | tar -xz -C /tmp \
+                       && awk '/^P:'"${DIST_REPO_PACKAGES}"'$/,/V:/' /tmp/APKINDEX | sed -n 2p | sed 's/^V://' ''',
             returnStdout: true).trim()
-            env.RELEASE_LINK = 'custom_command'
+            env.RELEASE_LINK = 'alpine_repo'
         }
       }
     }
@@ -852,11 +856,11 @@ pipeline {
              "tagger": {"name": "LinuxServer Jenkins","email": "jenkins@linuxserver.io","date": "'${GITHUB_DATE}'"}}' '''
         echo "Pushing New release for Tag"
         sh '''#! /bin/bash
-              echo "Updating to ${EXT_RELEASE_CLEAN}" > releasebody.json
+              echo "Updating external repo packages to ${EXT_RELEASE_CLEAN}" > releasebody.json
               echo '{"tag_name":"'${META_TAG}'",\
                      "target_commitish": "master",\
                      "name": "'${META_TAG}'",\
-                     "body": "**LinuxServer Changes:**\\n\\n'${LS_RELEASE_NOTES}'\\n\\n**Remote Changes:**\\n\\n' > start
+                     "body": "**LinuxServer Changes:**\\n\\n'${LS_RELEASE_NOTES}'\\n\\n**Repo Changes:**\\n\\n' > start
               printf '","draft": false,"prerelease": false}' >> releasebody.json
               paste -d'\\0' start releasebody.json > releasebody.json.done
               curl -H "Authorization: token ${GITHUB_TOKEN}" -X POST https://api.github.com/repos/${LS_USER}/${LS_REPO}/releases -d @releasebody.json.done'''

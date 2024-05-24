@@ -20,7 +20,8 @@ jobs:
           echo "**** External trigger running off of master branch. To disable this trigger, set a Github secret named \"PAUSE_EXTERNAL_TRIGGER_WIREGUARD_MASTER\". ****"
           echo "External trigger running off of master branch. To disable this trigger, set a Github secret named \`PAUSE_EXTERNAL_TRIGGER_WIREGUARD_MASTER\`" >> $GITHUB_STEP_SUMMARY
           echo "**** Retrieving external version ****"
-          EXT_RELEASE=$(curl -u ${{ secrets.CR_USER }}:${{ secrets.CR_PAT }} -sX GET https://api.github.com/repos/WireGuard/wireguard-tools/tags | jq -r .[0].name)
+          EXT_RELEASE=$(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.20/main/x86_64/APKINDEX.tar.gz" | tar -xz -C /tmp \
+            && awk '/^P:'"wireguard-tools"'$/,/V:/' /tmp/APKINDEX | sed -n 2p | sed 's/^V://')
           if [ -z "${EXT_RELEASE}" ] || [ "${EXT_RELEASE}" == "null" ]; then
             echo "**** Can't retrieve external version, exiting ****"
             FAILURE_REASON="Can't retrieve external version for wireguard branch master"
@@ -72,6 +73,14 @@ jobs:
           if [ "${EXT_RELEASE}" == "${IMAGE_VERSION}" ]; then
             echo "**** Version ${EXT_RELEASE} already pushed, exiting ****"
             echo "Version ${EXT_RELEASE} already pushed, exiting" >> $GITHUB_STEP_SUMMARY
+            exit 0
+          elif [[ $(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.20/main/aarch64/APKINDEX.tar.gz" | tar -xz -C /tmp && awk '/^P:'"wireguard-tools"'$/,/V:/' /tmp/APKINDEX | sed -n 2p | sed 's/^V://') != "${EXT_RELEASE}" ]]; then
+            echo "**** New version ${EXT_RELEASE} found; but not all arch repos updated yet; exiting ****"
+            echo "New version ${EXT_RELEASE} found; but not all arch repos updated yet; exiting" >> $GITHUB_STEP_SUMMARY
+            FAILURE_REASON="New version ${EXT_RELEASE} for wireguard tag latest is detected, however not all arch repos are updated yet. Will try again later."
+            curl -X POST -H "Content-Type: application/json" --data '{"avatar_url": "https://cdn.discordapp.com/avatars/354986384542662657/df91181b3f1cf0ef1592fbe18e0962d7.png","embeds": [{"color": 9802903,
+              "description": "**Trigger Failed** \n**Reason:** '"${FAILURE_REASON}"' \n"}],
+              "username": "Github Actions"}' ${{ secrets.DISCORD_WEBHOOK }}
             exit 0
           elif [ $(curl -s https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-wireguard/job/master/lastBuild/api/json | jq -r '.building') == "true" ]; then
             echo "**** New version ${EXT_RELEASE} found; but there already seems to be an active build on Jenkins; exiting ****"

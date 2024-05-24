@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/linuxserver/baseimage-alpine:3.19
+FROM ghcr.io/linuxserver/baseimage-alpine:3.20
 
 # set version label
 ARG BUILD_DATE
@@ -11,11 +11,6 @@ LABEL maintainer="thespad"
 
 RUN \
   echo "**** install dependencies ****" && \
-  apk add --no-cache --virtual=build-dependencies \
-    build-base \
-    elfutils-dev \
-    git \
-    linux-headers && \
   apk add --no-cache \
     bc \
     coredns \
@@ -28,7 +23,8 @@ RUN \
     libcap-utils \
     libqrencode-tools \
     net-tools \
-    openresolv && \
+    openresolv \
+    wireguard-tools && \
   echo "wireguard" >> /etc/modules && \
   cd /sbin && \
   for i in ! !-save !-restore; do \
@@ -37,22 +33,11 @@ RUN \
     ln -s iptables-legacy$(echo "${i}" | cut -c2-) iptables$(echo "${i}" | cut -c2-) && \
     ln -s ip6tables-legacy$(echo "${i}" | cut -c2-) ip6tables$(echo "${i}" | cut -c2-); \
   done && \
-  echo "**** install wireguard-tools ****" && \
-  if [ -z ${WIREGUARD_RELEASE+x} ]; then \
-    WIREGUARD_RELEASE=$(curl -sX GET "https://api.github.com/repos/WireGuard/wireguard-tools/tags" \
-    | jq -r .[0].name); \
-  fi && \
-  cd /app && \
-  git clone https://git.zx2c4.com/wireguard-tools && \
-  cd wireguard-tools && \
-  git checkout "${WIREGUARD_RELEASE}" && \
-  sed -i 's|\[\[ $proto == -4 \]\] && cmd sysctl -q net\.ipv4\.conf\.all\.src_valid_mark=1|[[ $proto == -4 ]] \&\& [[ $(sysctl -n net.ipv4.conf.all.src_valid_mark) != 1 ]] \&\& cmd sysctl -q net.ipv4.conf.all.src_valid_mark=1|' src/wg-quick/linux.bash && \
-  make -C src -j$(nproc) && \
-  make -C src install && \
+  sed -i 's|\[\[ $proto == -4 \]\] && cmd sysctl -q net\.ipv4\.conf\.all\.src_valid_mark=1|[[ $proto == -4 ]] \&\& [[ $(sysctl -n net.ipv4.conf.all.src_valid_mark) != 1 ]] \&\& cmd sysctl -q net.ipv4.conf.all.src_valid_mark=1|' /usr/bin/wg-quick && \
   rm -rf /etc/wireguard && \
   ln -s /config/wg_confs /etc/wireguard && \
+  printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
   echo "**** clean up ****" && \
-  apk del --no-network build-dependencies && \
   rm -rf \
     /tmp/*
 
