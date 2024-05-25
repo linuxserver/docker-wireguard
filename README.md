@@ -160,7 +160,7 @@ services:
       - PERSISTENTKEEPALIVE_PEERS= #optional
       - LOG_CONFS=true #optional
     volumes:
-      - /path/to/appdata/config:/config
+      - /path/to/wireguard/config:/config
       - /lib/modules:/lib/modules #optional
     ports:
       - 51820:51820/udp
@@ -188,7 +188,7 @@ docker run -d \
   -e PERSISTENTKEEPALIVE_PEERS= `#optional` \
   -e LOG_CONFS=true `#optional` \
   -p 51820:51820/udp \
-  -v /path/to/appdata/config:/config \
+  -v /path/to/wireguard/config:/config \
   -v /lib/modules:/lib/modules `#optional` \
   --sysctl="net.ipv4.conf.all.src_valid_mark=1" \
   --restart unless-stopped \
@@ -382,6 +382,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **24.05.24:** - Rebase to Alpine 3.20, install wireguard-tools from Alpine repo.
 * **10.03.24:** - Use iptables-legacy on Alpine 3.19.
 * **05.03.24:** - Rebase master to Alpine 3.19.
 * **03.10.23:** - **Potentially Breaking Change:** Support for multiple interfaces added. Wireguard confs moved to `/config/wg_confs/`. Any file with a `.conf` extension in that folder will be treated as a live tunnel config and will be attempted to start. If any of the tunnels fail, all tunnels will be stopped. Tunnels are started in alphabetical order. Managed server conf will continue to be hardcoded to `wg0.conf`.
