@@ -185,7 +185,7 @@ libbpf0                                                  1:0.5.0-1ubuntu22.04.1 
 libbrotli1                                               1.0.9-2build6                                deb          
 libbsd0                                                  0.11.5-1                                     deb          
 libbz2-1.0                                               1.0.8-5build1                                deb          
-libc-bin                                                 2.35-0ubuntu3.7                              deb          
+libc-bin                                                 2.35-0ubuntu3.8                              deb          
 libc-dev-bin                                             2.35-0ubuntu3.8                              deb          
 libc6                                                    2.35-0ubuntu3.8                              deb          
 libc6-dev                                                2.35-0ubuntu3.8                              deb          
@@ -304,8 +304,8 @@ libuuid1                                                 2.37.2-4ubuntu3.4      
 libxtables12                                             1.8.7-1ubuntu5.2                             deb          
 libxxhash0                                               0.8.1-1                                      deb          
 libzstd1                                                 1.4.8+dfsg-3build1                           deb          
-linux-libc-dev                                           5.15.0-107.117                               deb          
-locales                                                  2.35-0ubuntu3.7                              deb          
+linux-libc-dev                                           5.15.0-112.122                               deb          
+locales                                                  2.35-0ubuntu3.8                              deb          
 login                                                    1:4.8.1-2ubuntu2.2                           deb          
 logsave                                                  1.46.5-2ubuntu1.1                            deb          
 lsb-base                                                 11.1.0ubuntu4                                deb          
