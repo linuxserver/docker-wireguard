@@ -7,14 +7,14 @@ apk-tools                                                2.14.4-r0              
 bash                                                     5.2.26-r0                                    apk          
 bc                                                       1.07.1-r4                                    apk          
 brotli-libs                                              1.1.0-r2                                     apk          
-busybox                                                  1.36.1-r28                                   apk          
-busybox-binsh                                            1.36.1-r28                                   apk          
+busybox                                                  1.36.1-r29                                   apk          
+busybox-binsh                                            1.36.1-r29                                   apk          
 c-ares                                                   1.28.1-r0                                    apk          
 ca-certificates                                          20240226-r0                                  apk          
 ca-certificates-bundle                                   20240226-r0                                  apk          
 catatonit                                                0.2.0-r0                                     apk          
 cloud.google.com/go/compute/metadata                     v0.2.3                                       go-module    
-coredns                                                  1.11.1-r7                                    apk          
+coredns                                                  1.11.1-r8                                    apk          
 coreutils                                                9.5-r1                                       apk          
 coreutils-env                                            9.5-r1                                       apk          
 coreutils-fmt                                            9.5-r1                                       apk          
@@ -156,7 +156,7 @@ libcap-getcap                                            2.70-r0                
 libcap-setcap                                            2.70-r0                                      apk          
 libcap-utils                                             2.70-r0                                      apk          
 libcap2                                                  2.70-r0                                      apk          
-libcrypto3                                               3.3.0-r2                                     apk          
+libcrypto3                                               3.3.1-r0                                     apk          
 libcurl                                                  8.7.1-r0                                     apk          
 libelf                                                   0.191-r0                                     apk          
 libevent                                                 2.1.12-r7                                    apk          
@@ -173,7 +173,7 @@ libproc2                                                 4.0.4-r0               
 libpsl                                                   0.21.5-r1                                    apk          
 libqrencode                                              4.1.1-r2                                     apk          
 libqrencode-tools                                        4.1.1-r2                                     apk          
-libssl3                                                  3.3.0-r2                                     apk          
+libssl3                                                  3.3.1-r0                                     apk          
 libunistring                                             1.2-r0                                       apk          
 libxtables                                               1.8.10-r3                                    apk          
 linux-pam                                                1.6.0-r0                                     apk          
@@ -196,8 +196,8 @@ sigs.k8s.io/json                                         v0.0.0-20221116044647-b
 sigs.k8s.io/structured-merge-diff/v4                     v4.2.3                                       go-module    
 sigs.k8s.io/yaml                                         v1.3.0                                       go-module    
 skalibs                                                  2.14.1.1-r0                                  apk          
-ssl_client                                               1.36.1-r28                                   apk          
-stdlib                                                   go1.22.3                                     go-module    
+ssl_client                                               1.36.1-r29                                   apk          
+stdlib                                                   go1.22.4                                     go-module    
 tzdata                                                   2024a-r1                                     apk          
 unbound-libs                                             1.20.0-r0                                    apk          
 utmps-libs                                               0.1.2.2-r1                                   apk          
