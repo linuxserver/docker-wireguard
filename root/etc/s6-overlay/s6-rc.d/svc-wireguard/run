@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 
 unset WG_CONFS
-rm -rf /app/activeconfs
+rm -rf /run/activeconfs
 # Enumerate interfaces
 for wgconf in $(ls /config/wg_confs/*.conf); do
     if grep -q "\[Interface\]" "${wgconf}"; then
@@ -23,13 +23,13 @@ unset FAILED
 for tunnel in ${WG_CONFS[@]}; do
     echo "**** Activating tunnel ${tunnel} ****"
     if ! wg-quick up "${tunnel}"; then
-      FAILED="${tunnel}"
-      break
+        FAILED="${tunnel}"
+        break
     fi
 done
 
 if [[ -z "${FAILED}" ]]; then
-    declare -p WG_CONFS > /app/activeconfs
+    declare -p WG_CONFS > /run/activeconfs
     echo "**** All tunnels are now active ****"
 else
     echo "**** Tunnel ${FAILED} failed, will stop all others! ****"

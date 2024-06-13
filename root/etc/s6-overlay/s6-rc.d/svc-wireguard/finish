@@ -1,12 +1,12 @@
 #!/usr/bin/with-contenv bash
 # shellcheck shell=bash
 
-if [[ -f "/app/activeconfs" ]]; then
-    . /app/activeconfs
+if [[ -f "/run/activeconfs" ]]; then
+    . /run/activeconfs
     for tunnel in $(printf '%s\n' "${WG_CONFS[@]}" | tac | tr '\n' ' '; echo); do
         echo "**** Disabling tunnel ${tunnel} ****"
         wg-quick down "${tunnel}" || :
     done
     echo "**** All tunnels are down ****"
-    rm -rf /app/activeconfs
+    rm -rf /run/activeconfs
 fi
