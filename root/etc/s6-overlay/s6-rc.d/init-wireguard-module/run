@@ -10,9 +10,10 @@ if ip link add dev test type wireguard; then
     ip link del dev test
     if capsh --current | grep "Current:" | grep -q "cap_sys_module"; then
         echo "**** As the wireguard module is already active you can remove the SYS_MODULE capability from your container run/compose. ****"
+        echo "****     If your host does not automatically load the iptables module, you may still need the SYS_MODULE capability.     ****"
     fi
 else
     echo "**** The wireguard module is not active. If you believe that your kernel should have wireguard support already, make sure that it is activated via modprobe! ****"
-    echo "****  If you have an old kernel without wireguard support built-in, you can try using the "legacy" tag for this image to compile the modules from scratch.   ****"
+    echo "****  If you have an old kernel without wireguard support built-in, you can try using the 'legacy' tag for this image to compile the modules from scratch.   ****"
     sleep infinity
 fi
