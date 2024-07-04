@@ -19,7 +19,7 @@ coreutils                                                9.5-r1                 
 coreutils-env                                            9.5-r1                                       apk          
 coreutils-fmt                                            9.5-r1                                       apk          
 coreutils-sha512sum                                      9.5-r1                                       apk          
-curl                                                     8.7.1-r0                                     apk          
+curl                                                     8.8.0-r0                                     apk          
 findutils                                                4.9.0-r5                                     apk          
 github.com/Azure/azure-sdk-for-go                        v68.0.0+incompatible                         go-module    
 github.com/Azure/go-autorest/autorest                    v0.11.29                                     go-module    
@@ -156,8 +156,8 @@ libcap-getcap                                            2.70-r0                
 libcap-setcap                                            2.70-r0                                      apk          
 libcap-utils                                             2.70-r0                                      apk          
 libcap2                                                  2.70-r0                                      apk          
-libcrypto3                                               3.3.1-r0                                     apk          
-libcurl                                                  8.7.1-r0                                     apk          
+libcrypto3                                               3.3.1-r1                                     apk          
+libcurl                                                  8.8.0-r0                                     apk          
 libelf                                                   0.191-r0                                     apk          
 libevent                                                 2.1.12-r7                                    apk          
 libidn2                                                  2.3.7-r0                                     apk          
@@ -173,7 +173,7 @@ libproc2                                                 4.0.4-r0               
 libpsl                                                   0.21.5-r1                                    apk          
 libqrencode                                              4.1.1-r2                                     apk          
 libqrencode-tools                                        4.1.1-r2                                     apk          
-libssl3                                                  3.3.1-r0                                     apk          
+libssl3                                                  3.3.1-r1                                     apk          
 libunistring                                             1.2-r0                                       apk          
 libxtables                                               1.8.10-r3                                    apk          
 linux-pam                                                1.6.0-r0                                     apk          
@@ -183,7 +183,7 @@ musl-utils                                               1.2.5-r0               
 ncurses-terminfo-base                                    6.4_p20240420-r0                             apk          
 net-tools                                                2.10-r3                                      apk          
 netcat-openbsd                                           1.226-r0                                     apk          
-nghttp2-libs                                             1.62.0-r0                                    apk          
+nghttp2-libs                                             1.62.1-r0                                    apk          
 oniguruma                                                6.9.9-r0                                     apk          
 openresolv                                               3.13.2-r0                                    apk          
 pcre2                                                    10.43-r0                                     apk          
