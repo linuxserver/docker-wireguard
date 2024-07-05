@@ -54,8 +54,10 @@ opt_param_env_vars:
   - { env_var: "PERSISTENTKEEPALIVE_PEERS", env_value: "", desc: "Set to `all` or a list of comma separated peers (ie. `1,4,laptop`) for the wireguard server to send keepalive packets to listed peers every 25 seconds. Useful if server is accessed via domain name and has dynamic IP. Used only in server mode."}
   - { env_var: "LOG_CONFS", env_value: "true", desc: "Generated QR codes will be displayed in the docker log. Set to `false` to skip log output."}
 
-optional_block_1: false
-optional_block_1_items: ""
+readonly_supported: true
+readonly_message: |
+  * Not supported in client mode.
+  * Not supported for the `legacy` tag.
 
 # application setup block
 app_setup_block_enabled: true
