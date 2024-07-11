@@ -268,8 +268,8 @@ libpng16-16                                              1.6.37-3build5         
 libprocps8                                               2:3.3.17-6ubuntu2.1                          deb          
 libpsl5                                                  0.21.0-1.2build2                             deb          
 libpython3-stdlib                                        3.10.6-1~22.04                               deb          
-libpython3.10-minimal                                    3.10.12-1~22.04.3                            deb          
-libpython3.10-stdlib                                     3.10.12-1~22.04.3                            deb          
+libpython3.10-minimal                                    3.10.12-1~22.04.4                            deb          
+libpython3.10-stdlib                                     3.10.12-1~22.04.4                            deb          
 libqrencode4                                             4.1.1-1                                      deb          
 libquadmath0                                             12.3.0-1ubuntu1~22.04                        deb          
 libreadline8                                             8.1.2-1                                      deb          
@@ -286,7 +286,7 @@ libsmartcols1                                            2.37.2-4ubuntu3.4      
 libsqlite3-0                                             3.37.2-2ubuntu0.3                            deb          
 libss2                                                   1.46.5-2ubuntu1.1                            deb          
 libssh-4                                                 0.9.6-2ubuntu0.22.04.3                       deb          
-libssl3                                                  3.0.2-0ubuntu1.15                            deb          
+libssl3                                                  3.0.2-0ubuntu1.16                            deb          
 libstdc++-11-dev                                         11.4.0-1ubuntu1~22.04                        deb          
 libstdc++6                                               12.3.0-1ubuntu1~22.04                        deb          
 libsystemd0                                              249.11-0ubuntu3.12                           deb          
@@ -322,7 +322,7 @@ netbase                                                  6.3                    
 netcat                                                   1.218-4ubuntu1                               deb          
 netcat-openbsd                                           1.218-4ubuntu1                               deb          
 openresolv                                               3.12.0-2                                     deb          
-openssl                                                  3.0.2-0ubuntu1.15                            deb          
+openssl                                                  3.0.2-0ubuntu1.16                            deb          
 passwd                                                   1:4.8.1-2ubuntu2.2                           deb          
 patch                                                    2.7.6-7build2                                deb          
 perl                                                     5.34.0-3ubuntu1.3                            deb          
@@ -334,8 +334,8 @@ procps                                                   2:3.3.17-6ubuntu2.1    
 publicsuffix                                             20211207.1025-1                              deb          
 python3                                                  3.10.6-1~22.04                               deb          
 python3-minimal                                          3.10.6-1~22.04                               deb          
-python3.10                                               3.10.12-1~22.04.3                            deb          
-python3.10-minimal                                       3.10.12-1~22.04.3                            deb          
+python3.10                                               3.10.12-1~22.04.4                            deb          
+python3.10-minimal                                       3.10.12-1~22.04.4                            deb          
 qrencode                                                 4.1.1-1                                      deb          
 readline-common                                          8.1.2-1                                      deb          
 rpcsvc-proto                                             1.4.2-0ubuntu6                               deb          
@@ -347,7 +347,7 @@ sigs.k8s.io/yaml                                         v1.3.0                 
 stdlib                                                   go1.20.7                                     go-module    
 sysvinit-utils                                           3.01-1ubuntu1                                deb          
 tar                                                      1.34+dfsg-1ubuntu0.1.22.04.2                 deb          
-tzdata                                                   2024a-0ubuntu0.22.04                         deb          
+tzdata                                                   2024a-0ubuntu0.22.04.1                       deb          
 ubuntu-keyring                                           2021.03.26                                   deb          
 usrmerge                                                 25ubuntu2                                    deb          
 util-linux                                               2.37.2-4ubuntu3.4                            deb          
