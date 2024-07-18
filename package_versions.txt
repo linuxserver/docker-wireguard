@@ -10,8 +10,8 @@ brotli-libs                                              1.1.0-r2               
 busybox                                                  1.36.1-r29                                   apk          
 busybox-binsh                                            1.36.1-r29                                   apk          
 c-ares                                                   1.28.1-r0                                    apk          
-ca-certificates                                          20240226-r0                                  apk          
-ca-certificates-bundle                                   20240226-r0                                  apk          
+ca-certificates                                          20240705-r0                                  apk          
+ca-certificates-bundle                                   20240705-r0                                  apk          
 catatonit                                                0.2.0-r0                                     apk          
 cloud.google.com/go/compute/metadata                     v0.2.3                                       go-module    
 coredns                                                  1.11.1-r9                                    apk          
@@ -156,7 +156,7 @@ libcap-getcap                                            2.70-r0                
 libcap-setcap                                            2.70-r0                                      apk          
 libcap-utils                                             2.70-r0                                      apk          
 libcap2                                                  2.70-r0                                      apk          
-libcrypto3                                               3.3.1-r1                                     apk          
+libcrypto3                                               3.3.1-r3                                     apk          
 libcurl                                                  8.8.0-r0                                     apk          
 libelf                                                   0.191-r0                                     apk          
 libevent                                                 2.1.12-r7                                    apk          
@@ -173,7 +173,7 @@ libproc2                                                 4.0.4-r0               
 libpsl                                                   0.21.5-r1                                    apk          
 libqrencode                                              4.1.1-r2                                     apk          
 libqrencode-tools                                        4.1.1-r2                                     apk          
-libssl3                                                  3.3.1-r1                                     apk          
+libssl3                                                  3.3.1-r3                                     apk          
 libunistring                                             1.2-r0                                       apk          
 libxtables                                               1.8.10-r3                                    apk          
 linux-pam                                                1.6.0-r0                                     apk          
