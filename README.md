@@ -132,6 +132,15 @@ Keep in mind that this var will only be considered when the confs are regenerate
 
 Don't forget to set the necessary POSTUP and POSTDOWN rules in your client's peer conf for lan access.
 
+## Read-Only Operation
+
+This image can be run with a read-only container filesystem. For details please [read the docs](https://docs.linuxserver.io/misc/read-only/).
+
+### Caveats
+* Not supported in client mode.
+* Not supported for the `legacy` tag.
+
+
 ## Usage
 
 To help you get started creating a container from this image you can either use docker-compose or the docker cli.
@@ -216,6 +225,7 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-v /config` | Contains all relevant configuration files. |
 | `-v /lib/modules` | Host kernel modules for situations where they're not already loaded. |
 | `--sysctl=` | Required for client mode. |
+| `--read-only=true` | Run container with a read-only filesystem. Please [read the docs](https://docs.linuxserver.io/misc/read-only/). |
 
 ### Portainer notice
 
