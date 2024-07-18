@@ -234,8 +234,8 @@ libkmod2                                                 29-1ubuntu1            
 libkrb5-3                                                1.19.2-2ubuntu0.3                            deb          
 libkrb5support0                                          1.19.2-2ubuntu0.3                            deb          
 libksba8                                                 1.6.0-2ubuntu0.2                             deb          
-libldap-2.5-0                                            2.5.17+dfsg-0ubuntu0.22.04.1                 deb          
-libldap-common                                           2.5.17+dfsg-0ubuntu0.22.04.1                 deb          
+libldap-2.5-0                                            2.5.18+dfsg-0ubuntu0.22.04.1                 deb          
+libldap-common                                           2.5.18+dfsg-0ubuntu0.22.04.1                 deb          
 liblsan0                                                 12.3.0-1ubuntu1~22.04                        deb          
 liblz4-1                                                 1.9.3-2build2                                deb          
 liblzma5                                                 5.2.5-2ubuntu1                               deb          
@@ -304,7 +304,7 @@ libuuid1                                                 2.37.2-4ubuntu3.4      
 libxtables12                                             1.8.7-1ubuntu5.2                             deb          
 libxxhash0                                               0.8.1-1                                      deb          
 libzstd1                                                 1.4.8+dfsg-3build1                           deb          
-linux-libc-dev                                           5.15.0-113.123                               deb          
+linux-libc-dev                                           5.15.0-116.126                               deb          
 locales                                                  2.35-0ubuntu3.8                              deb          
 login                                                    1:4.8.1-2ubuntu2.2                           deb          
 logsave                                                  1.46.5-2ubuntu1.1                            deb          
