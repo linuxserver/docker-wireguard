@@ -392,6 +392,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **23.07.24:** - Install kmod from alpine repository.
 * **24.05.24:** - Rebase to Alpine 3.20, install wireguard-tools from Alpine repo.
 * **10.03.24:** - Use iptables-legacy on Alpine 3.19.
 * **05.03.24:** - Rebase master to Alpine 3.19.
