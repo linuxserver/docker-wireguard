@@ -20,6 +20,7 @@ RUN \
     iptables-legacy \
     ip6tables \
     iputils \
+    kmod \
     libcap-utils \
     libqrencode-tools \
     net-tools \
