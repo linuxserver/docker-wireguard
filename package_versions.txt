@@ -20,7 +20,7 @@ cpp                                                            4:11.2.0-1ubuntu1
 cpp-11                                                         11.4.0-1ubuntu1~22.04                    deb          
 cpp-12                                                         12.3.0-1ubuntu1~22.04                    deb          
 cron                                                           3.0pl1-137ubuntu3                        deb          
-curl                                                           7.81.0-1ubuntu1.16                       deb          
+curl                                                           7.81.0-1ubuntu1.17                       deb          
 dash                                                           0.5.11+git20210903+057cd650a4ed-3build1  deb          
 dctrl-tools                                                    2.24-3build2                             deb          
 debconf                                                        1.5.79ubuntu1                            deb          
@@ -206,8 +206,8 @@ libcrypt-dev                                                   1:4.4.27-1       
 libcrypt1                                                      1:4.4.27-1                               deb          
 libctf-nobfd0                                                  2.38-4ubuntu2.6                          deb          
 libctf0                                                        2.38-4ubuntu2.6                          deb          
-libcurl3-gnutls                                                7.81.0-1ubuntu1.16                       deb          
-libcurl4                                                       7.81.0-1ubuntu1.16                       deb          
+libcurl3-gnutls                                                7.81.0-1ubuntu1.17                       deb          
+libcurl4                                                       7.81.0-1ubuntu1.17                       deb          
 libdb5.3                                                       5.3.28+dfsg1-0.8ubuntu3                  deb          
 libdebconfclient0                                              0.261ubuntu1                             deb          
 libdpkg-perl                                                   1.21.1ubuntu2.3                          deb          
@@ -294,7 +294,7 @@ libsmartcols1                                                  2.37.2-4ubuntu3.4
 libsqlite3-0                                                   3.37.2-2ubuntu0.3                        deb          
 libss2                                                         1.46.5-2ubuntu1.1                        deb          
 libssh-4                                                       0.9.6-2ubuntu0.22.04.3                   deb          
-libssl3                                                        3.0.2-0ubuntu1.16                        deb          
+libssl3                                                        3.0.2-0ubuntu1.17                        deb          
 libstdc++-11-dev                                               11.4.0-1ubuntu1~22.04                    deb          
 libstdc++6                                                     12.3.0-1ubuntu1~22.04                    deb          
 libsystemd0                                                    249.11-0ubuntu3.12                       deb          
@@ -330,7 +330,7 @@ netbase                                                        6.3              
 netcat                                                         1.218-4ubuntu1                           deb          
 netcat-openbsd                                                 1.218-4ubuntu1                           deb          
 openresolv                                                     3.12.0-2                                 deb          
-openssl                                                        3.0.2-0ubuntu1.16                        deb          
+openssl                                                        3.0.2-0ubuntu1.17                        deb          
 passwd                                                         1:4.8.1-2ubuntu2.2                       deb          
 patch                                                          2.7.6-7build2                            deb          
 perl                                                           5.34.0-3ubuntu1.3                        deb          
