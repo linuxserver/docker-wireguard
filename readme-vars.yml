@@ -130,6 +130,7 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "13.08.24:", desc: "Add `errors` plugin to default Corefile." }
   - { date: "23.07.24:", desc: "Install kmod from alpine repository." }
   - { date: "24.05.24:", desc: "Rebase to Alpine 3.20, install wireguard-tools from Alpine repo." }
   - { date: "10.03.24:", desc: "Use iptables-legacy on Alpine 3.19." }
