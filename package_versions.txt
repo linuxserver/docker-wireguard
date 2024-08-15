@@ -228,7 +228,7 @@ libgmp10                                                       2:6.2.1+dfsg-3ubu
 libgnutls30                                                    3.7.3-4ubuntu1.5                         deb          
 libgomp1                                                       12.3.0-1ubuntu1~22.04                    deb          
 libgpg-error0                                                  1.43-3                                   deb          
-libgssapi-krb5-2                                               1.19.2-2ubuntu0.3                        deb          
+libgssapi-krb5-2                                               1.19.2-2ubuntu0.4                        deb          
 libhogweed6                                                    3.7.3-1build2                            deb          
 libidn2-0                                                      2.3.2-2build1                            deb          
 libip4tc2                                                      1.8.7-1ubuntu5.2                         deb          
@@ -236,11 +236,11 @@ libip6tc2                                                      1.8.7-1ubuntu5.2 
 libisl23                                                       0.24-2build1                             deb          
 libitm1                                                        12.3.0-1ubuntu1~22.04                    deb          
 libjq1                                                         1.6-2.1ubuntu3                           deb          
-libk5crypto3                                                   1.19.2-2ubuntu0.3                        deb          
+libk5crypto3                                                   1.19.2-2ubuntu0.4                        deb          
 libkeyutils1                                                   1.6.1-2ubuntu3                           deb          
 libkmod2                                                       29-1ubuntu1                              deb          
-libkrb5-3                                                      1.19.2-2ubuntu0.3                        deb          
-libkrb5support0                                                1.19.2-2ubuntu0.3                        deb          
+libkrb5-3                                                      1.19.2-2ubuntu0.4                        deb          
+libkrb5support0                                                1.19.2-2ubuntu0.4                        deb          
 libksba8                                                       1.6.0-2ubuntu0.2                         deb          
 libldap-2.5-0                                                  2.5.18+dfsg-0ubuntu0.22.04.2             deb          
 libldap-common                                                 2.5.18+dfsg-0ubuntu0.22.04.2             deb          
@@ -312,7 +312,7 @@ libuuid1                                                       2.37.2-4ubuntu3.4
 libxtables12                                                   1.8.7-1ubuntu5.2                         deb          
 libxxhash0                                                     0.8.1-1                                  deb          
 libzstd1                                                       1.4.8+dfsg-3build1                       deb          
-linux-libc-dev                                                 5.15.0-117.127                           deb          
+linux-libc-dev                                                 5.15.0-118.128                           deb          
 locales                                                        2.35-0ubuntu3.8                          deb          
 login                                                          1:4.8.1-2ubuntu2.2                       deb          
 logsave                                                        1.46.5-2ubuntu1.1                        deb          
