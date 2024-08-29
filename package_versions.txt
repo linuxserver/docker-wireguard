@@ -31,7 +31,7 @@ distro-info-data                                               0.52ubuntu0.7    
 dkms                                                           2.8.7-2ubuntu2.2                         deb          
 dpkg                                                           1.21.1ubuntu2.3                          deb          
 dpkg-dev                                                       1.21.1ubuntu2.3                          deb          
-e2fsprogs                                                      1.46.5-2ubuntu1.1                        deb          
+e2fsprogs                                                      1.46.5-2ubuntu1.2                        deb          
 findutils                                                      4.8.0-1ubuntu3                           deb          
 g++                                                            4:11.2.0-1ubuntu1                        deb          
 g++-11                                                         11.4.0-1ubuntu1~22.04                    deb          
@@ -201,7 +201,7 @@ libcap-ng0                                                     0.7.9-2.2build3  
 libcap2                                                        1:2.44-1ubuntu0.22.04.1                  deb          
 libcap2-bin                                                    1:2.44-1ubuntu0.22.04.1                  deb          
 libcc1-0                                                       12.3.0-1ubuntu1~22.04                    deb          
-libcom-err2                                                    1.46.5-2ubuntu1.1                        deb          
+libcom-err2                                                    1.46.5-2ubuntu1.2                        deb          
 libcrypt-dev                                                   1:4.4.27-1                               deb          
 libcrypt1                                                      1:4.4.27-1                               deb          
 libctf-nobfd0                                                  2.38-4ubuntu2.6                          deb          
@@ -215,7 +215,7 @@ libelf-dev                                                     0.186-1build1    
 libelf1                                                        0.186-1build1                            deb          
 liberror-perl                                                  0.17029-1                                deb          
 libexpat1                                                      2.4.7-1ubuntu0.3                         deb          
-libext2fs2                                                     1.46.5-2ubuntu1.1                        deb          
+libext2fs2                                                     1.46.5-2ubuntu1.2                        deb          
 libffi8                                                        3.4.2-4                                  deb          
 libgcc-11-dev                                                  11.4.0-1ubuntu1~22.04                    deb          
 libgcc-12-dev                                                  12.3.0-1ubuntu1~22.04                    deb          
@@ -275,7 +275,7 @@ libperl5.34                                                    5.34.0-3ubuntu1.3
 libpng16-16                                                    1.6.37-3build5                           deb          
 libprocps8                                                     2:3.3.17-6ubuntu2.1                      deb          
 libpsl5                                                        0.21.0-1.2build2                         deb          
-libpython3-stdlib                                              3.10.6-1~22.04                           deb          
+libpython3-stdlib                                              3.10.6-1~22.04.1                         deb          
 libpython3.10-minimal                                          3.10.12-1~22.04.5                        deb          
 libpython3.10-stdlib                                           3.10.12-1~22.04.5                        deb          
 libqrencode4                                                   4.1.1-1                                  deb          
@@ -292,7 +292,7 @@ libsemanage2                                                   3.3-1build2      
 libsepol2                                                      3.3-1build1                              deb          
 libsmartcols1                                                  2.37.2-4ubuntu3.4                        deb          
 libsqlite3-0                                                   3.37.2-2ubuntu0.3                        deb          
-libss2                                                         1.46.5-2ubuntu1.1                        deb          
+libss2                                                         1.46.5-2ubuntu1.2                        deb          
 libssh-4                                                       0.9.6-2ubuntu0.22.04.3                   deb          
 libssl3                                                        3.0.2-0ubuntu1.17                        deb          
 libstdc++-11-dev                                               11.4.0-1ubuntu1~22.04                    deb          
@@ -315,7 +315,7 @@ libzstd1                                                       1.4.8+dfsg-3build
 linux-libc-dev                                                 5.15.0-119.129                           deb          
 locales                                                        2.35-0ubuntu3.8                          deb          
 login                                                          1:4.8.1-2ubuntu2.2                       deb          
-logsave                                                        1.46.5-2ubuntu1.1                        deb          
+logsave                                                        1.46.5-2ubuntu1.2                        deb          
 lsb-base                                                       11.1.0ubuntu4                            deb          
 lsb-release                                                    11.1.0ubuntu4                            deb          
 lto-disabled-list                                              24                                       deb          
@@ -340,8 +340,8 @@ pinentry-curses                                                1.1.1-1build2    
 pkg-config                                                     0.29.2-1ubuntu3                          deb          
 procps                                                         2:3.3.17-6ubuntu2.1                      deb          
 publicsuffix                                                   20211207.1025-1                          deb          
-python3                                                        3.10.6-1~22.04                           deb          
-python3-minimal                                                3.10.6-1~22.04                           deb          
+python3                                                        3.10.6-1~22.04.1                         deb          
+python3-minimal                                                3.10.6-1~22.04.1                         deb          
 python3.10                                                     3.10.12-1~22.04.5                        deb          
 python3.10-minimal                                             3.10.12-1~22.04.5                        deb          
 qrencode                                                       4.1.1-1                                  deb          
