@@ -294,7 +294,7 @@ libsmartcols1                                                  2.37.2-4ubuntu3.4
 libsqlite3-0                                                   3.37.2-2ubuntu0.3                        deb          
 libss2                                                         1.46.5-2ubuntu1.2                        deb          
 libssh-4                                                       0.9.6-2ubuntu0.22.04.3                   deb          
-libssl3                                                        3.0.2-0ubuntu1.17                        deb          
+libssl3                                                        3.0.2-0ubuntu1.18                        deb          
 libstdc++-11-dev                                               11.4.0-1ubuntu1~22.04                    deb          
 libstdc++6                                                     12.3.0-1ubuntu1~22.04                    deb          
 libsystemd0                                                    249.11-0ubuntu3.12                       deb          
@@ -330,7 +330,7 @@ netbase                                                        6.3              
 netcat                                                         1.218-4ubuntu1                           deb          
 netcat-openbsd                                                 1.218-4ubuntu1                           deb          
 openresolv                                                     3.12.0-2                                 deb          
-openssl                                                        3.0.2-0ubuntu1.17                        deb          
+openssl                                                        3.0.2-0ubuntu1.18                        deb          
 passwd                                                         1:4.8.1-2ubuntu2.2                       deb          
 patch                                                          2.7.6-7build2                            deb          
 perl                                                           5.34.0-3ubuntu1.3                        deb          
