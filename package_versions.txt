@@ -19,7 +19,7 @@ coreutils                                                9.5-r1                 
 coreutils-env                                            9.5-r1                                       apk          
 coreutils-fmt                                            9.5-r1                                       apk          
 coreutils-sha512sum                                      9.5-r1                                       apk          
-curl                                                     8.9.0-r0                                     apk          
+curl                                                     8.9.1-r1                                     apk          
 findutils                                                4.9.0-r5                                     apk          
 github.com/Azure/azure-sdk-for-go                        v68.0.0+incompatible                         go-module    
 github.com/Azure/go-autorest/autorest                    v0.11.29                                     go-module    
@@ -158,7 +158,7 @@ libcap-setcap                                            2.70-r0                
 libcap-utils                                             2.70-r0                                      apk          
 libcap2                                                  2.70-r0                                      apk          
 libcrypto3                                               3.3.1-r3                                     apk          
-libcurl                                                  8.9.0-r0                                     apk          
+libcurl                                                  8.9.1-r1                                     apk          
 libelf                                                   0.191-r0                                     apk          
 libevent                                                 2.1.12-r7                                    apk          
 libidn2                                                  2.3.7-r0                                     apk          
