@@ -1,8 +1,8 @@
 NAME                                                           VERSION                                  TYPE        
 adduser                                                        3.118ubuntu5                             deb          
-apt                                                            2.4.12                                   deb          
-apt-utils                                                      2.4.12                                   deb          
-base-files                                                     12ubuntu4.6                              deb          
+apt                                                            2.4.13                                   deb          
+apt-utils                                                      2.4.13                                   deb          
+base-files                                                     12ubuntu4.7                              deb          
 base-passwd                                                    3.5.52build1                             deb          
 bash                                                           5.1-6ubuntu1.1                           deb          
 bc                                                             1.07.1-3build1                           deb          
@@ -179,7 +179,7 @@ k8s.io/kube-openapi                                            v0.0.0-2023101017
 k8s.io/utils                                                   v0.0.0-20230726121419-3b25d923346b       go-module    
 kmod                                                           29-1ubuntu1                              deb          
 libacl1                                                        2.3.1-1                                  deb          
-libapt-pkg6.0                                                  2.4.12                                   deb          
+libapt-pkg6.0                                                  2.4.13                                   deb          
 libasan6                                                       11.4.0-1ubuntu1~22.04                    deb          
 libasan8                                                       12.3.0-1ubuntu1~22.04                    deb          
 libassuan0                                                     2.5.5-1build1                            deb          
