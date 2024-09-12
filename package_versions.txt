@@ -2,7 +2,7 @@ NAME                                                     VERSION                
 alpine-baselayout                                        3.6.5-r0                                     apk          
 alpine-baselayout-data                                   3.6.5-r0                                     apk          
 alpine-keys                                              2.4-r1                                       apk          
-alpine-release                                           3.20.2-r0                                    apk          
+alpine-release                                           3.20.3-r0                                    apk          
 apk-tools                                                2.14.4-r0                                    apk          
 bash                                                     5.2.26-r0                                    apk          
 bc                                                       1.07.1-r4                                    apk          
@@ -157,7 +157,7 @@ libcap-getcap                                            2.70-r0                
 libcap-setcap                                            2.70-r0                                      apk          
 libcap-utils                                             2.70-r0                                      apk          
 libcap2                                                  2.70-r0                                      apk          
-libcrypto3                                               3.3.1-r3                                     apk          
+libcrypto3                                               3.3.2-r0                                     apk          
 libcurl                                                  8.9.1-r1                                     apk          
 libelf                                                   0.191-r0                                     apk          
 libevent                                                 2.1.12-r7                                    apk          
@@ -174,7 +174,7 @@ libproc2                                                 4.0.4-r0               
 libpsl                                                   0.21.5-r1                                    apk          
 libqrencode                                              4.1.1-r2                                     apk          
 libqrencode-tools                                        4.1.1-r2                                     apk          
-libssl3                                                  3.3.1-r3                                     apk          
+libssl3                                                  3.3.2-r0                                     apk          
 libunistring                                             1.2-r0                                       apk          
 libxtables                                               1.8.10-r3                                    apk          
 linux-pam                                                1.6.0-r0                                     apk          
@@ -199,7 +199,7 @@ sigs.k8s.io/yaml                                         v1.3.0                 
 skalibs                                                  2.14.1.1-r0                                  apk          
 ssl_client                                               1.36.1-r29                                   apk          
 stdlib                                                   go1.22.5                                     go-module    
-tzdata                                                   2024a-r1                                     apk          
+tzdata                                                   2024b-r0                                     apk          
 unbound-libs                                             1.20.0-r0                                    apk          
 utmps-libs                                               0.1.2.2-r1                                   apk          
 wireguard-tools                                          1.0.20210914-r4                              apk          
