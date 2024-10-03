@@ -9,7 +9,7 @@ bc                                                       1.07.1-r4              
 brotli-libs                                              1.1.0-r2                                     apk          
 busybox                                                  1.36.1-r29                                   apk          
 busybox-binsh                                            1.36.1-r29                                   apk          
-c-ares                                                   1.28.1-r0                                    apk          
+c-ares                                                   1.33.1-r0                                    apk          
 ca-certificates                                          20240705-r0                                  apk          
 ca-certificates-bundle                                   20240705-r0                                  apk          
 catatonit                                                0.2.0-r0                                     apk          
