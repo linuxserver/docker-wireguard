@@ -12,7 +12,7 @@ binutils-x86-64-linux-gnu                                      2.38-4ubuntu2.6  
 bsdutils                                                       1:2.37.2-4ubuntu3.4                      deb          
 build-essential                                                12.9ubuntu3                              deb          
 bzip2                                                          1.0.8-5build1                            deb          
-ca-certificates                                                20230311ubuntu0.22.04.1                  deb          
+ca-certificates                                                20240203~22.04.1                         deb          
 catatonit                                                      0.1.7-1                                  deb          
 cloud.google.com/go/compute/metadata                           v0.2.3                                   go-module    
 coreutils                                                      8.32-4.1ubuntu1.2                        deb          
