@@ -18,6 +18,9 @@ fi
 if [[ ! -f /config/templates/peer.conf ]]; then
     cp /defaults/peer.conf /config/templates/peer.conf
 fi
+if [[ ! -f /config/templates/server-peer.conf ]]; then
+    cp /defaults/server-peer.conf /config/templates/server-peer.conf
+fi
 # add preshared key to user templates (backwards compatibility)
 if ! grep -q 'PresharedKey' /config/templates/peer.conf; then
     sed -i 's|^Endpoint|PresharedKey = \$\(cat /config/\${PEER_ID}/presharedkey-\${PEER_ID}\)\nEndpoint|' /config/templates/peer.conf
@@ -69,13 +72,6 @@ DUDE"
                 cat <<DUDE > /config/${PEER_ID}/${PEER_ID}.conf
 $(cat /config/templates/peer.conf)
 DUDE"
-                # add peer info to server conf with presharedkey
-                cat <<DUDE >> /config/wg_confs/wg0.conf
-[Peer]
-# ${PEER_ID}
-PublicKey = $(cat "/config/${PEER_ID}/publickey-${PEER_ID}")
-PresharedKey = $(cat "/config/${PEER_ID}/presharedkey-${PEER_ID}")
-DUDE
             else
                 echo "**** Existing keys with no preshared key found for ${PEER_ID}, creating confs without preshared key for backwards compatibility ****"
                 # create peer conf without presharedkey
@@ -83,25 +79,16 @@ DUDE
                 cat <<DUDE > /config/${PEER_ID}/${PEER_ID}.conf
 $(sed '/PresharedKey/d' "/config/templates/peer.conf")
 DUDE"
-                # add peer info to server conf without presharedkey
-                cat <<DUDE >> /config/wg_confs/wg0.conf
-[Peer]
-# ${PEER_ID}
-PublicKey = $(cat "/config/${PEER_ID}/publickey-${PEER_ID}")
-DUDE
             fi
             SERVER_ALLOWEDIPS=SERVER_ALLOWEDIPS_PEER_${i}
-            # add peer's allowedips to server conf
             if [[ -n "${!SERVER_ALLOWEDIPS}" ]]; then
                 echo "Adding ${!SERVER_ALLOWEDIPS} to wg0.conf's AllowedIPs for peer ${i}"
-                cat <<DUDE >> /config/wg_confs/wg0.conf
-AllowedIPs = ${CLIENT_IP}/32,${!SERVER_ALLOWEDIPS}
-DUDE
-            else
-                cat <<DUDE >> /config/wg_confs/wg0.conf
-AllowedIPs = ${CLIENT_IP}/32
-DUDE
             fi
+            # add peer info to server conf
+            eval "$(printf %s)
+            cat <<DUDE >> /config/wg_confs/wg0.conf
+$(cat /config/templates/server-peer.conf)
+DUDE"
             # add PersistentKeepalive if the peer is specified
             if [[ -n "${PERSISTENTKEEPALIVE_PEERS_ARRAY}" ]] && ([[ "${PERSISTENTKEEPALIVE_PEERS_ARRAY[0]}" = "all" ]] || printf '%s\0' "${PERSISTENTKEEPALIVE_PEERS_ARRAY[@]}" | grep -Fxqz -- "${i}"); then
                 cat <<DUDE >> /config/wg_confs/wg0.conf
