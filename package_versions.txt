@@ -200,7 +200,7 @@ skalibs                                                  2.14.1.1-r0            
 ssl_client                                               1.36.1-r29                                   apk          
 stdlib                                                   go1.22.5                                     go-module    
 tzdata                                                   2024b-r0                                     apk          
-unbound-libs                                             1.20.0-r0                                    apk          
+unbound-libs                                             1.20.0-r1                                    apk          
 utmps-libs                                               0.1.2.2-r1                                   apk          
 wireguard-tools                                          1.0.20210914-r4                              apk          
 wireguard-tools-wg                                       1.0.20210914-r4                              apk          
