@@ -132,7 +132,6 @@ Keep in mind that this var will only be considered when the confs are regenerate
 
 Don't forget to set the necessary POSTUP and POSTDOWN rules in your client's peer conf for lan access.
 
- 
 ## Read-Only Operation
 
 This image can be run with a read-only container filesystem. For details please [read the docs](https://docs.linuxserver.io/misc/read-only/).
@@ -145,6 +144,9 @@ This image can be run with a read-only container filesystem. For details please 
 ## Usage
 
 To help you get started creating a container from this image you can either use docker-compose or the docker cli.
+
+>[!NOTE]
+>Unless a parameter is flaged as 'optional', it is *mandatory* and a value must be provided.
 
 ### docker-compose (recommended, [click here for more info](https://docs.linuxserver.io/general/docker-compose))
 
@@ -211,7 +213,7 @@ Containers are configured using parameters passed at runtime (such as those abov
 
 | Parameter | Function |
 | :----: | --- |
-| `-p 51820/udp` | wireguard port |
+| `-p 51820:51820/udp` | wireguard port |
 | `-e PUID=1000` | for UserID - see below for explanation |
 | `-e PGID=1000` | for GroupID - see below for explanation |
 | `-e TZ=Etc/UTC` | specify a timezone to use, see this [list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List). |
@@ -227,6 +229,8 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-v /lib/modules` | Host kernel modules for situations where they're not already loaded. |
 | `--sysctl=` | Required for client mode. |
 | `--read-only=true` | Run container with a read-only filesystem. Please [read the docs](https://docs.linuxserver.io/misc/read-only/). |
+| `--cap-add=NET_ADMIN` | Neccessary for Wireguard to create its VPN interface. |
+| `--cap-add=SYS_MODULE` | Neccessary for loading Wireguard kernel module if it's not already loaded. |
 
 ### Portainer notice
 
