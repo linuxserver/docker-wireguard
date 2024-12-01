@@ -35,10 +35,10 @@ param_env_vars:
   - { env_var: "TZ", env_value: "Europe/London", desc: "Specify a timezone to use EG Europe/London"}
 cap_add_param: true
 cap_add_param_vars:
-  - { cap_add_var: "NET_ADMIN" }
+  - { cap_add_var: "NET_ADMIN", desc: "Neccessary for Wireguard to create its VPN interface." }
 opt_cap_add_param: true
 opt_cap_add_param_vars:
-  - { cap_add_var: "SYS_MODULE" }
+  - { cap_add_var: "SYS_MODULE", desc: "Neccessary for loading Wireguard kernel module if it's not already loaded."  }
 custom_params:
   - { name: "sysctl", name_compose: "sysctls", value: ["net.ipv4.conf.all.src_valid_mark=1"], desc: "Required for client mode.", array: "true" }
 
