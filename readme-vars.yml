@@ -6,55 +6,49 @@ project_url: "https://www.wireguard.com/"
 project_logo: "https://www.wireguard.com/img/wireguard.svg"
 project_blurb: "[WireGuard®]({{ project_url }}) is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography. It aims to be faster, simpler, leaner, and more useful than IPsec, while avoiding the massive headache. It intends to be considerably more performant than OpenVPN. WireGuard is designed as a general purpose VPN for running on embedded interfaces and super computers alike, fit for many different circumstances. Initially released for the Linux kernel, it is now cross-platform (Windows, macOS, BSD, iOS, Android) and widely deployable. It is currently under heavy development, but already it might be regarded as the most secure, easiest to use, and simplest VPN solution in the industry."
 project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_name }}"
-
 # supported architectures
 available_architectures:
-  - { arch: "{{ arch_x86_64 }}", tag: "amd64-latest"}
-  - { arch: "{{ arch_arm64 }}", tag: "arm64v8-latest"}
-
+  - {arch: "{{ arch_x86_64 }}", tag: "amd64-latest"}
+  - {arch: "{{ arch_arm64 }}", tag: "arm64v8-latest"}
 # development version
 development_versions: true
 development_versions_items:
-  - { tag: "latest", desc: "Stable releases based on Alpine *without* support for compiling Wireguard modules." }
-  - { tag: "legacy", desc: "Stable releases with support for compiling Wireguard modules for older kernels." }
-
+  - {tag: "latest", desc: "Stable releases based on Alpine *without* support for compiling Wireguard modules."}
+  - {tag: "legacy", desc: "Stable releases with support for compiling Wireguard modules for older kernels."}
 # container parameters
 common_param_env_vars_enabled: true
 param_container_name: "{{ project_name }}"
 param_usage_include_vols: true
 param_volumes:
-  - { vol_path: "/config", vol_host_path: "/path/to/appdata/config", desc: "Contains all relevant configuration files." }
+  - {vol_path: "/config", vol_host_path: "/path/to/appdata/config", desc: "Contains all relevant configuration files."}
 opt_param_usage_include_vols: true
 opt_param_volumes:
-  - { vol_path: "/lib/modules", vol_host_path: "/lib/modules", desc: "Maps host's modules folder. Only required if compiling wireguard modules." }
+  - {vol_path: "/lib/modules", vol_host_path: "/lib/modules", desc: "Maps host's modules folder. Only required if compiling wireguard modules."}
 param_usage_include_ports: true
 param_ports:
-  - { external_port: "51820", internal_port: "51820/udp", port_desc: "wireguard port" }
+  - {external_port: "51820", internal_port: "51820/udp", port_desc: "wireguard port"}
 param_usage_include_env: true
 param_env_vars:
-  - { env_var: "TZ", env_value: "Europe/London", desc: "Specify a timezone to use EG Europe/London"}
+  - {env_var: "TZ", env_value: "Europe/London", desc: "Specify a timezone to use EG Europe/London"}
 cap_add_param: true
 cap_add_param_vars:
-  - { cap_add_var: "NET_ADMIN", desc: "Neccessary for Wireguard to create its VPN interface." }
-  - { cap_add_var: "SYS_MODULE", desc: "Neccessary for loading Wireguard kernel module if it's not already loaded."  }
+  - {cap_add_var: "NET_ADMIN", desc: "Neccessary for Wireguard to create its VPN interface."}
+  - {cap_add_var: "SYS_MODULE", desc: "Neccessary for loading Wireguard kernel module if it's not already loaded."}
 custom_params:
-  - { name: "sysctl", name_compose: "sysctls", value: ["net.ipv4.conf.all.src_valid_mark=1"], desc: "Required for client mode.", array: "true" }
-
+  - {name: "sysctl", name_compose: "sysctls", value: ["net.ipv4.conf.all.src_valid_mark=1"], desc: "Required for client mode.", array: "true"}
 # optional container parameters
 opt_param_usage_include_env: true
 opt_param_env_vars:
-  - { env_var: "SERVERURL", env_value: "wireguard.domain.com", desc: "External IP or domain name for docker host. Used in server mode. If set to `auto`, the container will try to determine and set the external IP automatically"}
-  - { env_var: "SERVERPORT", env_value: "51820", desc: "External port for docker host. Used in server mode."}
-  - { env_var: "PEERS", env_value: "1", desc: "Number of peers to create confs for. Required for server mode. Can also be a list of names: `myPC,myPhone,myTablet` (alphanumeric only)"}
-  - { env_var: "PEERDNS", env_value: "auto", desc: "DNS server set in peer/client configs (can be set as `8.8.8.8`). Used in server mode. Defaults to `auto`, which uses wireguard docker host's DNS via included CoreDNS forward."}
-  - { env_var: "INTERNAL_SUBNET", env_value: "10.13.13.0", desc: "Internal subnet for the wireguard and server and peers (only change if it clashes). Used in server mode."}
-  - { env_var: "ALLOWEDIPS", env_value: "0.0.0.0/0", desc: "The IPs/Ranges that the peers will be able to reach using the VPN connection. If not specified the default value is: '0.0.0.0/0, ::0/0' This will cause ALL traffic to route through the VPN, if you want split tunneling, set this to only the IPs you would like to use the tunnel AND the ip of the server's WG ip, such as 10.13.13.1."}
-  - { env_var: "PERSISTENTKEEPALIVE_PEERS", env_value: "", desc: "Set to `all` or a list of comma separated peers (ie. `1,4,laptop`) for the wireguard server to send keepalive packets to listed peers every 25 seconds. Useful if server is accessed via domain name and has dynamic IP. Used only in server mode."}
-  - { env_var: "LOG_CONFS", env_value: "true", desc: "Generated QR codes will be displayed in the docker log. Set to `false` to skip log output."}
-
+  - {env_var: "SERVERURL", env_value: "wireguard.domain.com", desc: "External IP or domain name for docker host. Used in server mode. If set to `auto`, the container will try to determine and set the external IP automatically"}
+  - {env_var: "SERVERPORT", env_value: "51820", desc: "External port for docker host. Used in server mode."}
+  - {env_var: "PEERS", env_value: "1", desc: "Number of peers to create confs for. Required for server mode. Can also be a list of names: `myPC,myPhone,myTablet` (alphanumeric only)"}
+  - {env_var: "PEERDNS", env_value: "auto", desc: "DNS server set in peer/client configs (can be set as `8.8.8.8`). Used in server mode. Defaults to `auto`, which uses wireguard docker host's DNS via included CoreDNS forward."}
+  - {env_var: "INTERNAL_SUBNET", env_value: "10.13.13.0", desc: "Internal subnet for the wireguard and server and peers (only change if it clashes). Used in server mode."}
+  - {env_var: "ALLOWEDIPS", env_value: "0.0.0.0/0", desc: "The IPs/Ranges that the peers will be able to reach using the VPN connection. If not specified the default value is: '0.0.0.0/0, ::0/0' This will cause ALL traffic to route through the VPN, if you want split tunneling, set this to only the IPs you would like to use the tunnel AND the ip of the server's WG ip, such as 10.13.13.1."}
+  - {env_var: "PERSISTENTKEEPALIVE_PEERS", env_value: "", desc: "Set to `all` or a list of comma separated peers (ie. `1,4,laptop`) for the wireguard server to send keepalive packets to listed peers every 25 seconds. Useful if server is accessed via domain name and has dynamic IP. Used only in server mode."}
+  - {env_var: "LOG_CONFS", env_value: "true", desc: "Generated QR codes will be displayed in the docker log. Set to `false` to skip log output."}
 optional_block_1: false
 optional_block_1_items: ""
-
 # application setup block
 app_setup_block_enabled: true
 app_setup_block: |
@@ -124,38 +118,82 @@ app_setup_block: |
   Keep in mind that this var will only be considered when the confs are regenerated. Adding this var for an existing peer won't force a regeneration. You can delete wg0.conf and restart the container to force regeneration if necessary.
 
   Don't forget to set the necessary POSTUP and POSTDOWN rules in your client's peer conf for lan access.
-
-
+# init diagram
+init_diagram: |
+  "wireguard:legacy": {
+    docker-mods
+    base {
+      fix-attr +\nlegacy cont-init
+    }
+    docker-mods -> base
+    legacy-services
+    custom services
+    init-services -> legacy-services
+    init-services -> custom services
+    custom services -> legacy-services
+    legacy-services -> ci-service-check
+    init-migrations -> init-adduser
+    init-os-end -> init-config
+    init-config -> init-config-end
+    init-wireguard-confs -> init-config-end
+    init-os-end -> init-crontab-config
+    init-mods-end -> init-custom-files
+    base -> init-envfile
+    base -> init-migrations
+    base -> init-mods
+    init-config-end -> init-mods
+    init-mods -> init-mods-end
+    init-mods-package-install -> init-mods-end
+    init-mods -> init-mods-package-install
+    base -> init-os-end
+    init-adduser -> init-os-end
+    init-envfile -> init-os-end
+    init-migrations -> init-os-end
+    init-custom-files -> init-services
+    init-mods-end -> init-services
+    init-wireguard-module -> init-wireguard-confs
+    init-config -> init-wireguard-module
+    init-services -> svc-coredns
+    svc-coredns -> legacy-services
+    init-services -> svc-cron
+    svc-cron -> legacy-services
+    svc-coredns -> svc-wireguard
+    svc-wireguard -> legacy-services
+  }
+  Base Images: {
+    "baseimage-ubuntu:jammy"
+  }
+  "wireguard:legacy" <- Base Images
 # changelog
 changelogs:
-  - { date: "03.10.23:", desc: "**Potentially Breaking Change:** Support for multiple interfaces added. Wireguard confs moved to `/config/wg_confs/`. Any file with a `.conf` extension in that folder will be treated as a live tunnel config and will be attempted to start. If any of the tunnels fail, all tunnels will be stopped. Tunnels are started in alphabetical order. Managed server conf will continue to be hardcoded to `wg0.conf`." }
-  - { date: "24.06.23:", desc: "Deprecate armhf as per [https://www.linuxserver.io/armhf](https://www.linuxserver.io/armhf)." }
-  - { date: "26.04.23:", desc: "Rework branches, swap alpine & ubuntu builds." }
-  - { date: "28.01.23:", desc: "Patch wg-quick to suppress false positive sysctl warning." }
-  - { date: "10.01.23:", desc: "Add new var to add `PersistentKeepalive` to server config for select peers to survive server IP changes when domain name is used." }
-  - { date: "26.10.22:", desc: "Better handle unsupported peer names. Improve logging." }
-  - { date: "12.10.22:", desc: "Add Alpine branch. Optimize wg and coredns services." }
-  - { date: "09.10.22:", desc: "Switch back to iptables-legacy due to issues on some hosts." }
-  - { date: "04.10.22:", desc: "Rebase to Jammy. Upgrade to s6v3." }
-  - { date: "16.05.22:", desc: "Improve NAT handling in server mode when multiple ethernet devices are present." }
-  - { date: "23.04.22:", desc: "Add pre-shared key support. Automatically added to all new peer confs generated, existing ones are left without to ensure no breaking changes." }
-  - { date: "10.04.22:", desc: "Rebase to Ubuntu Focal. Add `LOG_CONFS` env var. Remove deprecated `add-peer` command." }
-  - { date: "28.10.21:", desc: "Add site-to-site vpn support." }
-  - { date: "11.02.21:", desc: "Fix bug related to changing internal subnet and named peer confs not updating." }
-  - { date: "06.10.20:", desc: "Disable CoreDNS in client mode, or if port 53 is already in use in server mode." }
-  - { date: "04.10.20:", desc: "Allow to specify a list of names as PEERS and add ALLOWEDIPS environment variable. Also, add peer name/id to each one of the peer sections in wg0.conf. Important: Existing users need to delete `/config/templates/peer.conf` and restart" }
-  - { date: "27.09.20:", desc: "Cleaning service binding example to have accurate PreDown script." }
-  - { date: "06.08.20:", desc: "Replace resolvconf with openresolv due to dns issues when a client based on this image is connected to a server also based on this image. Add IPv6 info to readme. Display kernel version in logs." }
-  - { date: "29.07.20:", desc: "Update Coredns config to detect dns loops (existing users need to delete `/config/coredns/Corefile` and restart)." }
-  - { date: "27.07.20:", desc: "Update Coredns config to prevent issues with non-user-defined bridge networks (existing users need to delete `/config/coredns/Corefile` and restart)." }
-  - { date: "05.07.20:", desc: "Add Debian updates and security repos for headers." }
-  - { date: "25.06.20:", desc: "Simplify module tests, prevent iptables issues from resulting in false negatives." }
-  - { date: "19.06.20:", desc: "Add support for Ubuntu Focal (20.04) kernels. Compile wireguard tools and kernel module instead of using the ubuntu packages. Make module install optional. Improve verbosity in logs." }
-  - { date: "29.05.20:", desc: "Add support for 64bit raspbian." }
-  - { date: "28.04.20:", desc: "Add Buster/Stretch backports repos for Debian. Tested with OMV 5 and OMV 4 (on kernel 4.19.0-0.bpo.8-amd64)." }
-  - { date: "20.04.20:", desc: "Fix typo in client mode conf existence check." }
-  - { date: "13.04.20:", desc: "Fix bug that forced conf recreation on every start." }
-  - { date: "08.04.20:", desc: "Add arm32/64 builds and enable multi-arch (rpi4 with ubuntu and raspbian buster tested). Add CoreDNS for `PEERDNS=auto` setting. Update the `add-peer`/`show-peer` scripts to utilize the templates and the `INTERNAL_SUBNET` var (previously missed, oops)." }
-  - { date: "05.04.20:", desc: "Add `INTERNAL_SUBNET` variable to prevent subnet clashes. Add templates for server and peer confs." }
-  - { date: "01.04.20:", desc: "Add `show-peer` script and include info on host installed headers." }
-  - { date: "31.03.20:", desc: "Initial Release." }
+  - {date: "03.10.23:", desc: "**Potentially Breaking Change:** Support for multiple interfaces added. Wireguard confs moved to `/config/wg_confs/`. Any file with a `.conf` extension in that folder will be treated as a live tunnel config and will be attempted to start. If any of the tunnels fail, all tunnels will be stopped. Tunnels are started in alphabetical order. Managed server conf will continue to be hardcoded to `wg0.conf`."}
+  - {date: "24.06.23:", desc: "Deprecate armhf as per [https://www.linuxserver.io/armhf](https://www.linuxserver.io/armhf)."}
+  - {date: "26.04.23:", desc: "Rework branches, swap alpine & ubuntu builds."}
+  - {date: "28.01.23:", desc: "Patch wg-quick to suppress false positive sysctl warning."}
+  - {date: "10.01.23:", desc: "Add new var to add `PersistentKeepalive` to server config for select peers to survive server IP changes when domain name is used."}
+  - {date: "26.10.22:", desc: "Better handle unsupported peer names. Improve logging."}
+  - {date: "12.10.22:", desc: "Add Alpine branch. Optimize wg and coredns services."}
+  - {date: "09.10.22:", desc: "Switch back to iptables-legacy due to issues on some hosts."}
+  - {date: "04.10.22:", desc: "Rebase to Jammy. Upgrade to s6v3."}
+  - {date: "16.05.22:", desc: "Improve NAT handling in server mode when multiple ethernet devices are present."}
+  - {date: "23.04.22:", desc: "Add pre-shared key support. Automatically added to all new peer confs generated, existing ones are left without to ensure no breaking changes."}
+  - {date: "10.04.22:", desc: "Rebase to Ubuntu Focal. Add `LOG_CONFS` env var. Remove deprecated `add-peer` command."}
+  - {date: "28.10.21:", desc: "Add site-to-site vpn support."}
+  - {date: "11.02.21:", desc: "Fix bug related to changing internal subnet and named peer confs not updating."}
+  - {date: "06.10.20:", desc: "Disable CoreDNS in client mode, or if port 53 is already in use in server mode."}
+  - {date: "04.10.20:", desc: "Allow to specify a list of names as PEERS and add ALLOWEDIPS environment variable. Also, add peer name/id to each one of the peer sections in wg0.conf. Important: Existing users need to delete `/config/templates/peer.conf` and restart"}
+  - {date: "27.09.20:", desc: "Cleaning service binding example to have accurate PreDown script."}
+  - {date: "06.08.20:", desc: "Replace resolvconf with openresolv due to dns issues when a client based on this image is connected to a server also based on this image. Add IPv6 info to readme. Display kernel version in logs."}
+  - {date: "29.07.20:", desc: "Update Coredns config to detect dns loops (existing users need to delete `/config/coredns/Corefile` and restart)."}
+  - {date: "27.07.20:", desc: "Update Coredns config to prevent issues with non-user-defined bridge networks (existing users need to delete `/config/coredns/Corefile` and restart)."}
+  - {date: "05.07.20:", desc: "Add Debian updates and security repos for headers."}
+  - {date: "25.06.20:", desc: "Simplify module tests, prevent iptables issues from resulting in false negatives."}
+  - {date: "19.06.20:", desc: "Add support for Ubuntu Focal (20.04) kernels. Compile wireguard tools and kernel module instead of using the ubuntu packages. Make module install optional. Improve verbosity in logs."}
+  - {date: "29.05.20:", desc: "Add support for 64bit raspbian."}
+  - {date: "28.04.20:", desc: "Add Buster/Stretch backports repos for Debian. Tested with OMV 5 and OMV 4 (on kernel 4.19.0-0.bpo.8-amd64)."}
+  - {date: "20.04.20:", desc: "Fix typo in client mode conf existence check."}
+  - {date: "13.04.20:", desc: "Fix bug that forced conf recreation on every start."}
+  - {date: "08.04.20:", desc: "Add arm32/64 builds and enable multi-arch (rpi4 with ubuntu and raspbian buster tested). Add CoreDNS for `PEERDNS=auto` setting. Update the `add-peer`/`show-peer` scripts to utilize the templates and the `INTERNAL_SUBNET` var (previously missed, oops)."}
+  - {date: "05.04.20:", desc: "Add `INTERNAL_SUBNET` variable to prevent subnet clashes. Add templates for server and peer confs."}
+  - {date: "01.04.20:", desc: "Add `show-peer` script and include info on host installed headers."}
+  - {date: "31.03.20:", desc: "Initial Release."}
