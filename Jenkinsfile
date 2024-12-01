@@ -8,7 +8,7 @@ pipeline {
   }
   // Input to determine if this is a package check
   parameters {
-     string(defaultValue: 'false', description: 'package check run', name: 'PACKAGE_CHECK')
+    string(defaultValue: 'false', description: 'package check run', name: 'PACKAGE_CHECK')
   }
   // Configuration for the variables used for this specific repo
   environment {
@@ -191,6 +191,7 @@ pipeline {
           env.VERSION_TAG = env.EXT_RELEASE_CLEAN + '-ls' + env.LS_TAG_NUMBER
           env.META_TAG = 'legacy-' + env.EXT_RELEASE_CLEAN + '-ls' + env.LS_TAG_NUMBER
           env.EXT_RELEASE_TAG = 'legacy-version-' + env.EXT_RELEASE_CLEAN
+          env.BUILDCACHE = 'docker.io/lsiodev/buildcache,registry.gitlab.com/linuxserver.io/docker-jenkins-builder/lsiodev-buildcache,ghcr.io/linuxserver/lsiodev-buildcache,quay.io/linuxserver.io/lsiodev-buildcache'
         }
       }
     }
@@ -215,6 +216,7 @@ pipeline {
           env.META_TAG = 'legacy-' + env.EXT_RELEASE_CLEAN + '-pkg-' + env.PACKAGE_TAG + '-dev-' + env.COMMIT_SHA
           env.EXT_RELEASE_TAG = 'legacy-version-' + env.EXT_RELEASE_CLEAN
           env.DOCKERHUB_LINK = 'https://hub.docker.com/r/' + env.DEV_DOCKERHUB_IMAGE + '/tags/'
+          env.BUILDCACHE = 'docker.io/lsiodev/buildcache,registry.gitlab.com/linuxserver.io/docker-jenkins-builder/lsiodev-buildcache,ghcr.io/linuxserver/lsiodev-buildcache,quay.io/linuxserver.io/lsiodev-buildcache'
         }
       }
     }
@@ -239,6 +241,7 @@ pipeline {
           env.EXT_RELEASE_TAG = 'legacy-version-' + env.EXT_RELEASE_CLEAN
           env.CODE_URL = 'https://github.com/' + env.LS_USER + '/' + env.LS_REPO + '/pull/' + env.PULL_REQUEST
           env.DOCKERHUB_LINK = 'https://hub.docker.com/r/' + env.PR_DOCKERHUB_IMAGE + '/tags/'
+          env.BUILDCACHE = 'docker.io/lsiodev/buildcache,registry.gitlab.com/linuxserver.io/docker-jenkins-builder/lsiodev-buildcache,ghcr.io/linuxserver/lsiodev-buildcache,quay.io/linuxserver.io/lsiodev-buildcache'
         }
       }
     }
@@ -334,6 +337,35 @@ pipeline {
                 exit 0
               else
                 echo "No templates to delete"
+              fi
+              echo "Starting Stage 2.5 - Update init diagram"
+              if ! grep -q 'init_diagram:' readme-vars.yml; then
+                echo "Adding the key 'init_diagram' to readme-vars.yml"
+                sed -i '\\|^#.*changelog.*$|d' readme-vars.yml 
+                sed -i 's|^changelogs:|# init diagram\\ninit_diagram:\\n\\n# changelog\\nchangelogs:|' readme-vars.yml
+              fi
+              mkdir -p ${TEMPDIR}/d2
+              docker run --rm -v ${TEMPDIR}/d2:/output -e PUID=$(id -u) -e PGID=$(id -g) -e RAW="true" ghcr.io/linuxserver/d2-builder:latest ${CONTAINER_NAME}:legacy
+              ls -al ${TEMPDIR}/d2
+              yq -ei ".init_diagram |= load_str(\\"${TEMPDIR}/d2/${CONTAINER_NAME}-legacy.d2\\")" readme-vars.yml
+              if [[ $(md5sum readme-vars.yml | cut -c1-8) != $(md5sum ${TEMPDIR}/docker-${CONTAINER_NAME}/readme-vars.yml | cut -c1-8) ]]; then
+                echo "'init_diagram' has been updated. Updating repo and exiting build, new one will trigger based on commit."
+                mkdir -p ${TEMPDIR}/repo
+                git clone https://github.com/${LS_USER}/${LS_REPO}.git ${TEMPDIR}/repo/${LS_REPO}
+                cd ${TEMPDIR}/repo/${LS_REPO}
+                git checkout -f legacy
+                cp ${WORKSPACE}/readme-vars.yml ${TEMPDIR}/repo/${LS_REPO}/readme-vars.yml
+                git add readme-vars.yml
+                git commit -m 'Bot Updating Templated Files'
+                git pull https://LinuxServer-CI:${GITHUB_TOKEN}@github.com/${LS_USER}/${LS_REPO}.git legacy
+                git push https://LinuxServer-CI:${GITHUB_TOKEN}@github.com/${LS_USER}/${LS_REPO}.git legacy
+                echo "true" > /tmp/${COMMIT_SHA}-${BUILD_NUMBER}
+                echo "Updating templates and exiting build, new one will trigger based on commit"
+                rm -Rf ${TEMPDIR}
+                exit 0
+              else
+                echo "false" > /tmp/${COMMIT_SHA}-${BUILD_NUMBER}
+                echo "Init diagram is unchanged"
               fi
               echo "Starting Stage 3 - Update templates"
               CURRENTHASH=$(grep -hs ^ ${TEMPLATED_FILES} | md5sum | cut -c1-8)
@@ -543,8 +575,40 @@ pipeline {
           --label \"org.opencontainers.image.title=Wireguard\" \
           --label \"org.opencontainers.image.description=[WireGuard®](https://www.wireguard.com/) is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography. It aims to be faster, simpler, leaner, and more useful than IPsec, while avoiding the massive headache. It intends to be considerably more performant than OpenVPN. WireGuard is designed as a general purpose VPN for running on embedded interfaces and super computers alike, fit for many different circumstances. Initially released for the Linux kernel, it is now cross-platform (Windows, macOS, BSD, iOS, Android) and widely deployable. It is currently under heavy development, but already it might be regarded as the most secure, easiest to use, and simplest VPN solution in the industry.\" \
           --no-cache --pull -t ${IMAGE}:${META_TAG} --platform=linux/amd64 \
-          --provenance=false --sbom=false \
+          --provenance=false --sbom=false --builder=container --load \
           --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} ."
+        sh '''#! /bin/bash
+              set -e
+              IFS=',' read -ra CACHE <<< "$BUILDCACHE"
+              for i in "${CACHE[@]}"; do
+                docker tag ${IMAGE}:${META_TAG} ${i}:amd64-${COMMIT_SHA}-${BUILD_NUMBER}
+              done
+           '''
+        withCredentials([
+          [
+            $class: 'UsernamePasswordMultiBinding',
+            credentialsId: 'Quay.io-Robot',
+            usernameVariable: 'QUAYUSER',
+            passwordVariable: 'QUAYPASS'
+          ]
+        ]) {
+          retry_backoff(5,5) {
+              sh '''#! /bin/bash
+                    set -e
+                    echo $DOCKERHUB_TOKEN | docker login -u linuxserverci --password-stdin
+                    echo $GITHUB_TOKEN | docker login ghcr.io -u LinuxServer-CI --password-stdin
+                    echo $GITLAB_TOKEN | docker login registry.gitlab.com -u LinuxServer.io --password-stdin
+                    echo $QUAYPASS | docker login quay.io -u $QUAYUSER --password-stdin
+                    if [[ "${PACKAGE_CHECK}" != "true" ]]; then
+                      IFS=',' read -ra CACHE <<< "$BUILDCACHE"
+                      for i in "${CACHE[@]}"; do
+                        docker push ${i}:amd64-${COMMIT_SHA}-${BUILD_NUMBER} &
+                      done
+                      wait
+                    fi
+                '''
+          }
+        }
       }
     }
     // Build MultiArch Docker containers for push to LS Repo
@@ -575,8 +639,40 @@ pipeline {
               --label \"org.opencontainers.image.title=Wireguard\" \
               --label \"org.opencontainers.image.description=[WireGuard®](https://www.wireguard.com/) is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography. It aims to be faster, simpler, leaner, and more useful than IPsec, while avoiding the massive headache. It intends to be considerably more performant than OpenVPN. WireGuard is designed as a general purpose VPN for running on embedded interfaces and super computers alike, fit for many different circumstances. Initially released for the Linux kernel, it is now cross-platform (Windows, macOS, BSD, iOS, Android) and widely deployable. It is currently under heavy development, but already it might be regarded as the most secure, easiest to use, and simplest VPN solution in the industry.\" \
               --no-cache --pull -t ${IMAGE}:amd64-${META_TAG} --platform=linux/amd64 \
-              --provenance=false --sbom=false \
+              --provenance=false --sbom=false --builder=container --load \
               --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} ."
+            sh '''#! /bin/bash
+                  set -e
+                  IFS=',' read -ra CACHE <<< "$BUILDCACHE"
+                  for i in "${CACHE[@]}"; do
+                    docker tag ${IMAGE}:amd64-${META_TAG} ${i}:amd64-${COMMIT_SHA}-${BUILD_NUMBER}
+                  done
+               '''
+            withCredentials([
+              [
+                $class: 'UsernamePasswordMultiBinding',
+                credentialsId: 'Quay.io-Robot',
+                usernameVariable: 'QUAYUSER',
+                passwordVariable: 'QUAYPASS'
+              ]
+            ]) {
+              retry_backoff(5,5) {
+                  sh '''#! /bin/bash
+                        set -e
+                        echo $DOCKERHUB_TOKEN | docker login -u linuxserverci --password-stdin
+                        echo $GITHUB_TOKEN | docker login ghcr.io -u LinuxServer-CI --password-stdin
+                        echo $GITLAB_TOKEN | docker login registry.gitlab.com -u LinuxServer.io --password-stdin
+                        echo $QUAYPASS | docker login quay.io -u $QUAYUSER --password-stdin
+                        if [[ "${PACKAGE_CHECK}" != "true" ]]; then
+                          IFS=',' read -ra CACHE <<< "$BUILDCACHE"
+                          for i in "${CACHE[@]}"; do
+                            docker push ${i}:amd64-${COMMIT_SHA}-${BUILD_NUMBER} &
+                          done
+                          wait
+                        fi
+                    '''
+              }
+            }
           }
         }
         stage('Build ARM64') {
@@ -585,10 +681,6 @@ pipeline {
           }
           steps {
             echo "Running on node: ${NODE_NAME}"
-            echo 'Logging into Github'
-            sh '''#! /bin/bash
-                  echo $GITHUB_TOKEN | docker login ghcr.io -u LinuxServer-CI --password-stdin
-               '''
             sh "sed -r -i 's|(^FROM .*)|\\1\\n\\nENV LSIO_FIRST_PARTY=true|g' Dockerfile.aarch64"
             sh "docker buildx build \
               --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
@@ -604,18 +696,47 @@ pipeline {
               --label \"org.opencontainers.image.title=Wireguard\" \
               --label \"org.opencontainers.image.description=[WireGuard®](https://www.wireguard.com/) is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography. It aims to be faster, simpler, leaner, and more useful than IPsec, while avoiding the massive headache. It intends to be considerably more performant than OpenVPN. WireGuard is designed as a general purpose VPN for running on embedded interfaces and super computers alike, fit for many different circumstances. Initially released for the Linux kernel, it is now cross-platform (Windows, macOS, BSD, iOS, Android) and widely deployable. It is currently under heavy development, but already it might be regarded as the most secure, easiest to use, and simplest VPN solution in the industry.\" \
               --no-cache --pull -f Dockerfile.aarch64 -t ${IMAGE}:arm64v8-${META_TAG} --platform=linux/arm64 \
-              --provenance=false --sbom=false \
+              --provenance=false --sbom=false --builder=container --load \
               --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} ."
-            sh "docker tag ${IMAGE}:arm64v8-${META_TAG} ghcr.io/linuxserver/lsiodev-buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER}"
-            retry_backoff(5,5) {
-              sh "docker push ghcr.io/linuxserver/lsiodev-buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER}"
+            sh '''#! /bin/bash
+                  set -e
+                  IFS=',' read -ra CACHE <<< "$BUILDCACHE"
+                  for i in "${CACHE[@]}"; do
+                    docker tag ${IMAGE}:arm64v8-${META_TAG} ${i}:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER}
+                  done
+               '''
+            withCredentials([
+              [
+                $class: 'UsernamePasswordMultiBinding',
+                credentialsId: 'Quay.io-Robot',
+                usernameVariable: 'QUAYUSER',
+                passwordVariable: 'QUAYPASS'
+              ]
+            ]) {
+              retry_backoff(5,5) {
+                  sh '''#! /bin/bash
+                        set -e
+                        echo $DOCKERHUB_TOKEN | docker login -u linuxserverci --password-stdin
+                        echo $GITHUB_TOKEN | docker login ghcr.io -u LinuxServer-CI --password-stdin
+                        echo $GITLAB_TOKEN | docker login registry.gitlab.com -u LinuxServer.io --password-stdin
+                        echo $QUAYPASS | docker login quay.io -u $QUAYUSER --password-stdin
+                        if [[ "${PACKAGE_CHECK}" != "true" ]]; then
+                          IFS=',' read -ra CACHE <<< "$BUILDCACHE"
+                          for i in "${CACHE[@]}"; do
+                            docker push ${i}:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER} &
+                          done
+                          wait
+                        fi
+                    '''
+              }
             }
             sh '''#! /bin/bash
                   containers=$(docker ps -aq)
                   if [[ -n "${containers}" ]]; then
                     docker stop ${containers}
                   fi
-                  docker system prune -af --volumes || : '''
+                  docker system prune -af --volumes || :
+               '''
           }
         }
       }
@@ -765,37 +886,23 @@ pipeline {
         environment name: 'EXIT_STATUS', value: ''
       }
       steps {
-        withCredentials([
-          [
-            $class: 'UsernamePasswordMultiBinding',
-            credentialsId: 'Quay.io-Robot',
-            usernameVariable: 'QUAYUSER',
-            passwordVariable: 'QUAYPASS'
-          ]
-        ]) {
-          retry_backoff(5,5) {
-            sh '''#! /bin/bash
-                  set -e
-                  echo $DOCKERHUB_TOKEN | docker login -u linuxserverci --password-stdin
-                  echo $GITHUB_TOKEN | docker login ghcr.io -u LinuxServer-CI --password-stdin
-                  echo $GITLAB_TOKEN | docker login registry.gitlab.com -u LinuxServer.io --password-stdin
-                  echo $QUAYPASS | docker login quay.io -u $QUAYUSER --password-stdin
-                  for PUSHIMAGE in "${GITHUBIMAGE}" "${GITLABIMAGE}" "${QUAYIMAGE}" "${IMAGE}"; do
-                    docker tag ${IMAGE}:${META_TAG} ${PUSHIMAGE}:${META_TAG}
-                    docker tag ${PUSHIMAGE}:${META_TAG} ${PUSHIMAGE}:legacy
-                    docker tag ${PUSHIMAGE}:${META_TAG} ${PUSHIMAGE}:${EXT_RELEASE_TAG}
-                    if [ -n "${SEMVER}" ]; then
-                      docker tag ${PUSHIMAGE}:${META_TAG} ${PUSHIMAGE}:${SEMVER}
-                    fi
-                    docker push ${PUSHIMAGE}:legacy
-                    docker push ${PUSHIMAGE}:${META_TAG}
-                    docker push ${PUSHIMAGE}:${EXT_RELEASE_TAG}
-                    if [ -n "${SEMVER}" ]; then
-                      docker push ${PUSHIMAGE}:${SEMVER}
-                    fi
+        retry_backoff(5,5) {
+          sh '''#! /bin/bash
+                set -e
+                for PUSHIMAGE in "${GITHUBIMAGE}" "${GITLABIMAGE}" "${QUAYIMAGE}" "${IMAGE}"; do
+                  [[ ${PUSHIMAGE%%/*} =~ \\. ]] && PUSHIMAGEPLUS="${PUSHIMAGE}" || PUSHIMAGEPLUS="docker.io/${PUSHIMAGE}"
+                  IFS=',' read -ra CACHE <<< "$BUILDCACHE"
+                  for i in "${CACHE[@]}"; do
+                      if [[ "${PUSHIMAGEPLUS}" == "$(cut -d "/" -f1 <<< ${i})"* ]]; then
+                          CACHEIMAGE=${i}
+                      fi
                   done
-               '''
-          }
+                  docker buildx imagetools create --prefer-index=false -t ${PUSHIMAGE}:${META_TAG} -t ${PUSHIMAGE}:legacy -t {PUSHIMAGE}:${EXT_RELEASE_TAG} ${CACHEIMAGE}:amd64-${COMMIT_SHA}-${BUILD_NUMBER}
+                  if [ -n "${SEMVER}" ]; then
+                    docker buildx imagetools create --prefer-index=false -t ${PUSHIMAGE}:${SEMVER} ${CACHEIMAGE}:amd64-${COMMIT_SHA}-${BUILD_NUMBER}
+                  fi
+                done
+              '''
         }
       }
     }
@@ -806,57 +913,34 @@ pipeline {
         environment name: 'EXIT_STATUS', value: ''
       }
       steps {
-        withCredentials([
-          [
-            $class: 'UsernamePasswordMultiBinding',
-            credentialsId: 'Quay.io-Robot',
-            usernameVariable: 'QUAYUSER',
-            passwordVariable: 'QUAYPASS'
-          ]
-        ]) {
-          retry_backoff(5,5) {
-            sh '''#! /bin/bash
-                  set -e
-                  echo $DOCKERHUB_TOKEN | docker login -u linuxserverci --password-stdin
-                  echo $GITHUB_TOKEN | docker login ghcr.io -u LinuxServer-CI --password-stdin
-                  echo $GITLAB_TOKEN | docker login registry.gitlab.com -u LinuxServer.io --password-stdin
-                  echo $QUAYPASS | docker login quay.io -u $QUAYUSER --password-stdin
-                  if [ "${CI}" == "false" ]; then
-                    docker pull ghcr.io/linuxserver/lsiodev-buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER} --platform=arm64
-                    docker tag ghcr.io/linuxserver/lsiodev-buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER} ${IMAGE}:arm64v8-${META_TAG}
+        retry_backoff(5,5) {
+          sh '''#! /bin/bash
+                set -e
+                for MANIFESTIMAGE in "${IMAGE}" "${GITLABIMAGE}" "${GITHUBIMAGE}" "${QUAYIMAGE}"; do
+                  [[ ${MANIFESTIMAGE%%/*} =~ \\. ]] && MANIFESTIMAGEPLUS="${MANIFESTIMAGE}" || MANIFESTIMAGEPLUS="docker.io/${MANIFESTIMAGE}"
+                  IFS=',' read -ra CACHE <<< "$BUILDCACHE"
+                  for i in "${CACHE[@]}"; do
+                      if [[ "${MANIFESTIMAGEPLUS}" == "$(cut -d "/" -f1 <<< ${i})"* ]]; then
+                          CACHEIMAGE=${i}
+                      fi
+                  done
+                  docker buildx imagetools create --prefer-index=false -t ${MANIFESTIMAGE}:amd64-${META_TAG} -t ${MANIFESTIMAGE}:amd64-legacy -t ${MANIFESTIMAGE}:amd64-${EXT_RELEASE_TAG} ${CACHEIMAGE}:amd64-${COMMIT_SHA}-${BUILD_NUMBER}
+                  docker buildx imagetools create --prefer-index=false -t ${MANIFESTIMAGE}:arm64v8-${META_TAG} -t ${MANIFESTIMAGE}:arm64v8-legacy -t ${MANIFESTIMAGE}:arm64v8-${EXT_RELEASE_TAG} ${CACHEIMAGE}:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER}
+                  if [ -n "${SEMVER}" ]; then
+                    docker buildx imagetools create --prefer-index=false -t ${MANIFESTIMAGE}:amd64-${SEMVER} ${CACHEIMAGE}:amd64-${COMMIT_SHA}-${BUILD_NUMBER}
+                    docker buildx imagetools create --prefer-index=false -t ${MANIFESTIMAGE}:arm64v8-${SEMVER} ${CACHEIMAGE}:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER}
                   fi
-                  for MANIFESTIMAGE in "${IMAGE}" "${GITLABIMAGE}" "${GITHUBIMAGE}" "${QUAYIMAGE}"; do
-                    docker tag ${IMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:amd64-${META_TAG}
-                    docker tag ${MANIFESTIMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:amd64-legacy
-                    docker tag ${MANIFESTIMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:amd64-${EXT_RELEASE_TAG}
-                    docker tag ${IMAGE}:arm64v8-${META_TAG} ${MANIFESTIMAGE}:arm64v8-${META_TAG}
-                    docker tag ${MANIFESTIMAGE}:arm64v8-${META_TAG} ${MANIFESTIMAGE}:arm64v8-legacy
-                    docker tag ${MANIFESTIMAGE}:arm64v8-${META_TAG} ${MANIFESTIMAGE}:arm64v8-${EXT_RELEASE_TAG}
-                    if [ -n "${SEMVER}" ]; then
-                      docker tag ${MANIFESTIMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:amd64-${SEMVER}
-                      docker tag ${MANIFESTIMAGE}:arm64v8-${META_TAG} ${MANIFESTIMAGE}:arm64v8-${SEMVER}
-                    fi
-                    docker push ${MANIFESTIMAGE}:amd64-${META_TAG}
-                    docker push ${MANIFESTIMAGE}:amd64-${EXT_RELEASE_TAG}
-                    docker push ${MANIFESTIMAGE}:amd64-legacy
-                    docker push ${MANIFESTIMAGE}:arm64v8-${META_TAG}
-                    docker push ${MANIFESTIMAGE}:arm64v8-legacy
-                    docker push ${MANIFESTIMAGE}:arm64v8-${EXT_RELEASE_TAG}
-                    if [ -n "${SEMVER}" ]; then
-                      docker push ${MANIFESTIMAGE}:amd64-${SEMVER}
-                      docker push ${MANIFESTIMAGE}:arm64v8-${SEMVER}
-                    fi
-                  done
-                  for MANIFESTIMAGE in "${IMAGE}" "${GITLABIMAGE}" "${GITHUBIMAGE}" "${QUAYIMAGE}"; do
-                    docker buildx imagetools create -t ${MANIFESTIMAGE}:legacy ${MANIFESTIMAGE}:amd64-legacy ${MANIFESTIMAGE}:arm64v8-legacy
-                    docker buildx imagetools create -t ${MANIFESTIMAGE}:${META_TAG} ${MANIFESTIMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:arm64v8-${META_TAG}
-                    docker buildx imagetools create -t ${MANIFESTIMAGE}:${EXT_RELEASE_TAG} ${MANIFESTIMAGE}:amd64-${EXT_RELEASE_TAG} ${MANIFESTIMAGE}:arm64v8-${EXT_RELEASE_TAG}
-                    if [ -n "${SEMVER}" ]; then
-                      docker buildx imagetools create -t ${MANIFESTIMAGE}:${SEMVER} ${MANIFESTIMAGE}:amd64-${SEMVER} ${MANIFESTIMAGE}:arm64v8-${SEMVER}
-                    fi
-                  done
-               '''
-          }
+                done
+                for MANIFESTIMAGE in "${IMAGE}" "${GITLABIMAGE}" "${GITHUBIMAGE}" "${QUAYIMAGE}"; do
+                  docker buildx imagetools create -t ${MANIFESTIMAGE}:legacy ${MANIFESTIMAGE}:amd64-legacy ${MANIFESTIMAGE}:arm64v8-legacy
+                  docker buildx imagetools create -t ${MANIFESTIMAGE}:${META_TAG} ${MANIFESTIMAGE}:amd64-${META_TAG} ${MANIFESTIMAGE}:arm64v8-${META_TAG}
+
+                  docker buildx imagetools create -t ${MANIFESTIMAGE}:${EXT_RELEASE_TAG} ${MANIFESTIMAGE}:amd64-${EXT_RELEASE_TAG} ${MANIFESTIMAGE}:arm64v8-${EXT_RELEASE_TAG}
+                  if [ -n "${SEMVER}" ]; then
+                    docker buildx imagetools create -t ${MANIFESTIMAGE}:${SEMVER} ${MANIFESTIMAGE}:amd64-${SEMVER} ${MANIFESTIMAGE}:arm64v8-${SEMVER}
+                  fi
+                done
+              '''
         }
       }
     }
