@@ -22,7 +22,7 @@ cpp                                                            4:11.2.0-1ubuntu1
 cpp-11                                                         11.4.0-1ubuntu1~22.04                    deb          
 cpp-12                                                         12.3.0-1ubuntu1~22.04                    deb          
 cron                                                           3.0pl1-137ubuntu3                        deb          
-curl                                                           7.81.0-1ubuntu1.18                       deb          
+curl                                                           7.81.0-1ubuntu1.19                       deb          
 dash                                                           0.5.11+git20210903+057cd650a4ed-3build1  deb          
 dctrl-tools                                                    2.24-3build2                             deb          
 debconf                                                        1.5.79ubuntu1                            deb          
@@ -232,14 +232,14 @@ libcrypt1                                                      1:4.4.27-1       
 libctf-nobfd0                                                  2.38-4ubuntu2.6                          deb          
 libctf0                                                        2.38-4ubuntu2.6                          deb          
 libcurl3-gnutls                                                7.81.0-1ubuntu1.19                       deb          
-libcurl4                                                       7.81.0-1ubuntu1.18                       deb          
+libcurl4                                                       7.81.0-1ubuntu1.19                       deb          
 libdb5.3                                                       5.3.28+dfsg1-0.8ubuntu3                  deb          
 libdebconfclient0                                              0.261ubuntu1                             deb          
 libdpkg-perl                                                   1.21.1ubuntu2.3                          deb          
 libelf-dev                                                     0.186-1build1                            deb          
 libelf1                                                        0.186-1build1                            deb          
 liberror-perl                                                  0.17029-1                                deb          
-libexpat1                                                      2.4.7-1ubuntu0.4                         deb          
+libexpat1                                                      2.4.7-1ubuntu0.5                         deb          
 libext2fs2                                                     1.46.5-2ubuntu1.2                        deb          
 libffi8                                                        3.4.2-4                                  deb          
 libgcc-11-dev                                                  11.4.0-1ubuntu1~22.04                    deb          
