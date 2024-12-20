@@ -23,7 +23,7 @@ jobs:
           echo "> [!NOTE]" >> $GITHUB_STEP_SUMMARY
           echo "> External trigger running off of master branch. To disable this trigger, add \`wireguard_master\` into the Github organizational variable \`SKIP_EXTERNAL_TRIGGER\`." >> $GITHUB_STEP_SUMMARY
           printf "\n## Retrieving external version\n\n" >> $GITHUB_STEP_SUMMARY
-          EXT_RELEASE=$(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.20/main/x86_64/APKINDEX.tar.gz" | tar -xz -C /tmp \
+          EXT_RELEASE=$(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/APKINDEX.tar.gz" | tar -xz -C /tmp \
             && awk '/^P:'"wireguard-tools"'$/,/V:/' /tmp/APKINDEX | sed -n 2p | sed 's/^V://')
           echo "Type is \`alpine_repo\`" >> $GITHUB_STEP_SUMMARY
           if [ -z "${EXT_RELEASE}" ] || [ "${EXT_RELEASE}" == "null" ]; then
@@ -96,7 +96,7 @@ jobs:
           if [ "${EXT_RELEASE}" == "${IMAGE_VERSION}" ]; then
             echo "Version \`${EXT_RELEASE}\` already pushed, exiting" >> $GITHUB_STEP_SUMMARY
             exit 0
-          elif [[ $(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.20/main/aarch64/APKINDEX.tar.gz" | tar -xz -C /tmp && awk '/^P:'"wireguard-tools"'$/,/V:/' /tmp/APKINDEX | sed -n 2p | sed 's/^V://') != "${EXT_RELEASE}" ]]; then
+          elif [[ $(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.21/main/aarch64/APKINDEX.tar.gz" | tar -xz -C /tmp && awk '/^P:'"wireguard-tools"'$/,/V:/' /tmp/APKINDEX | sed -n 2p | sed 's/^V://') != "${EXT_RELEASE}" ]]; then
             echo "New version \`${EXT_RELEASE}\` found; but not all arch repos updated yet; exiting" >> $GITHUB_STEP_SUMMARY
             FAILURE_REASON="New version ${EXT_RELEASE} for wireguard tag latest is detected, however not all arch repos are updated yet. Will try again later."
             curl -X POST -H "Content-Type: application/json" --data '{"avatar_url": "https://cdn.discordapp.com/avatars/354986384542662657/df91181b3f1cf0ef1592fbe18e0962d7.png","embeds": [{"color": 9802903,
