@@ -62,7 +62,7 @@ This image provides various versions that are available via tags. Please read th
 
 | Tag | Available | Description |
 | :----: | :----: |--- |
-| latest | ✅ | Stable releases based on Alpine *without* support for compiling Wireguard modules. |
+| latest | ✅ | Stable releases based on Alpine *without* support for compiling Wireguard module. |
 | legacy | ✅ | Stable releases with support for compiling Wireguard modules for older kernels. |
 
 ## Application Setup
@@ -226,7 +226,7 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e PERSISTENTKEEPALIVE_PEERS=` | Set to `all` or a list of comma separated peers (ie. `1,4,laptop`) for the wireguard server to send keepalive packets to listed peers every 25 seconds. Useful if server is accessed via domain name and has dynamic IP. Used only in server mode. |
 | `-e LOG_CONFS=true` | Generated QR codes will be displayed in the docker log. Set to `false` to skip log output. |
 | `-v /config` | Contains all relevant configuration files. |
-| `-v /lib/modules` | Host kernel modules for situations where they're not already loaded. |
+| `-v /lib/modules` | Path to host kernel module for situations where it's not already loaded. |
 | `--sysctl=` | Required for client mode. |
 | `--read-only=true` | Run container with a read-only filesystem. Please [read the docs](https://docs.linuxserver.io/misc/read-only/). |
 | `--cap-add=NET_ADMIN` | Neccessary for Wireguard to create its VPN interface. |
@@ -398,6 +398,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **20.12.24:** - Rebase to Alpine 3.21.
 * **13.08.24:** - Add `errors` plugin to default Corefile.
 * **23.07.24:** - Install kmod from alpine repository.
 * **24.05.24:** - Rebase to Alpine 3.20, install wireguard-tools from Alpine repo.
