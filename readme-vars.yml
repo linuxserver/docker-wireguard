@@ -128,22 +128,18 @@ init_diagram: |
     init-migrations -> init-adduser
     init-os-end -> init-config
     init-config -> init-config-end
+    init-crontab-config -> init-config-end
     init-wireguard-confs -> init-config-end
-    init-os-end -> init-crontab-config
+    init-config -> init-crontab-config
     init-mods-end -> init-custom-files
     base -> init-envfile
     base -> init-migrations
-    base -> init-mods
     init-config-end -> init-mods
-    init-mods -> init-mods-end
     init-mods-package-install -> init-mods-end
     init-mods -> init-mods-package-install
-    base -> init-os-end
     init-adduser -> init-os-end
     init-envfile -> init-os-end
-    init-migrations -> init-os-end
     init-custom-files -> init-services
-    init-mods-end -> init-services
     init-wireguard-module -> init-wireguard-confs
     init-config -> init-wireguard-module
     init-services -> svc-coredns
@@ -154,7 +150,7 @@ init_diagram: |
     svc-wireguard -> legacy-services
   }
   Base Images: {
-    "baseimage-alpine:3.20"
+    "baseimage-alpine:3.21"
   }
   "wireguard:latest" <- Base Images
 # changelog
