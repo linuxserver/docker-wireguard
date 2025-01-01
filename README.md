@@ -56,15 +56,6 @@ The architectures supported by this image are:
 | arm64 | ✅ | arm64v8-\<version tag\> |
 | armhf | ❌ | |
 
-## Version Tags
-
-This image provides various versions that are available via tags. Please read the descriptions carefully and exercise caution when using unstable or development tags.
-
-| Tag | Available | Description |
-| :----: | :----: |--- |
-| latest | ✅ | Stable releases based on Alpine *without* support for compiling Wireguard module. |
-| legacy | ✅ | Stable releases with support for compiling Wireguard modules for older kernels. |
-
 ## Application Setup
 
 During container start, it will first check if the wireguard module is already installed and loaded. Kernels newer than 5.6 generally have the wireguard module built-in (along with some older custom kernels). However, the module may not be enabled. Make sure it is enabled prior to starting the container.
@@ -139,7 +130,6 @@ This image can be run with a read-only container filesystem. For details please 
 ### Caveats
 
 * Not supported in client mode.
-* Not supported for the `legacy` tag.
 
 ## Usage
 
@@ -398,6 +388,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **01.01.25:** - Deprecate legacy branch.
 * **20.12.24:** - Rebase to Alpine 3.21.
 * **13.08.24:** - Add `errors` plugin to default Corefile.
 * **23.07.24:** - Install kmod from alpine repository.

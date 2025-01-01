@@ -10,11 +10,6 @@ project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_
 available_architectures:
   - {arch: "{{ arch_x86_64 }}", tag: "amd64-latest"}
   - {arch: "{{ arch_arm64 }}", tag: "arm64v8-latest"}
-# development version
-development_versions: true
-development_versions_items:
-  - {tag: "latest", desc: "Stable releases based on Alpine *without* support for compiling Wireguard module."}
-  - {tag: "legacy", desc: "Stable releases with support for compiling Wireguard modules for older kernels."}
 # container parameters
 common_param_env_vars_enabled: true
 param_container_name: "{{ project_name }}"
@@ -49,7 +44,6 @@ opt_param_env_vars:
 readonly_supported: true
 readonly_message: |
   * Not supported in client mode.
-  * Not supported for the `legacy` tag.
 # application setup block
 app_setup_block_enabled: true
 app_setup_block: |
@@ -165,6 +159,7 @@ init_diagram: |
   "wireguard:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "01.01.25:", desc: "Deprecate legacy branch."}
   - {date: "20.12.24:", desc: "Rebase to Alpine 3.21."}
   - {date: "13.08.24:", desc: "Add `errors` plugin to default Corefile."}
   - {date: "23.07.24:", desc: "Install kmod from alpine repository."}
