@@ -140,6 +140,7 @@ init_diagram: |
     init-wireguard-confs -> init-config-end
     init-os-end -> init-crontab-config
     init-mods-end -> init-custom-files
+    init-config-end -> init-deprecate
     base -> init-envfile
     base -> init-migrations
     base -> init-mods
@@ -152,6 +153,7 @@ init_diagram: |
     init-envfile -> init-os-end
     init-migrations -> init-os-end
     init-custom-files -> init-services
+    init-deprecate -> init-services
     init-mods-end -> init-services
     init-wireguard-module -> init-wireguard-confs
     init-config -> init-wireguard-module
