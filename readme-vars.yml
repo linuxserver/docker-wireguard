@@ -18,7 +18,7 @@ param_volumes:
   - {vol_path: "/config", vol_host_path: "/path/to/{{ project_name }}/config", desc: "Contains all relevant configuration files."}
 opt_param_usage_include_vols: true
 opt_param_volumes:
-  - {vol_path: "/lib/modules", vol_host_path: "/lib/modules", desc: "Host kernel modules for situations where they're not already loaded."}
+  - {vol_path: "/lib/modules", vol_host_path: "/lib/modules", desc: "Path to host kernel module for situations where it's not already loaded."}
 param_usage_include_ports: true
 param_ports:
   - {external_port: "51820", internal_port: "51820/udp", port_desc: "wireguard port"}
@@ -160,6 +160,7 @@ init_diagram: |
 # changelog
 changelogs:
   - {date: "01.01.25:", desc: "Deprecate legacy branch."}
+  - {date: "20.12.24:", desc: "Rebase to Alpine 3.21."}
   - {date: "13.08.24:", desc: "Add `errors` plugin to default Corefile."}
   - {date: "23.07.24:", desc: "Install kmod from alpine repository."}
   - {date: "24.05.24:", desc: "Rebase to Alpine 3.20, install wireguard-tools from Alpine repo."}
