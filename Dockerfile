@@ -31,7 +31,7 @@ RUN \
     openresolv \
     wireguard-tools==${WIREGUARD_RELEASE} && \
   echo "wireguard" >> /etc/modules && \
-  cd /sbin && \
+  cd /usr/sbin && \
   for i in ! !-save !-restore; do \
     rm -rf iptables$(echo "${i}" | cut -c2-) && \
     rm -rf ip6tables$(echo "${i}" | cut -c2-) && \
