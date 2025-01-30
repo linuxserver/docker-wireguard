@@ -15,7 +15,7 @@ ca-certificates                                                20241121-r1      
 ca-certificates-bundle                                         20241121-r1                           apk          
 catatonit                                                      0.2.0-r0                              apk          
 cloud.google.com/go/compute/metadata                           v0.2.3                                go-module    
-coredns                                                        1.11.3-r0                             apk          
+coredns                                                        1.11.3-r1                             apk          
 coreutils                                                      9.5-r2                                apk          
 coreutils-env                                                  9.5-r2                                apk          
 coreutils-fmt                                                  9.5-r2                                apk          
