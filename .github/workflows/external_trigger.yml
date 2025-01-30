@@ -15,7 +15,10 @@ jobs:
           SKIP_EXTERNAL_TRIGGER: ${{ vars.SKIP_EXTERNAL_TRIGGER }}
         run: |
           printf "# External trigger for docker-wireguard\n\n" >> $GITHUB_STEP_SUMMARY
-          if grep -q "^wireguard_master" <<< "${SKIP_EXTERNAL_TRIGGER}"; then
+          if grep -q "^wireguard_master_" <<< "${SKIP_EXTERNAL_TRIGGER}"; then
+            echo "> [!NOTE]" >> $GITHUB_STEP_SUMMARY
+            echo "> Github organizational variable \`SKIP_EXTERNAL_TRIGGER\` contains \`wireguard_master_\`; will skip trigger if version matches." >> $GITHUB_STEP_SUMMARY
+          elif grep -q "^wireguard_master" <<< "${SKIP_EXTERNAL_TRIGGER}"; then
             echo "> [!WARNING]" >> $GITHUB_STEP_SUMMARY
             echo "> Github organizational variable \`SKIP_EXTERNAL_TRIGGER\` contains \`wireguard_master\`; skipping trigger." >> $GITHUB_STEP_SUMMARY
             exit 0
@@ -26,6 +29,11 @@ jobs:
           EXT_RELEASE=$(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/APKINDEX.tar.gz" | tar -xz -C /tmp \
             && awk '/^P:'"wireguard-tools"'$/,/V:/' /tmp/APKINDEX | sed -n 2p | sed 's/^V://')
           echo "Type is \`alpine_repo\`" >> $GITHUB_STEP_SUMMARY
+          if grep -q "^wireguard_master_${EXT_RELEASE}" <<< "${SKIP_EXTERNAL_TRIGGER}"; then
+            echo "> [!WARNING]" >> $GITHUB_STEP_SUMMARY
+            echo "> Github organizational variable \`SKIP_EXTERNAL_TRIGGER\` matches current external release; skipping trigger." >> $GITHUB_STEP_SUMMARY
+            exit 0
+          fi
           if [ -z "${EXT_RELEASE}" ] || [ "${EXT_RELEASE}" == "null" ]; then
             echo "> [!WARNING]" >> $GITHUB_STEP_SUMMARY
             echo "> Can't retrieve external version, exiting" >> $GITHUB_STEP_SUMMARY
