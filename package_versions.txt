@@ -146,8 +146,8 @@ iproute2                                                       6.11.0-r0        
 iproute2-minimal                                               6.11.0-r0                             apk          
 iproute2-ss                                                    6.11.0-r0                             apk          
 iproute2-tc                                                    6.11.0-r0                             apk          
-iptables                                                       1.8.10-r5                             apk          
-iptables-legacy                                                1.8.10-r5                             apk          
+iptables                                                       1.8.11-r1                             apk          
+iptables-legacy                                                1.8.11-r1                             apk          
 iputils                                                        20240905-r0                           apk          
 iputils-arping                                                 20240905-r0                           apk          
 iputils-clockdiff                                              20240905-r0                           apk          
@@ -173,8 +173,8 @@ libelf                                                         0.191-r0         
 libevent                                                       2.1.12-r7                             apk          
 libidn2                                                        2.3.7-r0                              apk          
 libintl                                                        0.22.5-r0                             apk          
-libip4tc                                                       1.8.10-r5                             apk          
-libip6tc                                                       1.8.10-r5                             apk          
+libip4tc                                                       1.8.11-r1                             apk          
+libip6tc                                                       1.8.11-r1                             apk          
 libmd                                                          1.1.0-r0                              apk          
 libmnl                                                         1.0.5-r2                              apk          
 libncursesw                                                    6.5_p20241006-r3                      apk          
@@ -186,7 +186,7 @@ libqrencode                                                    4.1.1-r2         
 libqrencode-tools                                              4.1.1-r2                              apk          
 libssl3                                                        3.3.2-r4                              apk          
 libunistring                                                   1.2-r0                                apk          
-libxtables                                                     1.8.10-r5                             apk          
+libxtables                                                     1.8.11-r1                             apk          
 linux-pam                                                      1.6.1-r1                              apk          
 mii-tool                                                       2.10-r3                               apk          
 musl                                                           1.2.5-r8                              apk          
