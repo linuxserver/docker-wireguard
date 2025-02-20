@@ -3,8 +3,8 @@ acl-libs                                                       2.3.2-r1         
 alpine-baselayout                                              3.6.8-r1                              apk          
 alpine-baselayout-data                                         3.6.8-r1                              apk          
 alpine-keys                                                    2.5-r0                                apk          
-alpine-release                                                 3.21.2-r0                             apk          
-apk-tools                                                      2.14.6-r2                             apk          
+alpine-release                                                 3.21.3-r0                             apk          
+apk-tools                                                      2.14.6-r3                             apk          
 bash                                                           5.2.37-r0                             apk          
 bc                                                             1.07.1-r5                             apk          
 brotli-libs                                                    1.1.0-r2                              apk          
@@ -20,7 +20,7 @@ coreutils                                                      9.5-r2           
 coreutils-env                                                  9.5-r2                                apk          
 coreutils-fmt                                                  9.5-r2                                apk          
 coreutils-sha512sum                                            9.5-r2                                apk          
-curl                                                           8.12.0-r0                             apk          
+curl                                                           8.12.1-r0                             apk          
 findutils                                                      4.10.0-r0                             apk          
 github.com/Azure/azure-sdk-for-go                              v68.0.0+incompatible                  go-module    
 github.com/Azure/go-autorest/autorest                          v0.11.29                              go-module    
@@ -167,8 +167,8 @@ libcap-getcap                                                  2.71-r0          
 libcap-setcap                                                  2.71-r0                               apk          
 libcap-utils                                                   2.71-r0                               apk          
 libcap2                                                        2.71-r0                               apk          
-libcrypto3                                                     3.3.2-r5                              apk          
-libcurl                                                        8.12.0-r0                             apk          
+libcrypto3                                                     3.3.3-r0                              apk          
+libcurl                                                        8.12.1-r0                             apk          
 libelf                                                         0.191-r0                              apk          
 libevent                                                       2.1.12-r7                             apk          
 libidn2                                                        2.3.7-r0                              apk          
@@ -184,13 +184,13 @@ libproc2                                                       4.0.4-r2         
 libpsl                                                         0.21.5-r3                             apk          
 libqrencode                                                    4.1.1-r2                              apk          
 libqrencode-tools                                              4.1.1-r2                              apk          
-libssl3                                                        3.3.2-r5                              apk          
+libssl3                                                        3.3.3-r0                              apk          
 libunistring                                                   1.2-r0                                apk          
 libxtables                                                     1.8.11-r1                             apk          
 linux-pam                                                      1.6.1-r1                              apk          
 mii-tool                                                       2.10-r3                               apk          
-musl                                                           1.2.5-r8                              apk          
-musl-utils                                                     1.2.5-r8                              apk          
+musl                                                           1.2.5-r9                              apk          
+musl-utils                                                     1.2.5-r9                              apk          
 ncurses-terminfo-base                                          6.5_p20241006-r3                      apk          
 net-tools                                                      2.10-r3                               apk          
 netcat-openbsd                                                 1.226.1.1-r0                          apk          
@@ -209,7 +209,7 @@ sigs.k8s.io/yaml                                               v1.3.0           
 skalibs-libs                                                   2.14.3.0-r0                           apk          
 ssl_client                                                     1.37.0-r12                            apk          
 stdlib                                                         go1.21.8                              go-module    
-tzdata                                                         2024b-r1                              apk          
+tzdata                                                         2025a-r0                              apk          
 unbound-libs                                                   1.22.0-r0                             apk          
 utmps-libs                                                     0.1.2.3-r2                            apk          
 wireguard-tools                                                1.0.20210914-r4                       apk          
