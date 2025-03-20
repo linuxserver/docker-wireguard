@@ -15,7 +15,7 @@ ca-certificates                                                20241121-r1      
 ca-certificates-bundle                                         20241121-r1                           apk          
 catatonit                                                      0.2.0-r0                              apk          
 cloud.google.com/go/compute/metadata                           v0.2.3                                go-module    
-coredns                                                        1.11.3-r2                             apk          
+coredns                                                        1.11.3-r3                             apk          
 coreutils                                                      9.5-r2                                apk          
 coreutils-env                                                  9.5-r2                                apk          
 coreutils-fmt                                                  9.5-r2                                apk          
@@ -179,7 +179,7 @@ libmd                                                          1.1.0-r0         
 libmnl                                                         1.0.5-r2                              apk          
 libncursesw                                                    6.5_p20241006-r3                      apk          
 libnftnl                                                       1.2.8-r0                              apk          
-libpng                                                         1.6.44-r0                             apk          
+libpng                                                         1.6.47-r0                             apk          
 libproc2                                                       4.0.4-r2                              apk          
 libpsl                                                         0.21.5-r3                             apk          
 libqrencode                                                    4.1.1-r2                              apk          
