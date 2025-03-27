@@ -20,7 +20,7 @@ coreutils                                                      9.5-r2           
 coreutils-env                                                  9.5-r2                                apk          
 coreutils-fmt                                                  9.5-r2                                apk          
 coreutils-sha512sum                                            9.5-r2                                apk          
-curl                                                           8.12.1-r0                             apk          
+curl                                                           8.12.1-r1                             apk          
 findutils                                                      4.10.0-r0                             apk          
 github.com/Azure/azure-sdk-for-go                              v68.0.0+incompatible                  go-module    
 github.com/Azure/go-autorest/autorest                          v0.11.29                              go-module    
@@ -168,7 +168,7 @@ libcap-setcap                                                  2.71-r0          
 libcap-utils                                                   2.71-r0                               apk          
 libcap2                                                        2.71-r0                               apk          
 libcrypto3                                                     3.3.3-r0                              apk          
-libcurl                                                        8.12.1-r0                             apk          
+libcurl                                                        8.12.1-r1                             apk          
 libelf                                                         0.191-r0                              apk          
 libevent                                                       2.1.12-r7                             apk          
 libidn2                                                        2.3.7-r0                              apk          
