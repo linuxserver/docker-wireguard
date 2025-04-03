@@ -209,7 +209,7 @@ sigs.k8s.io/yaml                                               v1.3.0           
 skalibs-libs                                                   2.14.3.0-r0                           apk          
 ssl_client                                                     1.37.0-r12                            apk          
 stdlib                                                         go1.21.8                              go-module    
-tzdata                                                         2025a-r0                              apk          
+tzdata                                                         2025b-r0                              apk          
 unbound-libs                                                   1.22.0-r0                             apk          
 utmps-libs                                                     0.1.2.3-r2                            apk          
 wireguard-tools                                                1.0.20210914-r4                       apk          
