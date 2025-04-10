@@ -10,12 +10,12 @@ bc                                                             1.07.1-r5        
 brotli-libs                                                    1.1.0-r2                              apk          
 busybox                                                        1.37.0-r12                            apk          
 busybox-binsh                                                  1.37.0-r12                            apk          
-c-ares                                                         1.34.3-r0                             apk          
+c-ares                                                         1.34.5-r0                             apk          
 ca-certificates                                                20241121-r1                           apk          
 ca-certificates-bundle                                         20241121-r1                           apk          
 catatonit                                                      0.2.0-r0                              apk          
 cloud.google.com/go/compute/metadata                           v0.2.3                                go-module    
-coredns                                                        1.11.3-r3                             apk          
+coredns                                                        1.11.3-r4                             apk          
 coreutils                                                      9.5-r2                                apk          
 coreutils-env                                                  9.5-r2                                apk          
 coreutils-fmt                                                  9.5-r2                                apk          
@@ -215,6 +215,6 @@ utmps-libs                                                     0.1.2.3-r2       
 wireguard-tools                                                1.0.20210914-r4                       apk          
 wireguard-tools-wg                                             1.0.20210914-r4                       apk          
 wireguard-tools-wg-quick                                       1.0.20210914-r4                       apk          
-xz-libs                                                        5.6.3-r0                              apk          
+xz-libs                                                        5.6.3-r1                              apk          
 zlib                                                           1.3.1-r2                              apk          
 zstd-libs                                                      1.5.6-r2                              apk          
