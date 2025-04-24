@@ -28,6 +28,7 @@ RUN \
     libcap-utils \
     libqrencode-tools \
     net-tools \
+    nftables \
     openresolv \
     wireguard-tools==${WIREGUARD_RELEASE} && \
   echo "wireguard" >> /etc/modules && \
