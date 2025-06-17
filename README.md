@@ -388,6 +388,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **17.06.25:** - Rebase to Alpine 3.22.
 * **01.01.25:** - Deprecate legacy branch.
 * **20.12.24:** - Rebase to Alpine 3.21.
 * **13.08.24:** - Add `errors` plugin to default Corefile.
