@@ -4,7 +4,7 @@
 unset WG_CONFS
 rm -rf /run/activeconfs
 # Enumerate interfaces
-for wgconf in $(ls /config/wg_confs/*.conf); do
+for wgconf in /config/wg_confs/*.conf; do
     if grep -q "\[Interface\]" "${wgconf}"; then
         echo "**** Found WG conf ${wgconf}, adding to list ****"
         WG_CONFS+=("${wgconf}")
@@ -13,14 +13,14 @@ for wgconf in $(ls /config/wg_confs/*.conf); do
     fi
 done
 
-if [[ -z "${WG_CONFS}" ]]; then
+if [[ -z "${WG_CONFS[*]}" ]]; then
     echo "**** No valid tunnel config found. Please create a valid config and restart the container ****"
     ip route del default
     exit 0
 fi
 
 unset FAILED
-for tunnel in ${WG_CONFS[@]}; do
+for tunnel in "${WG_CONFS[@]}"; do
     echo "**** Activating tunnel ${tunnel} ****"
     if ! wg-quick up "${tunnel}"; then
         FAILED="${tunnel}"
@@ -33,7 +33,7 @@ if [[ -z "${FAILED}" ]]; then
     echo "**** All tunnels are now active ****"
 else
     echo "**** Tunnel ${FAILED} failed, will stop all others! ****"
-    for tunnel in ${WG_CONFS[@]}; do
+    for tunnel in "${WG_CONFS[@]}"; do
         if [[ "${tunnel}" = "${FAILED}" ]]; then
             break
         else

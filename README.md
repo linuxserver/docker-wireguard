@@ -55,7 +55,7 @@ The architectures supported by this image are:
 
 ## Application Setup
 
-During container start, it will first check if the wireguard module is already installed and loaded. Kernels newer than 5.6 generally have the wireguard module built-in (along with some older custom kernels). However, the module may not be enabled. Make sure it is enabled prior to starting the container.
+During container start, it will first check if the wireguard module is already installed and loaded. All currently supported kernels should have the wireguard module built-in (along with some older custom kernels). However, the module may not be enabled. Make sure it is enabled prior to starting the container.
 
 This can be run as a server or a client, based on the parameters used.
 
@@ -385,6 +385,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **15.07.25:** - Rebase to Alpine 3.22. Remove iptables-legacy shim.
 * **01.01.25:** - Deprecate legacy branch.
 * **20.12.24:** - Rebase to Alpine 3.21.
 * **13.08.24:** - Add `errors` plugin to default Corefile.
