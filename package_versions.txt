@@ -167,7 +167,7 @@ libcap-getcap                                                  2.71-r0          
 libcap-setcap                                                  2.71-r0                               apk          
 libcap-utils                                                   2.71-r0                               apk          
 libcap2                                                        2.71-r0                               apk          
-libcrypto3                                                     3.3.3-r0                              apk          
+libcrypto3                                                     3.3.4-r0                              apk          
 libcurl                                                        8.12.1-r1                             apk          
 libelf                                                         0.191-r0                              apk          
 libevent                                                       2.1.12-r7                             apk          
@@ -184,7 +184,7 @@ libproc2                                                       4.0.4-r2         
 libpsl                                                         0.21.5-r3                             apk          
 libqrencode                                                    4.1.1-r2                              apk          
 libqrencode-tools                                              4.1.1-r2                              apk          
-libssl3                                                        3.3.3-r0                              apk          
+libssl3                                                        3.3.4-r0                              apk          
 libunistring                                                   1.2-r0                                apk          
 libxtables                                                     1.8.11-r1                             apk          
 linux-pam                                                      1.6.1-r1                              apk          
