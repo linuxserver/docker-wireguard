@@ -3,7 +3,7 @@ acl-libs                                                       2.3.2-r1         
 alpine-baselayout                                              3.6.8-r1                              apk          
 alpine-baselayout-data                                         3.6.8-r1                              apk          
 alpine-keys                                                    2.5-r0                                apk          
-alpine-release                                                 3.21.3-r0                             apk          
+alpine-release                                                 3.21.4-r0                             apk          
 apk-tools                                                      2.14.6-r3                             apk          
 bash                                                           5.2.37-r0                             apk          
 bc                                                             1.07.1-r5                             apk          
@@ -11,8 +11,8 @@ brotli-libs                                                    1.1.0-r2         
 busybox                                                        1.37.0-r12                            apk          
 busybox-binsh                                                  1.37.0-r12                            apk          
 c-ares                                                         1.34.5-r0                             apk          
-ca-certificates                                                20241121-r1                           apk          
-ca-certificates-bundle                                         20241121-r1                           apk          
+ca-certificates                                                20250619-r0                           apk          
+ca-certificates-bundle                                         20250619-r0                           apk          
 catatonit                                                      0.2.0-r0                              apk          
 cloud.google.com/go/compute/metadata                           v0.2.3                                go-module    
 coredns                                                        1.11.3-r5                             apk          
