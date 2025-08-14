@@ -8,8 +8,8 @@ apk-tools                                                        2.14.9-r2      
 bash                                                             5.2.37-r0                             apk          
 bc                                                               1.08.2-r0                             apk          
 brotli-libs                                                      1.1.0-r2                              apk          
-busybox                                                          1.37.0-r18                            apk          
-busybox-binsh                                                    1.37.0-r18                            apk          
+busybox                                                          1.37.0-r19                            apk          
+busybox-binsh                                                    1.37.0-r19                            apk          
 c-ares                                                           1.34.5-r0                             apk          
 ca-certificates                                                  20250619-r0                           apk          
 ca-certificates-bundle                                           20250619-r0                           apk          
@@ -17,7 +17,7 @@ catatonit                                                        0.2.1-r0       
 cloud.google.com/go/auth                                         v0.15.0                               go-module    
 cloud.google.com/go/auth/oauth2adapt                             v0.2.7                                go-module    
 cloud.google.com/go/compute/metadata                             v0.6.0                                go-module    
-coredns                                                          1.12.1-r2                             apk          
+coredns                                                          1.12.1-r3                             apk          
 coreutils                                                        9.7-r1                                apk          
 coreutils-env                                                    9.7-r1                                apk          
 coreutils-fmt                                                    9.7-r1                                apk          
@@ -248,7 +248,7 @@ sigs.k8s.io/json                                                 v0.0.0-20241010
 sigs.k8s.io/structured-merge-diff/v4                             v4.4.2                                go-module    
 sigs.k8s.io/yaml                                                 v1.4.0                                go-module    
 skalibs-libs                                                     2.14.4.0-r0                           apk          
-ssl_client                                                       1.37.0-r18                            apk          
+ssl_client                                                       1.37.0-r19                            apk          
 stdlib                                                           go1.24.1                              go-module    
 tzdata                                                           2025b-r0                              apk          
 unbound-libs                                                     1.23.1-r0                             apk          
