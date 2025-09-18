@@ -4,7 +4,7 @@ alpine-baselayout                                                3.7.0-r0       
 alpine-baselayout-data                                           3.7.0-r0                              apk          
 alpine-keys                                                      2.5-r0                                apk          
 alpine-release                                                   3.22.1-r0                             apk          
-apk-tools                                                        2.14.9-r2                             apk          
+apk-tools                                                        2.14.9-r3                             apk          
 bash                                                             5.2.37-r0                             apk          
 bc                                                               1.08.2-r0                             apk          
 brotli-libs                                                      1.1.0-r2                              apk          
@@ -202,7 +202,7 @@ k8s.io/klog/v2                                                   v2.130.1       
 k8s.io/kube-openapi                                              v0.0.0-20241105132330-32ad38e42d3f    go-module    
 k8s.io/utils                                                     v0.0.0-20241104100929-3ea5e8cea738    go-module    
 kmod                                                             34.2-r0                               apk          
-libapk2                                                          2.14.9-r2                             apk          
+libapk2                                                          2.14.9-r3                             apk          
 libattr                                                          2.5.2-r2                              apk          
 libbsd                                                           0.12.2-r0                             apk          
 libcap-getcap                                                    2.76-r0                               apk          
