@@ -3,7 +3,7 @@ acl-libs                                                         2.3.2-r1       
 alpine-baselayout                                                3.7.0-r0                              apk          
 alpine-baselayout-data                                           3.7.0-r0                              apk          
 alpine-keys                                                      2.5-r0                                apk          
-alpine-release                                                   3.22.1-r0                             apk          
+alpine-release                                                   3.22.2-r0                             apk          
 apk-tools                                                        2.14.9-r3                             apk          
 bash                                                             5.2.37-r0                             apk          
 bc                                                               1.08.2-r0                             apk          
@@ -17,7 +17,7 @@ catatonit                                                        0.2.1-r0       
 cloud.google.com/go/auth                                         v0.15.0                               go-module    
 cloud.google.com/go/auth/oauth2adapt                             v0.2.7                                go-module    
 cloud.google.com/go/compute/metadata                             v0.6.0                                go-module    
-coredns                                                          1.12.1-r4                             apk          
+coredns                                                          1.12.1-r5                             apk          
 coreutils                                                        9.7-r1                                apk          
 coreutils-env                                                    9.7-r1                                apk          
 coreutils-fmt                                                    9.7-r1                                apk          
