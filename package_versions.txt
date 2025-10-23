@@ -238,7 +238,7 @@ nftables                                                         1.1.3-r0       
 nghttp2-libs                                                     1.65.0-r0                             apk          
 oniguruma                                                        6.9.10-r0                             apk          
 openresolv                                                       3.14.1-r0                             apk          
-pcre2                                                            10.43-r1                              apk          
+pcre2                                                            10.46-r0                              apk          
 procps-ng                                                        4.0.4-r3                              apk          
 protobuf-c                                                       1.5.2-r0                              apk          
 readline                                                         8.2.13-r1                             apk          
@@ -251,7 +251,7 @@ skalibs-libs                                                     2.14.4.0-r0    
 ssl_client                                                       1.37.0-r19                            apk          
 stdlib                                                           go1.24.1                              go-module    
 tzdata                                                           2025b-r0                              apk          
-unbound-libs                                                     1.23.1-r0                             apk          
+unbound-libs                                                     1.23.1-r1                             apk          
 utmps-libs                                                       0.1.3.1-r0                            apk          
 wireguard-tools                                                  1.0.20250521-r0                       apk          
 wireguard-tools-wg                                               1.0.20250521-r0                       apk          
