@@ -10,7 +10,7 @@ bc                                                               1.08.2-r0      
 brotli-libs                                                      1.1.0-r2                              apk          
 busybox                                                          1.37.0-r20                            apk          
 busybox-binsh                                                    1.37.0-r20                            apk          
-c-ares                                                           1.34.5-r0                             apk          
+c-ares                                                           1.34.6-r0                             apk          
 ca-certificates                                                  20250911-r0                           apk          
 ca-certificates-bundle                                           20250911-r0                           apk          
 catatonit                                                        0.2.1-r0                              apk          
@@ -250,7 +250,7 @@ sigs.k8s.io/yaml                                                 v1.4.0         
 skalibs-libs                                                     2.14.4.0-r0                           apk          
 ssl_client                                                       1.37.0-r20                            apk          
 stdlib                                                           go1.24.1                              go-module    
-tzdata                                                           2025b-r0                              apk          
+tzdata                                                           2025c-r0                              apk          
 unbound-libs                                                     1.23.1-r1                             apk          
 utmps-libs                                                       0.1.3.1-r0                            apk          
 wireguard-tools                                                  1.0.20250521-r0                       apk          
