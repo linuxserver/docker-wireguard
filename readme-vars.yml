@@ -158,6 +158,7 @@ init_diagram: |
   "wireguard:latest" <- Base Images
 # changelog
 changelogs:
+  - {date: "04.01.26:", desc: "Rebase to Alpine 3.23."}
   - {date: "15.07.25:", desc: "Rebase to Alpine 3.22. Remove iptables-legacy shim."}
   - {date: "01.01.25:", desc: "Deprecate legacy branch."}
   - {date: "20.12.24:", desc: "Rebase to Alpine 3.21."}
