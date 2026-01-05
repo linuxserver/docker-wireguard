@@ -194,6 +194,10 @@ if [[ ! -f /config/coredns/Corefile ]]; then
     cp /defaults/Corefile /config/coredns/Corefile
 fi
 
+# Fix openresolv bug - Upstream fix in v3.17.3
+resolvconf -a control 2>/dev/null < /etc/resolv.conf
+resolvconf -u
+
 # permissions
 lsiown -R abc:abc \
     /config
