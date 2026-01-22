@@ -183,6 +183,10 @@ if [[ -n "$PEERS" ]]; then
             echo "**** No changes to parameters. Existing configs are used. ****"
         fi
     fi
+
+    # Fix openresolv bug - Upstream fix in v3.17.3
+    resolvconf -a control 2>/dev/null < /etc/resolv.conf
+    resolvconf -u
 else
     echo "**** Client mode selected. ****"
     USE_COREDNS="${USE_COREDNS,,}"
@@ -193,10 +197,6 @@ fi
 if [[ ! -f /config/coredns/Corefile ]]; then
     cp /defaults/Corefile /config/coredns/Corefile
 fi
-
-# Fix openresolv bug - Upstream fix in v3.17.3
-resolvconf -a control 2>/dev/null < /etc/resolv.conf
-resolvconf -u
 
 # permissions
 lsiown -R abc:abc \
