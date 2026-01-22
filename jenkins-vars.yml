@@ -15,7 +15,7 @@ repo_vars:
   - DEV_DOCKERHUB_IMAGE = 'lsiodev/wireguard'
   - PR_DOCKERHUB_IMAGE = 'lspipepr/wireguard'
   - DIST_IMAGE = 'alpine'
-  - DIST_REPO = 'http://dl-cdn.alpinelinux.org/alpine/v3.23/main/'
+  - DIST_REPO = 'http://dl-cdn.alpinelinux.org/alpine/v3.22/main/'
   - DIST_REPO_PACKAGES = 'wireguard-tools'
   - MULTIARCH='true'
   - CI='false'
