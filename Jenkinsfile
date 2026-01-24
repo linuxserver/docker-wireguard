@@ -20,14 +20,14 @@ pipeline {
     QUAYIO_API_TOKEN=credentials('quayio-repo-api-token')
     GIT_SIGNING_KEY=credentials('484fbca6-9a4f-455e-b9e3-97ac98785f5f')
     CONTAINER_NAME = 'wireguard'
-    BUILD_VERSION_ARG = 'WIREGUARD_VERSION'
+    BUILD_VERSION_ARG = 'WIREGUARD_RELEASE'
     LS_USER = 'linuxserver'
     LS_REPO = 'docker-wireguard'
     DOCKERHUB_IMAGE = 'linuxserver/wireguard'
     DEV_DOCKERHUB_IMAGE = 'lsiodev/wireguard'
     PR_DOCKERHUB_IMAGE = 'lspipepr/wireguard'
     DIST_IMAGE = 'alpine'
-    DIST_REPO = 'http://dl-cdn.alpinelinux.org/alpine/v3.22/main/'
+    DIST_REPO = 'http://dl-cdn.alpinelinux.org/alpine/v3.23/main/'
     DIST_REPO_PACKAGES = 'wireguard-tools'
     MULTIARCH='true'
     CI='false'
