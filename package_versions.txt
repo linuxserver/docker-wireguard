@@ -219,7 +219,7 @@ libmd                                                            1.1.0-r0       
 libmnl                                                           1.0.5-r2                              apk          
 libncursesw                                                      6.5_p20250503-r0                      apk          
 libnftnl                                                         1.2.9-r0                              apk          
-libpng                                                           1.6.53-r0                             apk          
+libpng                                                           1.6.54-r0                             apk          
 libproc2                                                         4.0.4-r3                              apk          
 libpsl                                                           0.21.5-r3                             apk          
 libqrencode                                                      4.1.1-r3                              apk          
