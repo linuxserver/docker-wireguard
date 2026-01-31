@@ -385,6 +385,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **24.01.26:** - Rebase to Alpine 3.23 again as openresolv alpine 3.23 package has now been updated.
 * **22.01.26:** - Revert to Alpine 3.22 due to resolvconf bug.
 * **04.01.26:** - Rebase to Alpine 3.23.
 * **15.07.25:** - Rebase to Alpine 3.22. Remove iptables-legacy shim.
