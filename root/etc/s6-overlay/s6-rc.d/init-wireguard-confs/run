@@ -198,9 +198,25 @@ if [[ -n "$PEERS" ]]; then
         fi
     fi
     if [[ -n "$IP6_SUBNET" ]]; then
-        # must end with colon (e.g. 2001:db8:b00b:420::)
-        if [[ ! "$IP6_SUBNET" =~ :$ ]]; then
-            echo "**** ERROR: IP6_SUBNET must end with ':' (e.g., 2001:db8:b00b:420::). IPv6 disabled. ****"
+        # normalize: strip trailing zeros after :: (e.g. ::0 → ::, ::000 → ::)
+        while [[ "$IP6_SUBNET" =~ ::0+$ ]]; do
+            IP6_SUBNET="${IP6_SUBNET%0}"
+        done
+        # normalize: fully-expanded trailing :0 groups without :: (e.g. 2001:db8:420:0:0:0:0 → 2001:db8:420::)
+        if [[ ! "$IP6_SUBNET" =~ :: ]]; then
+            ORIG_SUBNET="$IP6_SUBNET"
+            while [[ "$IP6_SUBNET" =~ :0+$ ]]; do
+                IP6_SUBNET="${IP6_SUBNET%:*}"
+            done
+            if [[ "$IP6_SUBNET" != "$ORIG_SUBNET" ]]; then
+                IP6_SUBNET="${IP6_SUBNET}::"
+            fi
+        fi
+    fi
+    if [[ -n "$IP6_SUBNET" ]]; then
+        # must end with :: to allow host-ID concatenation (e.g. 2001:db8:b00b:420::)
+        if [[ ! "$IP6_SUBNET" =~ ::$ ]]; then
+            echo "**** ERROR: IP6_SUBNET must end with '::' (e.g., 2001:db8:b00b:420::). IPv6 disabled. ****"
             IP6_SUBNET=""
         fi
     fi
