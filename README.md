@@ -73,7 +73,7 @@ Look for the address beginning with `fe80::`.
 
 Finally, `SYS_MODULE` capability is not optional: it must be added to `cap_add` when using IPv6.
 
-### Host Mode
+### Host Networking
 
 Enable IPv6 forwarding on the host by enabling the following sysctls:
 ```conf
@@ -106,7 +106,7 @@ services:
     restart: unless-stopped
 ```
 
-### Bridge Mode
+### Bridge Networking
 
 Create an external Docker network with IPv6 support:
 
