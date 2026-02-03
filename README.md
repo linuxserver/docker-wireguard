@@ -59,19 +59,26 @@ If you get IPv6 related errors in the log and connection cannot be established, 
 
 ## IPv6 GUA (Global Unicast Address) Support
 
-WireGuard supports optional dual-stack (IPv4+IPv6) tunnel configuration via the `IP6_SUBNET` environment variable. When set, both the server and all peers receive an IPv6 GUA address in addition to their IPv4 address. IPv6 is disabled by default; existing IPv4-only configurations continue to work without modification.
+This fork of WireGuard supports optional dual-stack (IPv4+IPv6) tunnel configuration via the `IP6_SUBNET` environment variable. When set, both the server and all peers receive an IPv6 GUA address in addition to their IPv4 address. IPv6 is disabled by default; existing IPv4-only configurations continue to work without modification.
 
-`SYS_MODULE` capability **must** be added to `cap_add` when using IPv6. A static IPv6 route must also be configured on your router pointing `IP6_SUBNET` to your host — this is required for both host and bridge modes. Without the router route, IPv6 traffic will not reach your WireGuard peers.
+**CRITICAL: IPv6 routing WILL NOT WORK out of the box. ADDITIONAL CONFIGURATION IS REQUIRED.**
 
-### Host Mode
+A static IPv6 route must be configured on your router pointing `IP6_SUBNET` to your host's link-local IPv6 address via the router's LAN interface. Without this, IPv6 traffic will fail to reach your WireGuard peers.
 
-Enable IPv6 forwarding on the host by adding the following sysctls to your docker-compose:
+The host's link-local address can be found by:
+```bash
+ip -c -6 -brief addr | grep <interface>
+```
+Look for the address beginning with `fe80::`.
 
-```yaml
-sysctls:
-  - net.ipv4.conf.all.src_valid_mark=1
-  - net.ipv6.conf.all.disable_ipv6=0
-  - net.ipv6.conf.all.forwarding=1
+Finally, `SYS_MODULE` capability is not optional: it must be added to `cap_add` when using IPv6.
+
+### Host Networking
+
+Enable IPv6 forwarding on the host by enabling the following sysctls:
+```conf
+net.ipv6.conf.all.disable_ipv6=0
+net.ipv6.conf.all.forwarding=1
 ```
 
 Configure a static IPv6 route on your router pointing `IP6_SUBNET` to the host device IP.
@@ -88,21 +95,18 @@ services:
       - NET_ADMIN
       - SYS_MODULE
     volumes:
-      - /path/to/wireguard/config:/config
+      - ./config:/config
       - /lib/modules:/lib/modules
-    sysctls:
-      - net.ipv4.conf.all.src_valid_mark=1
-      - net.ipv6.conf.all.disable_ipv6=0
-      - net.ipv6.conf.all.forwarding=1
     environment:
       - PEERS=3
       - SERVERURL=wireguard.domain.com
-      - "IP6_SUBNET=2001:db8:b00b:420::"
-      - "PEERDNS=8.8.8.8,2001:4860:4860::8888"
+      - IP6_SUBNET="2001:db8:b00b:42a::"
+      - PEERDNS=8.8.8.8,2001:4860:4860::8888
+      - PERSISTENTKEEPALIVEPEERS=all
     restart: unless-stopped
 ```
 
-### Bridge Mode
+### Bridge Networking
 
 Create an external Docker network with IPv6 support:
 
@@ -110,41 +114,60 @@ Create an external Docker network with IPv6 support:
 docker network create --ipv6 --subnet 2001:db8:1::/64 wireguard_net
 ```
 
-Add a static IPv6 route on the host pointing `IP6_SUBNET` to the Docker network gateway. **Note:** host routes added via `ip route` are ephemeral — you must make them persistent via your system's network configuration or they will be lost on reboot.
-
-```bash
-sudo ip -6 route add 2001:db8:b00b:420::/64 via <docker_network_gateway>
-```
-
 Configure a static IPv6 route on your router pointing `IP6_SUBNET` to the host device IP.
 
 Example (bridge mode):
 
 ```yaml
+networks:
+  wg6:
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        - subnet: "2001:db8:b00b:42b::/64"
+
 services:
   wireguard:
     image: ohshitgorillas/wireguard:latest
     container_name: wireguard
+    networks:
+      - wg6
+    ports:
+      - 51820:51820/udp
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
-    ports:
-      - 51820:51820/udp
-    volumes:
-      - /path/to/wireguard/config:/config
-      - /lib/modules:/lib/modules
-    networks:
-      wireguard_net:
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv6.conf.all.forwarding=1
     environment:
-      - PEERS=3
       - SERVERURL=wireguard.domain.com
-      - "IP6_SUBNET=2001:db8:b00b:420::"
-      - "PEERDNS=8.8.8.8,2001:4860:4860::8888"
+      - PEERS=3
+      - PEERDNS=8.8.8.8,2001:4860:4860::8888
+      - INTERNAL_SUBNET=10.14.14.0/24
+      - IP6_SUBNET="2001:db8:b00b:42a::"
+      - ALLOWEDIPS=0.0.0.0/0, ::/0
+      - PERSISTENTKEEPALIVE_PEERS=all
+    volumes:
+      - ./config:/config
+      - /lib/modules:/lib/modules
+    privileged: true
     restart: unless-stopped
-networks:
-  wireguard_net:
-    external: true
 ```
+
+Add a static IPv6 route on the host pointing `IP6_SUBNET` to the Docker network gateway.
+```bash
+sudo ip -6 route add 2001:db8:b00b:42a::/64 via 2001:db8:b00b:42b::2
+```
+
+Confirm that the `via` address is correct by executing:
+```bash
+docker exec wireguard ip -6 -brief addr | grep eth0
+```
+
+**Note:** host routes added via `ip route` are ephemeral — you must make them persistent via your system's network configuration or they will be lost on container or host reboot.
+
 
 ## Road warriors, roaming and returning home
 
