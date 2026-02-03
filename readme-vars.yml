@@ -39,6 +39,7 @@ opt_param_env_vars:
   - {env_var: "PEERS", env_value: "1", desc: "Number of peers to create confs for. Required for server mode. Can also be a list of names: `myPC,myPhone,myTablet` (alphanumeric only)"}
   - {env_var: "PEERDNS", env_value: "auto", desc: "DNS server set in peer/client configs (can be set as `8.8.8.8`). Used in server mode. Defaults to `auto`, which uses wireguard docker host's DNS via included CoreDNS forward."}
   - {env_var: "INTERNAL_SUBNET", env_value: "10.13.13.0", desc: "Internal subnet for the wireguard and server and peers (only change if it clashes). Used in server mode."}
+  - {env_var: "IP6_SUBNET", env_value: "", desc: "IPv6 subnet for the WireGuard tunnel, enabling dual-stack (IPv4+IPv6) configuration. Must end with ':' (e.g., 2001:db8:b00b:420::). Accepts an optional CIDR prefix /64 through /112 (defaults to /64 if omitted). Server gets ::1/128, peers get sequential ::2/128, ::3/128, etc. Requires SYS_MODULE capability and a static IPv6 route on your router. See IPv6 GUA setup instructions in the application setup section below. Used in server mode."}
   - {env_var: "ALLOWEDIPS", env_value: "0.0.0.0/0", desc: "The IPs/Ranges that the peers will be able to reach using the VPN connection. If not specified the default value is: '0.0.0.0/0, ::0/0' This will cause ALL traffic to route through the VPN, if you want split tunneling, set this to only the IPs you would like to use the tunnel AND the ip of the server's WG ip, such as 10.13.13.1."}
   - {env_var: "PERSISTENTKEEPALIVE_PEERS", env_value: "", desc: "Set to `all` or a list of comma separated peers (ie. `1,4,laptop`) for the wireguard server to send keepalive packets to listed peers every 25 seconds. Useful if server is accessed via domain name and has dynamic IP. Used only in server mode."}
   - {env_var: "LOG_CONFS", env_value: "true", desc: "Generated QR codes will be displayed in the docker log. Set to `false` to skip log output."}
@@ -60,7 +61,7 @@ app_setup_block: |
 
   If the environment variable `PEERS` is set to a number or a list of strings separated by comma, the container will run in server mode and the necessary server and peer/client confs will be generated. The peer/client config qr codes will be output in the docker log if `LOG_CONFS` is set to `true`. They will also be saved in text and png format under `/config/peerX` in case `PEERS` is a variable and an integer or `/config/peer_X` in case a list of names was provided instead of an integer.
 
-  Variables `SERVERURL`, `SERVERPORT`, `INTERNAL_SUBNET`, `PEERDNS`, `INTERFACE`, `ALLOWEDIPS` and `PERSISTENTKEEPALIVE_PEERS` are optional variables used for server mode. Any changes to these environment variables will trigger regeneration of server and peer confs. Peer/client confs will be recreated with existing private/public keys. Delete the peer folders for the keys to be recreated along with the confs.
+  Variables `SERVERURL`, `SERVERPORT`, `INTERNAL_SUBNET`, `PEERDNS`, `INTERFACE`, `ALLOWEDIPS`, `PERSISTENTKEEPALIVE_PEERS` and `IP6_SUBNET` are optional variables used for server mode. Any changes to these environment variables will trigger regeneration of server and peer confs. Peer/client confs will be recreated with existing private/public keys. Delete the peer folders for the keys to be recreated along with the confs.
 
   To add more peers/clients later on, you increment the `PEERS` environment variable or add more elements to the list and recreate the container.
 
@@ -75,6 +76,95 @@ app_setup_block: |
   Do not set the `PEERS` environment variable. Drop your client conf(s) into the config folder as `/config/wg_confs/<tunnel name>.conf` and start the container. If there are multiple tunnel configs, the container will attempt to start them all in alphabetical order. If any one of the tunnels fail, they will all be stopped and the default route will be deleted, requiring user intervention to fix the invalid conf and a container restart.
 
   If you get IPv6 related errors in the log and connection cannot be established, edit the `AllowedIPs` line in your peer/client wg0.conf to include only `0.0.0.0/0` and not `::/0`; and restart the container.
+
+  ## IPv6 GUA (Global Unicast Address) Support
+
+  WireGuard supports optional dual-stack (IPv4+IPv6) tunnel configuration via the `IP6_SUBNET` environment variable. When set, both the server and all peers receive an IPv6 GUA address in addition to their IPv4 address. IPv6 is disabled by default; existing IPv4-only configurations continue to work without modification.
+
+  `SYS_MODULE` capability **must** be added to `cap_add` when using IPv6. A static IPv6 route must also be configured on your router pointing `IP6_SUBNET` to your host — this is required for both host and bridge modes. Without the router route, IPv6 traffic will not reach your WireGuard peers.
+
+  ### Host Mode
+
+  Enable IPv6 forwarding on the host by adding the following sysctls to your docker-compose:
+
+    ```yaml
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv6.conf.all.forwarding=1
+    ```
+
+  Configure a static IPv6 route on your router pointing `IP6_SUBNET` to the host device IP.
+
+  Example (host mode):
+
+    ```yaml
+    services:
+      wireguard:
+        image: lsio/wireguard
+        container_name: wireguard
+        network_mode: host
+        cap_add:
+          - NET_ADMIN
+          - SYS_MODULE
+        volumes:
+          - /path/to/wireguard/config:/config
+          - /lib/modules:/lib/modules
+        sysctls:
+          - net.ipv4.conf.all.src_valid_mark=1
+          - net.ipv6.conf.all.disable_ipv6=0
+          - net.ipv6.conf.all.forwarding=1
+        environment:
+          - PEERS=3
+          - SERVERURL=wireguard.domain.com
+          - IP6_SUBNET=2001:db8:b00b:420::
+          - PEERDNS=8.8.8.8,2001:4860:4860::8888
+        restart: unless-stopped
+    ```
+
+  ### Bridge Mode
+
+  Create an external Docker network with IPv6 support:
+
+    ```bash
+    docker network create --ipv6 --subnet 2001:db8:1::/64 wireguard_net
+    ```
+
+  Add a static IPv6 route on the host pointing `IP6_SUBNET` to the Docker network gateway. **Note:** host routes added via `ip route` are ephemeral — you must make them persistent via your system's network configuration or they will be lost on reboot.
+
+    ```bash
+    sudo ip -6 route add 2001:db8:b00b:420::/64 via <docker_network_gateway>
+    ```
+
+  Configure a static IPv6 route on your router pointing `IP6_SUBNET` to the host device IP.
+
+  Example (bridge mode):
+
+    ```yaml
+    services:
+      wireguard:
+        image: lsio/wireguard
+        container_name: wireguard
+        cap_add:
+          - NET_ADMIN
+          - SYS_MODULE
+        ports:
+          - 51820:51820/udp
+        volumes:
+          - /path/to/wireguard/config:/config
+          - /lib/modules:/lib/modules
+        networks:
+          wireguard_net:
+        environment:
+          - PEERS=3
+          - SERVERURL=wireguard.domain.com
+          - IP6_SUBNET=2001:db8:b00b:420::
+          - PEERDNS=8.8.8.8,2001:4860:4860::8888
+        restart: unless-stopped
+    networks:
+      wireguard_net:
+        external: true
+    ```
 
   ## Road warriors, roaming and returning home
 

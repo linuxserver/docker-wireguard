@@ -22,6 +22,13 @@ fi
 if ! grep -q 'PresharedKey' /config/templates/peer.conf; then
     sed -i 's|^Endpoint|PresharedKey = \$\(cat /config/\${PEER_ID}/presharedkey-\${PEER_ID}\)\nEndpoint|' /config/templates/peer.conf
 fi
+# add IPv6 GUA support to user templates (backwards compatibility)
+if ! grep -q 'IP6_ADDR_SERVER' /config/templates/server.conf; then
+    sed -i 's|^Address = ${INTERFACE}\.1$|Address = ${INTERFACE}.1${IP6_ADDR_SERVER:+,${IP6_ADDR_SERVER}}|' /config/templates/server.conf
+fi
+if ! grep -q 'CLIENT_IP6' /config/templates/peer.conf; then
+    sed -i 's|^Address = ${CLIENT_IP}$|Address = ${CLIENT_IP}${CLIENT_IP6:+,${CLIENT_IP6}}|' /config/templates/peer.conf
+fi
 
 generate_confs () {
     mkdir -p /config/server
@@ -50,9 +57,17 @@ DUDE"
                 wg genpsk > "/config/${PEER_ID}/presharedkey-${PEER_ID}"
             fi
             if [[ -f "/config/${PEER_ID}/${PEER_ID}.conf" ]]; then
-                CLIENT_IP=$(grep "Address" "/config/${PEER_ID}/${PEER_ID}.conf" | awk '{print $NF}')
+                CLIENT_IP=$(grep "Address" "/config/${PEER_ID}/${PEER_ID}.conf" | awk '{print $NF}' | cut -d, -f1)
                 if [[ -n "${ORIG_INTERFACE}" ]] && [[ "${INTERFACE}" != "${ORIG_INTERFACE}" ]]; then
                     CLIENT_IP="${CLIENT_IP//${ORIG_INTERFACE}/${INTERFACE}}"
+                fi
+                if [[ -n "${IP6_SUBNET}" ]]; then
+                    CLIENT_IP6=$(grep "Address" "/config/${PEER_ID}/${PEER_ID}.conf" | awk '{print $NF}' | cut -d, -f2)
+                    if [[ -n "${ORIG_IP6_SUBNET}" ]] && [[ "${IP6_SUBNET}" != "${ORIG_IP6_SUBNET}" ]]; then
+                        CLIENT_IP6=""
+                    fi
+                else
+                    CLIENT_IP6=""
                 fi
             else
                 for idx in {2..254}; do
@@ -61,6 +76,16 @@ DUDE"
                     CLIENT_IP="${PROPOSED_IP}"
                     break
                 fi
+                done
+                CLIENT_IP6=""
+            fi
+            # IPv6 address conflict detection
+            if [[ -n "${IP6_SUBNET}" ]] && [[ -z "${CLIENT_IP6}" ]]; then
+                for idx in {2..254}; do
+                    if ! grep -q -R "${IP6_SUBNET}${idx}" /config/peer*/*.conf 2>/dev/null; then
+                        CLIENT_IP6="${IP6_SUBNET}${idx}/128"
+                        break
+                    fi
                 done
             fi
             if [[ -f "/config/${PEER_ID}/presharedkey-${PEER_ID}" ]]; then
@@ -95,11 +120,11 @@ DUDE
             if [[ -n "${!SERVER_ALLOWEDIPS}" ]]; then
                 echo "Adding ${!SERVER_ALLOWEDIPS} to wg0.conf's AllowedIPs for peer ${i}"
                 cat <<DUDE >> /config/wg_confs/wg0.conf
-AllowedIPs = ${CLIENT_IP}/32,${!SERVER_ALLOWEDIPS}
+AllowedIPs = ${CLIENT_IP}/32${CLIENT_IP6:+,${CLIENT_IP6}},${!SERVER_ALLOWEDIPS}
 DUDE
             else
                 cat <<DUDE >> /config/wg_confs/wg0.conf
-AllowedIPs = ${CLIENT_IP}/32
+AllowedIPs = ${CLIENT_IP}/32${CLIENT_IP6:+,${CLIENT_IP6}}
 DUDE
             fi
             # add PersistentKeepalive if the peer is specified
@@ -133,6 +158,7 @@ ORIG_PEERS="$PEERS"
 ORIG_INTERFACE="$INTERFACE"
 ORIG_ALLOWEDIPS="$ALLOWEDIPS"
 ORIG_PERSISTENTKEEPALIVE_PEERS="$PERSISTENTKEEPALIVE_PEERS"
+ORIG_IP6_SUBNET="$IP6_SUBNET"
 DUDE
 }
 
@@ -160,6 +186,35 @@ if [[ -n "$PEERS" ]]; then
     INTERFACE=$(echo "$INTERNAL_SUBNET" | awk 'BEGIN{FS=OFS="."} NF--')
     ALLOWEDIPS=${ALLOWEDIPS:-0.0.0.0/0, ::/0}
     echo "**** AllowedIPs for peers $ALLOWEDIPS ****"
+    if [[ -n "$IP6_SUBNET" ]]; then
+        # strip optional CIDR prefix and validate prefix length
+        if [[ "$IP6_SUBNET" =~ /([0-9]+)$ ]]; then
+            IP6_PREFIX_LEN="${BASH_REMATCH[1]}"
+            IP6_SUBNET="${IP6_SUBNET%/*}"
+            if [[ "$IP6_PREFIX_LEN" -lt 64 ]]; then
+                echo "**** ERROR: IP6_SUBNET prefix length /${IP6_PREFIX_LEN} is too small. Must be /64 or larger. IPv6 disabled. ****"
+                IP6_SUBNET=""
+            fi
+        fi
+    fi
+    if [[ -n "$IP6_SUBNET" ]]; then
+        # must end with colon (e.g. 2001:db8:b00b:420::)
+        if [[ ! "$IP6_SUBNET" =~ :$ ]]; then
+            echo "**** ERROR: IP6_SUBNET must end with ':' (e.g., 2001:db8:b00b:420::). IPv6 disabled. ****"
+            IP6_SUBNET=""
+        fi
+    fi
+    if [[ -n "$IP6_SUBNET" ]]; then
+        # basic format: only hex digits and colons
+        if [[ ! "$IP6_SUBNET" =~ ^[0-9a-fA-F:]+$ ]]; then
+            echo "**** ERROR: IP6_SUBNET contains invalid characters. IPv6 disabled. ****"
+            IP6_SUBNET=""
+        fi
+    fi
+    if [[ -n "$IP6_SUBNET" ]]; then
+        IP6_ADDR_SERVER="${IP6_SUBNET}1/128"
+        echo "**** IPv6 subnet is set to ${IP6_SUBNET}, server IPv6 will be ${IP6_ADDR_SERVER} ****"
+    fi
     if [[ -z "$PEERDNS" ]] || [[ "$PEERDNS" = "auto" ]]; then
         PEERDNS="${INTERFACE}.1"
         echo "**** PEERDNS var is either not set or is set to \"auto\", setting peer DNS to ${INTERFACE}.1 to use wireguard docker host's DNS. ****"
@@ -175,7 +230,7 @@ if [[ -n "$PEERS" ]]; then
         if [[ -f /config/.donoteditthisfile ]]; then
             . /config/.donoteditthisfile
         fi
-        if [[ "$SERVERURL" != "$ORIG_SERVERURL" ]] || [[ "$SERVERPORT" != "$ORIG_SERVERPORT" ]] || [[ "$PEERDNS" != "$ORIG_PEERDNS" ]] || [[ "$PEERS" != "$ORIG_PEERS" ]] || [[ "$INTERFACE" != "$ORIG_INTERFACE" ]] || [[ "$ALLOWEDIPS" != "$ORIG_ALLOWEDIPS" ]] || [[ "$PERSISTENTKEEPALIVE_PEERS" != "$ORIG_PERSISTENTKEEPALIVE_PEERS" ]]; then
+        if [[ "$SERVERURL" != "$ORIG_SERVERURL" ]] || [[ "$SERVERPORT" != "$ORIG_SERVERPORT" ]] || [[ "$PEERDNS" != "$ORIG_PEERDNS" ]] || [[ "$PEERS" != "$ORIG_PEERS" ]] || [[ "$INTERFACE" != "$ORIG_INTERFACE" ]] || [[ "$ALLOWEDIPS" != "$ORIG_ALLOWEDIPS" ]] || [[ "$PERSISTENTKEEPALIVE_PEERS" != "$ORIG_PERSISTENTKEEPALIVE_PEERS" ]] || [[ "$IP6_SUBNET" != "$ORIG_IP6_SUBNET" ]]; then
             echo "**** Server related environment variables changed, regenerating 1 server and ${PEERS} peer/client confs ****"
             generate_confs
             save_vars
