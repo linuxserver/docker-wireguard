@@ -97,8 +97,8 @@ services:
     environment:
       - PEERS=3
       - SERVERURL=wireguard.domain.com
-      - IP6_SUBNET=2001:db8:b00b:420::
-      - PEERDNS=8.8.8.8,2001:4860:4860::8888
+      - "IP6_SUBNET=2001:db8:b00b:420::"
+      - "PEERDNS=8.8.8.8,2001:4860:4860::8888"
     restart: unless-stopped
 ```
 
@@ -138,8 +138,8 @@ services:
     environment:
       - PEERS=3
       - SERVERURL=wireguard.domain.com
-      - IP6_SUBNET=2001:db8:b00b:420::
-      - PEERDNS=8.8.8.8,2001:4860:4860::8888
+      - "IP6_SUBNET=2001:db8:b00b:420::"
+      - "PEERDNS=8.8.8.8,2001:4860:4860::8888"
     restart: unless-stopped
 networks:
   wireguard_net:
