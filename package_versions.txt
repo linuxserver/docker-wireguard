@@ -4,7 +4,7 @@ alpine-baselayout                                                  3.7.1-r8     
 alpine-baselayout-data                                             3.7.1-r8                              apk          
 alpine-keys                                                        2.6-r0                                apk          
 alpine-release                                                     3.23.3-r0                             apk          
-apk-tools                                                          3.0.3-r1                              apk          
+apk-tools                                                          3.0.4-r0                              apk          
 bash                                                               5.3.3-r1                              apk          
 bc                                                                 1.08.2-r0                             apk          
 brotli-libs                                                        1.2.0-r0                              apk          
@@ -17,7 +17,7 @@ catatonit                                                          0.2.1-r0     
 cloud.google.com/go/auth                                           v0.16.3                               go-module    
 cloud.google.com/go/auth/oauth2adapt                               v0.2.8                                go-module    
 cloud.google.com/go/compute/metadata                               v0.7.0                                go-module    
-coredns                                                            1.12.3-r6                             apk          
+coredns                                                            1.12.3-r7                             apk          
 coreutils                                                          9.8-r1                                apk          
 coreutils-env                                                      9.8-r1                                apk          
 coreutils-fmt                                                      9.8-r1                                apk          
@@ -204,7 +204,7 @@ k8s.io/klog/v2                                                     v2.130.1     
 k8s.io/kube-openapi                                                v0.0.0-20241105132330-32ad38e42d3f    go-module    
 k8s.io/utils                                                       v0.0.0-20241210054802-24370beab758    go-module    
 kmod                                                               34.2-r1                               apk          
-libapk                                                             3.0.3-r1                              apk          
+libapk                                                             3.0.4-r0                              apk          
 libattr                                                            2.5.2-r2                              apk          
 libbsd                                                             0.12.2-r0                             apk          
 libcap-getcap                                                      2.77-r0                               apk          
