@@ -11,6 +11,7 @@ import {
   createLocalConfigFile,
   getRemoteConfigFilePath,
 } from "../createLocalConfigFile";
+import { setLocalhostConfig } from "../setLocalhostConfig";
 import fs from "fs";
 
 (async function (): Promise<void> {
@@ -23,19 +24,24 @@ import fs from "fs";
 
     const isQr = process.argv.includes("--qr");
     const isLocal = process.argv.includes("--local");
+    const isLocalhost = process.argv.includes("--localhost");
 
     const configName = isLocal ? "local" : "remote";
     const configFormat = isQr ? "qr" : "text";
     console.log(
-      `Preparing ${configName} ${configFormat} Wireguard credentials; use CTRL + C to stop`
+      `Preparing ${configName} ${configFormat} Wireguard credentials; use CTRL + C to stop`,
     );
 
-    const config = isLocal
+    const baseConfig = isLocal
       ? await createLocalConfigFile(params.MASTER_ADMIN)
       : fs.readFileSync(
           getRemoteConfigFilePath(params.MASTER_ADMIN, "conf"),
-          "utf-8"
+          "utf-8",
         );
+
+    // Mostly required to connect from within the same machine,
+    // especially when DAppNode is installed on macOS.
+    const config = isLocalhost ? setLocalhostConfig(baseConfig) : baseConfig;
 
     const str = isQr
       ? // If rendering the QR fails, show error and the raw remoteTextCreds

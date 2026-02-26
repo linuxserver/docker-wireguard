@@ -43,7 +43,7 @@ async function getLocalIpWithRetries(retries: number): Promise<string> {
 async function getLocalIp(): Promise<string> {
   const dappmanagerHostnames = params.DAPPMANAGER_HOSTNAMES;
   const getLocalIpUrls = dappmanagerHostnames.map(
-    (hostname) => `http://${hostname}${params.GET_INTERNAL_IP_ENDPOINT}`
+    (hostname) => `http://${hostname}${params.GET_INTERNAL_IP_ENDPOINT}`,
   );
 
   let errorMessages: string[] = [];
@@ -57,7 +57,7 @@ async function getLocalIp(): Promise<string> {
       return localIp;
     } catch (e) {
       errorMessages.push(
-        `Local IP could not be fetched from ${url}: ${e.message}`
+        `Local IP could not be fetched from ${url}: ${e.message}`,
       );
     }
   }
@@ -66,12 +66,12 @@ async function getLocalIp(): Promise<string> {
 
 export function setLocalEndpoint(
   configFile: string,
-  localEndpoint: string
+  localEndpoint: string,
 ): string {
   return configFile
     .split("\n")
     .map((row) =>
-      row.startsWith("Endpoint =") ? `Endpoint = ${localEndpoint}` : row
+      row.startsWith("Endpoint =") ? `Endpoint = ${localEndpoint}` : row,
     )
     .join("\n");
 }

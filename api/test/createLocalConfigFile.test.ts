@@ -28,6 +28,8 @@ AllowedIPs = 0.0.0.0/0`;
 
     const localEndpoint = `192.168.1.45:51820`;
 
-    expect(setLocalEndpoint(remoteConfig, localEndpoint)).to.deep.equal(expextedLocalConfig);
+    expect(setLocalEndpoint(remoteConfig, localEndpoint)).to.deep.equal(
+      expextedLocalConfig,
+    );
   });
 });
