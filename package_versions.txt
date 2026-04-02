@@ -1,7 +1,7 @@
 NAME                                                               VERSION                               TYPE        
 acl-libs                                                           2.3.2-r1                              apk          
-alpine-baselayout                                                  3.7.1-r8                              apk          
-alpine-baselayout-data                                             3.7.1-r8                              apk          
+alpine-baselayout                                                  3.7.2-r0                              apk          
+alpine-baselayout-data                                             3.7.2-r0                              apk          
 alpine-keys                                                        2.6-r0                                apk          
 alpine-release                                                     3.23.3-r0                             apk          
 apk-tools                                                          3.0.5-r0                              apk          
