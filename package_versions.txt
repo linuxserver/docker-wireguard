@@ -22,7 +22,7 @@ coreutils                                                                      9
 coreutils-env                                                                  9.11-r0                                apk          
 coreutils-fmt                                                                  9.11-r0                                apk          
 coreutils-sha512sum                                                            9.11-r0                                apk          
-curl                                                                           8.22.0-r0                              apk          
+curl                                                                           8.23.0-r0                              apk          
 findutils                                                                      4.10.0-r1                              apk          
 github.com/Azure/azure-sdk-for-go                                              v68.0.0+incompatible                   go-module    
 github.com/Azure/go-autorest/autorest                                          v0.11.30                               go-module    
@@ -218,7 +218,7 @@ libcap-setcap                                                                  2
 libcap-utils                                                                   2.78-r0                                apk          
 libcap2                                                                        2.78-r0                                apk          
 libcrypto3                                                                     3.5.9-r0                               apk          
-libcurl                                                                        8.22.0-r0                              apk          
+libcurl                                                                        8.23.0-r0                              apk          
 libelf                                                                         0.195-r0                               apk          
 libevent                                                                       2.1.13-r0                              apk          
 libidn2                                                                        2.3.8-r0                               apk          
