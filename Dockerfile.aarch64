@@ -33,6 +33,7 @@ RUN \
   echo "wireguard" >> /etc/modules && \
   rm -rf /etc/wireguard && \
   ln -s /config/wg_confs /etc/wireguard && \
+  cp /usr/bin/wg-quick /usr/local/bin/wg-quick && \
   printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
   echo "**** clean up ****" && \
   rm -rf \
