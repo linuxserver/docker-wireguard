@@ -158,7 +158,7 @@ init_diagram: |
   "wireguard:latest" <- Base Images
 # changelog
 changelogs:
-  - {date: "01.11.26:", desc: "Run wg-quick from /usr/bin/local to avoid apparmor issues on Ubuntu 25+."}
+  - {date: "01.11.26:", desc: "Run wg-quick from /usr/bin/local to avoid apparmor issues on Ubuntu 25+ with custom runtimes."}
   - {date: "05.07.26:", desc: "Rebase to Alpine 3.24."}
   - {date: "24.01.26:", desc: "Rebase to Alpine 3.23 again as openresolv alpine 3.23 package has now been updated."}
   - {date: "22.01.26:", desc: "Revert to Alpine 3.22 due to resolvconf bug."}
