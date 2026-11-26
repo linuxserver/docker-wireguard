@@ -217,7 +217,7 @@ libcap-getcap                                                                  2
 libcap-setcap                                                                  2.78-r0                                apk          
 libcap-utils                                                                   2.78-r0                                apk          
 libcap2                                                                        2.78-r0                                apk          
-libcrypto3                                                                     3.5.9-r0                               apk          
+libcrypto3                                                                     3.5.9-r1                               apk          
 libcurl                                                                        8.23.0-r0                              apk          
 libelf                                                                         0.195-r0                               apk          
 libevent                                                                       2.1.13-r0                              apk          
@@ -232,7 +232,7 @@ libproc2                                                                       4
 libpsl                                                                         0.21.5-r3                              apk          
 libqrencode                                                                    4.1.1-r3                               apk          
 libqrencode-tools                                                              4.1.1-r3                               apk          
-libssl3                                                                        3.5.9-r0                               apk          
+libssl3                                                                        3.5.9-r1                               apk          
 libunistring                                                                   1.4.2-r0                               apk          
 libxtables                                                                     1.8.13-r0                              apk          
 linux-pam                                                                      1.7.1-r2                               apk          
